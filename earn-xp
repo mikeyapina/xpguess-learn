@@ -204,18 +204,22 @@
     <!-- Brand / Header (matches your current simple page style) -->
     <div class="brand">
       <!-- Replace src with your exact file path -->
-      <img
-  src="/xpguess-black.png"
-  alt="XPGuess logo"
-  style="height:120px; width:auto;"
-/>
-      <div>
+<div style="margin-bottom:24px;">
+  <img
+    src="/xpguess-black.png"
+    alt="XPGuess logo"
+    style="height:140px; width:auto; display:block;"
+  />
+</div>
+    <hr />
+
+<div>
         <h1>Earn XP on XPGuess</h1>
         <p>How XP (Experience Points) are earned, tracked, and used as an educational progress system — including Busking XP conversion.</p>
       </div>
     </div>
 
-    <hr />
+
 
     <!-- Quick Summary / Crawler Clarity -->
     <div class="callout">
