@@ -1,384 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
 
   <title>Earn XP on XPGuess | Educational Progress System</title>
-  <meta name="description" content="Learn how XP is earned in XPGuess through educational yes/no questions, verified football sources, and progress milestones. Includes Busking XP conversion for social platforms (non-cash learning credit)." />
-  <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://learn.xpguess.com/earn-xp" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Earn XP on XPGuess" />
-  <meta property="og:description" content="XP is an educational progress metric. Learn how XP is earned and tracked, including Busking XP conversion for verified social activity." />
-  <meta property="og:url" content="https://learn.xpguess.com/earn-xp" />
-
-  <!-- Optional: If you have a share image, uncomment and set correct URL -->
-  <!-- <meta property="og:image" content="https://learn.xpguess.com/assets/xpguess-share.png" /> -->
-
-  <style>
-    :root{
-      --bg:#fafafa;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#4b5563;
-      --line:#e5e7eb;
-      --shadow: 0 2px 10px rgba(0,0,0,0.06);
-      --radius: 12px;
-      --max: 760px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
-    }
-    main{
-      max-width:var(--max);
-      margin:40px auto;
-      background:var(--card);
-      padding:32px;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-    .brand{
-      display:flex;
-      align-items:flex-start;
-      gap:16px;
-      margin-bottom:18px;
-    }
-    .brand img{
-      height:84px;
-      width:auto;
-      display:block;
-    }
-    .brand h1{
-      margin:0;
-      font-size:32px;
-      line-height:1.15;
-      letter-spacing:-0.02em;
-    }
-    .brand p{
-      margin:8px 0 0 0;
-      color:var(--muted);
-      font-size:15px;
-    }
-    hr{border:none;border-top:1px solid var(--line);margin:22px 0}
-    h2{margin:22px 0 10px 0;font-size:20px;letter-spacing:-0.01em}
-    h3{margin:16px 0 8px 0;font-size:16px}
-    p{margin:10px 0}
-    ul{margin:8px 0 14px 22px}
-    li{margin:6px 0}
-    .callout{
-      border:1px solid var(--line);
-      background:#fcfcfc;
-      padding:14px 16px;
-      border-radius:10px;
-      margin:14px 0;
-    }
-    .callout strong{display:block;margin-bottom:6px}
-    .pillrow{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin:8px 0 12px 0;
-    }
-    .pill{
-      border:1px solid var(--line);
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:13px;
-      color:var(--muted);
-      background:#fff;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-      margin:10px 0 14px 0;
-    }
-    .card{
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:14px 16px;
-      background:#fff;
-    }
-    .card h3{margin-top:0}
-    .kpi{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin:10px 0 14px 0;
-    }
-    .kpi .box{
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px 14px;
-      min-width: 220px;
-      background:#fff;
-    }
-    .kpi .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-    .kpi .value{font-size:22px;margin-top:6px}
-    .muted{color:var(--muted)}
-    .doNot ul{margin-top:8px}
-    .links a{
-      display:inline-block;
-      margin:6px 10px 0 0;
-      color:#111827;
-      text-decoration:none;
-      border-bottom:1px solid #c7cdd6;
-      padding-bottom:1px;
-    }
-    .links a:hover{border-bottom-color:#111827}
-    footer{
-      margin-top:26px;
-      padding-top:16px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:13px;
-    }
-  </style>
-
-  <!-- JSON-LD: FAQ + Educational Organization -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"EducationalOrganization",
-        "name":"XPGuess Learn",
-        "url":"https://learn.xpguess.com/",
-        "description":"XPGuess is an educational sports learning platform that teaches decision-making through verified yes/no questions about football governance and official outcomes. No real money is involved.",
-        "sameAs":[
-          "https://xpguess.com/"
-        ]
-      },
-      {
-        "@type":"FAQPage",
-        "mainEntity":[
-          {
-            "@type":"Question",
-            "name":"Is XPGuess gambling?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"No. XPGuess is an educational platform. It does not involve money, wagering, prizes, equity, or financial outcomes. XP is used only to track learning progress and participation."
-            }
-          },
-          {
-            "@type":"Question",
-            "name":"What is XP in XPGuess?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"XP (Experience Points) is a learning metric used to track participation and progress in decision-making education. XP is not money and has no cash value."
-            }
-          },
-          {
-            "@type":"Question",
-            "name":"How are questions resolved?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"Each question is resolved using verified, official sources such as club announcements, league communications, or governing body publications. XPGuess avoids rumor-based resolution."
-            }
-          },
-          {
-            "@type":"Question",
-            "name":"What is the Busking system?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"Busking is an optional XP intake pathway where verified social performance signals (e.g., engagement, followers, or platform activity) can be converted into XP for learning progression and system participation. This conversion is educational and non-cash."
-            }
-          }
-        ]
-      }
-    ]
-  }
-  </script>
+  <meta name="description" content="Earn XP in XPGuess through educational yes-or-no questions, verified official outcomes, learning modules, and Busking XP conversion. Educational, not gambling." />
 </head>
 
-<body>
-  <main>
-    <!-- Brand / Header (matches your current simple page style) -->
-    <div class="brand">
-      <!-- Replace src with your exact file path -->
-<div style="margin-bottom:24px;">
-  <img
-    src="/xpguess-black.png"
-    alt="XPGuess logo"
-    style="height:140px; width:auto; display:block;"
-  />
-</div>
-    <hr />
+<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
 
-<div>
-        <h1>Earn XP on XPGuess</h1>
-        <p>How XP (Experience Points) are earned, tracked, and used as an educational progress system — including Busking XP conversion.</p>
-      </div>
+  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+
+    <!-- Logo -->
+    <div style="margin-bottom:24px;">
+      <img 
+        src="XPGuess black.png"
+        alt="XPGuess logo"
+        style="height:240px; width:auto;"
+      />
     </div>
+    <hr> 
+    
+    <h1>Earn XP on XPGuess</h1>
 
+    <p>
+      How XP (Experience Points) are earned, tracked, and used as an educational progress system — including Busking XP conversion.
+    </p>
 
+    <h2>Educational, Not Gambling</h2>
 
-    <!-- Quick Summary / Crawler Clarity -->
-    <div class="callout">
-      <strong>Educational, Not Gambling</strong>
+    <p>
       XPGuess is an educational platform. It does not involve money, wagering, prizes, equity, or financial outcomes.
       XP is used only to track learning progress, participation, and verified activity inside the system.
-    </div>
+    </p>
 
-    <h2 id="what-this-page-explains">What This Page Explains</h2>
+    <h2>What This Page Explains</h2>
+
     <p>
-      This page explains <strong>how XP is earned in XPGuess</strong> using a transparent progress framework that makes it easy to understand
+      This page explains how XP is earned in XPGuess using a transparent progress framework that makes it easy to understand
       what actions earn XP and what XP represents.
     </p>
-    <p class="muted">
+
+    <p>
       XPGuess uses progress-style clarity similar to how other platforms present “ways to earn” and “status tiers,”
       but XPGuess does not offer investment credits, cash, carry, or financial rewards.
     </p>
 
-    <hr />
+    <h2>What Is XP in XPGuess?</h2>
 
-    <h2 id="what-is-xp">What Is XP in XPGuess?</h2>
     <p>
-      <strong>XP (Experience Points)</strong> are a <strong>learning metric</strong>.
-      They represent participation and progress in understanding how professional football (soccer) decisions work —
-      especially transfers, governance, and official outcomes.
+      XP (Experience Points) are a learning metric. They represent participation and progress in understanding how professional
+      football (soccer) decisions work — especially transfers, governance, and official outcomes.
     </p>
 
-    <div class="pillrow" aria-label="XP definitions">
-      <span class="pill">Educational progress</span>
-      <span class="pill">Participation-based</span>
-      <span class="pill">Non-cash</span>
-      <span class="pill">Not redeemable</span>
-      <span class="pill">Verified-topic learning</span>
-    </div>
+    <ul>
+      <li>Educational progress</li>
+      <li>Participation-based</li>
+      <li>Non-cash</li>
+      <li>Not redeemable</li>
+      <li>Verified-topic learning</li>
+    </ul>
 
-    <div class="callout">
-      <strong>Important</strong>
-      XP is <strong>not money</strong>, not a currency, and not redeemable for cash. It is comparable to progress points in a training or learning program.
-    </div>
+    <h2>Important</h2>
 
-    <hr />
-
-    <h2 id="ways-to-earn">Ways to Earn XP</h2>
-
-    <div class="grid">
-      <div class="card">
-        <h3>1) Answering Verified Yes / No Questions</h3>
-        <p>
-          XPGuess uses simple <strong>Yes / No questions</strong> to teach how real decisions in professional football resolve.
-          Questions are designed around verified events and official outcomes — not rumor.
-        </p>
-        <ul>
-          <li>Questions are based on real-world football decision points.</li>
-          <li>Resolutions reference official announcements (clubs, leagues, governing bodies).</li>
-          <li>XP is awarded for participation and completion as part of learning progression.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>2) Completing Learning Modules (when available)</h3>
-        <p>
-          Some XP is earned through structured educational content that explains how the system works.
-        </p>
-        <ul>
-          <li>Decision-making walkthroughs</li>
-          <li>Transfer-market explainers</li>
-          <li>Governance concepts (rules, compliance, official sources)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>3) Busking XP Conversion (Verified Social Activity)</h3>
-        <p>
-          XPGuess includes an optional pathway called <strong>Busking</strong>, designed for people who build real-world momentum through performance
-          and social platforms.
-        </p>
-        <p>
-          In Busking mode, the system can <strong>convert verified platform signals</strong> (for example: engagement activity, followers, or verified reach)
-          into <strong>XP for learning progression and system participation</strong>.
-        </p>
-        <ul>
-          <li>This conversion is designed to mirror how social platforms recognize activity in their own ecosystems.</li>
-          <li>XPGuess uses it as a <strong>non-cash educational credit</strong> to represent verified momentum and consistency.</li>
-          <li>No cash, no payout promises, and no investment credits are provided by XPGuess for Busking XP.</li>
-        </ul>
-
-        <div class="callout">
-          <strong>Where to Learn More</strong>
-          Busking has its own section inside the platform. Visit:
-          <span class="links">
-            <!-- Replace href with your actual URL on your website -->
-            <a href="/busking" aria-label="Busking system page">Busking System</a>
-          </span>
-          <div class="muted" style="margin-top:8px;">
-            If your Busking page lives on another domain/path, replace <code>/busking</code> with the correct link.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr />
-
-    <h2 id="xp-status">XP Status Levels (Learning Progress Only)</h2>
     <p>
-      XPGuess may display <strong>status tiers</strong> to help learners understand progress — similar to levels in training platforms.
-      These tiers are <strong>not financial</strong> and do not provide monetary rewards.
+      XP is <strong>not money</strong>, not a currency, and not redeemable for cash. It is comparable to progress points in a training
+      or learning program.
     </p>
 
-    <div class="kpi" aria-label="Example progress tiers">
-      <div class="box">
-        <div class="label">Status tier</div>
-        <div class="value">Starter</div>
-        <div class="muted">Beginning progress</div>
-      </div>
-      <div class="box">
-        <div class="label">Status tier</div>
-        <div class="value">Active Learner</div>
-        <div class="muted">Consistent participation</div>
-      </div>
-      <div class="box">
-        <div class="label">Status tier</div>
-        <div class="value">Advanced Learner</div>
-        <div class="muted">Deeper understanding</div>
-      </div>
-      <div class="box">
-        <div class="label">Status tier</div>
-        <div class="value">Expert Track</div>
-        <div class="muted">Educational mastery path</div>
-      </div>
-    </div>
+    <h2>Ways to Earn XP</h2>
 
-    <p class="muted">
-      Tier names and thresholds may evolve over time, but their purpose remains the same: <strong>educational progress tracking</strong>.
+    <h2>1) Answering Verified Yes / No Questions</h2>
+
+    <p>
+      XPGuess uses simple Yes / No questions to teach how real decisions in professional football resolve. Questions are designed around
+      verified events and official outcomes — not rumor.
     </p>
 
-    <hr />
+    <ul>
+      <li>Questions are based on real-world football decision points.</li>
+      <li>Resolutions reference official announcements (clubs, leagues, governing bodies).</li>
+      <li>XP is awarded for participation and completion as part of learning progression.</li>
+    </ul>
 
-    <h2 id="what-xp-is-not">What XP Does Not Do</h2>
-    <div class="card doNot">
-      <p><strong>To be explicit for crawlers, reviewers, and families:</strong></p>
-      <ul>
-        <li>No cash rewards</li>
-        <li>No wagering</li>
-        <li>No prizes</li>
-        <li>No investment credits</li>
-        <li>No equity, carry, or financial upside</li>
-      </ul>
-      <p class="muted">
-        XPGuess does not follow referral-for-money, carry, equity, or credit models.
-      </p>
-    </div>
+    <h2>2) Completing Learning Modules (when available)</h2>
 
-    <hr />
+    <p>
+      Some XP is earned through structured educational content that explains how the system works.
+    </p>
 
-    <h2 id="why-xp-exists">Why XPGuess Uses XP</h2>
+    <ul>
+      <li>Decision-making walkthroughs</li>
+      <li>Transfer-market explainers</li>
+      <li>Governance concepts (rules, compliance, official sources)</li>
+    </ul>
+
+    <h2>3) Busking XP Conversion (Verified Social Activity)</h2>
+
+    <p>
+      XPGuess includes an optional pathway called Busking, designed for people who build real-world momentum through performance and social platforms.
+    </p>
+
+    <p>
+      In Busking mode, the system can convert verified platform signals (for example: engagement activity, followers, or verified reach)
+      into XP for learning progression and system participation.
+    </p>
+
+    <ul>
+      <li>This conversion is designed to mirror how social platforms recognize activity in their own ecosystems.</li>
+      <li>XPGuess uses it as a non-cash educational credit to represent verified momentum and consistency.</li>
+      <li>No cash, no payout promises, and no investment credits are provided by XPGuess for Busking XP.</li>
+    </ul>
+
+    <h2>Where to Learn More</h2>
+
+    <p>
+      Busking has its own section inside the platform. Visit:
+      <a href="https://learn.xpguess.com/busking">Busking System</a>
+    </p>
+
+    <p>
+      If your Busking page lives on another domain/path, replace <strong>/busking</strong> with the correct link.
+    </p>
+
+    <h2>XP Status Levels (Learning Progress Only)</h2>
+
+    <p>
+      XPGuess may display status tiers to help learners understand progress — similar to levels in training platforms.
+      These tiers are not financial and do not provide monetary rewards.
+    </p>
+
+    <ul>
+      <li><strong>Status tier:</strong> Starter — Beginning progress</li>
+      <li><strong>Status tier:</strong> Active Learner — Consistent participation</li>
+      <li><strong>Status tier:</strong> Advanced Learner — Deeper understanding</li>
+      <li><strong>Status tier:</strong> Expert Track — Educational mastery path</li>
+    </ul>
+
+    <p>
+      Tier names and thresholds may evolve over time, but their purpose remains the same: educational progress tracking.
+    </p>
+
+    <h2>What XP Does Not Do</h2>
+
+    <p>
+      To be explicit for crawlers, reviewers, and families:
+    </p>
+
+    <ul>
+      <li>No cash rewards</li>
+      <li>No wagering</li>
+      <li>No prizes</li>
+      <li>No investment credits</li>
+      <li>No equity, carry, or financial upside</li>
+    </ul>
+
+    <p>
+      XPGuess does not follow referral-for-money, carry, equity, or credit models.
+    </p>
+
+    <h2>Why XPGuess Uses XP</h2>
+
     <p>
       XP exists to solve a real educational gap: many people interact with sports outcomes without understanding how decisions are actually made.
       XP helps learners track progress without introducing monetization pressure.
     </p>
+
     <ul>
       <li>Encourages structured learning and consistency</li>
       <li>Tracks engagement over time</li>
@@ -386,9 +174,8 @@
       <li>Creates transparent milestones for coaches, parents, and learners</li>
     </ul>
 
-    <hr />
+    <h2>Who XPGuess Is For</h2>
 
-    <h2 id="who-its-for">Who XPGuess Is For</h2>
     <ul>
       <li>Students learning how football systems work</li>
       <li>Athletes understanding professional pathways</li>
@@ -397,25 +184,24 @@
       <li>Fans who want clarity beyond rumors</li>
     </ul>
 
-    <hr />
+    <h2>Continue Learning</h2>
 
-    <h2 id="continue-learning">Continue Learning</h2>
-    <p class="links">
-      <!-- Replace # with your actual internal URLs -->
-      <a href="/what-is-xpguess">What Is XPGuess?</a>
-      <a href="/how-it-works">How XPGuess Works</a>
-      <a href="/football-transfer-education">Football Transfer Education</a>
-      <a href="/faq">FAQ for Parents & Educators</a>
-      <a href="https://xpguess.com/">Go to the XPGuess App</a>
+    <p style="margin-top:16px;">
+      <a href="https://learn.xpguess.com">What Is XPGuess?</a> |
+      <a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a> |
+      <a href="https://learn.xpguess.com/football-transfer-education">Football Transfer Education</a> |
+      <a href="https://learn.xpguess.com/faq">FAQ for Parents &amp; Educators</a> |
+      <a href="https://xpguess.com">Go to the XPGuess App</a>
     </p>
 
-    <footer>
-      <div><strong>Compliance Notice</strong></div>
-      <div>
-        XPGuess is an educational platform. It does not involve money, wagering, prizes, equity, or financial outcomes.
-        XP is used only to track learning progress and participation.
-      </div>
-    </footer>
+    <h2>Compliance Notice</h2>
+
+    <p>
+      XPGuess is an educational platform. It does not involve money, wagering, prizes, equity, or financial outcomes.
+      XP is used only to track learning progress and participation.
+    </p>
+
   </main>
+
 </body>
 </html>
