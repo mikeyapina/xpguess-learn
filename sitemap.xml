@@ -3,33 +3,37 @@
 
   <url>
     <loc>https://learn.xpguess.com/</loc>
-    <lastmod>2026-01-10</lastmod>
+    <lastmod>2026-01-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/how-xpguess-works.html</loc>
-    <lastmod>2026-01-10</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://learn.xpguess.com/what-is-the-january-transfer-window.html</loc>
-    <lastmod>2026-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/earn-xp.html</loc>
     <lastmod>2026-01-12</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/football-transfer-system.html</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-
-  
+  <url>
+    <loc>https://learn.xpguess.com/busking.html</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
 </urlset>
