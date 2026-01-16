@@ -37,42 +37,45 @@
   </url>
 
   <url>
-  <loc>https://learn.xpguess.com/what-xpguess-is-and-is-not.html</loc>
-  <lastmod>2026-01-12</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
+    <loc>https://learn.xpguess.com/what-xpguess-is-and-is-not.html</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-
-
   <url>
-  <loc>https://learn.xpguess.com/secure-sports-analytics-infrastructure.html</loc>
-  <lastmod>2026-01-14</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-
-  <url>
-  <loc>https://learn.xpguess.com/why-most-athletes-dont-go-pro.html</loc>
-  <lastmod>2026-01-14</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
+    <loc>https://learn.xpguess.com/secure-sports-analytics-infrastructure.html</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-
+  <url>
+    <loc>https://learn.xpguess.com/why-most-athletes-dont-go-pro.html</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
   <url>
-  <loc>https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html</loc>
-  <lastmod>2026-01-14</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-  
+    <loc>https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <url>
-  <loc>https://learn.xpguess.com/fitness-wellness-and-support-model.html</loc>
-  <lastmod>2026-01-16</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
+    <loc>https://learn.xpguess.com/fitness-wellness-and-support-model.html</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
 </urlset>
