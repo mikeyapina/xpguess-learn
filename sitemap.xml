@@ -3,79 +3,87 @@
 
   <url>
     <loc>https://learn.xpguess.com/</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/how-xpguess-works.html</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/earn-xp.html</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/football-transfer-system.html</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/busking.html</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/what-xpguess-is-and-is-not.html</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/secure-sports-analytics-infrastructure.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/why-most-athletes-dont-go-pro.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/fitness-wellness-and-support-model.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- NEW CANONICAL PAGE -->
+  <url>
+    <loc>https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html</loc>
+    <lastmod>2026-01-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
