@@ -7,14 +7,67 @@
   <title>How XPGuess Handles Age, Learning, and Responsible Access | XPGuess Learn</title>
   <meta name="description" content="How XPGuess separates learning access from adult participation, uses role-based permissions, and maintains accountable, reviewable progress. Educational only. Not gambling." />
 
+  <!-- Step 1: Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/age-learning-and-responsible-access.html" />
 
   <meta name="robots" content="index,follow" />
   <meta name="googlebot" content="index,follow" />
 
-  <!-- =====================================================
-       Breadcrumb Schema (specific to THIS Age/Learning page)
-       ===================================================== -->
+  <!-- Template styling (prevents purple links / inconsistent default fonts) -->
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    main {
+      max-width: 720px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr { border: 0; border-top: 1px solid #eee; margin: 24px 0; }
+    h1 { margin: 0 0 10px 0; font-size: 30px; line-height: 1.2; }
+    h2 { margin: 0 0 10px 0; font-size: 20px; line-height: 1.35; }
+    h3 { margin: 14px 0 8px 0; font-size: 16px; line-height: 1.35; }
+    p, li { color: #333; line-height: 1.7; }
+    a { color: #111; text-decoration: underline; }
+    a:visited { color: #111; }
+    .kicker { margin: 0 0 10px 0; font-size: 13px; color: #666; }
+    .lede { margin: 0; font-size: 16px; color: #444; line-height: 1.6; }
+    .callout {
+      margin: 0;
+      padding: 12px 14px;
+      background: #f4f6ff;
+      border: 1px solid #e4e8ff;
+      border-radius: 8px;
+      color: #222;
+      line-height: 1.6;
+    }
+    .callout-dark {
+      margin: 16px 0 0 0;
+      padding: 12px 14px;
+      background: #0b1220;
+      border-radius: 8px;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .onpage {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .onpage ul { margin: 10px 0 0 0; padding-left: 18px; }
+    .footer-note { font-size: 12px; color: #777; margin: 0; }
+  </style>
+
+  <!-- Step 2A: Breadcrumb Schema (THIS page) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -27,9 +80,7 @@
   }
   </script>
 
-  <!-- =====================================================
-       Article Schema (specific to THIS Age/Learning page)
-       ===================================================== -->
+  <!-- Step 2B: Article Schema (THIS page) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,20 +107,11 @@
   </script>
 </head>
 
+<body>
+  <main>
+    <a id="top"></a>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="
-    max-width: 760px;
-    margin: 40px auto;
-    background: #ffffff;
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  ">
-
-   <a id="top"></a>
-
+    <!-- Logo -->
     <div style="margin-bottom:24px;">
       <img
         src="XPGuess black.png"
@@ -81,57 +123,69 @@
     <hr>
 
     <!-- Header -->
-    <header style="margin-bottom: 22px;">
-      <p style="margin:0 0 10px 0; font-size: 13px; color:#666;">
-        XPGuess Learn • Governance • Access Controls
-      </p>
-      <h1 style="margin:0 0 10px 0; font-size: 30px; line-height: 1.2;">
-        How XPGuess Handles Age, Learning, and Responsible Access
-      </h1>
-      <p style="margin:0; font-size: 16px; color:#444; line-height: 1.6;">
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Governance • Access Controls</p>
+      <h1>How XPGuess Handles Age, Learning, and Responsible Access</h1>
+      <p class="lede">
         XPGuess is designed as intentional learning infrastructure: structured participation, eligibility separation,
         and accountable access—without attention-driven engagement mechanics.
       </p>
     </header>
 
-    <hr style="margin: 24px 0;" />
+    <!-- Step 3: On this page (anchors) -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#why-age-access-matter">1. Why Age &amp; Access Matter</a></li>
+        <li><a href="#not-a-social-network">2. Not a Social Network</a></li>
+        <li><a href="#two-experiences">3. Two Distinct Experiences</a></li>
+        <li><a href="#eligibility-approach">4. Age &amp; Eligibility Approach</a></li>
+        <li><a href="#oversight">5. Verification &amp; Accountability</a></li>
+        <li><a href="#xp-not-gambling">6. Why XP Is Not Gambling</a></li>
+        <li><a href="#regulated-future">7. Designed for a Regulated Future</a></li>
+        <li><a href="#what-it-means">8. For Parents, Educators, Partners</a></li>
+        <li><a href="#transparency">9. Transparency &amp; Responsibility</a></li>
+      </ul>
+    </section>
+
+    <hr>
 
     <!-- 1 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">1. Why Age &amp; Access Matter in Digital Learning Systems</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="why-age-access-matter">
+      <h2>1. Why Age &amp; Access Matter in Digital Learning Systems</h2>
+      <p>
         Modern learning platforms serve users across wide age ranges. When a system supports both early learners and
         advanced participation, access must be structured so that features align with age, eligibility, and local rules.
       </p>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+      <ul>
         <li>Learning, play, and participation can require different permissions depending on the user.</li>
         <li>One-size-fits-all access increases risk for users, guardians, and institutions.</li>
         <li>Responsible platforms separate access modes rather than assuming one standard user profile.</li>
       </ul>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 2 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">2. XPGuess Is a Learning System — Not a Social Network</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="not-a-social-network">
+      <h2>2. XPGuess Is a Learning System — Not a Social Network</h2>
+      <p>
         XPGuess is designed to document process and decision-learning signals—not maximize engagement or passive consumption.
         There is no infinite feed, no anonymous amplification, and no virality-driven mechanic.
       </p>
-      <p style="margin:0; padding:12px 14px; background:#f4f6ff; border:1px solid #e4e8ff; border-radius:8px; color:#222; line-height:1.6;">
+      <p class="callout">
         <strong>Core principle:</strong> XPGuess prioritizes structured participation and accountability over attention-based engagement.
       </p>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 3 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">3. Two Distinct Experiences: Learning Access vs. Adult Participation</h2>
+    <section id="two-experiences">
+      <h2>3. Two Distinct Experiences: Learning Access vs. Adult Participation</h2>
 
-      <h3 style="margin:14px 0 8px 0;">A. Free Learning Access</h3>
-      <ul style="padding-left:18px; line-height:1.7; margin:0 0 12px 0; color:#333;">
+      <h3>A. Free Learning Access</h3>
+      <ul>
         <li>Designed for youth, students, and early learners.</li>
         <li>Focused on decision-making exercises, training reflection, and educational progression.</li>
         <li>No financial features.</li>
@@ -139,48 +193,47 @@
         <li>No speculative systems.</li>
       </ul>
 
-      <h3 style="margin:14px 0 8px 0;">B. Adult Participation (Eligibility Required)</h3>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+      <h3>B. Adult Participation (Eligibility Required)</h3>
+      <ul>
         <li>Separate access path with additional verification requirements where applicable.</li>
         <li>Advanced features unlock only after eligibility confirmation.</li>
         <li>Clear disclosures and restrictions are applied at the point of use.</li>
       </ul>
 
-      <p style="margin:12px 0 0 0; padding:12px 14px; background:#f7f7f7; border:1px solid #eee; border-radius:8px; color:#222; line-height:1.6;">
+      <p class="callout" style="background:#f7f7f7;border:1px solid #eee;">
         <strong>Key principle:</strong> Learning access does not automatically grant participation access.
       </p>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 4 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">4. How XPGuess Approaches Age &amp; Eligibility</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="eligibility-approach">
+      <h2>4. How XPGuess Approaches Age &amp; Eligibility</h2>
+      <p>
         XPGuess treats age and eligibility as permissions—not assumptions. The system uses role-based access controls
         to restrict functionality in a transparent and reviewable way.
       </p>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+      <ul>
         <li>Respects regional laws and institutional requirements.</li>
         <li>Supports guardian or administrator oversight when required.</li>
         <li>Prevents feature misuse through eligibility gates and attributable actions.</li>
       </ul>
-
-      <p style="margin:12px 0 0 0; color:#333; line-height:1.7;">
+      <p>
         XPGuess does not sell data. XPGuess does not infer age for advertising. The platform uses structure to restrict
         functionality—not influence behavior.
       </p>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 5 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">5. Verification, Oversight, and Accountability</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="oversight">
+      <h2>5. Verification, Oversight, and Accountability</h2>
+      <p>
         Responsible access requires enforcement. XPGuess is designed so restricted actions remain attributable and reviewable.
       </p>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+      <ul>
         <li>Activity is logged and attributable.</li>
         <li>Progress can be reviewed by coaches, guardians, or administrators (as applicable).</li>
         <li>No anonymous escalation into restricted features.</li>
@@ -188,44 +241,43 @@
       </ul>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 6 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">6. Why XP Is Not Gambling, Currency, or Inducement</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="xp-not-gambling">
+      <h2>6. Why XP Is Not Gambling, Currency, or Inducement</h2>
+      <p>
         XP in XPGuess represents documented effort and learning progression. XP is not cash, cannot be cashed out,
         and does not promise financial return.
       </p>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+      <ul>
         <li>XP tracks learning signals, not outcomes.</li>
         <li>XP cannot be exchanged for money.</li>
         <li>XP does not function as a wager or speculative instrument.</li>
       </ul>
-
-      <p style="margin:12px 0 0 0; padding:12px 14px; background:#f4fff6; border:1px solid #dff7e4; border-radius:8px; color:#1b3a23; line-height:1.6;">
+      <p class="callout" style="background:#f4fff6;border:1px solid #dff7e4;color:#1b3a23;">
         <strong>Simple explanation:</strong> XP tracks learning signals, not outcomes.
       </p>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 7 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">7. Designed for a Regulated Future</h2>
-      <p style="margin:0; color:#333; line-height:1.7;">
+    <section id="regulated-future">
+      <h2>7. Designed for a Regulated Future</h2>
+      <p>
         Youth protection and accountable participation standards are increasing globally. XPGuess was designed with
         eligibility separation, access controls, and governance-first architecture to reduce risk for users, partners,
         and institutions.
       </p>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 8 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">8. What This Means for Parents, Educators, and Partners</h2>
-      <ul style="padding-left:18px; line-height:1.7; margin:0; color:#333;">
+    <section id="what-it-means">
+      <h2>8. What This Means for Parents, Educators, and Partners</h2>
+      <ul>
         <li><strong>Parents:</strong> clarity, protection, and reviewable participation.</li>
         <li><strong>Educators:</strong> structured documentation and accountable progression.</li>
         <li><strong>Partners:</strong> reduced compliance risk through governance-first design.</li>
@@ -233,50 +285,45 @@
       </ul>
     </section>
 
-    <hr style="margin: 24px 0;" />
+    <hr>
 
     <!-- 9 -->
-    <section>
-      <h2 style="margin:0 0 10px 0;">9. Transparency &amp; Ongoing Responsibility</h2>
-      <p style="margin:0 0 12px 0; color:#333; line-height:1.7;">
+    <section id="transparency">
+      <h2>9. Transparency &amp; Ongoing Responsibility</h2>
+      <p>
         Policies evolve as regulations evolve. XPGuess commits to clear disclosures, ongoing review, and responsible iteration.
       </p>
-      <p style="margin:0; color:#333; line-height:1.7;">
+      <p>
         XPGuess exists to help people learn how decisions are made — responsibly, transparently, and with respect for who is participating.
       </p>
-
-      <p style="margin:16px 0 0 0; padding:12px 14px; background:#0b1220; border-radius:8px; color:#fff; line-height:1.6;">
-        <strong>Built for learning. Designed for accountability. Ready for regulation.</strong>
-      </p>
+      <p class="callout-dark"><strong>Built for learning. Designed for accountability. Ready for regulation.</strong></p>
     </section>
 
-    <!-- Footer nav block (provided by you) -->
     <hr style="margin-top:32px;">
 
-    <h2>Continue Learning</ha2>
-
+    <h2>Continue Learning</h2>
     <nav aria-label="Learn pages">
       <ul style="padding-left:18px; line-height:1.6;">
-      <li><a href="https://learn.xpguess.com/">Learn Index</a></li>
-      <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
-      <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
-      <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
-      <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
-      <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
-      <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
-      <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
-      <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
-      <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
-      <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-      <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
-    </ul>
+        <li><a href="https://learn.xpguess.com/">Learn Index</a></li>
+        <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+        <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+        <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+        <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+        <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+        <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+        <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+        <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+        <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+        <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+      </ul>
+    </nav>
 
     <p style="margin-top:32px;">
       <a href="https://xpguess.com">Go to the XPGuess App</a>
     </p>
 
     <h2>Compliance Notice</h2>
-
     <p>
       XPGuess is an educational platform. It does not provide medical services,
       act as a healthcare provider, or replace professional care.
@@ -284,20 +331,11 @@
       reflection, and athlete protection.
     </p>
 
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         Place near bottom of Learn pages, before final <hr>
-         ========================================================= -->
-
-    <section aria-labelledby="terminology-provenance"
-             style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
-
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
+    <section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
         Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
         <strong>educational decision-learning construct</strong> used to explore how
@@ -313,7 +351,6 @@
         repeatability, transparency, and reviewable progress rather than subjective opinion.
       </p>
 
-      <!-- Provenance -->
       <p style="margin:0 0 12px 0;">
         The conceptual foundations behind XPGuess and NTG derive from earlier technical work
         by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
@@ -329,9 +366,7 @@
         mechanical laws rather than coaching intuition alone.
         For historical context and transparency, the original reference image is available here:
         <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the original reference image (opens in a new tab)
         </a>.
       </p>
@@ -341,20 +376,20 @@
         <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
         structured learning, physical preparation, and development principles:
         <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the publication on Amazon (opens in a new tab)
         </a>.
       </p>
-
     </section>
 
     <hr style="margin-top:32px;">
-    <p style="font-size:12px; color:#777; margin:0;">
+    <p class="footer-note">
       XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
     </p>
 
+    <p style="margin-top:18px;">
+      <a href="#top">Back to top</a>
+    </p>
   </main>
 </body>
 </html>
