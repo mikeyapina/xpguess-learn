@@ -1,28 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Fitness, Wellness & Support Framework", "item": "https://learn.xpguess.com/fitness-wellness-and-support-model.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Fitness, Wellness & Support Framework | XPGuess Athlete Development</title>
   <meta name="description" content="XPGuess provides a training-first fitness, wellness, and support framework that documents participation, discipline, and readiness across sports—without medical diagnosis or treatment." />
 
-  <!-- Step 1: Canonical -->
+  <!-- Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/fitness-wellness-and-support-model.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Learn Base Template Styles -->
+  <style>
+    :root { color-scheme: light; }
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0;
+      color:#111;
+    }
+    main{
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+      color:#222;
+      line-height:1.6;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; line-height:1.7; }
+    .card{
+      margin:16px 0;
+      padding:16px;
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+    }
+    .card-title{ font-weight:700; margin-bottom:8px; }
+    .footer-note{ font-size:12px; color:#777; margin:0; }
+  </style>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Fitness, Wellness & Support Framework", "item": "https://learn.xpguess.com/fitness-wellness-and-support-model.html" }
+    ]
+  }
+  </script>
+
+  <!-- Article Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,20 +105,20 @@
       "Sports governance education",
       "Non-cash XP learning signals"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
-    <!-- Logo -->
+    <!-- Logo (template standard: root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -73,23 +126,25 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">Fitness, Wellness &amp; Support Framework</h1>
+    <!-- Header (template standard) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Fitness Logging • Wellness Check-ins • Support Workflows • Non-Medical</p>
+      <h1>Fitness, Wellness &amp; Support Framework</h1>
+      <p class="lede">
+        XPGuess includes a training-first fitness, wellness, and support framework designed to document
+        participation, consistency, and readiness across sports and performance pathways.
+      </p>
+      <p class="callout">
+        <strong>Boundary:</strong> This system is intentionally non-medical. It does not diagnose conditions,
+        provide treatment, or store clinical health data. Its purpose is structured development, reflection,
+        and governance support.
+      </p>
+    </header>
 
-    <p>
-      XPGuess includes a training-first fitness, wellness, and support framework designed to document
-      athlete participation, consistency, and readiness across sports and performance pathways.
-    </p>
-
-    <p>
-      The system is intentionally non-medical. It does not diagnose conditions, provide treatment,
-      or store clinical health data. Its purpose is to support structured development, reflection,
-      and governance in athletic environments.
-    </p>
-
-    <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+    <!-- On this page (template pattern: internal anchors) -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
         <li><a href="#system-purpose">System purpose</a></li>
         <li><a href="#fitness-modules">What the fitness modules include</a></li>
         <li><a href="#xp-in-fitness">What XP represents in fitness context</a></li>
@@ -100,24 +155,38 @@
         <li><a href="#compliance">Compliance notice</a></li>
         <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
+
+    <hr>
 
     <h2 id="system-purpose">System Purpose</h2>
 
     <p>
-      The fitness and support framework exists to solve a common problem in sports:
-      performance is often evaluated without visibility into preparation, discipline,
-      recovery habits, or sustained engagement.
+      The fitness and support framework exists to address a common evaluation gap in sports:
+      performance is often judged without visibility into preparation, discipline, recovery habits,
+      or sustained engagement.
     </p>
 
     <p>
-      XPGuess documents these signals in a standardized, reviewable way—without crossing
-      medical, privacy, or regulatory boundaries.
+      XPGuess documents these signals in a standardized, reviewable way—without crossing medical,
+      privacy, or regulatory boundaries.
     </p>
+
+    <div class="card" role="note" aria-label="What this solves">
+      <div class="card-title">What the framework helps make visible (non-clinical)</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Consistency and adherence to structure</li>
+        <li>Training participation timelines</li>
+        <li>Recovery engagement patterns (non-medical)</li>
+        <li>Readiness signals tied to discipline and routine</li>
+      </ul>
+    </div>
+
+    <hr>
 
     <h2 id="fitness-modules">What the Fitness Modules Include</h2>
 
-    <ul>
+    <ul style="margin:0 0 14px 18px;">
       <li>Structured training plans and routines</li>
       <li>Session-based activity and effort logging</li>
       <li>Recovery and rest engagement tracking</li>
@@ -129,90 +198,89 @@
       These tools record engagement and discipline—not health outcomes or diagnoses.
     </p>
 
+    <hr>
+
     <h2 id="xp-in-fitness">What XP Represents in Fitness Context</h2>
 
     <p>
-      XP (Experience Points) function as a behavioral and participation ledger.
+      XP (Experience Points) functions as a behavioral and participation ledger.
+      It can be used to make disciplined engagement reviewable over time.
     </p>
 
-    <p>
-      XP may be earned for:
+    <div class="card" role="note" aria-label="How XP can be earned in fitness context">
+      <div class="card-title">XP may be earned for (educational participation)</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Completing training sessions</li>
+        <li>Maintaining consistency over time</li>
+        <li>Logging effort and recovery activities</li>
+        <li>Engaging with educational content</li>
+        <li>Participating in structured support workflows</li>
+      </ul>
+    </div>
+
+    <p style="margin:0;">
+      XP does <strong>not</strong> represent medical improvement, injury recovery, mental health outcomes,
+      or treatment effectiveness.
     </p>
 
-    <ul>
-      <li>Completing training sessions</li>
-      <li>Maintaining consistency over time</li>
-      <li>Logging effort and recovery activities</li>
-      <li>Engaging with educational content</li>
-      <li>Participating in structured support workflows</li>
-    </ul>
-
-    <p>
-      XP does <strong>not</strong> represent medical improvement, injury recovery,
-      mental health outcomes, or treatment effectiveness.
-    </p>
+    <hr>
 
     <h2 id="support-reflection">Support &amp; Reflection (Therapy Mode)</h2>
 
     <p>
-      XPGuess includes a structured support and reflection layer often referred to as
-      “Therapy Mode.” This is not clinical therapy.
+      XPGuess includes a structured support and reflection layer often referred to as “Therapy Mode.”
+      This is not clinical therapy.
     </p>
+
+    <div class="card" role="note" aria-label="What therapy mode provides">
+      <div class="card-title">Therapy Mode provides (non-clinical)</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Guided self-reflection prompts</li>
+        <li>Well-being awareness check-ins</li>
+        <li>Escalation signals to guardians or program staff (when configured)</li>
+      </ul>
+    </div>
 
     <p>
-      It provides:
+      If external support is needed, it occurs outside the platform. XPGuess does not store protected health information.
     </p>
 
-    <ul>
-      <li>Guided self-reflection prompts</li>
-      <li>Well-being awareness check-ins</li>
-      <li>Escalation signals to guardians or program staff</li>
-    </ul>
-
-    <p>
-      If external support is needed, it occurs outside the platform.
-      XPGuess does not store protected health information.
-    </p>
+    <hr>
 
     <h2 id="athlete-evaluation">Why This Matters for Athlete Evaluation</h2>
 
     <p>
-      Coaches, agents, programs, and organizations often lack reliable signals beyond
-      short-term performance metrics.
+      Coaches, agents, programs, and organizations often lack reliable signals beyond short-term performance metrics.
+      The fitness and support framework adds objective indicators that complement performance snapshots.
     </p>
 
-    <p>
-      The fitness and support framework provides objective indicators such as:
-    </p>
-
-    <ul>
-      <li>Training consistency</li>
-      <li>Load management patterns</li>
-      <li>Recovery engagement</li>
-      <li>Response to structure and feedback</li>
-      <li>Discipline over time</li>
-    </ul>
+    <div class="card" role="note" aria-label="Objective indicators">
+      <div class="card-title">Examples of objective indicators (non-medical)</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Training consistency</li>
+        <li>Load management patterns (documentation only)</li>
+        <li>Recovery engagement</li>
+        <li>Response to structure and feedback</li>
+        <li>Discipline over time</li>
+      </ul>
+    </div>
 
     <p>
       These signals help reduce bias, speculation, and timing-based misjudgment.
     </p>
 
+    <hr>
+
     <h2 id="governance-compliance">Governance &amp; Compliance Alignment</h2>
 
     <p>
-      The framework is designed to operate safely across:
+      The framework is designed to operate safely across youth development programs, professional pipelines,
+      multi-sport environments, and international jurisdictions by separating development tracking from medical care.
     </p>
 
-    <ul>
-      <li>Youth development programs</li>
-      <li>Professional pipelines</li>
-      <li>Multi-sport environments</li>
-      <li>International jurisdictions</li>
-    </ul>
-
     <p>
-      By separating development tracking from medical care, XPGuess supports
-      transparency, auditability, and ethical athlete protection.
+      This supports transparency, auditability, and ethical athlete protection—especially when documentation must be
+      reviewed by multiple stakeholders over time.
     </p>
 
     <hr style="margin-top:32px;">
@@ -220,7 +288,7 @@
     <h2 id="continue-learning">Continue Learning</h2>
 
     <nav aria-label="Learn pages">
-       <ul style="padding-left:18px; line-height:1.6;">
+      <ul style="padding-left:18px; line-height:1.6;">
         <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
         <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
         <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
@@ -232,8 +300,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -244,26 +312,18 @@
     <h2 id="compliance">Compliance Notice</h2>
 
     <p>
-      XPGuess is an educational platform. It does not provide medical services,
-      act as a healthcare provider, or replace professional care.
-      All fitness and support tools exist for training documentation,
+      XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider,
+      or replace professional care. All fitness and support tools exist for training documentation,
       reflection, and athlete protection.
     </p>
-
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         Place near bottom of Learn pages, before final <hr>
-         ========================================================= -->
 
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
         Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
         <strong>educational decision-learning construct</strong> used to explore how
@@ -279,7 +339,6 @@
         repeatability, transparency, and reviewable progress rather than subjective opinion.
       </p>
 
-      <!-- Provenance -->
       <p style="margin:0 0 12px 0;">
         The conceptual foundations behind XPGuess and NTG derive from earlier technical work
         by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
@@ -316,11 +375,31 @@
 
     </section>
 
-    <p style="margin-top:28px;">
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
+    </p>
+
+    <p style="margin-top:18px;">
       <a href="#top">Back to top</a>
     </p>
 
   </main>
+
+  <!-- Responsive (template standard) -->
+  <style>
+    @media (max-width: 760px) {
+      main {
+        margin: 16px auto !important;
+        padding: 18px !important;
+        border-radius: 10px !important;
+      }
+      img {
+        height: 180px !important;
+      }
+    }
+  </style>
 
 </body>
 </html>
