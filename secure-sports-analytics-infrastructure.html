@@ -1,45 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Why Most Athletes Don’t Go Pro", "item": "https://learn.xpguess.com/why-most-athletes-dont-go-pro.html" }
-  ]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Secure Sports Analytics Infrastructure", "item": "https://learn.xpguess.com/secure-sports-analytics-infrastructure.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Secure Sports Analytics Infrastructure | Data Governance & Athlete Protection</title>
+  <!-- PAGE META -->
+  <title>Secure Sports Analytics Infrastructure | Data Governance &amp; Athlete Protection | XPGuess Learn</title>
   <meta name="description" content="How secure sports analytics infrastructure protects raw athlete data, enables governed analytics, and avoids vendor lock-in across sports, development programs, and organizations." />
 
-  <!-- Step 1: Canonical -->
+  <!-- STEP 1: CANONICAL -->
   <link rel="canonical" href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- TEMPLATE STYLES (STANDARD FOR LEARN) -->
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    main {
+      max-width: 720px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr { border: 0; border-top: 1px solid #eee; margin: 24px 0; }
+    h1 { margin: 0 0 10px 0; font-size: 30px; line-height: 1.2; }
+    h2 { margin: 0 0 10px 0; font-size: 20px; line-height: 1.35; }
+    h3 { margin: 14px 0 8px 0; font-size: 16px; line-height: 1.35; }
+    p, li { color: #333; line-height: 1.7; }
+    a { color: #111; text-decoration: underline; }
+    a:visited { color: #111; }
+    .kicker { margin: 0 0 10px 0; font-size: 13px; color: #666; }
+    .lede { margin: 0; font-size: 16px; color: #444; line-height: 1.6; }
+    .callout {
+      margin: 0;
+      padding: 12px 14px;
+      background: #f4f6ff;
+      border: 1px solid #e4e8ff;
+      border-radius: 8px;
+      color: #222;
+      line-height: 1.6;
+    }
+    .callout-dark {
+      margin: 16px 0 0 0;
+      padding: 12px 14px;
+      background: #0b1220;
+      border-radius: 8px;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .onpage {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .onpage ul { margin: 10px 0 0 0; padding-left: 18px; }
+    .footer-note { font-size: 12px; color: #777; margin: 0; }
+  </style>
+
+  <!-- STEP 2A: BREADCRUMB SCHEMA (KEEP ONLY ONE; REMOVE DUPLICATES) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Secure Sports Analytics Infrastructure", "item": "https://learn.xpguess.com/secure-sports-analytics-infrastructure.html" }
+    ]
+  }
+  </script>
+
+  <!-- STEP 2B: ARTICLE SCHEMA -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Secure Sports Analytics Infrastructure | Data Governance & Athlete Protection",
+    "headline": "Secure Sports Analytics Infrastructure | Data Governance & Athlete Protection | XPGuess Learn",
     "description": "How secure sports analytics infrastructure protects raw athlete data, enables governed analytics, and avoids vendor lock-in across sports, development programs, and organizations.",
     "inLanguage": "en",
     "isAccessibleForFree": true,
@@ -65,19 +112,20 @@
       "Vendor-neutral data formats",
       "Non-medical development documentation"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
+    <!-- LOGO (ROOT PATH) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -85,150 +133,169 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">Secure Sports Analytics Infrastructure</h1>
+    <!-- HEADER (TEMPLATE STANDARD) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Governance • Secure Infrastructure</p>
+      <h1>Secure Sports Analytics Infrastructure</h1>
+      <p class="lede">
+        How governed, auditable analytics systems protect raw athlete data, preserve portability, and reduce long-term risk
+        across teams, programs, and organizations.
+      </p>
+    </header>
 
-    <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#educational-purpose">Educational purpose</a></li>
-        <li><a href="#closed-systems-problem">The problem with closed analytics systems</a></li>
-        <li><a href="#different-foundation">A different foundation</a></li>
-        <li><a href="#how-architecture-works">How the architecture works</a></li>
-        <li><a href="#who-this-serves">Who this serves</a></li>
-        <li><a href="#why-this-matters">Why this matters</a></li>
-        <li><a href="#continue-learning">Continue learning</a></li>
-        <li><a href="#compliance">Compliance notice</a></li>
-        <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
+    <!-- STEP 3: ON THIS PAGE -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#overview">1. Overview</a></li>
+        <li><a href="#educational-purpose">2. Educational purpose</a></li>
+        <li><a href="#closed-systems-problem">3. The problem with closed analytics systems</a></li>
+        <li><a href="#different-foundation">4. A different foundation</a></li>
+        <li><a href="#how-architecture-works">5. How the architecture works</a></li>
+        <li><a href="#who-this-serves">6. Who this serves</a></li>
+        <li><a href="#why-this-matters">7. Why this matters</a></li>
+        <li><a href="#continue-learning">8. Continue learning</a></li>
+        <li><a href="#compliance">9. Compliance notice</a></li>
+        <li><a href="#terminology-provenance">10. Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
 
+    <hr>
+
+    <!-- MAIN CONTENT -->
     <section id="overview" aria-label="Overview">
+      <h2>1. Overview</h2>
       <p>
         Modern sports analytics is evolving rapidly, but many platforms force teams,
         athletes, and organizations into closed systems where raw data is locked,
         models are opaque, and long-term flexibility is lost.
       </p>
-
       <p>
         This page explains a different approach — one built around
         <strong>data ownership, controlled access, and governed analytics</strong>.
       </p>
     </section>
 
-    <h2 id="educational-purpose">Educational Purpose</h2>
+    <hr>
 
-    <p>
-      XPGuess and related NTG systems are educational and governance-focused platforms.
-      They do not operate as brokers, exchanges, custodians, or financial services.
-    </p>
+    <section id="educational-purpose" aria-label="Educational purpose">
+      <h2>2. Educational Purpose</h2>
+      <p>
+        XPGuess and related NTG systems are educational and governance-focused platforms.
+        They do not operate as brokers, exchanges, custodians, or financial services.
+      </p>
+      <p>
+        This infrastructure exists to support understanding, documentation,
+        and responsible decision-making across sports environments.
+      </p>
+    </section>
 
-    <p>
-      This infrastructure exists to support understanding, documentation,
-      and responsible decision-making across sports environments.
-    </p>
+    <hr>
 
-    <h2 id="closed-systems-problem">The Problem With Closed Analytics Systems</h2>
+    <section id="closed-systems-problem" aria-label="The problem with closed analytics systems">
+      <h2>3. The Problem With Closed Analytics Systems</h2>
+      <p>
+        Many analytics platforms combine data capture, analysis, and decision logic
+        into a single closed ecosystem.
+      </p>
+      <p>
+        While convenient in the short term, this creates long-term risks:
+      </p>
+      <ul>
+        <li>Loss of raw data ownership</li>
+        <li>Vendor lock-in</li>
+        <li>Opaque or unverifiable models</li>
+        <li>Limited portability across teams or leagues</li>
+      </ul>
+    </section>
 
-    <p>
-      Many analytics platforms combine data capture, analysis, and decision logic
-      into a single closed ecosystem.
-    </p>
+    <hr>
 
-    <p>
-      While convenient in the short term, this creates long-term risks:
-    </p>
+    <section id="different-foundation" aria-label="A different foundation">
+      <h2>4. A Different Foundation</h2>
+      <p>
+        The XPGuess approach separates infrastructure from interpretation.
+        Organizations retain control over raw inputs while enabling analytics
+        through governed access.
+      </p>
+    </section>
 
-    <ul>
-      <li>Loss of raw data ownership</li>
-      <li>Vendor lock-in</li>
-      <li>Opaque or unverifiable models</li>
-      <li>Limited portability across teams or leagues</li>
-    </ul>
+    <hr>
 
-    <h2 id="different-foundation">A Different Foundation</h2>
+    <section id="how-architecture-works" aria-label="How the architecture works">
+      <h2>5. How the Architecture Works</h2>
 
-    <p>
-      The XPGuess approach separates infrastructure from interpretation.
-      Organizations retain control over raw inputs while enabling analytics
-      through governed access.
-    </p>
+      <h3 id="raw-data-protected">1) Raw Data Is Protected by Design</h3>
+      <p>
+        Original data is stored in a restricted layer:
+      </p>
+      <ul>
+        <li>No public access</li>
+        <li>No direct user browsing</li>
+        <li>Write access limited to trusted services</li>
+      </ul>
+      <p>
+        Raw data is treated as protected source material — not a commodity.
+      </p>
 
-    <h2 id="how-architecture-works">How the Architecture Works</h2>
+      <h3 id="access-through-translation">2) Access Happens Through Translation</h3>
+      <p>
+        Instead of exposing raw files, access occurs through governed translation:
+      </p>
+      <ul>
+        <li>Short-lived, permissioned access</li>
+        <li>Role- and context-aware controls</li>
+        <li>Logged and auditable events</li>
+        <li>Sanitized outputs only</li>
+      </ul>
 
-    <h3 id="raw-data-protected">1) Raw Data Is Protected by Design</h3>
+      <h3 id="analytics-without-lockin">3) Analytics Without Lock-In</h3>
+      <p>
+        Data can be normalized into vendor-neutral formats that support:
+      </p>
+      <ul>
+        <li>Event-based analysis</li>
+        <li>Performance tracking</li>
+        <li>Longitudinal development records</li>
+        <li>Cross-sport comparison</li>
+      </ul>
+      <p>
+        Organizations are never forced into a single analytics vendor.
+      </p>
+    </section>
 
-    <p>
-      Original data is stored in a restricted layer:
-    </p>
+    <hr>
 
-    <ul>
-      <li>No public access</li>
-      <li>No direct user browsing</li>
-      <li>Write access limited to trusted services</li>
-    </ul>
+    <section id="who-this-serves" aria-label="Who this serves">
+      <h2>6. Who This Serves</h2>
+      <ul>
+        <li>Clubs and academies</li>
+        <li>Athlete development programs</li>
+        <li>Analysts and researchers</li>
+        <li>Federations and governing bodies</li>
+        <li>Education-first sports initiatives</li>
+      </ul>
+    </section>
 
-    <p>
-      Raw data is treated as protected source material — not a commodity.
-    </p>
+    <hr>
 
-    <h3 id="access-through-translation">2) Access Happens Through Translation</h3>
-
-    <p>
-      Instead of exposing raw files, access occurs through governed translation:
-    </p>
-
-    <ul>
-      <li>Short-lived, permissioned access</li>
-      <li>Role- and context-aware controls</li>
-      <li>Logged and auditable events</li>
-      <li>Sanitized outputs only</li>
-    </ul>
-
-    <h3 id="analytics-without-lockin">3) Analytics Without Lock-In</h3>
-
-    <p>
-      Data can be normalized into vendor-neutral formats that support:
-    </p>
-
-    <ul>
-      <li>Event-based analysis</li>
-      <li>Performance tracking</li>
-      <li>Longitudinal development records</li>
-      <li>Cross-sport comparison</li>
-    </ul>
-
-    <p>
-      Organizations are never forced into a single analytics vendor.
-    </p>
-
-    <h2 id="who-this-serves">Who This Serves</h2>
-
-    <ul>
-      <li>Clubs and academies</li>
-      <li>Athlete development programs</li>
-      <li>Analysts and researchers</li>
-      <li>Federations and governing bodies</li>
-      <li>Education-first sports initiatives</li>
-    </ul>
-
-    <h2 id="why-this-matters">Why This Matters</h2>
-
-    <p>
-      Secure, governed infrastructure protects athletes, reduces risk,
-      and enables responsible collaboration without sacrificing data control.
-    </p>
-
-    <p>
-      This approach supports transparency, auditability,
-      and long-term trust across sports systems.
-    </p>
+    <section id="why-this-matters" aria-label="Why this matters">
+      <h2>7. Why This Matters</h2>
+      <p>
+        Secure, governed infrastructure protects athletes, reduces risk,
+        and enables responsible collaboration without sacrificing data control.
+      </p>
+      <p>
+        This approach supports transparency, auditability,
+        and long-term trust across sports systems.
+      </p>
+      <p class="callout-dark"><strong>Governed data enables durable decisions — without locking athletes into closed systems.</strong></p>
+    </section>
 
     <hr style="margin-top:32px;">
 
-    <h2 id="continue-learning">Continue Learning</h2>
-
+    <!-- CONTINUE LEARNING -->
+    <h2 id="continue-learning">8. Continue Learning</h2>
     <nav aria-label="Learn pages">
       <ul style="padding-left:18px; line-height:1.6;">
         <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
@@ -242,8 +309,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -251,8 +318,8 @@
       <a href="https://xpguess.com">Go to the XPGuess App</a>
     </p>
 
-    <h2 id="compliance">Compliance Notice</h2>
-
+    <!-- COMPLIANCE -->
+    <h2 id="compliance">9. Compliance Notice</h2>
     <p>
       XPGuess is an educational platform. It does not provide medical services,
       act as a healthcare provider, or replace professional care.
@@ -260,20 +327,13 @@
       reflection, and athlete protection.
     </p>
 
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         Place near bottom of Learn pages, before final <hr>
-         ========================================================= -->
-
+    <!-- TERMINOLOGY & PROVENANCE -->
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
-
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
-        Terminology, Frameworks, and Foundational Work
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
+        10. Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
         <strong>educational decision-learning construct</strong> used to explore how
@@ -289,7 +349,6 @@
         repeatability, transparency, and reviewable progress rather than subjective opinion.
       </p>
 
-      <!-- Provenance -->
       <p style="margin:0 0 12px 0;">
         The conceptual foundations behind XPGuess and NTG derive from earlier technical work
         by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
@@ -305,9 +364,7 @@
         mechanical laws rather than coaching intuition alone.
         For historical context and transparency, the original reference image is available here:
         <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the original reference image (opens in a new tab)
         </a>.
       </p>
@@ -317,20 +374,21 @@
         <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
         structured learning, physical preparation, and development principles:
         <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the publication on Amazon (opens in a new tab)
         </a>.
       </p>
-
     </section>
 
-    <p style="margin-top:28px;">
-      <a href="#top">Back to top</a>
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
     </p>
 
+    <p style="margin-top:18px;">
+      <a href="#top">Back to top</a>
+    </p>
   </main>
-
 </body>
 </html>
