@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Football Transfer System Explained", "item": "https://learn.xpguess.com/football-transfer-system.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -22,7 +10,72 @@
   <!-- Step 1: Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/football-transfer-system.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Learn Base Template Styles (scoped + hardened) -->
+  <style>
+    :root { color-scheme: light; }
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0;
+      color:#111;
+    }
+    main{
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+      color:#222;
+      line-height:1.6;
+    }
+    .callout-dark{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#0b1220;
+      border-radius:8px;
+      color:#fff;
+      line-height:1.6;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; line-height:1.7; }
+    .footer-note{ font-size:12px; color:#777; margin:0; }
+  </style>
+
+  <!-- Step 2A: Breadcrumb Schema (single, correct) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Football Transfer System Explained", "item": "https://learn.xpguess.com/football-transfer-system.html" }
+    ]
+  }
+  </script>
+
+  <!-- Step 2B: Article Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -57,19 +110,20 @@
       "Transfermarkt limitations",
       "Governance and eligibility rules"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
+    <!-- Logo (root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -77,12 +131,24 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">The Football Transfer System</h1>
+    <!-- Header (template standard) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Governance • Player Mobility</p>
+      <h1>The Football Transfer System</h1>
+      <p class="lede">
+        A governance-first reference for how transfers and registrations actually work — what public databases can and cannot prove,
+        how windows constrain eligibility, and how development-linked mechanisms connect to player history.
+      </p>
+      <p class="callout">
+        <strong>Educational only:</strong> XPGuess does not involve money, wagering, prizes, equity, or financial outcomes.
+        XP is a non-cash learning signal used only for participation and learning progress.
+      </p>
+    </header>
 
     <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
         <li><a href="#overview">Overview</a></li>
         <li><a href="#educational-purpose">Educational purpose (not gambling)</a></li>
         <li><a href="#transfer-vs-registration-vs-transfermarkt">Transfer vs registration vs Transfermarkt</a></li>
@@ -98,9 +164,11 @@
         <li><a href="#governed-records">How governed records reduce bias</a></li>
         <li><a href="#continue-learning">Continue learning</a></li>
         <li><a href="#compliance">Compliance notice</a></li>
-        <li><a href="#provenance">Foundational work &amp; historical context</a></li>
+        <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
+
+    <hr>
 
     <section id="overview" aria-label="Overview">
       <p>
@@ -108,7 +176,6 @@
         Unlike draft-based leagues, football operates under <strong>registration</strong>, <strong>contract</strong>, and
         <strong>governing-body eligibility rules</strong> that determine when and how an athlete may move—and when they can actually play.
       </p>
-
       <p>
         This page is designed to be a <strong>governance-first reference</strong> for how transfers work:
         what public databases can and cannot prove, how loans differ from permanent transfers, how underage mobility is constrained,
@@ -116,14 +183,15 @@
       </p>
     </section>
 
-    <h2 id="educational-purpose">Educational Purpose (Not Gambling)</h2>
+    <hr>
 
+    <h2 id="educational-purpose">Educational Purpose (Not Gambling)</h2>
     <p>
       XPGuess is an educational platform. It does not involve money, wagering, prizes, equity,
       or financial outcomes. XP is used only to track learning progress and participation.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="transfer-vs-registration-vs-transfermarkt">Critical Distinction: “Transfer” vs “Registration” vs “Transfermarkt”</h2>
 
@@ -148,7 +216,7 @@
       Final proof is the federation/league registration record and the signed documents supporting the athlete’s status.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="why-confusing">Why the Transfer System Is Often Confusing</h2>
 
@@ -168,7 +236,7 @@
       Governed records reduce rumor-driven decisions by making the athlete’s timeline reviewable.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="transfer-windows">Transfer Windows (What “The Window” Really Means)</h2>
 
@@ -178,7 +246,6 @@
     </p>
 
     <h3 id="primary-windows">The Two Primary Windows</h3>
-
     <ul>
       <li><strong>Summer window</strong> (primary): usually the most active due to season transitions and contract expirations.</li>
       <li><strong>Winter/January window</strong> (mid-season): typically shorter and more tactical, used to address injuries and roster gaps.</li>
@@ -188,29 +255,25 @@
       Note: exact dates and constraints vary by country, federation, and league. The concept stays consistent: it is about when registration changes are allowed.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="transfer-types">Transfer Types (What They Actually Mean)</h2>
 
     <h3 id="permanent-transfer">1) Permanent Transfer (Club-to-Club)</h3>
-
     <p>
       A permanent transfer is when a player’s registration and typically their contract rights move to a new club on an ongoing basis.
       This can occur with a <strong>transfer fee</strong> or as a <strong>free transfer</strong>.
     </p>
-
     <ul>
       <li><strong>With a transfer fee:</strong> buying club pays an agreed fee to the selling club (potentially with add-ons or sell-on clauses).</li>
       <li><strong>Free transfer:</strong> player moves after contract expiry, or the prior club releases the player without receiving a fee.</li>
     </ul>
 
     <h3 id="loan">2) Loan (Temporary Registration)</h3>
-
     <p>
       A loan is a <strong>temporary registration</strong> with another club for a defined period. The player remains contracted to the parent club
       but is registered to play for the loan club during the loan term.
     </p>
-
     <ul>
       <li><strong>Loan fee:</strong> sometimes the loaning club pays a fee to borrow the player.</li>
       <li><strong>Wage split:</strong> parent club and loan club may split salary responsibilities.</li>
@@ -218,96 +281,74 @@
     </ul>
 
     <h3 id="independent-movement">3) Independent Movement (Not Club-to-Club)</h3>
-
     <p>
       This refers to movement where a club did not “sell” the player:
     </p>
-
     <ul>
       <li><strong>Released / contract terminated:</strong> player becomes free to sign elsewhere (subject to rules and timing).</li>
       <li><strong>Free agent signing:</strong> player signs with a new club without a transfer fee paid to the prior club.</li>
       <li><strong>Academy exit / amateur movement:</strong> player changes registration status within domestic youth/amateur frameworks.</li>
     </ul>
-
     <p>
       Even without a transfer fee, development-linked payments may still apply in some cases (see solidarity and training compensation),
       depending on the player’s status, age, and whether the move is international.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="unattached">Unattached Players (Free Agents)</h2>
-
     <p>
       An unattached player is not currently under contract. This status is frequently misunderstood.
       Being unattached does <strong>not</strong> automatically indicate lack of ability, lack of discipline, or career failure.
     </p>
-
     <p>
       In many cases, it reflects timing, eligibility transitions, or administrative gaps.
       Governed training and participation records help clarify reality when the athlete is between registrations.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="underage">Underage Players: How Can a Minor Be “Transferred”?</h2>
-
     <p>
       Underage mobility is one of the most sensitive areas in football governance.
       The strictest restrictions generally apply to <strong>international movement</strong> (country-to-country).
       Domestic movement (within one country) is governed by that country’s federation rules and youth registration systems.
     </p>
-
     <ul>
       <li><strong>Domestic movement:</strong> can occur through domestic youth/amateur rules, academy registration changes, and local eligibility systems.</li>
       <li><strong>International movement:</strong> is heavily restricted for minors and requires formal compliance processes. Public listings are not proof.</li>
     </ul>
 
     <h3 id="school-vs-club">School Transfer vs Club Transfer</h3>
-
     <p>
       A <strong>school transfer</strong> is an educational enrollment change. A <strong>club transfer</strong> is a football registration and/or contract change.
       They can happen together, but they are not the same—and confusing the two is a common cause of eligibility problems.
     </p>
-
     <ul>
       <li><strong>School transfer:</strong> governed by education authorities/school associations.</li>
       <li><strong>Club registration:</strong> governed by the football association/league rules.</li>
       <li><strong>Eligibility risk:</strong> a player can be enrolled but not properly registered for competition, or vice versa.</li>
     </ul>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="affiliates">Affiliates, “B Teams,” Academy Sides, and Internal Movement</h2>
-
     <p>
       Confusion often comes from club groups that have multiple squads (first team, reserve, U-19, U-17) or multi-club ownership groups.
       Not all “internal movement” is a transfer with a fee.
     </p>
-
     <ul>
-      <li>
-        <strong>Same legal club entity (academy → reserve → first team):</strong>
-        often a change in squad designation and registration category inside the same club identity, not a sale to another club.
-      </li>
-      <li>
-        <strong>Different clubs under common ownership:</strong>
-        can still be a real loan or transfer between separate club entities. Registration paperwork still governs eligibility.
-      </li>
-      <li>
-        <strong>Not actually affiliated:</strong>
-        if two teams are not the same legal club entity, movement is a club-to-club event (loan or permanent) even if described casually as “the same system.”
-      </li>
+      <li><strong>Same legal club entity (academy → reserve → first team):</strong> often a change in squad designation and registration category inside the same club identity, not a sale to another club.</li>
+      <li><strong>Different clubs under common ownership:</strong> can still be a real loan or transfer between separate club entities. Registration paperwork still governs eligibility.</li>
+      <li><strong>Not actually affiliated:</strong> if two teams are not the same legal club entity, movement is a club-to-club event (loan or permanent) even if described casually as “the same system.”</li>
     </ul>
-
     <p>
       Credibility improves when you label which case applies: <strong>same legal club</strong> vs <strong>separate clubs</strong>.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="who-gets-paid">Who Gets the Money When a Player Transfers?</h2>
-
     <p>
       There are multiple distinct “money streams.” Mixing them up is a common credibility failure:
     </p>
@@ -323,7 +364,6 @@
       In many professional transfers for compensation, a <strong>5% solidarity contribution</strong> is withheld from the transfer compensation and distributed to clubs that trained the player
       between ages <strong>12 and 23</strong>, proportional to training years.
     </p>
-
     <p>
       Compliance-safe label: <strong>the solidarity contribution (5%)</strong>—linked to training history, not school tuition.
     </p>
@@ -342,63 +382,53 @@
       These are compliance-controlled and jurisdiction-specific.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="failure-modes">“Registered but Not Registered”: The Real-World Failure Mode</h2>
-
     <p>
       A common operational problem is that a player is “registered” in one place but not another:
     </p>
-
     <ul>
       <li><strong>Club believes paperwork is complete</strong>, but league/federation registration is incomplete → player is not match-eligible.</li>
       <li><strong>Player appears publicly</strong> (database/news) but is not officially registered → families are misled.</li>
       <li><strong>School enrollment</strong> is completed but sport eligibility rules are violated → player loses competition rights.</li>
     </ul>
-
     <p>
       Athlete-protection rule of thumb:
       <strong>do not treat a player as transferred/eligible until federation registration confirmation exists</strong>
       (and where cross-border applies, the proper clearance trail exists).
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="transfermarkt-means">What “Transfermarkt Admission” Usually Means</h2>
-
     <p>
       When people say “he got admitted to Transfermarkt,” they typically mean:
     </p>
-
     <ul>
       <li>A player profile was created, or</li>
       <li>The player’s club history was updated (loan/permanent), or</li>
       <li>The player appeared because official matches were logged in competitions covered by the platform.</li>
     </ul>
-
     <p>
       Therefore: <strong>Transfermarkt presence is evidence of public tracking, not legal registration</strong>.
       For governance, it is a <strong>signal</strong>, not a compliance artifact.
     </p>
 
-    <hr style="margin:28px 0;">
+    <hr>
 
     <h2 id="governed-records">How Governed Records Reduce Bias</h2>
-
     <p>
       Bias tends to enter the system when:
     </p>
-
     <ul>
       <li>An athlete is unattached during a window</li>
       <li>There is no documented development record</li>
       <li>Decisions rely on rumor instead of evidence</li>
     </ul>
-
     <p>
       Governed records reduce confusion by making progress reviewable:
     </p>
-
     <ul>
       <li>Unattached does not mean undocumented</li>
       <li>Progress exists before windows open</li>
@@ -406,15 +436,15 @@
       <li>Families gain clarity and protection</li>
     </ul>
 
-    <p style="font-size:13px; color:#555; margin-top:16px;">
-      <strong>Note:</strong> This page is educational and compliance-oriented. It is not legal advice.
-      Rules can vary by federation/league and by the player’s status (amateur/professional) and facts (domestic vs international).
+    <p class="callout-dark" style="margin-top:18px;">
+      <strong>Reminder:</strong> This page is educational and compliance-oriented. It is not legal advice.
+      Rules vary by federation/league and by player status and facts.
     </p>
 
     <hr style="margin-top:32px;">
 
     <h2 id="continue-learning">Continue Learning</h2>
-
+    <nav aria-label="Learn pages">
       <ul style="padding-left:18px; line-height:1.6;">
         <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
         <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
@@ -427,93 +457,86 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
+    </nav>
 
     <p style="margin-top:32px;">
       <a href="https://xpguess.com">Go to the XPGuess App</a>
     </p>
 
     <h2 id="compliance">Compliance Notice</h2>
-
     <p>
       XPGuess is an educational platform. It does not provide medical services,
       act as a healthcare provider, or replace professional care.
       All fitness and support tools exist for training documentation,
       reflection, and athlete protection.
     </p>
-<!-- =========================================================
-     Terminology & Provenance (SEO + Compliance Safe)
-     Place near bottom of Learn pages, before final <hr>
-     ========================================================= -->
 
-<section aria-labelledby="terminology-provenance"
-         style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+    <section aria-labelledby="terminology-provenance"
+             style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
-  <h3 id="terminology-provenance"
-      style="font-size:16px; margin:0 0 12px 0;">
-    Terminology, Frameworks, and Foundational Work
-  </h3>
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
+        Terminology, Frameworks, and Foundational Work
+      </h3>
 
-  <!-- Terminology -->
-  <p style="margin:0 0 12px 0;">
-    <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
-    <strong>educational decision-learning construct</strong> used to explore how
-    athletic outcomes, development paths, and professional decisions unfold over time.
-    The term refers to structured learning through verified scenarios and governed data,
-    not speculation, gambling, or prediction for financial gain.
-  </p>
+      <p style="margin:0 0 12px 0;">
+        <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
+        <strong>educational decision-learning construct</strong> used to explore how
+        athletic outcomes, development paths, and professional decisions unfold over time.
+        The term refers to structured learning through verified scenarios and governed data,
+        not speculation, gambling, or prediction for financial gain.
+      </p>
 
-  <p style="margin:0 0 12px 0;">
-    <strong>Natural Technical Governance (NTG)</strong> refers to a standards-based
-    framework for documenting training, participation, and technical development using
-    first principles (e.g., mechanics, continuity, and structure). NTG emphasizes
-    repeatability, transparency, and reviewable progress rather than subjective opinion.
-  </p>
+      <p style="margin:0 0 12px 0;">
+        <strong>Natural Technical Governance (NTG)</strong> refers to a standards-based
+        framework for documenting training, participation, and technical development using
+        first principles (e.g., mechanics, continuity, and structure). NTG emphasizes
+        repeatability, transparency, and reviewable progress rather than subjective opinion.
+      </p>
 
-  <!-- Provenance -->
-  <p style="margin:0 0 12px 0;">
-    The conceptual foundations behind XPGuess and NTG derive from earlier technical work
-    by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
-    biomechanical fundamentals, and predictable career progression through structured
-    learning constructs.
-  </p>
+      <p style="margin:0 0 12px 0;">
+        The conceptual foundations behind XPGuess and NTG derive from earlier technical work
+        by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
+        biomechanical fundamentals, and predictable career progression through structured
+        learning constructs.
+      </p>
 
-  <p style="margin:0 0 12px 0;">
-    A key foundational reference is the article
-    <em>“Beginning and Staying with the Basics: Building from the Ground Up”</em>,
-    written by Michael A. Piña for a <em>Technique</em> gymnastics publication.
-    This work emphasized breaking skills into elementary components governed by
-    mechanical laws rather than coaching intuition alone.
-    For historical context and transparency, the original reference image is available here:
-    <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
-       target="_blank"
-       rel="noopener noreferrer"
-       style="text-decoration:underline;">
-      View the original reference image (opens in a new tab)
-    </a>.
-  </p>
+      <p style="margin:0 0 12px 0;">
+        A key foundational reference is the article
+        <em>“Beginning and Staying with the Basics: Building from the Ground Up”</em>,
+        written by Michael A. Piña for a <em>Technique</em> gymnastics publication.
+        This work emphasized breaking skills into elementary components governed by
+        mechanical laws rather than coaching intuition alone.
+        For historical context and transparency, the original reference image is available here:
+        <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
+           target="_blank" rel="noopener noreferrer">
+          View the original reference image (opens in a new tab)
+        </a>.
+      </p>
 
-  <p style="margin:0;">
-    Additional published work by Michael A. Piña includes
-    <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
-    structured learning, physical preparation, and development principles:
-    <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
-       target="_blank"
-       rel="noopener noreferrer"
-       style="text-decoration:underline;">
-      View the publication on Amazon (opens in a new tab)
-    </a>.
-  </p>
+      <p style="margin:0;">
+        Additional published work by Michael A. Piña includes
+        <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
+        structured learning, physical preparation, and development principles:
+        <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
+           target="_blank" rel="noopener noreferrer">
+          View the publication on Amazon (opens in a new tab)
+        </a>.
+      </p>
+    </section>
 
-</section>
+    <hr style="margin-top:32px;">
 
-    <p style="margin-top:28px;">
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
+    </p>
+
+    <p style="margin-top:18px;">
       <a href="#top">Back to top</a>
     </p>
 
   </main>
-
 </body>
 </html>
