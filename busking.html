@@ -1,28 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Busking & Informal Performance Paths", "item": "https://learn.xpguess.com/busking.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Busking & Informal Performance Paths | XPGuess Learn</title>
+  <title>Busking &amp; Informal Performance Paths | XPGuess Learn</title>
   <meta name="description" content="An educational overview of busking and informal performance pathways, how visibility and opportunity emerge outside formal systems, and why governance-first documentation matters. Not gambling." />
 
   <!-- Step 1: Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/busking.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Learn Base Template Styles (scoped + hardened) -->
+  <style>
+    :root { color-scheme: light; }
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0;
+      color:#111;
+    }
+    main{
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+      color:#222;
+      line-height:1.6;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; line-height:1.7; }
+    .card{
+      margin:16px 0;
+      padding:16px;
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+    }
+    .card-title{ font-weight:700; margin-bottom:8px; }
+    .footer-note{ font-size:12px; color:#777; margin:0; }
+  </style>
+
+  <!-- Step 2A: Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Busking & Informal Performance Paths", "item": "https://learn.xpguess.com/busking.html" }
+    ]
+  }
+  </script>
+
+  <!-- Step 2B: Article Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -51,19 +104,20 @@
       "Athlete and talent protection",
       "Non-cash XP learning signals"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
+    <!-- Logo (root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -71,23 +125,25 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">Busking & Informal Performance Paths</h1>
+    <!-- Header (template standard) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Governance-First Documentation • Educational Only</p>
+      <h1>Busking &amp; Informal Performance Paths</h1>
+      <p class="lede">
+        Many athletes and performers develop skills and earn visibility outside formal pipelines — in public spaces,
+        community circuits, independent training groups, and self-organized showcases. This page explains why informal
+        paths matter and where governance and safety boundaries protect people when structure is missing.
+      </p>
+      <p class="callout">
+        <strong>Educational only:</strong> XPGuess does not involve money, wagering, prizes, equity, or financial outcomes.
+        XP is a non-cash learning signal used to document participation and learning progress.
+      </p>
+    </header>
 
-    <p>
-      In many sports and performance economies, people develop skills and earn visibility outside formal pipelines.
-      This includes informal training environments, street performance (“busking”), community competition, and
-      self-organized showcases.
-    </p>
-
-    <p>
-      This page is an educational overview of why informal paths matter — and why governance, documentation, and
-      safety boundaries are critical when visibility emerges outside structured systems.
-    </p>
-
-    <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+    <!-- On this page -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
         <li><a href="#meaning">What “busking” means in a development context</a></li>
         <li><a href="#risk">Why informal paths are high-impact — and high-risk</a></li>
         <li><a href="#adds">What XPGuess adds (educational, non-cash)</a></li>
@@ -97,7 +153,9 @@
         <li><a href="#compliance">Compliance notice</a></li>
         <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
+
+    <hr>
 
     <h2 id="meaning">What “Busking” Means in a Development Context</h2>
 
@@ -112,10 +170,21 @@
       fact that opportunity often appears before formal recognition.
     </p>
 
+    <div class="card" role="note" aria-label="Why this matters">
+      <div class="card-title">Why this matters</div>
+      <p style="margin:0;">
+        Informal work can create real skill and real visibility — but without governed documentation, the participant is
+        often judged by rumor, timing, or someone else’s narrative instead of a reviewable record.
+      </p>
+    </div>
+
+    <hr>
+
     <h2 id="risk">Why Informal Paths Are High-Impact — and High-Risk</h2>
 
     <p>
-      Informal environments can create rapid visibility, but they often lack:
+      Informal environments can produce rapid visibility, but they often lack the guardrails that formal systems (ideally)
+      provide:
     </p>
 
     <ul>
@@ -127,21 +196,35 @@
 
     <p>
       Without structure, capable participants can be overlooked, misrepresented, or extracted from without fair credit.
-      The issue is rarely talent — the issue is an absence of verified continuity.
+      The issue is rarely talent — the issue is an absence of verified continuity and enforceable boundaries.
     </p>
+
+    <hr>
 
     <h2 id="adds">What XPGuess Adds (Educational, Non-Cash)</h2>
 
     <p>
-      XPGuess is designed to support governance-first learning and documentation.
-      XP (Experience Points) is an educational metric that tracks participation, consistency, and decision discipline.
-      XP is not money, not redeemable, and not tied to wagering.
+      XPGuess supports governance-first learning and documentation. XP (Experience Points) is an educational metric that
+      tracks completion of defined learning actions and structured workflows. XP is not money, not redeemable, and not tied
+      to wagering.
     </p>
 
     <p>
-      In informal pathways, documentation matters because it creates continuity that does not rely on rumor,
-      timing pressure, or status-based assumptions.
+      In informal pathways, documentation matters because it creates continuity that does not rely on rumor, timing pressure,
+      or status-based assumptions. A governed record can show what happened, when it happened, and how progress was built.
     </p>
+
+    <div class="card">
+      <div class="card-title">What “documentation” means here</div>
+      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+        <li>Structured participation logs (non-medical)</li>
+        <li>Attributable identity and timeline clarity</li>
+        <li>Evidence-backed claims (not hype)</li>
+        <li>Safer boundaries around consent and use</li>
+      </ul>
+    </div>
+
+    <hr>
 
     <h2 id="domains">Why This Matters Across Sports and Performance Domains</h2>
 
@@ -157,9 +240,11 @@
     </ul>
 
     <p>
-      When progress is documented and explained in a governed way, decision-making becomes reviewable rather than
-      speculative — and participants are less vulnerable to exploitation or mislabeling.
+      When progress is documented and explained in a governed way, decision-making becomes reviewable rather than speculative —
+      and participants are less vulnerable to exploitation, mislabeling, or credit loss.
     </p>
+
+    <hr>
 
     <h2 id="safety">Compliance &amp; Safety Boundary</h2>
 
@@ -185,8 +270,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -203,20 +288,13 @@
       reflection, and athlete protection.
     </p>
 
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         Place near bottom of Learn pages, before final <hr>
-         ========================================================= -->
-
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
         Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
         <strong>educational decision-learning construct</strong> used to explore how
@@ -232,7 +310,6 @@
         repeatability, transparency, and reviewable progress rather than subjective opinion.
       </p>
 
-      <!-- Provenance -->
       <p style="margin:0 0 12px 0;">
         The conceptual foundations behind XPGuess and NTG derive from earlier technical work
         by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
@@ -244,36 +321,35 @@
         A key foundational reference is the article
         <em>“Beginning and Staying with the Basics: Building from the Ground Up”</em>,
         written by Michael A. Piña for a <em>Technique</em> gymnastics publication.
-        This work emphasized breaking skills into elementary components governed by
-        mechanical laws rather than coaching intuition alone.
         For historical context and transparency, the original reference image is available here:
         <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
            target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           rel="noopener noreferrer">
           View the original reference image (opens in a new tab)
         </a>.
       </p>
 
       <p style="margin:0;">
         Additional published work by Michael A. Piña includes
-        <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
-        structured learning, physical preparation, and development principles:
+        <em>Coach Teaches Animals: Gymnastics Stretching</em>:
         <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
            target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           rel="noopener noreferrer">
           View the publication on Amazon (opens in a new tab)
         </a>.
       </p>
-
     </section>
 
-    <p style="margin-top:28px;">
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
+    </p>
+
+    <p style="margin-top:18px;">
       <a href="#top">Back to top</a>
     </p>
 
   </main>
-
 </body>
 </html>
