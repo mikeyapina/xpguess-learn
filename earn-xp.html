@@ -1,30 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "How XP Is Earned on XPGuess", "item": "https://learn.xpguess.com/earn-xp.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>How XP Is Earned on XPGuess | Educational Sports Platform</title>
-
-  <!-- UPDATED meta description to match the new definition -->
   <meta name="description" content="Learn how XP is earned on XPGuess through governed educational decision flows and verified learning actions. XP records progression through rules, timing, and outcomes—not money, performance, or behavior scoring." />
 
   <!-- Step 1: Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/earn-xp.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Learn Base Template Styles (scoped + hardened) -->
+  <style>
+    :root { color-scheme: light; }
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0;
+      color:#111;
+    }
+    main{
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+      color:#222;
+      line-height:1.6;
+    }
+    .callout-dark{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#0b1220;
+      border-radius:8px;
+      color:#fff;
+      line-height:1.6;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; line-height:1.7; }
+    .card{
+      margin:16px 0;
+      padding:16px;
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+    }
+    .card-title{ font-weight:700; margin-bottom:8px; }
+    .footer-note{ font-size:12px; color:#777; margin:0; }
+  </style>
+
+  <!-- Step 2A: Breadcrumb Schema (single, correct) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "How XP Is Earned on XPGuess", "item": "https://learn.xpguess.com/earn-xp.html" }
+    ]
+  }
+  </script>
+
+  <!-- Step 2B: Article Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,19 +114,20 @@
       "Training logs (non-medical)",
       "Profile completion and documentation"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
+    <!-- Logo (root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -75,36 +135,36 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">How XP Is Earned on XPGuess</h1>
+    <!-- Header (template standard) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Educational Ledger • Governed Decision Flows</p>
+      <h1>How XP Is Earned on XPGuess</h1>
+      <p class="lede">
+        XP is a governed educational ledger that records completed learning actions and decision flows.
+        It documents exposure to rules, timing constraints, and verified outcome paths — not money, performance, or personal “discipline scoring.”
+      </p>
+      <p class="callout">
+        <strong>Educational only:</strong> XPGuess does not involve money, wagering, prizes, equity, or financial outcomes.
+        XP is a non-cash learning signal used only for participation and learning progress.
+      </p>
+    </header>
 
-    <!-- UPDATED intro to remove legacy framing -->
-    <p>
-      XP on XPGuess is <strong>not</strong> money, not a prize, and not a “discipline score.”
-      XP is a <strong>governed educational ledger</strong> that records completed learning actions
-      and decision flows that exist in real sports systems.
-    </p>
-
-    <p>
-      XP exists to document exposure to <strong>rules</strong>, <strong>timing constraints</strong>, and
-      <strong>verified resolution paths</strong>—so participants learn how official outcomes are actually determined
-      (and how confusion happens when verification is missing).
-    </p>
-
-    <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+    <!-- On this page -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
         <li><a href="#represents">What XP represents</a></li>
         <li><a href="#earned">How XP is earned</a></li>
-        <li><a href="#paths">XP Paths (quick examples)</a></li>
+        <li><a href="#paths">XP paths (quick examples)</a></li>
         <li><a href="#not">What XP is not</a></li>
         <li><a href="#continue-learning">Continue learning</a></li>
         <li><a href="#compliance">Compliance notice</a></li>
         <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
 
-    <!-- UPDATED section -->
+    <hr>
+
     <h2 id="represents">What XP Represents</h2>
 
     <p>
@@ -118,14 +178,15 @@
       not how “good” someone is, how hard they tried, or whether they will succeed.
     </p>
 
-    <div style="margin:16px 0; padding:14px; border:1px solid #eee; border-radius:10px; background:#fcfcfc;">
-      <div style="font-weight:700; margin-bottom:6px;">Quick idea (kid-friendly, still true):</div>
+    <div class="card" role="note" aria-label="Quick idea">
+      <div class="card-title">Quick idea (kid-friendly, still true):</div>
       <p style="margin:0;">
         XP is your <strong>proof trail</strong>: “I did the learning action, I followed the flow, and I can show it.”
       </p>
     </div>
 
-    <!-- UPDATED section -->
+    <hr>
+
     <h2 id="earned">How XP Is Earned</h2>
 
     <p>
@@ -135,24 +196,12 @@
     </p>
 
     <ul>
-      <li>
-        <strong>Completing rule-based questions</strong> (yes/no learning prompts) tied to governance logic
-      </li>
-      <li>
-        <strong>Stepping through decision flows</strong> that include timing windows and eligibility constraints
-      </li>
-      <li>
-        <strong>Reaching verified resolution</strong> using official confirmation paths (not rumor or narrative)
-      </li>
-      <li>
-        <strong>Logging training sessions</strong> — including <strong>coach-led instruction</strong> — to document continuity over time
-      </li>
-      <li>
-        <strong>Completing your profile</strong> so your record is attributable, organized, and reviewable
-      </li>
-      <li>
-        <strong>Participating in fitness, wellness, and support routines</strong> (non-clinical) as structured documentation workflows
-      </li>
+      <li><strong>Completing rule-based questions</strong> (yes/no learning prompts) tied to governance logic</li>
+      <li><strong>Stepping through decision flows</strong> that include timing windows and eligibility constraints</li>
+      <li><strong>Reaching verified resolution</strong> using official confirmation paths (not rumor or narrative)</li>
+      <li><strong>Logging training sessions</strong> — including <strong>coach-led instruction</strong> — to document continuity over time</li>
+      <li><strong>Completing your profile</strong> so your record is attributable, organized, and reviewable</li>
+      <li><strong>Participating in fitness, wellness, and support routines</strong> (non-clinical) as structured documentation workflows</li>
       <li>
         <strong>Minting items in the XP Store</strong> as an <strong>in-app educational tracking action</strong>
         (this is not a cash transaction and not a financial product)
@@ -164,16 +213,17 @@
       XP is tied to <strong>completing defined actions</strong> that create a reviewable learning record.
     </p>
 
-    <!-- NEW: kid-interest section without hype -->
+    <hr>
+
     <h2 id="paths">XP Paths (Quick Examples)</h2>
 
     <p>
-      If the usual “platform explanation” feels boring, use this: XP is earned by completing <strong>missions</strong>
-      that teach you how real sports systems work and help you build a record you can show later.
+      XP is earned by completing <strong>missions</strong> that teach you how real sports systems work and help you build a record you can show later.
+      These examples are simplified, but the goal is always the same: a clean, reviewable proof trail.
     </p>
 
-    <div style="margin:16px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:10px;">
-      <div style="font-weight:700; margin-bottom:8px;">Mission 1: Become Window-Smart</div>
+    <div class="card">
+      <div class="card-title">Mission 1: Become Window-Smart</div>
       <ul style="margin:0; padding-left:18px; line-height:1.7;">
         <li>Answer a transfer/eligibility question</li>
         <li>Complete a timing-window decision flow</li>
@@ -181,8 +231,8 @@
       </ul>
     </div>
 
-    <div style="margin:16px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:10px;">
-      <div style="font-weight:700; margin-bottom:8px;">Mission 2: Build a Clean Training Record</div>
+    <div class="card">
+      <div class="card-title">Mission 2: Build a Clean Training Record</div>
       <ul style="margin:0; padding-left:18px; line-height:1.7;">
         <li>Log a coach-led session (what you did, when, and why)</li>
         <li>Log a structured routine (training/fitness)</li>
@@ -190,17 +240,17 @@
       </ul>
     </div>
 
-    <div style="margin:16px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:10px;">
-      <div style="font-weight:700; margin-bottom:8px;">Mission 3: Make Your Profile “Scout-Readable”</div>
+    <div class="card">
+      <div class="card-title">Mission 3: Make Your Profile “Scout-Readable”</div>
       <ul style="margin:0; padding-left:18px; line-height:1.7;">
         <li>Complete your profile fields so your record is attributable</li>
-        <li>Keep your pathway context consistent (club / academy / independent)</li>
+        <li>Keep pathway context consistent (club / academy / independent)</li>
         <li>Reduce confusion when someone reviews your history</li>
       </ul>
     </div>
 
-    <div style="margin:16px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:10px;">
-      <div style="font-weight:700; margin-bottom:8px;">Mission 4: XP Store (Educational)</div>
+    <div class="card">
+      <div class="card-title">Mission 4: XP Store (Educational)</div>
       <ul style="margin:0; padding-left:18px; line-height:1.7;">
         <li>Mint an XP Store item as a platform action</li>
         <li>Use it as a tracked checkpoint (not a purchase, not money)</li>
@@ -208,7 +258,8 @@
       </ul>
     </div>
 
-    <!-- UPDATED section -->
+    <hr>
+
     <h2 id="not">What XP Is Not</h2>
 
     <ul>
@@ -223,6 +274,11 @@
     <p>
       This boundary allows XPGuess to operate safely across sports, age groups, and jurisdictions as an educational
       and governance-first platform.
+    </p>
+
+    <p class="callout-dark">
+      <strong>Operational rule of thumb:</strong> XP should always map to a defined, reviewable learning action.
+      If an action cannot be reviewed, it should not generate XP.
     </p>
 
     <hr style="margin-top:32px;">
@@ -242,8 +298,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -259,19 +315,13 @@
       Any training, wellness, or support tools are used for documentation and education only and are intentionally non-clinical.
     </p>
 
-    <!-- =========================================================
-         Terminology & Provenance (UPDATED to match new standards)
-         ========================================================= -->
-
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
         Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- UPDATED Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> is a <strong>governed educational system</strong> that teaches how professional sports decisions are structured,
         constrained, and resolved. It uses simplified yes/no learning questions and structured flows to teach
@@ -286,7 +336,6 @@
         it is a governance lens.
       </p>
 
-      <!-- Provenance (reframed) -->
       <p style="margin:0 0 12px 0;">
         The conceptual lineage behind XPGuess and NTG is rooted in earlier technical work by <strong>Michael A. Piña</strong> emphasizing
         first-principles mechanics, repeatable learning constructs, and verifiable progression over narrative interpretation.
@@ -299,8 +348,7 @@
         the original reference image is available here:
         <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
            target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           rel="noopener noreferrer">
           View the original reference image (opens in a new tab)
         </a>.
       </p>
@@ -310,19 +358,23 @@
         <em>Coach Teaches Animals: Gymnastics Stretching</em>:
         <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
            target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           rel="noopener noreferrer">
           View the publication on Amazon (opens in a new tab)
         </a>.
       </p>
 
     </section>
 
-    <p style="margin-top:28px;">
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
+    </p>
+
+    <p style="margin-top:18px;">
       <a href="#top">Back to top</a>
     </p>
 
   </main>
-
 </body>
 </html>
