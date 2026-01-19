@@ -1,28 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "How XPGuess Works", "item": "https://learn.xpguess.com/how-xpguess-works.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>How XPGuess Works | Educational Sports Decision Platform</title> 
+  <title>How XPGuess Works | Educational Sports Decision Platform</title>
   <meta name="description" content="How XPGuess works: a structured educational system using yes-or-no questions resolved by verified outcomes. Learn governance, athlete pathways, timing rules, and professional sports decision-making. Not gambling." />
 
   <!-- Step 1: Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/how-xpguess-works.html" />
 
-  <!-- Step 2: Schema.org JSON-LD (Article) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Template styling (standard Learn base template) -->
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    main {
+      max-width: 720px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr { border: 0; border-top: 1px solid #eee; margin: 24px 0; }
+    h1 { margin: 0 0 10px 0; font-size: 30px; line-height: 1.2; }
+    h2 { margin: 0 0 10px 0; font-size: 20px; line-height: 1.35; }
+    h3 { margin: 14px 0 8px 0; font-size: 16px; line-height: 1.35; }
+    p, li { color: #333; line-height: 1.7; }
+    a { color: #111; text-decoration: underline; }
+    a:visited { color: #111; }
+    .kicker { margin: 0 0 10px 0; font-size: 13px; color: #666; }
+    .lede { margin: 0; font-size: 16px; color: #444; line-height: 1.6; }
+    .callout {
+      margin: 0;
+      padding: 12px 14px;
+      background: #f4f6ff;
+      border: 1px solid #e4e8ff;
+      border-radius: 8px;
+      color: #222;
+      line-height: 1.6;
+    }
+    .callout-dark {
+      margin: 16px 0 0 0;
+      padding: 12px 14px;
+      background: #0b1220;
+      border-radius: 8px;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .onpage {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .onpage ul { margin: 10px 0 0 0; padding-left: 18px; }
+    .footer-note { font-size: 12px; color: #777; margin: 0; }
+  </style>
+
+  <!-- Step 2A: Breadcrumb Schema (THIS page) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "How XPGuess Works", "item": "https://learn.xpguess.com/how-xpguess-works.html" }
+    ]
+  }
+  </script>
+
+  <!-- Step 2B: Article Schema (THIS page) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -51,19 +109,20 @@
       "Decision discipline",
       "Non-cash XP learning signals"
     ],
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="max-width:720px; margin:40px auto; background:#ffffff; padding:32px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+<body>
+  <main>
     <a id="top"></a>
 
+    <!-- Logo (root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -71,79 +130,104 @@
 
     <hr>
 
-    <h1 style="margin-top:0;">How XPGuess Works</h1>
+    <!-- Header -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • How It Works • Governance</p>
+      <h1>How XPGuess Works</h1>
+      <p class="lede">
+        A structured educational system using yes-or-no questions resolved by verified outcomes — designed to teach
+        governance, athlete pathways, timing rules, and professional decision-making. Not gambling.
+      </p>
+    </header>
 
     <p>
       XPGuess is an educational sports learning platform built to explain how real-world professional sports systems work.
       It uses structured Yes-or-No questions that are resolved using verified outcomes and official rules — not rumors.
     </p>
 
-    <p>
-      XPGuess is not gambling. No real money is involved. XP is used only to track learning participation and consistency.
+    <p class="callout">
+      <strong>Important:</strong> XPGuess is not gambling. No real money is involved. XP is used only to track learning
+      participation and consistency.
     </p>
 
-    <!-- Step 3: Internal Anchors ("On this page") -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
-        <li><a href="#core-mechanism">The core mechanism</a></li>
-        <li><a href="#resolution">How questions are resolved</a></li>
-        <li><a href="#what-you-learn">What participants learn</a></li>
-        <li><a href="#xp-represents">What XP represents</a></li>
-        <li><a href="#why-it-matters">Why this matters</a></li>
-        <li><a href="#continue-learning">Continue learning</a></li>
-        <li><a href="#compliance">Compliance notice</a></li>
-        <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
+    <hr>
+
+    <!-- Step 3: On this page (anchors) -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#core-mechanism">1. The core mechanism</a></li>
+        <li><a href="#resolution">2. How questions are resolved</a></li>
+        <li><a href="#what-you-learn">3. What participants learn</a></li>
+        <li><a href="#xp-represents">4. What XP represents</a></li>
+        <li><a href="#why-it-matters">5. Why this matters</a></li>
+        <li><a href="#continue-learning">6. Continue learning</a></li>
+        <li><a href="#compliance">7. Compliance notice</a></li>
+        <li><a href="#terminology-provenance">8. Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
 
-    <h2 id="core-mechanism">The Core Mechanism</h2>
+    <hr>
 
-    <p>
-      XPGuess presents clear questions about real sports decisions and outcomes — such as roster changes, eligibility,
-      registration timing, and governance-driven events — across multiple sports environments.
-    </p>
+    <section id="core-mechanism">
+      <h2>1. The Core Mechanism</h2>
+      <p>
+        XPGuess presents clear questions about real sports decisions and outcomes — such as roster changes, eligibility,
+        registration timing, and governance-driven events — across multiple sports environments.
+      </p>
+      <p>
+        Each question is designed to help participants learn how professional systems operate under rules, timelines,
+        and documentation requirements.
+      </p>
+    </section>
 
-    <p>
-      Each question is designed to help participants learn how professional systems operate under rules, timelines,
-      and documentation requirements.
-    </p>
+    <hr>
 
-    <h2 id="resolution">How Questions Are Resolved</h2>
+    <section id="resolution">
+      <h2>2. How Questions Are Resolved</h2>
+      <p>
+        Questions are resolved using verified outcomes, such as official announcements and rule-based confirmations.
+        The goal is to teach how decisions are validated in real systems — and how false narratives spread when verification is missing.
+      </p>
+    </section>
 
-    <p>
-      Questions are resolved using verified outcomes, such as official announcements and rule-based confirmations.
-      The goal is to teach how decisions are validated in real systems — and how false narratives spread when verification is missing.
-    </p>
+    <hr>
 
-    <h2 id="what-you-learn">What Participants Learn</h2>
+    <section id="what-you-learn">
+      <h2>3. What Participants Learn</h2>
+      <ul>
+        <li>How governance structures affect athlete movement and opportunity</li>
+        <li>How timing windows, seasons, and registration periods constrain decisions</li>
+        <li>How verified outcomes differ from rumor-driven narratives</li>
+        <li>How to think clearly under uncertainty without speculation</li>
+      </ul>
+    </section>
 
-    <ul>
-      <li>How governance structures affect athlete movement and opportunity</li>
-      <li>How timing windows, seasons, and registration periods constrain decisions</li>
-      <li>How verified outcomes differ from rumor-driven narratives</li>
-      <li>How to think clearly under uncertainty without speculation</li>
-    </ul>
+    <hr>
 
-    <h2 id="xp-represents">What XP Represents</h2>
+    <section id="xp-represents">
+      <h2>4. What XP Represents</h2>
+      <p>
+        XP is a participation and learning ledger. It reflects engagement, consistency, and progress through educational content.
+        XP does not represent money, performance ranking, or career outcome prediction.
+      </p>
+    </section>
 
-    <p>
-      XP is a participation and learning ledger. It reflects engagement, consistency, and progress through educational content.
-      XP does not represent money, performance ranking, or career outcome prediction.
-    </p>
+    <hr>
 
-    <h2 id="why-it-matters">Why This Matters</h2>
-
-    <p>
-      In many sports environments, decisions are influenced by incomplete records, bias, or timing pressure.
-      XPGuess strengthens understanding by making governance and system logic visible — and by teaching how to evaluate claims
-      using verified sources and structured reasoning.
-    </p>
+    <section id="why-it-matters">
+      <h2>5. Why This Matters</h2>
+      <p>
+        In many sports environments, decisions are influenced by incomplete records, bias, or timing pressure.
+        XPGuess strengthens understanding by making governance and system logic visible — and by teaching how to evaluate claims
+        using verified sources and structured reasoning.
+      </p>
+      <p class="callout-dark"><strong>Better decisions start with verifiable rules and accountable records.</strong></p>
+    </section>
 
     <hr style="margin-top:32px;">
 
-    <h2 id="continue-learning">Continue Learning</h2>
-
+    <h2 id="continue-learning">6. Continue Learning</h2>
     <nav aria-label="Learn pages">
       <ul style="padding-left:18px; line-height:1.6;">
         <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
@@ -157,8 +241,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -166,8 +250,7 @@
       <a href="https://xpguess.com">Go to the XPGuess App</a>
     </p>
 
-    <h2 id="compliance">Compliance Notice</h2>
-
+    <h2 id="compliance">7. Compliance Notice</h2>
     <p>
       XPGuess is an educational platform. It does not provide medical services,
       act as a healthcare provider, or replace professional care.
@@ -175,20 +258,12 @@
       reflection, and athlete protection.
     </p>
 
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         Place near bottom of Learn pages, before final <hr>
-         ========================================================= -->
-
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
-
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
-        Terminology, Frameworks, and Foundational Work
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
+        8. Terminology, Frameworks, and Foundational Work
       </h3>
 
-      <!-- Terminology -->
       <p style="margin:0 0 12px 0;">
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
         <strong>educational decision-learning construct</strong> used to explore how
@@ -204,7 +279,6 @@
         repeatability, transparency, and reviewable progress rather than subjective opinion.
       </p>
 
-      <!-- Provenance -->
       <p style="margin:0 0 12px 0;">
         The conceptual foundations behind XPGuess and NTG derive from earlier technical work
         by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
@@ -220,9 +294,7 @@
         mechanical laws rather than coaching intuition alone.
         For historical context and transparency, the original reference image is available here:
         <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the original reference image (opens in a new tab)
         </a>.
       </p>
@@ -232,20 +304,21 @@
         <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
         structured learning, physical preparation, and development principles:
         <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
-           target="_blank"
-           rel="noopener noreferrer"
-           style="text-decoration:underline;">
+           target="_blank" rel="noopener noreferrer">
           View the publication on Amazon (opens in a new tab)
         </a>.
       </p>
-
     </section>
 
-    <p style="margin-top:28px;">
-      <a href="#top">Back to top</a>
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
     </p>
 
+    <p style="margin-top:18px;">
+      <a href="#top">Back to top</a>
+    </p>
   </main>
-
 </body>
 </html>
