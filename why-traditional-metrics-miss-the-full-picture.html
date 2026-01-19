@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-    { "@type": "ListItem", "position": 3, "name": "Why Traditional Metrics Miss the Full Picture", "item": "https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html" }
-  ]
-}
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -22,7 +10,72 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html" />
 
-  <!-- Schema.org JSON-LD -->
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Learn Base Template Styles -->
+  <style>
+    :root { color-scheme: light; }
+    body{
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0;
+      color:#111;
+    }
+    main{
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      margin:16px 0 0 0;
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+      color:#222;
+      line-height:1.6;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; line-height:1.7; }
+    .card{
+      margin:16px 0;
+      padding:16px;
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+    }
+    .card-title{ font-weight:700; margin-bottom:8px; }
+    .footer-note{ font-size:12px; color:#777; margin:0; }
+  </style>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Why Traditional Metrics Miss the Full Picture", "item": "https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html" }
+    ]
+  }
+  </script>
+
+  <!-- Article Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,27 +97,20 @@
       "@type": "Organization",
       "name": "XPGuess Learn"
     },
+    "datePublished": "2026-01-17",
     "dateModified": "2026-01-17"
   }
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
-
-  <main style="
-    max-width:720px;
-    margin:40px auto;
-    background:#ffffff;
-    padding:32px;
-    border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.04);
-  ">
+<body>
+  <main>
     <a id="top"></a>
 
-    <!-- Logo (ONLY image on page) -->
+    <!-- Logo (template standard: root path) -->
     <div style="margin-bottom:24px;">
       <img
-        src="XPGuess black.png"
+        src="/XPGuess%20black.png"
         alt="XPGuess logo"
         style="height:240px; width:auto;"
       />
@@ -72,24 +118,24 @@
 
     <hr>
 
-    <h1 style="margin:0 0 12px 0; line-height:1.2;">
-      Why Traditional Metrics Miss the Full Picture
-    </h1>
+    <!-- Header (template standard) -->
+    <header style="margin-bottom:22px;">
+      <p class="kicker">XPGuess Learn • Evaluation Context • Bias Reduction • Governance • Educational Only</p>
+      <h1>Why Traditional Metrics Miss the Full Picture</h1>
+      <p class="lede">
+        Most athlete evaluation systems rely on surface-level indicators. Even when statistics are involved,
+        they are often treated as isolated snapshots—a single match, a short window, a moment in time.
+      </p>
+      <p class="callout">
+        <strong>Key point:</strong> Metrics can be useful, but without context and continuity they can create false confidence.
+        The missing layer is a reviewable record of process, constraints, and learning over time.
+      </p>
+    </header>
 
-    <p style="margin:0 0 14px 0; line-height:1.6;">
-      Most athlete evaluation systems rely on surface-level indicators. Even when statistics are involved,
-      they are often treated as isolated snapshots — a single match, a short window, a moment in time.
-    </p>
-
-    <p style="margin:0 0 18px 0; line-height:1.6;">
-      These metrics may look objective, but without context they can tell an incomplete story. It’s like taking
-      a single temperature reading and assuming you understand someone’s overall health.
-    </p>
-
-    <!-- On this page -->
-    <div style="margin:20px 0; padding:16px; background:#fafafa; border:1px solid #eee; border-radius:8px;">
-      <div style="font-weight:600; margin-bottom:8px;">On this page</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.7;">
+    <!-- On this page (template pattern: internal anchors) -->
+    <section class="onpage" aria-label="On this page">
+      <strong>On this page</strong>
+      <ul>
         <li><a href="#problem">The problem isn’t a lack of data</a></li>
         <li><a href="#process-intelligence">From outcome obsession to process intelligence</a></li>
         <li><a href="#why-this-matters">Why this matters</a></li>
@@ -98,60 +144,88 @@
         <li><a href="#compliance">Compliance notice</a></li>
         <li><a href="#terminology-provenance">Terminology &amp; provenance</a></li>
       </ul>
-    </div>
+    </section>
 
-    <h2 id="problem" style="margin:22px 0 10px 0; line-height:1.25;">
-      The Problem Isn’t a Lack of Data
-    </h2>
+    <hr>
 
-    <p style="margin:0 0 14px 0; line-height:1.6;">
-      The real gap is context and continuity. Traditional systems rarely capture the decisions an athlete made,
+    <h2 id="problem">The Problem Isn’t a Lack of Data</h2>
+
+    <p>
+      The gap is context and continuity. Traditional systems rarely capture the decisions an athlete made,
       the conditions those decisions were made under, or how learning evolves over time.
     </p>
 
-    <p style="margin:0 0 10px 0; line-height:1.6;">
-      When the record is incomplete, evaluation becomes vulnerable to:
+    <div class="card" role="note" aria-label="Where evaluation becomes vulnerable">
+      <div class="card-title">When the record is incomplete, evaluation becomes vulnerable to:</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Bias and reputation effects</li>
+        <li>Timing pressure and short-window judgments</li>
+        <li>Rumor-driven narratives</li>
+        <li>Overreaction to single outcomes</li>
+      </ul>
+    </div>
+
+    <p>
+      Even “objective” stats can become misleading when role expectations, opponent strength, fatigue,
+      injuries, coaching instructions, or eligibility constraints are missing from the story.
     </p>
 
-    <ul style="margin:0 0 18px 18px; line-height:1.6;">
-      <li>Bias and reputation effects</li>
-      <li>Timing pressure and short-window judgments</li>
-      <li>Rumor-driven narratives</li>
-      <li>Overreaction to single outcomes</li>
-    </ul>
+    <hr>
 
-    <h2 id="process-intelligence" style="margin:22px 0 10px 0; line-height:1.25;">
-      From Outcome Obsession to Process Intelligence
-    </h2>
+    <h2 id="process-intelligence">From Outcome Obsession to Process Intelligence</h2>
 
-    <p style="margin:0 0 14px 0; line-height:1.6;">
+    <p>
       XPGuess is built on a different assumption: progress is not a single outcome. It is a governed process.
-      Instead of relying only on final results, XP-based systems document signals over time — participation,
+      Instead of relying only on final results, XP-based systems document signals over time—participation,
       decision scenarios, learning milestones, and verified timelines aligned with real-world cycles.
     </p>
 
-    <h2 id="why-this-matters" style="margin:22px 0 10px 0; line-height:1.25;">
-      Why This Matters
-    </h2>
+    <div class="card" role="note" aria-label="Process signals XPGuess can document">
+      <div class="card-title">Examples of “process signals” (educational, non-cash)</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Structured learning actions tied to governance rules (eligibility, windows, documentation)</li>
+        <li>Verified resolution paths (how an outcome is officially confirmed)</li>
+        <li>Continuity of training logs over time (non-medical documentation)</li>
+        <li>Attributable records that reduce confusion when a profile is reviewed</li>
+      </ul>
+    </div>
 
-    <p style="margin:0 0 14px 0; line-height:1.6;">
-      When progress is documented over time, decisions can be reviewed rather than guessed, development can be
-      evaluated without speculation, and athletes can be assessed on readiness — not timing noise.
+    <p style="font-size:13px; color:#555;">
+      XP is not money, not redeemable, and not tied to wagering. It is an educational progress signal.
     </p>
 
-    <p style="margin:0 0 18px 0; line-height:1.6;">
-      This does not eliminate natural selection or talent differences. It reduces blind spots that cause capable
-      athletes to be overlooked or misjudged.
+    <hr>
+
+    <h2 id="why-this-matters">Why This Matters</h2>
+
+    <p>
+      When progress is documented over time, decisions can be reviewed rather than guessed. Development can be evaluated
+      without speculation, and athletes can be assessed on readiness—not timing noise.
     </p>
 
-    <h2 id="objective-signals" style="margin:22px 0 10px 0; line-height:1.25;">
-      Objective Signals Replace Assumptions
-    </h2>
-
-    <p style="margin:0 0 18px 0; line-height:1.6;">
-      By shifting from isolated stats to context-aware records, the system creates objectivity where subjectivity
-      once dominated. What emerges is not hype or guarantees — but clarity.
+    <p>
+      This does not eliminate natural selection or talent differences. It reduces blind spots that cause capable athletes
+      to be overlooked or misjudged because the record was incomplete or non-attributable.
     </p>
+
+    <hr>
+
+    <h2 id="objective-signals">Objective Signals Replace Assumptions</h2>
+
+    <p>
+      By shifting from isolated stats to context-aware records, the system creates objectivity where subjectivity once dominated.
+      What emerges is not hype or guarantees—but clarity.
+    </p>
+
+    <div class="card" role="note" aria-label="What improves with context">
+      <div class="card-title">What improves when context exists</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Less reliance on reputation and “who knows who” dynamics</li>
+        <li>More transparent conversations with families about stages and expectations</li>
+        <li>Clearer evaluation when athletes change teams, regions, or competitive environments</li>
+        <li>Better alignment between training intent and observed outcomes</li>
+      </ul>
+    </div>
 
     <hr style="margin-top:32px;">
 
@@ -170,8 +244,8 @@
         <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
         <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>  
-        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>     
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamental Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
       </ul>
     </nav>
 
@@ -182,17 +256,16 @@
     <h2 id="compliance">Compliance Notice</h2>
 
     <p>
-      XPGuess is an educational platform. It does not provide medical services,
-      act as a healthcare provider, or replace professional care.
-      All fitness and support tools exist for training documentation,
+      XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider,
+      or replace professional care. All fitness and support tools exist for training documentation,
       reflection, and athlete protection.
     </p>
 
+    <!-- Terminology & Provenance -->
     <section aria-labelledby="terminology-provenance"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
-      <h3 id="terminology-provenance"
-          style="font-size:16px; margin:0 0 12px 0;">
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
         Terminology, Frameworks, and Foundational Work
       </h3>
 
@@ -244,12 +317,19 @@
 
     </section>
 
-    <p style="margin-top:28px;">
+    <hr style="margin-top:32px;">
+
+    <p class="footer-note">
+      XPGuess Learn is educational content. No gambling. No real money. XP is a learning progress signal.
+    </p>
+
+    <p style="margin-top:18px;">
       <a href="#top">Back to top</a>
     </p>
 
   </main>
 
+  <!-- Responsive (template standard) -->
   <style>
     @media (max-width: 760px) {
       main {
