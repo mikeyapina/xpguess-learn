@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>How XPGuess Rankings Work (With the Math Behind the Leaderboard) | XPGuess Learn</title>
+  <meta name="description" content="A compliance-safe, audit-friendly explanation of how XPGuess rankings work across sports, education, cognition, and real-world skill—plus the math behind lane scores and leaderboard rank." />
+
+  <link rel="canonical" href="https://learn.xpguess.com/how-xpguess-rankings-work.html" />
+
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- Optional: If you use a shared favicon across Learn pages -->
+  <!-- <link rel="icon" href="https://learn.xpguess.com/favicon.ico" /> -->
+</head>
+
+<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0;">
+
+  <main style="
+    max-width:720px;
+    margin:40px auto;
+    background:#ffffff;
+    padding:32px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  ">
+
+    <!-- Logo (ONLY image on page) -->
+    <div style="margin-bottom:24px;">
+      <a href="https://learn.xpguess.com/" rel="home" style="display:inline-block;">
+        <img
+          src="https://learn.xpguess.com/assets/xpguess-logo-black.png"
+          alt="XPGuess Learn"
+          style="height:28px; width:auto; display:block;"
+        />
+      </a>
+    </div>
+
+    <!-- Page Title -->
+    <h1 style="margin:0 0 12px 0; font-size:28px; line-height:1.25; color:#111;">
+      How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill
+    </h1>
+
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.6;">
+      <strong>Educational only.</strong> XPGuess rankings are designed as a governed learning and
+      documentation mechanism. XP is a non-cash learning signal and does not represent money,
+      value, or financial outcomes. This page explains the ranking structure and why it is
+      audit-friendly and testable.
+    </p>
+
+    <hr style="margin:24px 0; border:none; border-top:1px solid #eee;" />
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Rankings Are Developmental, Not Sport-Specific</h2>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      XPGuess rankings are intentionally sport-agnostic. The system does not rank soccer differently
+      than basketball, gymnastics, martial arts, track, or any other discipline. Instead, it ranks
+      how consistently and accurately someone participates within their sport.
+    </p>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      Development is not uniform across sports or access levels. A youth training daily without
+      competition access is still developing. A participant in a lower-visibility sport is still
+      developing. XPGuess rankings reflect that by valuing training behavior and verified participation,
+      not league prestige or outcome statistics.
+    </p>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      Athletes from different sports can exist in the same ranking environment without being falsely
+      compared. The system does not claim they are equivalent athletes. It claims only that verified
+      effort has occurred, and that effort deserves to be counted.
+    </p>
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Rankings Apply at Every Level</h2>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      XPGuess rankings function regardless of whether a participant is a beginner, amateur, youth athlete,
+      or advanced competitor. This is possible because rankings are relative to context, not absolute to the world.
+    </p>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      A participant is not ranked “globally.” They are ranked based on their accumulated participation within defined
+      cohorts and development lanes. This allows someone to be meaningfully ranked even if they are not elite, professional,
+      or fully developed. The ranking answers a simple question:
+      <strong>Is this person consistently doing the work required at their current level?</strong>
+    </p>
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Cognitive Activity and Gaming as Legitimate Inputs</h2>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      XPGuess includes cognitive activity—including structured gaming—because decision-making speed, pattern recognition,
+      and accuracy under pressure are core performance traits across many disciplines.
+    </p>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      Gaming does not replace physical training, and XPGuess does not pretend it does. What the system recognizes is that
+      cognitive effort is measurable and relevant. Participants who engage heavily in cognitive tasks will show strength
+      in that lane and weakness elsewhere, and the ranking will reflect both.
+    </p>
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Education as a Ranking Component</h2>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      Education enters XPGuess rankings through completion and consistency, not prestige. A high school diploma, a GED,
+      a trade certification, or online education all represent completed learning. The ranking records that completion
+      as evidence of discipline and follow-through.
+    </p>
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Real-World Skill Application and Busking</h2>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      Real-world skill application, including busking, represents applied effort under uncontrolled conditions. It requires
+      repetition, endurance, adaptability, and resilience. From a ranking perspective, time spent applying a skill in real
+      conditions matters, regardless of whether it happens inside or outside formal systems.
+    </p>
+
+    <hr style="margin:28px 0; border:none; border-top:1px solid #eee;" />
+
+    <!-- ========================= -->
+    <!-- Ranking Math Section -->
+    <!-- ========================= -->
+
+    <h2 style="margin:0 0 10px 0; font-size:22px; color:#111;">The Ranking Math</h2>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      XPGuess rankings are computed using a multi-lane scoring model. Each lane generates a lane score from the same four
+      concepts—volume, quality, consistency, and trust—and those lane scores are aggregated into one composite rank score.
+      The purpose of the math is not to “prove” someone is better. The purpose is to create a testable mechanism:
+      a consistent way to evaluate how changes in participation and execution change rank outcomes.
+    </p>
+
+    <h3 style="margin:18px 0 8px 0; font-size:16px; color:#111;">Step 1: Define Lanes and Inputs</h3>
+    <p style="margin:0 0 12px 0; color:#444; line-height:1.7;">
+      For each participant <strong>(i)</strong>, XPGuess tracks four lanes <strong>(d)</strong>:
+      Physical sport (P), Cognitive/Gaming (C), Education (E), and Real-World/Busking (R).
+      Each lane measures inputs over a time window <strong>(T)</strong> (e.g., 30 days, 90 days, lifetime).
+    </p>
+    <ul style="margin:0 0 14px 0; padding-left:18px; color:#444; line-height:1.7;">
+      <li><strong>XP volume</strong> (XP<sub>i,d,T</sub>)</li>
+      <li><strong>Accuracy / quality</strong> (A<sub>i,d,T</sub>) scaled 0 to 1</li>
+      <li><strong>Consistency</strong> (S<sub>i,d,T</sub>) scaled 0 to 1</li>
+      <li><strong>Verification trust</strong> (V<sub>i,d,T</sub>) scaled 0 to 1</li>
+    </ul>
+
+    <h3 style="margin:18px 0 8px 0; font-size:16px; color:#111;">Step 2: Normalize XP</h3>
+    <p style="margin:0 0 12px 0; color:#444; line-height:1.7;">
+      Raw XP volumes can vary widely. To prevent magnitude outliers from dominating purely by size,
+      XP is normalized using a monotonic function such as log normalization:
+    </p>
+    <p style="margin:0 0 14px 0; color:#111; line-height:1.7;">
+      <code style="background:#f6f6f6; padding:2px 6px; border-radius:4px;">
+        X(i,d,T) = log(1 + XP(i,d,T))
+      </code>
+    </p>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      This preserves accumulation while adding diminishing returns. If your internal XP is already normalized,
+      this step can be replaced by your existing scaling.
+    </p>
+
+    <h3 style="margin:18px 0 8px 0; font-size:16px; color:#111;">Step 3: Compute Lane Score (Multiplicative Quality Gate)</h3>
+    <p style="margin:0 0 12px 0; color:#444; line-height:1.7;">
+      Lane scores reward volume while enforcing quality, consistency, and verification using multiplicative amplification:
+    </p>
+    <p style="margin:0 0 14px 0; color:#111; line-height:1.7;">
+      <code style="background:#f6f6f6; padding:2px 6px; border-radius:4px;">
+        LS(i,d,T) = X(i,d,T) · (1 + αd·A(i,d,T)) · (1 + βd·S(i,d,T)) · (1 + γd·V(i,d,T))
+      </code>
+    </p>
+    <ul style="margin:0 0 14px 0; padding-left:18px; color:#444; line-height:1.7;">
+      <li>High XP with poor accuracy should not outrank high XP with strong accuracy.</li>
+      <li>Consistency amplifies sustained behavior.</li>
+      <li>Verification amplifies trustworthiness.</li>
+    </ul>
+
+    <h3 style="margin:18px 0 8px 0; font-size:16px; color:#111;">Step 4: Aggregate Lane Scores (Cross-Domain Balance)</h3>
+    <p style="margin:0 0 12px 0; color:#444; line-height:1.7;">
+      Lane scores are aggregated using lane weights (w<sub>d</sub>) to form a composite rank score:
+    </p>
+    <p style="margin:0 0 14px 0; color:#111; line-height:1.7;">
+      <code style="background:#f6f6f6; padding:2px 6px; border-radius:4px;">
+        CR(i,T) = Σd ( wd · LS(i,d,T) )
+      </code>
+    </p>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      Lane weights tune measurement priority. They do not imply moral superiority—only ranking emphasis.
+      A stable governance rule applies: no single lane should be able to dominate indefinitely without quality,
+      consistency, and verification.
+    </p>
+
+    <h3 style="margin:18px 0 8px 0; font-size:16px; color:#111;">Step 5: Derive Rank Order</h3>
+    <p style="margin:0 0 14px 0; color:#444; line-height:1.7;">
+      Leaderboard rank is the deterministic ordering of composite scores:
+    </p>
+    <p style="margin:0 0 18px 0; color:#111; line-height:1.7;">
+      <code style="background:#f6f6f6; padding:2px 6px; border-radius:4px;">
+        Rank(i) = 1 + | { j : CR(j,T) &gt; CR(i,T) } |
+      </code>
+    </p>
+
+    <h2 style="margin:0 0 10px 0; font-size:20px; color:#111;">Why This Is a Testing Mechanism (Not an Absolute Truth Claim)</h2>
+    <p style="margin:0 0 18px 0; color:#444; line-height:1.7;">
+      This model is intentionally testable. You can vary XP volume, accuracy, consistency, and verification and observe
+      rank sensitivity. That makes the leaderboard calibratable and audit-friendly while keeping rankings grounded in
+      measurable inputs.
+    </p>
+
+    <hr style="margin-top:32px; border:none; border-top:1px solid #eee;" />
+
+    <!-- ========================= -->
+    <!-- Footer Sections (Required) -->
+    <!-- ========================= -->
+
+    <h2 style="margin:0 0 12px 0; font-size:18px; color:#111;">Continue Learning</h2>
+    <ul style="padding-left:18px; line-height:1.6; margin:0; color:#444;">
+      <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+      <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+      <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+      <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+      <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+      <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+      <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+      <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+      <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+      <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+      <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+      <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+      <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    </ul>
+
+    <p style="margin-top:24px;">
+      <a href="https://xpguess.com">Go to the XPGuess App</a>
+    </p>
+
+    <h2 style="margin:24px 0 10px 0; font-size:18px; color:#111;">Compliance Notice</h2>
+    <p style="margin:0; color:#444; line-height:1.7;">
+      XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider,
+      or replace professional care. All fitness and support tools exist for training documentation, reflection,
+      and athlete protection.
+    </p>
+
+    <!-- =========================================================
+         Terminology & Provenance (SEO + Compliance Safe)
+         ========================================================= -->
+
+    <section aria-labelledby="terminology-provenance"
+             style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+      <h3 id="terminology-provenance" style="font-size:16px; margin:0 0 12px 0;">
+        Terminology, Frameworks, and Foundational Work
+      </h3>
+
+      <p style="margin:0 0 12px 0;">
+        <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an
+        <strong>educational decision-learning construct</strong> used to explore how
+        athletic outcomes, development paths, and professional decisions unfold over time.
+        The term refers to structured learning through verified scenarios and governed data,
+        not speculation, gambling, or prediction for financial gain.
+      </p>
+
+      <p style="margin:0 0 12px 0;">
+        <strong>Natural Technical Governance (NTG)</strong> refers to a standards-based
+        framework for documenting training, participation, and technical development using
+        first principles (e.g., mechanics, continuity, and structure). NTG emphasizes
+        repeatability, transparency, and reviewable progress rather than subjective opinion.
+      </p>
+
+      <p style="margin:0 0 12px 0;">
+        The conceptual foundations behind XPGuess and NTG derive from earlier technical work
+        by <strong>Michael A. Piña</strong>, focused on ground-up athlete development,
+        biomechanical fundamentals, and predictable career progression through structured
+        learning constructs.
+      </p>
+
+      <p style="margin:0 0 12px 0;">
+        A key foundational reference is the article
+        <em>“Beginning and Staying with the Basics: Building from the Ground Up”</em>,
+        written by Michael A. Piña for a <em>Technique</em> gymnastics publication.
+        This work emphasized breaking skills into elementary components governed by
+        mechanical laws rather than coaching intuition alone.
+        For historical context and transparency, the original reference image is available here:
+        <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="text-decoration:underline;">
+          View the original reference image (opens in a new tab)
+        </a>.
+      </p>
+
+      <p style="margin:0;">
+        Additional published work by Michael A. Piña includes
+        <em>Coach Teaches Animals: Gymnastics Stretching</em>, which further explores
+        structured learning, physical preparation, and development principles:
+        <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="text-decoration:underline;">
+          View the publication on Amazon (opens in a new tab)
+        </a>.
+      </p>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
