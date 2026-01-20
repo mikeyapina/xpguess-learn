@@ -59,7 +59,6 @@
       border-radius:10px;
     }
     .card-title{ font-weight:700; margin-bottom:8px; }
-    .footer-note{ font-size:12px; color:#777; margin:0; }
     code{
       background:#f6f6f6;
       padding:2px 6px;
@@ -160,10 +159,7 @@
 
     <hr>
 
-    <!-- ========================= -->
     <!-- Body -->
-    <!-- ========================= -->
-
     <section id="developmental-not-sport-specific">
       <h2>Rankings Are Developmental, Not Sport-Specific</h2>
       <p>
@@ -227,10 +223,6 @@
 
     <hr>
 
-    <!-- ========================= -->
-    <!-- Ranking Math -->
-    <!-- ========================= -->
-
     <section id="ranking-math">
       <h2>The Ranking Math</h2>
       <p>
@@ -258,9 +250,7 @@
         <p style="margin:0 0 10px 0;">
           To prevent magnitude outliers from dominating the scale, XP can be normalized using a monotonic function such as log scaling:
         </p>
-        <p style="margin:0;">
-          <code>X(i,d,T) = log(1 + XP(i,d,T))</code>
-        </p>
+        <p style="margin:0;"><code>X(i,d,T) = log(1 + XP(i,d,T))</code></p>
       </div>
 
       <div class="card">
@@ -270,7 +260,7 @@
         </p>
         <p style="margin:0;">
           <code>
-            LS(i,d,T) = X(i,d,T) &middot; (1 + &alpha;d &middot; A(i,d,T)) &middot; (1 + &beta;d &middot; S(i,d,T)) &middot; (1 + &gamma;d &middot; V(i,d,T))
+            LS(i,d,T) = X(i,d,T) · (1 + αd · A(i,d,T)) · (1 + βd · S(i,d,T)) · (1 + γd · V(i,d,T))
           </code>
         </p>
         <p style="margin:10px 0 0 0;">
@@ -283,9 +273,7 @@
         <p style="margin:0 0 10px 0;">
           Lane scores are aggregated using lane weights w<sub>d</sub>:
         </p>
-        <p style="margin:0;">
-          <code>CR(i,T) = &Sigma;<sub>d</sub> ( w<sub>d</sub> &middot; LS(i,d,T) )</code>
-        </p>
+        <p style="margin:0;"><code>CR(i,T) = Σd ( wd · LS(i,d,T) )</code></p>
         <p style="margin:10px 0 0 0;">
           Lane weights tune measurement priority; they do not imply moral superiority. A stable governance rule applies:
           no lane should dominate indefinitely without quality, consistency, and verification.
@@ -294,12 +282,8 @@
 
       <div class="card">
         <div class="card-title">Step 5: Leaderboard rank ordering</div>
-        <p style="margin:0 0 10px 0;">
-          Rank is the deterministic ordering of composite scores:
-        </p>
-        <p style="margin:0;">
-          <code>Rank(i) = 1 + | { j : CR(j,T) &gt; CR(i,T) } |</code>
-        </p>
+        <p style="margin:0 0 10px 0;">Rank is the deterministic ordering of composite scores:</p>
+        <p style="margin:0;"><code>Rank(i) = 1 + | { j : CR(j,T) &gt; CR(i,T) } |</code></p>
       </div>
     </section>
 
@@ -313,10 +297,6 @@
     </section>
 
     <hr style="margin-top:32px;">
-
-    <!-- ========================= -->
-    <!-- Footer Sections (Template Standard) -->
-    <!-- ========================= -->
 
     <section id="continue-learning">
       <h2>Continue Learning</h2>
@@ -349,9 +329,6 @@
       </p>
     </section>
 
-    <!-- =========================================================
-         Terminology & Provenance (SEO + Compliance Safe)
-         ========================================================= -->
     <section id="terminology-provenance" aria-labelledby="terminology-provenance-title"
              style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
 
