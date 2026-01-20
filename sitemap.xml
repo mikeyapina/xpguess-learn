@@ -1,102 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- ========================= -->
+  <!-- Canonical Learn (learn.xpguess.com) -->
+  <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/how-xpguess-works.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/earn-xp.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/football-transfer-system.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/busking.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/what-xpguess-is-and-is-not.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/secure-sports-analytics-infrastructure.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/why-most-athletes-dont-go-pro.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/fitness-wellness-and-support-model.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://learn.xpguess.com/age-learning-and-responsible-access.html</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ========================= -->
+  <!-- Lovable Public Routes (xpguess.com) -->
+  <!-- ========================= -->
+
   <!-- Public questions index -->
   <url>
     <loc>https://xpguess.com/xpguess</loc>
-    <lastmod>2026-01-17</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-  <loc>https://learn.xpguess.com/age-learning-and-responsible-access.html</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
 
-  
+  <!-- Public leaderboard -->
+  <url>
+    <loc>https://xpguess.com/xpguess/leaderboard</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Lovable /learn shell (should canonicalize to learn.xpguess.com/) -->
+  <url>
+    <loc>https://xpguess.com/learn</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
