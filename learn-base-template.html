@@ -8,7 +8,7 @@
   <title>{{PAGE_TITLE}} | XPGuess Learn</title>
   <meta name="description" content="{{META_DESCRIPTION}}" />
 
-  <!-- STEP 1: CANONICAL -->
+  <!-- CANONICAL -->
   <link rel="canonical" href="{{CANONICAL_URL}}" />
 
   <meta name="robots" content="index,follow" />
@@ -19,53 +19,39 @@
     :root { color-scheme: light; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #fafafa;
-      margin: 0;
-      padding: 0;
-      color: #111;
+      background:#fafafa; margin:0; padding:0; color:#111;
     }
     main {
-      max-width: 720px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
     }
-    hr { border: 0; border-top: 1px solid #eee; margin: 24px 0; }
-    h1 { margin: 0 0 10px 0; font-size: 30px; line-height: 1.2; }
-    h2 { margin: 0 0 10px 0; font-size: 20px; line-height: 1.35; }
-    h3 { margin: 14px 0 8px 0; font-size: 16px; line-height: 1.35; }
-    p, li { color: #333; line-height: 1.7; }
-    a { color: #111; text-decoration: underline; }
-    a:visited { color: #111; }
-    .kicker { margin: 0 0 10px 0; font-size: 13px; color: #666; }
-    .lede { margin: 0; font-size: 16px; color: #444; line-height: 1.6; }
-    .callout {
-      padding: 12px 14px;
-      background: #f4f6ff;
-      border: 1px solid #e4e8ff;
-      border-radius: 8px;
-      margin: 0;
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
     }
-    .callout-dark {
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: #0b1220;
-      border-radius: 8px;
-      color: #fff;
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
     }
-    .onpage {
-      background: #fafafa;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      padding: 14px 16px;
-    }
-    .onpage ul { margin: 10px 0 0 0; padding-left: 18px; }
-    .footer-note { font-size: 12px; color: #777; }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
+    .footer-note{ font-size:12px; color:#777; }
   </style>
 
-  <!-- STEP 2A: BREADCRUMB SCHEMA -->
+  <!-- BREADCRUMB SCHEMA -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -78,7 +64,7 @@
   }
   </script>
 
-  <!-- STEP 2B: ARTICLE SCHEMA -->
+  <!-- ARTICLE SCHEMA -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -107,67 +93,104 @@
 </head>
 
 <body>
-  <main>
-    <a id="top"></a>
+<main>
+  <a id="top"></a>
 
-    <!-- LOGO -->
-    <div style="margin-bottom:24px;">
-      <img
-        src="XPGuess-black.png"
-        alt="XPGuess logo"
-        style="height:240px; width:auto;"
-      />
-    </div>
+  <!-- LOGO -->
+  <div style="margin-bottom:24px;">
+    <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
+  </div>
 
-    <hr>
+  <hr>
 
-    <!-- HEADER -->
-    <header style="margin-bottom:22px;">
-      <p class="kicker">{{KICKER_LINE}}</p>
-      <h1>{{H1_TITLE}}</h1>
-      <p class="lede">{{LEDE_TEXT}}</p>
-    </header>
+  <!-- HEADER -->
+  <header style="margin-bottom:22px;">
+    <p class="kicker">{{KICKER_LINE}}</p>
+    <h1>{{H1_TITLE}}</h1>
+    <p class="lede">{{LEDE_TEXT}}</p>
+  </header>
 
-    <!-- STEP 3: ON THIS PAGE -->
-    <section class="onpage" aria-label="On this page">
-      <strong>On this page</strong>
-      <ul>
-        {{ON_PAGE_ANCHORS}}
-      </ul>
-    </section>
+  <!-- ON THIS PAGE -->
+  <section class="onpage" aria-label="On this page">
+    <strong>On this page</strong>
+    <ul>
+      {{ON_PAGE_ANCHORS}}
+    </ul>
+  </section>
 
-    <hr>
+  <hr>
 
-    <!-- MAIN CONTENT -->
-    {{MAIN_CONTENT}}
+  <!-- MAIN CONTENT -->
+  {{MAIN_CONTENT}}
 
-    <hr style="margin-top:32px;">
+  <!-- ================= FOOTER ================= -->
 
-    <!-- CONTINUE LEARNING -->
-    <h2>Continue Learning</h2>
-    <nav aria-label="Learn pages">
-      {{CONTINUE_LEARNING_LINKS}}
-    </nav>
+  <hr style="margin-top:32px;">
 
-    <p style="margin-top:32px;">
-      <a href="https://xpguess.com">Go to the XPGuess App</a>
-    </p>
+  <h2>Continue Learning</h2>
+  <ul style="padding-left:18px; line-height:1.6;">
+    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+  </ul>
 
-    <!-- COMPLIANCE -->
-    <h2>Compliance Notice</h2>
+  <p style="margin-top:32px;">
+    <a href="https://xpguess.com">Go to the XPGuess App</a>
+  </p>
+
+  <h2>Compliance Notice</h2>
+  <p>
+    XPGuess is an educational platform. It does not provide medical services,
+    act as a healthcare provider, or replace professional care.
+    All fitness and support tools exist for training documentation,
+    reflection, and athlete protection.
+  </p>
+
+  <section aria-labelledby="terminology-provenance"
+           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+
+    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+
+    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+
+    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+
     <p>
-      XPGuess is an educational platform. No gambling. No real money.
-      XP is a learning progress signal used for documentation and reflection.
+      Reference:
+      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
+        “Beginning and Staying with the Basics: Building from the Ground Up”
+      </a>
     </p>
 
-    <hr style="margin-top:32px;">
-    <p class="footer-note">
-      XPGuess Learn content is educational and governance-focused.
+    <p>
+      Additional work:
+      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
+        Coach Teaches Animals: Gymnastics Stretching
+      </a>
     </p>
+  </section>
 
-    <p style="margin-top:18px;">
-      <a href="#top">Back to top</a>
-    </p>
-  </main>
+  <p class="footer-note" style="margin-top:32px;">
+    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  </p>
+
+  <p style="margin-top:18px;">
+    <a href="#top">Back to top</a>
+  </p>
+
+</main>
 </body>
 </html>
