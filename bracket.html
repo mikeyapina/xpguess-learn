@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- XPGuess Learn Base Template alignment -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -22,7 +21,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bracket: A Structured Prediction Game for Learning, XP, and Ranking" />
-  <meta name="twitter:description" content="Bracket captures how people decide under constraints—timing, pick locking, XP signals, and ranking. Educational only. Not gambling." />
+  <meta name="twitter:description" content="Bracket captures how people decide under constraints—timing, picks, XP, and ranking. Educational only. Not gambling." />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -38,7 +37,7 @@
   </script>
 </head>
 
-<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0; color:#111;">
+<body id="top" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#fafafa; margin:0; padding:0; color:#111;">
   <main style="
     max-width:720px;
     margin:40px auto;
@@ -49,9 +48,9 @@
     line-height:1.55;
   ">
 
-    <!-- Header / Brand strip (ONLY image on page) -->
-    <div style="margin-bottom:24px;">
-      <a href="https://learn.xpguess.com/" style="text-decoration:none; display:inline-block;">
+    <!-- Logo (ONLY image on page) -->
+    <div style="margin-bottom:18px;">
+      <a href="https://learn.xpguess.com/" style="text-decoration:none;">
         <img
           src="XPGuess black.png"
           alt="XPGuess"
@@ -60,38 +59,59 @@
       </a>
     </div>
 
-    <!-- Page header -->
-    <header style="margin-bottom:18px;">
-      <h1 style="margin:0 0 8px 0; font-size:28px; letter-spacing:-0.02em;">
-        Bracket: A Structured Prediction Game for Learning, XP, and Ranking
-      </h1>
-      <p style="margin:0; color:#333; font-size:16px;">
-        Bracket is a structured prediction game inside XPGuess that captures decision quality over time through timing, pick locking, and repeatable sessions.
-      </p>
+    <hr style="border:none; border-top:1px solid #eaeaea; margin:0 0 18px 0;" />
 
-      <!-- Compliance / safety line (consistent with prior Learn pages) -->
-      <p style="margin:10px 0 0 0; color:#555; font-size:13px;">
-        Educational simulation only. Not gambling. No cash wagering, odds-setting, or payouts.
-      </p>
-    </header>
+    <div style="color:#555; font-size:13px; margin:0 0 6px 0;">
+      XPGuess
+    </div>
 
-    <!-- Section: What this page covers (optional but consistent with clear Learn tone) -->
-    <section style="margin:22px 0;">
+    <h1 style="margin:0 0 10px 0; font-size:28px; letter-spacing:-0.02em;">
+      Bracket: A Structured Prediction Game for Learning, XP, and Ranking
+    </h1>
+
+    <p style="margin:0 0 10px 0; color:#222; font-size:16px;">
+      Bracket is a structured prediction game inside XPGuess that captures decision quality over time through timing, pick locking, and repeatable sessions.
+    </p>
+
+    <p style="margin:0; color:#555; font-size:13px;">
+      Educational simulation. Not gambling. No cash wagering.
+    </p>
+
+    <div style="margin:18px 0;">
+      <h2 style="font-size:16px; margin:0 0 8px 0;">On this page</h2>
+      <ul style="margin:0; padding-left:18px;">
+        <li><a href="#what-bracket-is" style="color:#111;">What Bracket Is</a></li>
+        <li><a href="#why-bracket-exists" style="color:#111;">Why Bracket Exists</a></li>
+        <li><a href="#not-gambling" style="color:#111;">Bracket Is Not Gambling</a></li>
+        <li><a href="#how-bracket-works" style="color:#111;">How Bracket Works</a></li>
+        <li><a href="#timing-modes" style="color:#111;">Two Timing Modes</a></li>
+        <li><a href="#why-time-matters" style="color:#111;">Why Time Matters</a></li>
+        <li><a href="#xp-learning-ranking" style="color:#111;">XP, Learning, and Ranking</a></li>
+        <li><a href="#platform-connection" style="color:#111;">How Bracket Connects to XPGuess</a></li>
+        <li><a href="#beta-scope" style="color:#111;">Beta Scope</a></li>
+        <li><a href="#faq" style="color:#111;">FAQ</a></li>
+      </ul>
+    </div>
+
+    <hr style="border:none; border-top:1px solid #eaeaea; margin:18px 0;" />
+
+    <!-- MAIN CONTENT -->
+    <section id="what-bracket-is" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">What Bracket Is</h2>
       <p style="margin:0;">
-        Bracket is a turn-based prediction format where players pick outcomes across a bracket or round structure. On the surface, it resembles
-        “pick winners and advance.” In XPGuess, the purpose is deeper: Bracket is designed to measure <strong>decision behavior</strong> across repeated,
-        governed sessions—not just whether a single pick was correct.
+        Bracket is a turn-based prediction format where players pick outcomes across a bracket or round structure. On the surface it resembles “pick winners
+        and advance.” In XPGuess, the purpose is deeper: Bracket is designed to measure <strong>decision behavior</strong> across repeated, governed sessions—
+        not just whether a single pick was correct.
       </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="why-bracket-exists" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">Why Bracket Exists</h2>
       <p style="margin:0 0 10px 0;">
-        Many prediction systems only record the final result (right or wrong). Bracket exists to record the decision process around each pick in a
-        way that is reviewable and comparable over time.
+        Many prediction systems only record the final result (right or wrong). Bracket exists to record the decision process around each pick in a way that is
+        reviewable and comparable over time.
       </p>
-      <ul style="margin:0; padding-left:18px; color:#222;">
+      <ul style="margin:0; padding-left:18px;">
         <li>How long a player takes to decide</li>
         <li>How judgment changes under time constraints</li>
         <li>Whether consistency improves across repeated sessions</li>
@@ -102,86 +122,72 @@
       </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="not-gambling" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">Bracket Is Not Gambling</h2>
       <p style="margin:0;">
-        Bracket does not involve money wagers, cash prizes, odds-setting, or payout mechanics. Results generate <strong>XP</strong> as a learning and
-        progression signal. XP is not currency and is not a cash proxy; it is a structured record of participation and decision patterns.
+        Bracket does not involve money wagers, cash prizes, odds-setting, or payout mechanics. Results generate <strong>XP</strong> as a learning and progression
+        signal. XP is not currency and is not a cash proxy; it is a structured record of participation and decision patterns.
       </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="how-bracket-works" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">How Bracket Works</h2>
       <p style="margin:0 0 12px 0;">
-        Bracket play is organized into <strong>sessions</strong>, <strong>matches</strong>, and <strong>turns</strong>. These terms matter because they
-        make gameplay auditable and comparable across time.
+        Bracket play is organized into <strong>sessions</strong>, <strong>matches</strong>, and <strong>turns</strong>. These terms matter because they make
+        gameplay auditable and comparable across time.
       </p>
 
-      <div style="border:1px solid #efefef; border-radius:8px; padding:14px; margin-bottom:12px; background:#fcfcfc;">
-        <h3 style="margin:0 0 6px 0; font-size:15px;">1) Sessions</h3>
-        <p style="margin:0; color:#222;">
-          A session groups one or more matches under a single ruleset. Sessions can be solo (practice) or multi-player (head-to-head) and may be
-          shared by invite code.
-        </p>
-      </div>
+      <h3 style="margin:0 0 6px 0; font-size:15px;">1) Sessions</h3>
+      <p style="margin:0 0 12px 0;">
+        A session groups one or more matches under a single ruleset. Sessions can be solo (practice) or multi-player (head-to-head) and may be shared by invite code.
+      </p>
 
-      <div style="border:1px solid #efefef; border-radius:8px; padding:14px; margin-bottom:12px; background:#fcfcfc;">
-        <h3 style="margin:0 0 6px 0; font-size:15px;">2) Matches</h3>
-        <p style="margin:0; color:#222;">
-          Each match is a decision point: pick one outcome (for example, home vs away). Picks lock when submitted and are recorded for review.
-        </p>
-      </div>
+      <h3 style="margin:0 0 6px 0; font-size:15px;">2) Matches</h3>
+      <p style="margin:0 0 12px 0;">
+        Each match is a decision point: pick one outcome (for example, home vs away). Picks lock when submitted and are recorded for review.
+      </p>
 
-      <div style="border:1px solid #efefef; border-radius:8px; padding:14px; background:#fcfcfc;">
-        <h3 style="margin:0 0 6px 0; font-size:15px;">3) Turns</h3>
-        <p style="margin:0; color:#222;">
-          Turns determine when a player is allowed to pick. Depending on session settings, a turn may require a deliberate “Start Turn / Start Play”
-          action before picks are allowed.
-        </p>
-      </div>
+      <h3 style="margin:0 0 6px 0; font-size:15px;">3) Turns</h3>
+      <p style="margin:0;">
+        Turns determine when a player is allowed to pick. Depending on session settings, a turn may require a deliberate “Start Turn / Start Play” action
+        before picks are allowed.
+      </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="timing-modes" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">Two Timing Modes</h2>
       <p style="margin:0 0 12px 0;">
         Bracket supports two timing philosophies. Both are valid; they measure different cognitive traits and different styles of decision-making.
       </p>
 
-      <div style="border-left:4px solid #111; padding-left:12px; margin:0 0 14px 0;">
-        <h3 style="margin:0 0 4px 0; font-size:15px;">Mode 1: Game Strategy Thinking (Live)</h3>
-        <p style="margin:0; color:#222;">
-          Designed for co-present play where time pressure is part of the signal. The clock runs after the turn starts, and timing reflects pressure
-          handling, pattern recognition, and tactical confidence.
-        </p>
-      </div>
+      <h3 style="margin:0 0 6px 0; font-size:15px;">Mode 1: Game Strategy Thinking (Live)</h3>
+      <p style="margin:0 0 12px 0;">
+        Designed for co-present play where time pressure is part of the signal. The clock runs after the turn starts, and timing reflects pressure handling,
+        pattern recognition, and tactical confidence.
+      </p>
 
-      <div style="border-left:4px solid #111; padding-left:12px;">
-        <h3 style="margin:0 0 4px 0; font-size:15px;">Mode 2: Friends &amp; Family Game Play (Async)</h3>
-        <p style="margin:0; color:#222;">
-          Designed for distributed play where players engage when available. Active time can be tracked as accumulated engagement rather than a strict
-          countdown, allowing deliberate reasoning while still preserving measurable patterns over repeated sessions.
-        </p>
-      </div>
+      <h3 style="margin:0 0 6px 0; font-size:15px;">Mode 2: Friends &amp; Family Game Play (Async)</h3>
+      <p style="margin:0;">
+        Designed for distributed play where players engage when available. Active time can be tracked as accumulated engagement rather than a strict countdown,
+        allowing deliberate reasoning while still preserving measurable patterns over repeated sessions.
+      </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="why-time-matters" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">Why Time Matters</h2>
       <p style="margin:0;">
-        Time is not treated as punishment in Bracket. Time is treated as information. Across multiple sessions, the platform can observe whether a
-        player consistently stalls, rushes, or stabilizes their timing as judgment improves. This helps separate repeatable decision quality from
-        one-off outcomes.
+        Time is not treated as punishment in Bracket. Time is treated as information. Across multiple sessions, the platform can observe whether a player
+        consistently stalls, rushes, or stabilizes their timing as judgment improves. This helps separate repeatable decision quality from one-off outcomes.
       </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="xp-learning-ranking" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">XP, Learning, and Ranking</h2>
       <p style="margin:0 0 10px 0;">
-        Bracket contributes to XP as a learning signal. XP is not money and is not intended to function like money. It is a structured record of
-        participation, completion, consistency, and decision behavior over time.
+        Bracket contributes to XP as a learning signal. XP is not money and is not intended to function like money. It is a structured record of participation,
+        completion, consistency, and decision behavior over time.
       </p>
-      <p style="margin:0;">
-        Over time, Bracket can contribute evidence to:
-      </p>
+      <p style="margin:0;">Over time, Bracket can contribute evidence to:</p>
       <ul style="margin:10px 0 0 0; padding-left:18px;">
         <li>Progress summaries</li>
         <li>Consistency and reliability signals</li>
@@ -190,15 +196,15 @@
       </ul>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="platform-connection" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">How Bracket Connects to XPGuess</h2>
       <p style="margin:0;">
-        Bracket is a repeatable decision format inside a broader system that documents improvement in a governed, reviewable way. Sessions provide a
-        compact structure for turning gameplay into learning data—without relying on popularity metrics or unverifiable claims.
+        Bracket is a repeatable decision format inside a broader system that documents improvement in a governed, reviewable way. Sessions provide a compact
+        structure for turning gameplay into learning data—without relying on popularity metrics or unverifiable claims.
       </p>
     </section>
 
-    <section style="margin:22px 0;">
+    <section id="beta-scope" style="margin:22px 0;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">Beta Scope</h2>
       <p style="margin:0;">
         Bracket Beta is intentionally layered. Early releases focus on stable mechanics—turn gating, pick locking, timing modes, and auditability.
@@ -206,36 +212,86 @@
       </p>
     </section>
 
-    <!-- FAQ (aligned to previous Learn pages: short, direct, compliance-forward) -->
-    <section style="margin:26px 0 0 0; padding-top:18px; border-top:1px solid #eee;">
+    <section id="faq" style="margin:26px 0 0 0; padding-top:18px; border-top:1px solid #eee;">
       <h2 style="font-size:18px; margin:0 0 8px 0;">FAQ</h2>
 
-      <div style="margin-bottom:12px;">
-        <h3 style="margin:0 0 4px 0; font-size:15px;">Is Bracket gambling?</h3>
-        <p style="margin:0; color:#222;">No. Bracket is an educational simulation. There is no money wagering and no payouts.</p>
-      </div>
+      <h3 style="margin:0 0 4px 0; font-size:15px;">Is Bracket gambling?</h3>
+      <p style="margin:0 0 12px 0;">No. Bracket is an educational simulation. There is no money wagering and no payouts.</p>
 
-      <div style="margin-bottom:12px;">
-        <h3 style="margin:0 0 4px 0; font-size:15px;">Why does timing matter?</h3>
-        <p style="margin:0; color:#222;">
-          Timing creates measurable decision patterns. Over repeated play, it becomes a signal for discipline, pressure handling, and consistency.
-        </p>
-      </div>
+      <h3 style="margin:0 0 4px 0; font-size:15px;">Why does timing matter?</h3>
+      <p style="margin:0 0 12px 0;">
+        Timing creates measurable decision patterns. Over repeated play, it becomes a signal for discipline, pressure handling, and consistency.
+      </p>
 
-      <div>
-        <h3 style="margin:0 0 4px 0; font-size:15px;">What does XP represent?</h3>
-        <p style="margin:0; color:#222;">
-          XP represents structured learning signals—participation, completion, and consistency—rather than cash value.
-        </p>
-      </div>
+      <h3 style="margin:0 0 4px 0; font-size:15px;">What does XP represent?</h3>
+      <p style="margin:0;">
+        XP represents structured learning signals—participation, completion, and consistency—rather than cash value.
+      </p>
     </section>
 
-    <!-- Standard Learn footer (aligned with other pages) -->
-    <footer style="margin-top:26px; color:#666; font-size:12px;">
-      <p style="margin:0;">
-        XPGuess Learn — Educational content only. Not financial advice. Not gambling.
+    <hr style="border:none; border-top:1px solid #eaeaea; margin:22px 0;" />
+
+    <!-- Continue Learning (REQUIRED: matches base template) -->
+    <section aria-label="Continue Learning" style="margin:0;">
+      <h2 style="font-size:18px; margin:0 0 10px 0;">Continue Learning</h2>
+      <ul style="margin:0; padding-left:18px;">
+        <li><a href="https://learn.xpguess.com/" style="color:#111;">Learn Index</a></li>
+        <li><a href="https://learn.xpguess.com/how-xpguess-works.html" style="color:#111;">How XPGuess Works</a></li>
+        <li><a href="https://learn.xpguess.com/earn-xp.html" style="color:#111;">Earn XP on XPGuess</a></li>
+        <li><a href="https://learn.xpguess.com/football-transfer-system.html" style="color:#111;">Athlete Transfer &amp; Mobility Systems</a></li>
+        <li><a href="https://learn.xpguess.com/busking.html" style="color:#111;">Informal Performance &amp; Visibility Paths</a></li>
+        <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html" style="color:#111;">What XPGuess Is — and Is Not</a></li>
+        <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html" style="color:#111;">Secure Sports Analytics Infrastructure</a></li>
+        <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html" style="color:#111;">Why Most Athletes Don’t Go Pro</a></li>
+        <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html" style="color:#111;">Why Traditional Metrics Miss the Full Picture</a></li>
+        <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html" style="color:#111;">Fitness, Wellness, and Support Model</a></li>
+        <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html" style="color:#111;">Training, Fitness, and Wellness Infrastructure</a></li>
+        <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html" style="color:#111;">Why Fundamentals Matter in Youth Sports</a></li>
+        <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html" style="color:#111;">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+        <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html" style="color:#111;">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+        <li><a href="https://learn.xpguess.com/bracket.html" style="color:#111;">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+      </ul>
+
+      <p style="margin:12px 0 0 0;">
+        <a href="https://xpguess.com" style="color:#111;">Go to the XPGuess App</a>
       </p>
-    </footer>
+    </section>
+
+    <hr style="border:none; border-top:1px solid #eaeaea; margin:22px 0;" />
+
+    <!-- Compliance Notice (matches base template content) -->
+    <section aria-label="Compliance Notice" style="margin:0;">
+      <h2 style="font-size:18px; margin:0 0 8px 0;">Compliance Notice</h2>
+      <p style="margin:0; color:#222;">
+        XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider, or replace professional care.
+        All fitness and support tools exist for training documentation, reflection, and athlete protection.
+      </p>
+
+      <h3 style="margin:14px 0 6px 0; font-size:15px;">Terminology, Frameworks, and Foundational Work</h3>
+      <p style="margin:0 0 10px 0; color:#222;">
+        XPGuess — Extended Performance Guessing — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.
+      </p>
+      <p style="margin:0 0 10px 0; color:#222;">
+        Natural Technical Governance (NTG) documents training and participation using first principles rather than subjective opinion.
+      </p>
+      <p style="margin:0 0 10px 0; color:#222;">
+        The conceptual foundations derive from earlier technical work by Michael A. Piña, including biomechanical and developmental research.
+      </p>
+      <p style="margin:0 0 10px 0; color:#222;">
+        Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-the-basics.html" style="color:#111;">“Beginning and Staying with the Basics: Building from the Ground Up”</a>
+      </p>
+      <p style="margin:0 0 10px 0; color:#222;">
+        Additional work: <a href="https://www.amazon.com.mx/" style="color:#111;">Coach Teaches Animals: Gymnastics Stretching</a>
+      </p>
+      <p style="margin:0; color:#555; font-size:12px;">
+        XPGuess Learn content is educational, governance-focused, and non-commercial.
+      </p>
+    </section>
+
+    <p style="margin:18px 0 0 0; font-size:12px;">
+      <a href="#top" style="color:#111;">Back to top</a>
+    </p>
+
   </main>
 </body>
 </html>
