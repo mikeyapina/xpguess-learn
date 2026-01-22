@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Bracket: A Structured Prediction Game for Learning, XP, and Ranking | XPGuess Learn</title>
-  <meta name="description" content="Bracket is a structured prediction game inside XPGuess that captures decision quality over time through timing, pick locking, and repeatable sessions. Educational only. Not gambling." />
+  <meta name="description" content="Bracket is a structured prediction game inside XPGuess that evolves static brackets into a decision engine. Timing, pick locking, and repeatable sessions generate XP learning signals. Educational only. Not gambling." />
   <link rel="canonical" href="https://learn.xpguess.com/bracket.html" />
 
   <meta name="robots" content="index,follow" />
@@ -14,13 +14,13 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Bracket: A Structured Prediction Game for Learning, XP, and Ranking" />
-  <meta property="og:description" content="Bracket is a structured prediction game inside XPGuess that captures decision quality over time through timing, pick locking, and repeatable sessions. Educational only. Not gambling." />
+  <meta property="og:description" content="Bracket is a structured prediction game inside XPGuess that evolves static brackets into a decision engine. Timing, pick locking, and repeatable sessions generate XP learning signals. Educational only. Not gambling." />
   <meta property="og:url" content="https://learn.xpguess.com/bracket.html" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bracket: A Structured Prediction Game for Learning, XP, and Ranking" />
-  <meta name="twitter:description" content="Bracket captures decision quality over time through timing, pick locking, and repeatable sessions. Educational only. Not gambling." />
+  <meta name="twitter:description" content="Bracket evolves static brackets into a decision engine. Timing, pick locking, and repeatable sessions generate XP learning signals. Educational only. Not gambling." />
 
   <style>
     body{
@@ -80,7 +80,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "Bracket: A Structured Prediction Game for Learning, XP, and Ranking | XPGuess Learn",
-    "description": "Bracket is a structured prediction game inside XPGuess that captures decision quality over time through timing, pick locking, and repeatable sessions. Educational only. Not gambling.",
+    "description": "Bracket is a structured prediction game inside XPGuess that evolves static brackets into a decision engine. Timing, pick locking, and repeatable sessions generate XP learning signals. Educational only. Not gambling.",
     "inLanguage": "en",
     "isAccessibleForFree": true,
     "mainEntityOfPage": {
@@ -121,15 +121,17 @@
       <ul>
         <li><a href="#what">1. What Bracket Is</a></li>
         <li><a href="#why">2. Why Bracket Exists</a></li>
-        <li><a href="#not-gambling">3. Bracket Is Not Gambling</a></li>
-        <li><a href="#how">4. How Bracket Works</a></li>
-        <li><a href="#timing">5. Two Timing Modes</a></li>
-        <li><a href="#time-matters">6. Why Time Matters</a></li>
-        <li><a href="#xp">7. XP, Learning, and Ranking</a></li>
-        <li><a href="#connects">8. How Bracket Connects to XPGuess</a></li>
-        <li><a href="#beta">9. Beta Scope</a></li>
-        <li><a href="#compliance">9. Compliance Notice</a></li>
-        <li><a href="#terms">10. Terminology, Frameworks, and Foundational Work</a></li>
+        <li><a href="#static-to-engine">3. From Static Brackets to Decision Engines</a></li>
+        <li><a href="#diagram">4. Diagram: Static Bracket → Decision Engine</a></li>
+        <li><a href="#not-gambling">5. Bracket Is Not Gambling</a></li>
+        <li><a href="#how">6. How Bracket Works</a></li>
+        <li><a href="#timing">7. Two Timing Modes</a></li>
+        <li><a href="#time-matters">8. Why Time Matters</a></li>
+        <li><a href="#xp">9. XP, Learning, and Ranking</a></li>
+        <li><a href="#connects">10. How Bracket Connects to XPGuess</a></li>
+        <li><a href="#beta">11. Beta Scope</a></li>
+        <li><a href="#compliance">12. Compliance Notice</a></li>
+        <li><a href="#terms">13. Terminology, Frameworks, and Foundational Work</a></li>
       </ul>
     </div>
 
@@ -157,8 +159,110 @@
       </p>
     </section>
 
+    <section id="static-to-engine">
+      <h2>3. From Static Brackets to Decision Engines</h2>
+      <p>
+        Traditional bracket games are static. A user submits a pick, waits for the outcome, and receives points. Once the event ends, the data expires.
+        No learning signal is preserved, and no insight is gained into <em>how</em> decisions were made.
+      </p>
+      <p>
+        Bracket by XPGuess replaces this model with a <strong>decision engine</strong>. Instead of measuring outcomes alone, the system measures <strong>decision behavior</strong>.
+        Each pick occurs inside a defined turn, governed by time, mode, and context. Whether players are competing live or participating asynchronously, the system captures how long they think,
+        when they act, and how consistently they engage.
+      </p>
+      <p>
+        This transforms bracket play from a one-time prediction into a <strong>repeatable cognitive exercise</strong>—one that generates XP, supports ranking intelligence,
+        and contributes to a persistent learning profile across the platform.
+      </p>
+      <ul>
+        <li>Static brackets ask <em>who you picked</em>.</li>
+        <li>Decision engines measure <em>how you think</em>.</li>
+      </ul>
+    </section>
+
+    <section id="diagram">
+      <h2>4. Diagram: Static Bracket → Decision Engine</h2>
+      <p>
+        This diagram shows the category shift: from a one-time outcome record to a governed decision record that generates persistent learning signals.
+      </p>
+
+      <pre style="white-space:pre; overflow:auto; background:#f7f7f7; border:1px solid #eee; border-radius:8px; padding:14px 16px; font-size:13px; line-height:1.45; margin:0 0 12px 0;">
+┌─────────────────────┐
+│  STATIC BRACKET      │
+│  (Legacy Model)      │
+└─────────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  PICK WINNER         │
+│  (One-time input)    │
+└─────────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  GAME ENDS           │
+│  Points awarded      │
+└─────────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│  DATA EXPIRES        │
+│  (No memory)         │
+└─────────────────────┘
+
+==================== TRANSITION ====================
+
+┌──────────────────────────────┐
+│  DECISION ENGINE (XPGuess)    │
+└──────────────────────────────┘
+          │
+          ▼
+┌──────────────────────────────┐
+│  TURN START                   │
+│  • Live (chess-style clock)   │
+│  • Async (time accumulation)  │
+└──────────────────────────────┘
+          │
+          ▼
+┌──────────────────────────────┐
+│  STRATEGY WINDOW              │
+│  • Thinking time measured     │
+│  • Hesitation logged          │
+│  • Mode-aware behavior        │
+└──────────────────────────────┘
+          │
+          ▼
+┌──────────────────────────────┐
+│  PICK SUBMISSION              │
+│  • Locks decision             │
+│  • Captures context           │
+└──────────────────────────────┘
+          │
+          ▼
+┌──────────────────────────────┐
+│  XP + SIGNALS GENERATED       │
+│  • Participation              │
+│  • Timing discipline          │
+│  • Consistency                │
+└──────────────────────────────┘
+          │
+          ▼
+┌──────────────────────────────┐
+│  PERSISTENT PROFILE VALUE     │
+│  • Learning record            │
+│  • Ranking context            │
+│  • CV / intelligence signal   │
+└──────────────────────────────┘
+      </pre>
+
+      <p style="margin:0;">
+        This diagram answers three implementation questions at once: why the timer matters (it is data), why async play is valid (it reveals different behavior),
+        and why XP can be earned without “winning” (learning signals are not identical to outcomes).
+      </p>
+    </section>
+
     <section id="not-gambling">
-      <h2>3. Bracket Is Not Gambling</h2>
+      <h2>5. Bracket Is Not Gambling</h2>
       <p>
         Bracket does not involve money wagers, cash prizes, odds-setting, or payout mechanics. Results generate XP as a learning and progression signal.
         XP is not currency and is not a cash proxy; it is a structured record of participation and decision patterns.
@@ -166,46 +270,46 @@
     </section>
 
     <section id="how">
-      <h2>4. How Bracket Works</h2>
+      <h2>6. How Bracket Works</h2>
       <p>
         Bracket play is organized into sessions, matches, and turns. These terms matter because they make gameplay auditable and comparable across time.
       </p>
 
-      <h3>4.1 Sessions</h3>
+      <h3>6.1 Sessions</h3>
       <p>
         A session groups one or more matches under a single ruleset. Sessions can be solo (practice) or multi-player (head-to-head) and may be shared by invite code.
       </p>
 
-      <h3>4.2 Matches</h3>
+      <h3>6.2 Matches</h3>
       <p>
         Each match is a decision point: pick one outcome (for example, home vs away). Picks lock when submitted and are recorded for review.
       </p>
 
-      <h3>4.3 Turns</h3>
+      <h3>6.3 Turns</h3>
       <p>
         Turns determine when a player is allowed to pick. Depending on session settings, a turn may require a deliberate “Start Turn / Start Play” action before picks are allowed.
       </p>
     </section>
 
     <section id="timing">
-      <h2>5. Two Timing Modes</h2>
+      <h2>7. Two Timing Modes</h2>
       <p>
         Bracket supports two timing philosophies. Both are valid; they measure different cognitive traits and different styles of decision-making.
       </p>
 
-      <h3>5.1 Mode 1: Game Strategy Thinking (Live)</h3>
+      <h3>7.1 Mode 1: Game Strategy Thinking (Live)</h3>
       <p>
         Designed for co-present play where time pressure is part of the signal. The clock runs after the turn starts, and timing reflects pressure handling, pattern recognition, and tactical confidence.
       </p>
 
-      <h3>5.2 Mode 2: Friends &amp; Family Game Play (Async)</h3>
+      <h3>7.2 Mode 2: Friends &amp; Family Game Play (Async)</h3>
       <p>
         Designed for distributed play where players engage when available. Active time can be tracked as accumulated engagement rather than a strict countdown, allowing deliberate reasoning while still preserving measurable patterns over repeated sessions.
       </p>
     </section>
 
     <section id="time-matters">
-      <h2>6. Why Time Matters</h2>
+      <h2>8. Why Time Matters</h2>
       <p>
         Time is not treated as punishment in Bracket. Time is treated as information. Across multiple sessions, the platform can observe whether a player consistently stalls, rushes, or stabilizes their timing as judgment improves.
         This helps separate repeatable decision quality from one-off outcomes.
@@ -213,7 +317,7 @@
     </section>
 
     <section id="xp">
-      <h2>7. XP, Learning, and Ranking</h2>
+      <h2>9. XP, Learning, and Ranking</h2>
       <p>
         Bracket contributes to XP as a learning signal. XP is not money and is not intended to function like money. It is a structured record of participation, completion, consistency, and decision behavior over time.
       </p>
@@ -227,14 +331,14 @@
     </section>
 
     <section id="connects">
-      <h2>8. How Bracket Connects to XPGuess</h2>
+      <h2>10. How Bracket Connects to XPGuess</h2>
       <p>
         Bracket is a repeatable decision format inside a broader system that documents improvement in a governed, reviewable way. Sessions provide a compact structure for turning gameplay into learning data—without relying on popularity metrics or unverifiable claims.
       </p>
     </section>
 
     <section id="beta">
-      <h2>9. Beta Scope</h2>
+      <h2>11. Beta Scope</h2>
       <p>
         Bracket Beta is intentionally layered. Early releases focus on stable mechanics—turn gating, pick locking, timing modes, and auditability. Expanded leagues, team pools, and multi-round progression can be added after the core decision engine is validated.
       </p>
@@ -269,7 +373,7 @@
     <hr>
 
     <section id="compliance">
-      <h2>9. Compliance Notice</h2>
+      <h2>12. Compliance Notice</h2>
       <p>
         XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider, or replace professional care.
         All fitness and support tools exist for training documentation, reflection, and athlete protection.
@@ -277,7 +381,7 @@
     </section>
 
     <section id="terms">
-      <h2>10. Terminology, Frameworks, and Foundational Work</h2>
+      <h2>13. Terminology, Frameworks, and Foundational Work</h2>
       <p>
         <strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how athletic outcomes, development paths, and professional decisions unfold over time.
         The term refers to structured learning through verified scenarios and governed data, not speculation, gambling, or prediction for financial gain.
@@ -315,3 +419,4 @@
   </main>
 </body>
 </html>
+```0
