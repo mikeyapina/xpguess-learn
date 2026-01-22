@@ -94,21 +94,53 @@
 </head>
 
 <body>
-  <main>
-    <a id="top"></a>
+<main>
+  <a id="top"></a>
 
-    <!-- LOGO (LOCKED TO TEMPLATE) -->
-    <div style="margin-bottom:24px;">
-      <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
-    </div>
-    
-    <!-- LOGO (LOCKED TO TEMPLATE) -->
-    <div style="margin-bottom:24px;">
-      <img src="NTGguess-xpguess-bracket-game-transparent.png" alt="XPGuess ntgguess bracket game logo" style="height:240px; width:auto;">
-    </div>
-    
+  <!-- LOGO ROW -->
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:32px;
+    margin-bottom:32px;
+    flex-wrap:wrap;
+  ">
 
-    <hr>
+    <!-- XPGuess Logo (LOCKED at 240px) -->
+    <img
+      src="XPGuess-black.png"
+      alt="XPGuess logo"
+      style="
+        height:240px;
+        width:auto;
+        max-width:100%;
+        object-fit:contain;
+      "
+    >
+
+    <!-- NTG Guess Bracket Logo (OPTICALLY NORMALIZED) -->
+    <div style="
+      height:240px;
+      display:flex;
+      align-items:center;
+    ">
+      <img
+        src="NTGguess-xpguess-bracket-game-transparent.png"
+        alt="NTG Guess Bracket logo"
+        style="
+          height:200px;
+          width:auto;
+          max-width:100%;
+          object-fit:contain;
+        "
+      >
+    </div>
+
+  </div>
+
+  <hr>
+</main>
+
 
     <!-- HEADER (MATCH TEMPLATE LAYOUT) -->
     <header style="margin-bottom:22px;">
