@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://learn.xpguess.com/sitemap.xml
+Sitemap: https://xpguess.com/sitemap.xml
