@@ -2,18 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- ========================= -->
-  <!-- LEARN ROOT (HIGHEST)      -->
+  <!-- LEARN ROOT                -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- ========================= -->
-  <!-- CORE LEARN (DEFINITION)   -->
+  <!-- CORE LEARN DEFINITIONS    -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/how-xpguess-works.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -36,17 +38,57 @@
   </url>
 
   <!-- ========================= -->
-  <!-- NEW LEARN PAGES           -->
+  <!-- MIC MODE / LANGUAGE       -->
   <!-- ========================= -->
+
   <url>
-    <loc>https://learn.xpguess.com/capturelabz.html</loc>
-    <lastmod>2026-03-11</lastmod>
+    <loc>https://learn.xpguess.com/mic-mode.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/mic-mode-language-learning.html</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://learn.xpguess.com/mic-mode.html</loc>
+    <loc>https://learn.xpguess.com/voice-language-game.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/nahuatl-language-audio-dataset.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/mixteco-language-dataset.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://learn.xpguess.com/indigenous-language-speech-data.html</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========================= -->
+  <!-- NEW LEARN PAGES           -->
+  <!-- ========================= -->
+
+  <url>
+    <loc>https://learn.xpguess.com/capturelabz.html</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -60,8 +102,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- GAMES / DECISION ENGINE   -->
+  <!-- GAME SYSTEM               -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/bracket.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -72,6 +115,7 @@
   <!-- ========================= -->
   <!-- GOVERNANCE / SAFETY       -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -94,8 +138,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- SYSTEMS / INFRASTRUCTURE  -->
+  <!-- SYSTEMS                   -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/secure-sports-analytics-infrastructure.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -111,8 +156,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- TRAINING / DEVELOPMENT    -->
+  <!-- TRAINING                  -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -135,8 +181,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- CONTEXT / ANALYSIS        -->
+  <!-- ANALYSIS                  -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/why-most-athletes-dont-go-pro.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -152,8 +199,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- INFORMAL / VISIBILITY     -->
+  <!-- INFORMAL VISIBILITY       -->
   <!-- ========================= -->
+
   <url>
     <loc>https://learn.xpguess.com/busking.html</loc>
     <lastmod>2026-01-23</lastmod>
@@ -162,8 +210,9 @@
   </url>
 
   <!-- ========================= -->
-  <!-- PUBLIC APP (OUTSIDE LEARN) -->
+  <!-- XPGuess APP               -->
   <!-- ========================= -->
+
   <url>
     <loc>https://xpguess.com/</loc>
     <lastmod>2026-01-23</lastmod>
@@ -190,6 +239,31 @@
     <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+  </url>
+
+  <!-- ========================= -->
+  <!-- MIC MODE APP              -->
+  <!-- ========================= -->
+
+  <url>
+    <loc>https://xpguess.com/mic-mode</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://xpguess.com/mic-mode/packs</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://xpguess.com/language-contribute</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
