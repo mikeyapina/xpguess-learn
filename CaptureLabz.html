@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3HB79N4XWD');
+  </script>
 
-  gtag('config', 'G-3HB79N4XWD');
-</script>  
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- PAGE META -->
-  <title>CaptureLabz: Ethical Voice Dataset Infrastructure for AI, Translation, and Language Preservation | XPGuess Learn</title>
-  <meta name="description" content="CaptureLabz™ is the XPGuess framework for structured voice dataset creation, contributor recording workflows, AI speech training data, translation support, and indigenous language preservation." />
+  <title>CaptureLabz: Structured Voice Dataset Infrastructure for AI, Translation, and Language Preservation | XPGuess Learn</title>
+  <meta name="description" content="CaptureLabz™ is the XPGuess framework for structured voice dataset creation, contributor recording workflows, speech-data governance, AI training support, translation pipelines, and indigenous language preservation." />
 
   <!-- CANONICAL -->
   <link rel="canonical" href="https://learn.xpguess.com/capturelabz.html" />
@@ -24,50 +23,80 @@
   <meta name="robots" content="index,follow" />
   <meta name="googlebot" content="index,follow" />
 
+  <!-- OPTIONAL SOCIAL META -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="CaptureLabz: Structured Voice Dataset Infrastructure for AI, Translation, and Language Preservation" />
+  <meta property="og:description" content="CaptureLabz™ is the XPGuess framework for structured voice dataset creation, contributor recording workflows, speech-data governance, AI training support, translation pipelines, and indigenous language preservation." />
+  <meta property="og:url" content="https://learn.xpguess.com/capturelabz.html" />
+  <meta property="og:site_name" content="XPGuess Learn" />
+
   <!-- TEMPLATE STYLES (DO NOT REMOVE) -->
   <style>
     :root { color-scheme: light; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:#fafafa; margin:0; padding:0; color:#111;
+      background:#fafafa;
+      margin:0;
+      padding:0;
+      color:#111;
     }
     main {
-      max-width:720px; margin:40px auto; background:#fff;
-      padding:32px; border-radius:8px;
+      max-width:720px;
+      margin:40px auto;
+      background:#fff;
+      padding:32px;
+      border-radius:8px;
       box-shadow:0 2px 8px rgba(0,0,0,0.04);
     }
-    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
-    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
-    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
-    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
-    p, li{ color:#333; line-height:1.7; }
-    a{ color:#111; text-decoration:underline; }
-    a:visited{ color:#111; }
-    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
-    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
-    .callout{
+    hr { border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1 { margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2 { margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3 { margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li { color:#333; line-height:1.7; }
+    a { color:#111; text-decoration:underline; }
+    a:visited { color:#111; }
+    .kicker { margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede { margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout {
       padding:12px 14px;
       background:#f4f6ff;
       border:1px solid #e4e8ff;
       border-radius:8px;
     }
-    .onpage{
+    .onpage {
       background:#fafafa;
       border:1px solid #eee;
       border-radius:8px;
       padding:14px 16px;
     }
-    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
-    .footer-note{ font-size:12px; color:#777; }
+    .onpage ul { margin:10px 0 0 0; padding-left:18px; }
+    .footer-note { font-size:12px; color:#777; }
     code, pre {
-      background: #f7f7f7;
-      border-radius: 6px;
+      background:#f7f7f7;
+      border-radius:6px;
     }
     pre {
-      padding: 14px;
-      overflow-x: auto;
-      line-height: 1.5;
-      font-size: 13px;
+      padding:14px;
+      overflow-x:auto;
+      line-height:1.5;
+      font-size:13px;
+    }
+    table {
+      width:100%;
+      border-collapse:collapse;
+      margin:14px 0;
+      font-size:14px;
+    }
+    th, td {
+      border:1px solid #eaeaea;
+      padding:10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th {
+      background:#fafafa;
+      color:#222;
     }
   </style>
 
@@ -89,8 +118,8 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "CaptureLabz: Ethical Voice Dataset Infrastructure for AI, Translation, and Language Preservation | XPGuess Learn",
-    "description": "CaptureLabz™ is the XPGuess framework for structured voice dataset creation, contributor recording workflows, AI speech training data, translation support, and indigenous language preservation.",
+    "headline": "CaptureLabz: Structured Voice Dataset Infrastructure for AI, Translation, and Language Preservation | XPGuess Learn",
+    "description": "CaptureLabz™ is the XPGuess framework for structured voice dataset creation, contributor recording workflows, speech-data governance, AI training support, translation pipelines, and indigenous language preservation.",
     "inLanguage": "en",
     "isAccessibleForFree": true,
     "mainEntityOfPage": {
@@ -107,7 +136,7 @@
       "name": "XPGuess Learn"
     },
     "datePublished": "2026-03-11",
-    "dateModified": "2026-03-11"
+    "dateModified": "2026-03-14"
   }
   </script>
 </head>
@@ -125,9 +154,9 @@
 
   <!-- HEADER -->
   <header style="margin-bottom:22px;">
-    <p class="kicker">AI speech datasets • translation infrastructure • contributor recording systems • indigenous language preservation</p>
-    <h1>CaptureLabz™: Ethical Voice Dataset Infrastructure for AI, Translation, and Language Preservation</h1>
-    <p class="lede">CaptureLabz™ is the structured voice-data capture framework inside the XPGuess ecosystem. It is designed to support high-quality speech dataset creation for AI training, multilingual translation, voice interfaces, and underrepresented language preservation through controlled prompts, contributor workflows, reference recordings, and metadata-rich collection logic.</p>
+    <p class="kicker">speech datasets • AI training data • contributor workflows • translation infrastructure • indigenous language preservation</p>
+    <h1>CaptureLabz™: Structured Voice Dataset Infrastructure for AI, Translation, and Language Preservation</h1>
+    <p class="lede">CaptureLabz™ is the structured voice-data framework inside the XPGuess ecosystem. It is designed to support speech dataset creation, contributor recording workflows, metadata-rich organization, translation support, and long-term language preservation through controlled prompts, defined recording slots, and traceable collection logic.</p>
   </header>
 
   <!-- ON THIS PAGE -->
@@ -136,6 +165,7 @@
     <ul>
       <li><a href="#what-is-capturelabz">What CaptureLabz is</a></li>
       <li><a href="#why-it-exists">Why it exists</a></li>
+      <li><a href="#voice-dataset-ecosystem">CaptureLabz in the voice dataset ecosystem</a></li>
       <li><a href="#core-architecture">Core architecture</a></li>
       <li><a href="#recording-flow">How the recording flow works</a></li>
       <li><a href="#dataset-value">Why this dataset structure has commercial value</a></li>
@@ -152,20 +182,62 @@
   <!-- MAIN CONTENT -->
   <section id="what-is-capturelabz">
     <h2>What CaptureLabz™ Is</h2>
-    <p>CaptureLabz™ is a framework for collecting, structuring, and organizing voice recordings in a way that is useful for artificial intelligence systems. Instead of treating recording as a loose upload process, CaptureLabz standardizes what is said, how it is recorded, how speakers are identified, and how metadata is attached. The goal is to produce recordings that are useful not only for storage, but for real model training, benchmarking, quality review, translation, and enterprise dataset licensing.</p>
-    <p>In practice, that means a language pack can be created with reference prompts, approved pronunciation, contributor submission flows, and organized exports that can support ASR systems, speech translation systems, voice assistant training, and language documentation efforts.</p>
+    <p>CaptureLabz™ is a framework for collecting, structuring, and organizing voice recordings in a way that is useful for artificial intelligence systems, speech workflows, and language-resource development. Instead of treating recording as a loose upload process, CaptureLabz standardizes what is said, how it is recorded, how contributors are routed, and how metadata is attached. The goal is to produce recordings that are useful not only for storage, but for model training, benchmarking preparation, quality review, translation support, archive-building, and commercial dataset packaging.</p>
+    <p>In practice, that means a language pack can be created with reference prompts, approved pronunciation, contributor submission flows, slot-based recording structures, and organized export pathways that support ASR systems, speech translation systems, voice assistant training, pronunciation review, and language documentation efforts.</p>
   </section>
 
   <hr>
 
   <section id="why-it-exists">
     <h2>Why It Exists</h2>
-    <p>Most speech data in the market is weak in one of four places: the recording quality is inconsistent, the speaker identity is poorly tracked, the prompt structure is loose, or the legal provenance is unclear. Those problems reduce usefulness for researchers and create risk for commercial buyers. CaptureLabz was designed to solve that by treating data capture as infrastructure rather than as a simple media upload feature.</p>
-    <p>The framework also responds to a larger gap: many languages, especially indigenous and regionally underrepresented languages across Mexico and the Americas, are still missing from modern AI systems because there are too few structured audio datasets available for model training. CaptureLabz provides a path to build those datasets in a disciplined way.</p>
+    <p>Much of the voice data available in the market is weak in one or more critical places: recording quality may be inconsistent, prompt structure may be loose, contributor identity may be weakly linked, or legal provenance may be unclear. Those issues reduce research usefulness and create risk for commercial buyers. CaptureLabz was designed to address that gap by treating dataset capture as infrastructure rather than as a simple media upload feature.</p>
+    <p>The framework also responds to a larger structural problem: many languages, especially indigenous and regionally underrepresented languages across Mexico and the Americas, still have very limited structured speech resources available for modern AI use. CaptureLabz provides a pathway to build those resources in a more disciplined, reusable, and traceable way.</p>
 
     <div class="callout">
-      <strong>Core idea:</strong> a recording becomes far more valuable when it is attached to a verified prompt, a known slot type, a known contributor path, and reusable metadata.
+      <strong>Core idea:</strong> a recording becomes more valuable when it is attached to a verified prompt, a known slot type, contributor context, and reusable metadata.
     </div>
+  </section>
+
+  <hr>
+
+  <section id="voice-dataset-ecosystem">
+    <h2>CaptureLabz™ in the Voice Dataset Ecosystem</h2>
+    <p>Speech data tools generally fall into a few categories: open community datasets, benchmark corpora, enterprise collection vendors, cloud speech platforms, and internal collection systems. CaptureLabz occupies a distinct role within that landscape. It is best understood as a structured dataset infrastructure layer focused on reproducibility, prompt discipline, metadata organization, and governance over how voice data is collected.</p>
+    <p>That means CaptureLabz is not positioned as a direct replacement for every open dataset or every outsourced data vendor. Instead, it is designed for teams that want stronger control over how data is gathered, reviewed, organized, and documented.</p>
+
+    <table aria-label="Voice dataset ecosystem comparison">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Typical Focus</th>
+          <th>Where CaptureLabz Differs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Open community datasets</td>
+          <td>Broad volunteer contribution and open access</td>
+          <td>Stronger emphasis on controlled structure, provenance, and project-specific dataset design</td>
+        </tr>
+        <tr>
+          <td>Benchmark datasets</td>
+          <td>Standardized corpora for model comparison</td>
+          <td>Designed to create new datasets rather than only consume existing benchmarks</td>
+        </tr>
+        <tr>
+          <td>Enterprise collection vendors</td>
+          <td>Managed scale, outsourced project execution</td>
+          <td>Keeps collection methodology and governance closer to the organization running the project</td>
+        </tr>
+        <tr>
+          <td>Cloud speech platforms</td>
+          <td>Model hosting, APIs, speech services</td>
+          <td>Focuses upstream on the dataset creation pipeline itself</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>For that reason, CaptureLabz is especially relevant when an organization needs custom language coverage, project-specific controls, or documentation strong enough to support research integrity, procurement review, or internal governance standards.</p>
   </section>
 
   <hr>
@@ -184,22 +256,22 @@
       <li>Metadata such as speaker, dialect, recording conditions, timestamps, and status</li>
     </ul>
 
-    <p>This architecture allows the same dataset to be useful in multiple downstream contexts: training, evaluation, phonetic review, translation support, pronunciation comparison, and future benchmark publication.</p>
+    <p>This architecture allows the same dataset to be useful in multiple downstream contexts, including model training, evaluation, phonetic review, translation support, pronunciation comparison, and later benchmark publication.</p>
   </section>
 
   <hr>
 
   <section id="recording-flow">
     <h2>How the Recording Flow Works</h2>
-    <p>CaptureLabz is built around a guided contributor flow. A contributor receives a specific pack, hears or reviews a reference version, and records into the correct slot. Those slots are intentionally structured. For example, one pack may request a close reference recording, a slow version, a target-language reference, and a target-language slow version. Another pack may require those same four recordings plus far-field versions of each.</p>
-    <p>This is important because the capture flow is not just collecting audio. It is building a machine-readable asset library where each file has meaning. The difference between a reference slot and a far-field slot is not cosmetic. It reflects a future training or evaluation use case.</p>
+    <p>CaptureLabz is built around a guided contributor flow. A contributor receives a specific pack, hears or reviews a reference version, and records into the correct slot. Those slots are intentionally structured. For example, one pack may request a close reference recording, a slow version, a target-language reference, and a target-language slow version. Another pack may require those same four recordings plus far-field variants.</p>
+    <p>This matters because the capture flow is not simply collecting audio. It is building a machine-readable asset library where each file has a defined purpose. The difference between a reference slot and a far-field slot is not cosmetic. It reflects a later training, evaluation, or product use case.</p>
 
     <h3>Examples of slot logic</h3>
     <ul>
-      <li><strong>Reference:</strong> the approved pronunciation baseline</li>
+      <li><strong>Reference:</strong> approved pronunciation baseline</li>
       <li><strong>Slow:</strong> deliberate speech useful for alignment and clarity</li>
-      <li><strong>Far-field:</strong> speech recorded at a distance to simulate real device usage</li>
-      <li><strong>Contributor repeat:</strong> repetition by a different speaker for diversity and robustness</li>
+      <li><strong>Far-field:</strong> speech recorded at a distance to simulate device interaction</li>
+      <li><strong>Contributor repeat:</strong> repeated recording by a different speaker for diversity and robustness</li>
     </ul>
   </section>
 
@@ -207,16 +279,16 @@
 
   <section id="dataset-value">
     <h2>Why This Dataset Structure Has Commercial Value</h2>
-    <p>Raw audio alone is not enough. Buyers, researchers, and AI teams assign more value to speech data when the collection process is disciplined and when the dataset can be trusted without reverse-engineering the capture pipeline. CaptureLabz increases value because it creates recordings that are consistent, labeled, and exportable in a form that maps to real AI workflows.</p>
-    <p>That matters for enterprise leads because teams evaluating speech data often ask the same questions: Was the prompt controlled? Is the pronunciation anchored? Can speaker-level metadata be reviewed? Are there multiple recording conditions? Is the licensing chain clear? Can benchmark results be attached later? CaptureLabz is designed so the answer can be yes.</p>
+    <p>Raw audio alone is rarely enough. Buyers, researchers, and internal AI teams generally assign more value to speech data when the collection process is disciplined and when the dataset can be understood without reverse-engineering the capture pipeline. CaptureLabz increases value by producing recordings that are organized, labeled, and exportable in a format that maps more cleanly to real speech-data workflows.</p>
+    <p>That matters because technical and procurement teams often ask similar questions: Was the prompt controlled? Is the pronunciation anchored? Can contributor-level metadata be reviewed? Are there multiple recording conditions? Is provenance clear enough for responsible use? Can benchmark results be attached later? CaptureLabz is designed to support those kinds of requirements.</p>
 
     <h3>Why structured voice data is worth more</h3>
     <ul>
       <li>It is easier to train and evaluate models against it</li>
       <li>It is easier to reproduce results</li>
       <li>It reduces ambiguity around what each file represents</li>
-      <li>It improves licensing confidence for commercial buyers</li>
-      <li>It makes underrepresented language datasets more credible</li>
+      <li>It supports stronger procurement and documentation confidence</li>
+      <li>It makes underrepresented language datasets more credible and reusable</li>
     </ul>
   </section>
 
@@ -224,11 +296,11 @@
 
   <section id="indigenous-languages">
     <h2>Why It Matters for Indigenous Languages</h2>
-    <p>Many indigenous languages are still largely absent from mainstream AI pipelines. That absence is not because the languages lack value. It is because the data has not been collected in a format that modern systems can readily use. CaptureLabz makes it possible to build structured speech resources for languages that have historically been left out of commercial and research datasets.</p>
-    <p>This has direct implications for language preservation, translation, educational tools, cultural continuity, and future voice technologies. A structured Nahuatl, Mixtec, Zapotec, or other indigenous-language pack is not just an archive. It can become training data, pronunciation evidence, educational material, and a foundation for later translation or recognition models.</p>
+    <p>Many indigenous languages remain largely absent from mainstream AI pipelines. That absence is not because the languages lack value. It is often because the data has not been collected in a format that modern systems can readily use. CaptureLabz makes it possible to build structured speech resources for languages that have historically been left out of commercial and research datasets.</p>
+    <p>This has direct implications for language preservation, translation tools, educational support, cultural continuity, and future voice technologies. A structured Nahuatl, Mixtec, Zapotec, or other indigenous-language pack is not just an archive. It can become training data, pronunciation evidence, educational material, and a foundation for later recognition or translation systems.</p>
 
     <div class="callout">
-      <strong>Preservation plus utility:</strong> when speech is collected with structure, it can help preserve language while also making that language usable inside modern AI systems.
+      <strong>Preservation plus utility:</strong> when speech is collected with structure, it can help preserve language while also making that language more usable inside modern AI systems.
     </div>
   </section>
 
@@ -236,8 +308,8 @@
 
   <section id="ethics-and-governance">
     <h2>Ethics, Consent, and Governance</h2>
-    <p>CaptureLabz is not only about technical quality. It is also about provenance and responsible capture. Voice data is sensitive, and the system must make clear what is being recorded, who provided it, how it may be used, and under what permissions it was collected. CaptureLabz is intended to support contributor-aware collection rather than anonymous extraction.</p>
-    <p>That means a strong implementation should include contributor identity handling, role-based controls, pack-based permissions, session tracking, and traceable relationships between the source prompt, the recording event, and the resulting file. The more transparent the capture chain, the stronger the dataset from both a legal and operational standpoint.</p>
+    <p>CaptureLabz is not only about technical quality. It is also about provenance and responsible capture. Voice data can be sensitive, and the system should make clear what is being recorded, who provided it, how it may be used, and under what permissions it was collected. CaptureLabz is intended to support contributor-aware collection rather than anonymous extraction.</p>
+    <p>In a stronger implementation, that means contributor identity handling, role-based controls, pack-based permissions, session tracking, and traceable relationships between the source prompt, the recording event, and the resulting file. The more transparent the capture chain, the stronger the dataset from both a legal and operational standpoint.</p>
 
     <h3>Governance goals</h3>
     <ul>
@@ -271,15 +343,16 @@
         pack002_word001_lang_slow_far.wav
 </code></pre>
 
-    <p>This kind of structure gives downstream users a clean starting point for benchmarking, training, validation splits, and quality assurance. It also aligns with the broader idea that each recording slot should communicate purpose, not just filename uniqueness.</p>
+    <p>This kind of structure gives downstream users a cleaner starting point for benchmarking, training, validation splits, and quality assurance. It also reinforces the broader idea that each recording slot should communicate purpose, not just filename uniqueness.</p>
   </section>
 
   <hr>
 
   <section id="xpguess-integration">
     <h2>How CaptureLabz™ Fits Inside XPGuess</h2>
-    <p>Within the broader XPGuess ecosystem, CaptureLabz is the voice and dataset capture layer. XPGuess provides the surrounding infrastructure such as contributor flow, session routing, pack management, validation views, and public or controlled collection paths. CaptureLabz gives that infrastructure a clear technical identity for the speech-data side of the platform.</p>
-    <p>This is strategically useful because it separates the brand of the dataset engine from the broader XPGuess learning and systems environment. In other words, XPGuess can remain the larger ecosystem while CaptureLabz becomes the named methodology and product layer for structured speech collection, language recording, and AI-ready voice capture.</p>
+    <p>Within the broader XPGuess ecosystem, CaptureLabz is the voice and dataset capture layer. XPGuess provides the surrounding infrastructure such as contributor flow, session routing, pack management, validation views, and public or controlled collection paths. CaptureLabz gives that infrastructure a clearer technical identity for the speech-data side of the platform.</p>
+    <p>This is strategically useful because it separates the dataset framework from the broader XPGuess learning and systems environment. In other words, XPGuess can remain the larger ecosystem while CaptureLabz becomes the named methodology and product layer for structured speech collection, language recording, and AI-ready voice capture.</p>
+    <p>Related systems inside this broader ecosystem include <a href="https://learn.xpguess.com/mic-mode.html">Mic Mode™</a> as a structured voice contribution layer and <a href="https://learn.xpguess.com/arteregistry.html">ArteRegistry</a> as a complementary rights and asset-positioning layer where relevant.</p>
   </section>
 
   <hr>
@@ -287,15 +360,15 @@
   <section id="trademark-note">
     <h2>Trademark and Naming Note</h2>
     <p><strong>CaptureLabz™</strong> is being used as a brand identifier for this structured voice dataset framework. The “™” symbol reflects a claimed mark. Formal trademark registration is a separate legal filing process and should be handled through the appropriate trademark authority and counsel if registration is desired.</p>
-    <p>From a publishing standpoint, using the name consistently across the Learn page, dataset pages, contributor flows, documentation, and future whitepapers helps establish market identity and product clarity.</p>
+    <p>The text of this page and other original authored documentation connected to the framework may also qualify for copyright protection as original written work. Consistent publication across Learn pages, product documentation, contributor flows, and supporting materials helps establish authorship, product identity, and public-facing continuity.</p>
   </section>
 
   <hr>
 
   <section>
     <h2>Conclusion</h2>
-    <p>CaptureLabz™ turns voice collection into infrastructure. Instead of treating recordings as loose media uploads, it frames them as structured assets with prompt alignment, contributor routing, metadata, and future AI value. That makes it useful for enterprise speech-data buyers, researchers, and preservation-driven language projects alike.</p>
-    <p>For XPGuess, this is more than branding. It is a way to present your voice-data and language-pack work as a coherent system with technical logic, commercial value, and long-term defensibility.</p>
+    <p>CaptureLabz™ turns voice collection into structured infrastructure. Instead of treating recordings as loose media uploads, it frames them as organized assets with prompt alignment, contributor routing, metadata, and future research or commercial value. That makes it relevant for speech-data buyers, internal AI teams, researchers, and preservation-driven language projects alike.</p>
+    <p>For XPGuess, this is more than branding. It is a way to present voice-data and language-pack work as a coherent system with technical logic, operational structure, and stronger long-term defensibility.</p>
   </section>
 
   <!-- ================= FOOTER ================= -->
@@ -307,6 +380,9 @@
     <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
     <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
     <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/capturelabz.html">CaptureLabz™</a></li>
+    <li><a href="https://learn.xpguess.com/mic-mode.html">Mic Mode™</a></li>
+    <li><a href="https://learn.xpguess.com/arteregistry.html">ArteRegistry</a></li>
     <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
     <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
     <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
@@ -320,7 +396,7 @@
     <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
     <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
     <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
-    </ul>
+  </ul>
 
   <p style="margin-top:32px;">
     <a href="https://xpguess.com">Go to the XPGuess App</a>
@@ -367,6 +443,8 @@
   <p style="margin-top:18px;">
     <a href="#top">Back to top</a>
   </p>
-<p><strong>Original framework publication:</strong> XPGuess Learn / 3MOF / Michael Ortega, March 11, 2026.</p></main>
+
+  <p><strong>Original framework publication:</strong> XPGuess Learn / 3MOF / Michael Ortega, March 11, 2026.</p>
+</main>
 </body>
 </html>
