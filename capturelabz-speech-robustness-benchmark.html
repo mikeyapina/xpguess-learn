@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3HB79N4XWD');
+</script>  
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- PAGE META -->
+  <title>CaptureLabz Speech Robustness Benchmark | XPGuess Learn</title>
+  <meta name="description" content="The CaptureLabz Speech Robustness Benchmark evaluates how speech recognition systems perform under realistic acoustic variation using structured multi-condition datasets for low-resource and underrepresented languages." />
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://learn.xpguess.com/capturelabz-speech-robustness-benchmark.html" />
+
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- TEMPLATE STYLES (DO NOT REMOVE) -->
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0; color:#111;
+    }
+    main {
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
+    .footer-note{ font-size:12px; color:#777; }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:14px 0 18px 0;
+      font-size:14px;
+    }
+    th, td{
+      border:1px solid #e8e8e8;
+      padding:10px 12px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#fafafa;
+      font-weight:600;
+      color:#111;
+    }
+  </style>
+
+  <!-- BREADCRUMB SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "CaptureLabz Speech Robustness Benchmark", "item": "https://learn.xpguess.com/capturelabz-speech-robustness-benchmark.html" }
+    ]
+  }
+  </script>
+
+  <!-- ARTICLE SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CaptureLabz Speech Robustness Benchmark | XPGuess Learn",
+    "description": "The CaptureLabz Speech Robustness Benchmark evaluates how speech recognition systems perform under realistic acoustic variation using structured multi-condition datasets for low-resource and underrepresented languages.",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://learn.xpguess.com/capturelabz-speech-robustness-benchmark.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "XPGuess",
+      "url": "https://xpguess.com"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "XPGuess Learn"
+    },
+    "datePublished": "2026-03-15",
+    "dateModified": "2026-03-15"
+  }
+  </script>
+</head>
+
+<body>
+<main>
+  <a id="top"></a>
+
+  <!-- LOGO -->
+  <div style="margin-bottom:24px;">
+    <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
+  </div>
+
+  <hr>
+
+  <!-- HEADER -->
+  <header style="margin-bottom:22px;">
+    <p class="kicker">CaptureLabz Research Infrastructure • AI Reliability • XPGuess Learn</p>
+    <h1>CaptureLabz Speech Robustness Benchmark</h1>
+    <p class="lede">The CaptureLabz Speech Robustness Benchmark measures how speech recognition systems perform when exposed to structured acoustic variation. It is designed to test whether multi-condition recordings improve model reliability under real-world distribution shift for low-resource and underrepresented languages.</p>
+  </header>
+
+  <!-- ON THIS PAGE -->
+  <section class="onpage" aria-label="On this page">
+    <strong>On this page</strong>
+    <ul>
+      <li><a href="#what-this-benchmark-measures">What This Benchmark Measures</a></li>
+      <li><a href="#the-problem-distribution-shift">The Problem: Distribution Shift</a></li>
+      <li><a href="#benchmark-design">Benchmark Design</a></li>
+      <li><a href="#evaluation-metrics">Evaluation Metrics</a></li>
+      <li><a href="#core-research-question">Core Research Question</a></li>
+      <li><a href="#research-applications">Research Applications</a></li>
+      <li><a href="#why-this-matters">Why This Matters</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- MAIN CONTENT -->
+
+  <section id="what-this-benchmark-measures">
+    <h2>What This Benchmark Measures</h2>
+    <p>The CaptureLabz Speech Robustness Benchmark is built to test whether speech recognition systems remain reliable when recording conditions change. Rather than relying only on ideal, close-microphone speech, the benchmark introduces structured variation in distance and pacing so researchers can measure how models behave when inputs become less controlled.</p>
+    <p>The goal is not just to collect more audio. The goal is to create a benchmark that helps determine whether a model can generalize outside of narrow training conditions.</p>
+  </section>
+
+  <hr>
+
+  <section id="the-problem-distribution-shift">
+    <h2>The Problem: Distribution Shift</h2>
+    <p>Most speech recognition systems are trained on recordings captured under relatively clean conditions. In practice, however, speech is often recorded farther from the microphone, in rooms with reverberation, in community spaces, or with more natural variations in delivery.</p>
+    <p>This gap between training conditions and deployment conditions is known as <strong>distribution shift</strong>. When the training data does not reflect the environments in which the model will actually be used, recognition quality often drops.</p>
+    <div class="callout">
+      <strong>Benchmark purpose:</strong> measure how much performance degrades under acoustic shift, and whether structured multi-condition training reduces that degradation.
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="benchmark-design">
+    <h2>Benchmark Design</h2>
+    <p>The benchmark compares models trained using conventional speech data structures with models trained using the CaptureLabz multi-condition protocol.</p>
+
+    <h3>Baseline Training Condition</h3>
+    <ul>
+      <li>Train speech recognition system using <strong>Close / Normal</strong> recordings only</li>
+      <li>Represents conventional clean-audio dataset logic</li>
+    </ul>
+
+    <h3>CaptureLabz Training Condition</h3>
+    <ul>
+      <li>Train using all four CaptureLabz recording conditions:</li>
+      <li><strong>Close / Normal</strong></li>
+      <li><strong>Close / Slow</strong></li>
+      <li><strong>Distance / Normal</strong></li>
+      <li><strong>Distance / Slow</strong></li>
+    </ul>
+
+    <p>Both models are then evaluated against held-out recordings collected under varied acoustic conditions, allowing condition-aware comparison.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Training Setup</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Close / Normal only</td>
+          <td>Represents narrow, conventional speech dataset design</td>
+        </tr>
+        <tr>
+          <td>All four CaptureLabz conditions</td>
+          <td>Tests whether acoustic diversity improves robustness</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr>
+
+  <section id="evaluation-metrics">
+    <h2>Evaluation Metrics</h2>
+    <p>The benchmark uses common speech recognition measures along with condition-aware analysis.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Word Error Rate (WER)</strong></td>
+          <td>Measures transcription accuracy by comparing predicted words against reference transcripts.</td>
+        </tr>
+        <tr>
+          <td><strong>Character Error Rate (CER)</strong></td>
+          <td>Measures transcription performance at the character level.</td>
+        </tr>
+        <tr>
+          <td><strong>Performance Degradation</strong></td>
+          <td>Measures how much model accuracy drops when moving from baseline conditions to shifted acoustic conditions.</td>
+        </tr>
+        <tr>
+          <td><strong>Condition Sensitivity</strong></td>
+          <td>Identifies which recording conditions produce the largest reliability loss.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr>
+
+  <section id="core-research-question">
+    <h2>Core Research Question</h2>
+    <div class="callout">
+      Do speech recognition models trained on structured multi-condition datasets generalize more reliably under acoustic variation than models trained only on conventional close-microphone recordings?
+    </div>
+    <p>This question turns CaptureLabz from a recording workflow into a testable research framework. Success would suggest that carefully designed acoustic variation can improve model reliability under real-world deployment conditions.</p>
+  </section>
+
+  <hr>
+
+  <section id="research-applications">
+    <h2>Research Applications</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Application Area</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Low-resource ASR</td>
+          <td>Training and evaluating speech models for languages with limited existing data</td>
+        </tr>
+        <tr>
+          <td>Robustness testing</td>
+          <td>Measuring how models behave under changes in recording conditions</td>
+        </tr>
+        <tr>
+          <td>Dataset design research</td>
+          <td>Studying which forms of acoustic variation most improve generalization</td>
+        </tr>
+        <tr>
+          <td>AI reliability research</td>
+          <td>Identifying failure patterns caused by narrow training distributions</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr>
+
+  <section id="why-this-matters">
+    <h2>Why This Matters</h2>
+    <p>Many underrepresented languages face two technical problems at once: too little speech data and too little acoustic diversity in the data that does exist. CaptureLabz is designed to address both problems by making multi-condition speech collection part of the dataset structure from the beginning.</p>
+    <p>In practical terms, the benchmark helps researchers test whether speech systems are merely accurate in ideal environments or whether they remain useful in realistic ones.</p>
+    <div class="callout">
+      <strong>CaptureLabz benchmark logic:</strong> community speech becomes research-ready data, and research-ready data becomes a way to measure AI reliability rather than simply archive recordings.
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+
+  <hr style="margin-top:32px;">
+
+  <h2>Continue Learning</h2>
+  <ul style="padding-left:18px; line-height:1.6;">
+    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+    <li><a href="https://learn.xpguess.com/capturelabz-recording-protocol.html">CaptureLabz Recording Protocol v1.0</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+    <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+    <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+  </ul>
+
+  <p style="margin-top:32px;">
+    <a href="https://xpguess.com">Go to the XPGuess App</a>
+  </p>
+
+  <h2>Compliance Notice</h2>
+  <p>
+    XPGuess is an educational platform. It does not provide medical services,
+    act as a healthcare provider, or replace professional care.
+    All fitness and support tools exist for training documentation,
+    reflection, and athlete protection.
+  </p>
+
+  <section aria-labelledby="terminology-provenance"
+           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+
+    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+
+    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+
+    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+
+    <p>
+      Reference:
+      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
+        “Beginning and Staying with the Basics: Building from the Ground Up”
+      </a>
+    </p>
+
+    <p>
+      Additional work:
+      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
+        Coach Teaches Animals: Gymnastics Stretching
+      </a>
+    </p>
+  </section>
+
+  <p class="footer-note" style="margin-top:32px;">
+    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  </p>
+
+  <p style="margin-top:18px;">
+    <a href="#top">Back to top</a>
+  </p>
+
+</main>
+</body>
+</html>
