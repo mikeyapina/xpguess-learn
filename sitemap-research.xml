@@ -4,21 +4,29 @@
   <url>
     <loc>https://learn.xpguess.com/capturelabz.html</loc>
     <lastmod>2026-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/capturelabz-recording-protocol.html</loc>
     <lastmod>2026-03-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/capturelabz-speech-robustness-benchmark.html</loc>
     <lastmod>2026-03-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
 
   <url>
     <loc>https://learn.xpguess.com/capturelabz-nahuatl-mixtec-pilot.html</loc>
     <lastmod>2026-03-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
 
 </urlset>
