@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3HB79N4XWD');
+</script>  
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- PAGE META -->
+  <title>CaptureLabz Recording Protocol v1.0 | XPGuess Learn</title>
+  <meta name="description" content="CaptureLabz Recording Protocol v1.0 explains the structured multi-condition speech dataset framework used to create research-ready voice data for low-resource and underrepresented languages." />
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://learn.xpguess.com/capturelabz-recording-protocol.html" />
+
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <!-- TEMPLATE STYLES (DO NOT REMOVE) -->
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0; color:#111;
+    }
+    main {
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
+    .footer-note{ font-size:12px; color:#777; }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:14px 0 18px 0;
+      font-size:14px;
+    }
+    th, td{
+      border:1px solid #e8e8e8;
+      padding:10px 12px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#f7f7f7;
+      color:#111;
+      font-weight:600;
+    }
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:13px;
+    }
+    pre{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px;
+      overflow-x:auto;
+      line-height:1.5;
+    }
+  </style>
+
+  <!-- BREADCRUMB SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "CaptureLabz Recording Protocol v1.0", "item": "https://learn.xpguess.com/capturelabz-recording-protocol.html" }
+    ]
+  }
+  </script>
+
+  <!-- ARTICLE SCHEMA -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CaptureLabz Recording Protocol v1.0 | XPGuess Learn",
+    "description": "CaptureLabz Recording Protocol v1.0 explains the structured multi-condition speech dataset framework used to create research-ready voice data for low-resource and underrepresented languages.",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://learn.xpguess.com/capturelabz-recording-protocol.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "XPGuess",
+      "url": "https://xpguess.com"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "XPGuess Learn"
+    },
+    "datePublished": "2026-03-15",
+    "dateModified": "2026-03-15"
+  }
+  </script>
+</head>
+
+<body>
+<main>
+  <a id="top"></a>
+
+  <!-- LOGO -->
+  <div style="margin-bottom:24px;">
+    <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
+  </div>
+
+  <hr>
+
+  <!-- HEADER -->
+  <header style="margin-bottom:22px;">
+    <p class="kicker">CaptureLabz Research Infrastructure • Voice Dataset Protocol • XPGuess Learn</p>
+    <h1>CaptureLabz Recording Protocol v1.0</h1>
+    <p class="lede">CaptureLabz is a structured speech dataset protocol designed to produce research-ready voice data for low-resource and underrepresented languages. This page documents the core recording logic, metadata structure, and benchmark concept used to evaluate speech-model reliability under real-world acoustic variation.</p>
+  </header>
+
+  <!-- ON THIS PAGE -->
+  <section class="onpage" aria-label="On this page">
+    <strong>On this page</strong>
+    <ul>
+      <li><a href="#what-it-is">What CaptureLabz Is</a></li>
+      <li><a href="#why-it-exists">Why This Protocol Exists</a></li>
+      <li><a href="#core-conditions">Core Recording Conditions</a></li>
+      <li><a href="#dataset-structure">Dataset Structure</a></li>
+      <li><a href="#benchmark">Speech Robustness Benchmark</a></li>
+      <li><a href="#pilot">Pilot Languages and Initial Use</a></li>
+      <li><a href="#why-researchers-care">Why Researchers Care</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- MAIN CONTENT -->
+
+  <section id="what-it-is">
+    <h2>What CaptureLabz Is</h2>
+    <p>CaptureLabz is not just a recording interface. It is a <strong>standardized speech dataset protocol and benchmark framework</strong> intended to help communities, researchers, and technical teams create more useful voice data for AI systems.</p>
+    <p>Most low-resource language efforts focus on preservation alone or collect audio in one narrow recording condition. CaptureLabz introduces a repeatable structure that combines <strong>controlled acoustic variation</strong>, <strong>documented metadata</strong>, and <strong>governance-aware collection logic</strong>.</p>
+    <div class="callout">
+      <strong>Core idea:</strong> the same word or phrase should not exist in only one recording condition. Real-world speech systems fail when they are trained only on clean, close-microphone audio.
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="why-it-exists">
+    <h2>Why This Protocol Exists</h2>
+    <p>Modern speech recognition systems are often trained on audio collected in quiet environments with limited acoustic diversity. That creates a reliability problem. Models may perform well in clean settings, then degrade when speech is recorded from farther away, in a different room, or under more natural listening conditions.</p>
+    <p>CaptureLabz exists to reduce that gap. It introduces a structured protocol that allows speech datasets to be created with <strong>known acoustic variation</strong> rather than accidental noise alone.</p>
+    <p>For low-resource languages, this matters even more. Many languages do not have enough recorded material to support multiple rounds of trial-and-error data collection. The protocol is intended to make each session more valuable from the beginning.</p>
+  </section>
+
+  <hr>
+
+  <section id="core-conditions">
+    <h2>Core Recording Conditions</h2>
+    <p>The first version of the CaptureLabz protocol uses four primary recording conditions. These are designed to create a small but meaningful matrix of acoustic diversity that can be reproduced across languages and communities.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Condition</th>
+          <th>Description</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Close / Normal</strong></td>
+          <td>Speaker records near the microphone using natural speech pace.</td>
+          <td>Baseline training condition similar to traditional datasets.</td>
+        </tr>
+        <tr>
+          <td><strong>Close / Slow</strong></td>
+          <td>Speaker remains near the microphone but uses slower, more careful articulation.</td>
+          <td>Improves phonetic clarity and supports pronunciation analysis.</td>
+        </tr>
+        <tr>
+          <td><strong>Distance / Normal</strong></td>
+          <td>Speaker records from farther away with natural speech pacing.</td>
+          <td>Captures room reverberation, decay, and more realistic listening conditions.</td>
+        </tr>
+        <tr>
+          <td><strong>Distance / Slow</strong></td>
+          <td>Speaker records from farther away using slower, more deliberate articulation.</td>
+          <td>Combines environmental realism with clearer phonetic structure.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Additional conditions can be layered later, including device variation, outdoor recording, speaker movement, or bilingual crossover patterns. Version 1.0 begins with a compact set that is simple enough to reproduce and strong enough to support benchmark testing.</p>
+  </section>
+
+  <hr>
+
+  <section id="dataset-structure">
+    <h2>Dataset Structure</h2>
+    <p>CaptureLabz datasets are designed as structured releases rather than loose folders of audio. A complete release should include audio files, transcripts, metadata, and condition labels that allow researchers to reproduce training and evaluation experiments.</p>
+
+    <h3>Core fields</h3>
+    <pre>speaker_id
+language
+dialect
+recording_condition
+environment
+device_type
+transcript
+ipa
+audio_file
+session_id
+consent_status
+qa_status</pre>
+
+    <p>This structure allows researchers to separate by condition, compare training regimes, and evaluate whether performance changes are tied to recording distance, pacing, or dialect tagging rather than to undocumented variation.</p>
+
+    <h3>Example release logic</h3>
+    <pre>capturelabz/
+├── audio/
+│   ├── nahuatl/
+│   └── mixtec/
+├── metadata/
+│   ├── speakers.json
+│   ├── sessions.json
+│   └── dialect_tags.json
+├── transcripts/
+│   ├── nahuatl_orthography.csv
+│   ├── nahuatl_ipa.csv
+│   ├── mixtec_orthography.csv
+│   └── mixtec_ipa.csv
+└── tools/
+    ├── loader.py
+    ├── train_test_split.json
+    └── benchmark_notes.md</pre>
+  </section>
+
+  <hr>
+
+  <section id="benchmark">
+    <h2>Speech Robustness Benchmark</h2>
+    <p>CaptureLabz is intended to function as more than a dataset release process. It is also a <strong>speech robustness benchmark</strong> for testing how models perform under acoustic distribution shift.</p>
+
+    <p>A simple benchmark question looks like this:</p>
+    <div class="callout">
+      <strong>Research question:</strong> do speech models trained on multi-condition data generalize more reliably under real-world acoustic variation than models trained only on conventional close-microphone recordings?
+    </div>
+
+    <h3>Example benchmark setup</h3>
+    <ul>
+      <li>Train baseline model on <strong>Close / Normal</strong> recordings only</li>
+      <li>Train intervention model on <strong>all four CaptureLabz conditions</strong></li>
+      <li>Evaluate both on unseen distance and natural-environment recordings</li>
+      <li>Measure differences in error rate and degradation under shift</li>
+    </ul>
+
+    <p>Typical outputs may include Word Error Rate (WER), Character Error Rate (CER), performance decay by condition, and condition-aware model comparisons.</p>
+  </section>
+
+  <hr>
+
+  <section id="pilot">
+    <h2>Pilot Languages and Initial Use</h2>
+    <p>The early CaptureLabz pilot is being shaped around <strong>Nahuatl</strong> and <strong>Mixtec</strong>, including speaker access through existing trusted community relationships in Mexico. These languages are important not only because they are historically and culturally significant, but because they are also underrepresented in modern AI speech systems.</p>
+    <p>The pilot is intended to validate:</p>
+    <ul>
+      <li>that the multi-condition recording protocol is practical in real community settings,</li>
+      <li>that the metadata structure is usable for research packaging, and</li>
+      <li>that acoustic diversity improves robustness compared with narrow collection methods.</li>
+    </ul>
+    <p>Future pilots may expand into additional languages and regions once the first release and benchmark logic are stabilized.</p>
+  </section>
+
+  <hr>
+
+  <section id="why-researchers-care">
+    <h2>Why Researchers Care</h2>
+    <p>Researchers do not only need more data. They need <strong>better-controlled data</strong>, clearer provenance, and datasets that expose where models fail. CaptureLabz is designed to support that by producing speech data with explicit condition labels and a documented protocol.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Research Need</th>
+          <th>CaptureLabz Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Low-resource ASR training</td>
+          <td>Structured multilingual speech datasets for underrepresented languages</td>
+        </tr>
+        <tr>
+          <td>Robustness testing</td>
+          <td>Controlled acoustic variation across distance and pacing</td>
+        </tr>
+        <tr>
+          <td>Benchmark reproducibility</td>
+          <td>Condition-aware metadata and standardized splits</td>
+        </tr>
+        <tr>
+          <td>Governance and provenance</td>
+          <td>NTG-based audit logic, session structure, and consent-aware collection</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>In practical terms:</strong> CaptureLabz is meant to help turn community speech into research-ready data that can be used to measure AI system reliability rather than simply archive recordings.
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+
+  <hr style="margin-top:32px;">
+
+  <h2>Continue Learning</h2>
+  <ul style="padding-left:18px; line-height:1.6;">
+    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+    <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+    <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+  </ul>
+
+  <p style="margin-top:32px;">
+    <a href="https://xpguess.com">Go to the XPGuess App</a>
+  </p>
+
+  <h2>Compliance Notice</h2>
+  <p>
+    XPGuess is an educational platform. It does not provide medical services,
+    act as a healthcare provider, or replace professional care.
+    All fitness and support tools exist for training documentation,
+    reflection, and athlete protection.
+  </p>
+
+  <section aria-labelledby="terminology-provenance"
+           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+
+    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+
+    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+
+    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+
+    <p>
+      Reference:
+      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
+        “Beginning and Staying with the Basics: Building from the Ground Up”
+      </a>
+    </p>
+
+    <p>
+      Additional work:
+      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
+        Coach Teaches Animals: Gymnastics Stretching
+      </a>
+    </p>
+  </section>
+
+  <p class="footer-note" style="margin-top:32px;">
+    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  </p>
+
+  <p style="margin-top:18px;">
+    <a href="#top">Back to top</a>
+  </p>
+
+</main>
+</body>
+</html>
