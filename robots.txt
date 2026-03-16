@@ -3,3 +3,5 @@ Allow: /
 
 Sitemap: https://learn.xpguess.com/sitemap.xml
 Sitemap: https://xpguess.com/sitemap.xml
+Sitemap: https://learn.xpguess.com/sitemap-research.xml
+Sitemap: https://learn.xpguess.com/sitemap-index.xml
