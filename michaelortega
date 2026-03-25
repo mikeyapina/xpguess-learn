@@ -1,0 +1,310 @@
+You’re right. I stripped out the **gtag block** and simplified the head instead of following the Learn template. That was wrong.
+
+Here is the **correct inline file** with the **Learn template head preserved**, including **gtag**, canonical, robots, template styles, your **name in place of the logo**, your **resume**, your **AI/product explainer**, your **dataset work**, and the **real Learn footer structure**.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3HB79N4XWD');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Michael A. Ortega Resume, AI Systems, Voice Datasets, and 3MOF Platform Work | XPGuess Learn</title>
+  <meta name="description" content="Michael A. Ortega resume page documenting enterprise telecom, VoIP, healthcare, infrastructure, AI systems, voice dataset work, and product development across 3MOF, XPGuess, Bracket, CaptureLabz, ArteRegistry, NTG, and KITE." />
+
+  <link rel="canonical" href="https://learn.xpguess.com/michael-a-ortega-resume-ai-voice-datasets-3mof.html" />
+
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0; color:#111;
+    }
+    main {
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
+    .footer-note{ font-size:12px; color:#777; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Michael A. Ortega Resume", "item": "https://learn.xpguess.com/michael-a-ortega-resume-ai-voice-datasets-3mof.html" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Michael A. Ortega Resume, AI Systems, Voice Datasets, and 3MOF Platform Work | XPGuess Learn",
+    "description": "Michael A. Ortega resume page documenting enterprise telecom, VoIP, healthcare, infrastructure, AI systems, voice dataset work, and product development across 3MOF, XPGuess, Bracket, CaptureLabz, ArteRegistry, NTG, and KITE.",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://learn.xpguess.com/michael-a-ortega-resume-ai-voice-datasets-3mof.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "XPGuess",
+      "url": "https://xpguess.com"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "XPGuess Learn"
+    },
+    "datePublished": "2026-03-25",
+    "dateModified": "2026-03-25"
+  }
+  </script>
+</head>
+
+<body>
+<main>
+  <a id="top"></a>
+
+  <div style="margin-bottom:24px;">
+    <div style="font-size:34px; font-weight:700; line-height:1.15; letter-spacing:-0.02em;">Michael A. Ortega</div>
+    <div style="margin-top:6px; font-size:14px; color:#666;">Technical Product Owner • AI Operations Lead • Telecom, Voice, and Infrastructure Delivery</div>
+  </div>
+
+  <hr>
+
+  <header style="margin-bottom:22px;">
+    <p class="kicker">XPGuess Learn • Resume, systems record, product lineage, and delivery documentation</p>
+    <h1>Michael A. Ortega Resume, AI Systems, Voice Datasets, and 3MOF Platform Work</h1>
+    <p class="lede">Technical leader with 20+ years across telecom, VoIP, healthcare, data centers, enterprise billing, compliance, and modern AI-enabled systems. This page combines resume-style experience with a public record of platform development and delivery across 3MOF, XPGuess, Bracket, CaptureLabz, ArteRegistry, NTG, KITE, and related voice dataset infrastructure.</p>
+  </header>
+
+  <section class="onpage" aria-label="On this page">
+    <strong>On this page</strong>
+    <ul>
+      <li><a href="#resume-summary">Professional summary</a></li>
+      <li><a href="#current-platform-work">Current platform and AI work</a></li>
+      <li><a href="#dataset-work">Voice dataset and speech systems work</a></li>
+      <li><a href="#selected-experience">Selected professional experience</a></li>
+      <li><a href="#voice-telecom">Voice, IVR, VoIP, and Cisco systems</a></li>
+      <li><a href="#infrastructure-compliance">Infrastructure and compliance background</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section id="resume-summary">
+    <h2>Professional Summary</h2>
+    <p>Michael A. Ortega is a technical product owner, AI operations lead, and enterprise delivery specialist with more than 20 years of experience across telecommunications, healthcare, finance, aviation, and infrastructure. His work spans VoIP systems, Cisco Call Manager, PBX-to-IP migration, data center buildouts, carrier coordination, enterprise billing systems, compliance-sensitive platform delivery, and large-scale technical program execution.</p>
+    <p>His current work extends that background into AI-enabled systems and public product development, including product architecture, workflow design, data handling, governance, documentation, and deployment across the 3MOF ecosystem. The result is not just concept work. It is active platform development tied to real products, real operating logic, and public-facing delivery.</p>
+  </section>
+
+  <section id="current-platform-work">
+    <h2>Current Platform and AI Work</h2>
+    <p>Michael is actively developing and delivering connected products under the 3MOF umbrella. These products are not isolated websites. They are interrelated systems spanning engagement, identity, training, compliance, finance, provenance, and AI-oriented voice infrastructure.</p>
+
+    <h3>3MOF Platform Family</h3>
+    <ul>
+      <li><strong>XPGuess</strong> — engagement, ranking, and decision-learning environment with crawlable educational infrastructure.</li>
+      <li><strong>Bracket</strong> — structured prediction and comparison layer tied to the XPGuess system.</li>
+      <li><strong>CaptureLabz</strong> — voice dataset infrastructure for multilingual speech collection, contributor workflows, packaging, and delivery.</li>
+      <li><strong>ArteRegistry</strong> — provenance, attribution, and registry system for artwork and cultural assets.</li>
+      <li><strong>Name the Game (NTG)</strong> — athlete and participant operating system connecting development, governance, reporting, and support.</li>
+      <li><strong>KITE</strong> — financial logic layer for tracked disbursements, stipend flows, savings visibility, and auditability.</li>
+    </ul>
+
+    <h3>AI and Systems Operations</h3>
+    <ul>
+      <li>Built AI-enabled workflow structures tied to product delivery rather than demo-only prototypes.</li>
+      <li>Developed structured automation and reporting flows with OpenClaw, Discord-linked processes, and Supabase-backed data handling.</li>
+      <li>Integrated healthcare-oriented logic including FHIR and HL7 related workflow patterns.</li>
+      <li>Designed systems documentation, publishing flows, and public learn pages so technical work is discoverable, attributable, and easier to trace over time.</li>
+    </ul>
+  </section>
+
+  <section id="dataset-work">
+    <h2>Voice Dataset and Speech Systems Work</h2>
+    <p>Michael’s current work includes structured voice dataset infrastructure and delivery-oriented speech system design. That work sits primarily under CaptureLabz and related product flows, and it builds on an older telecom and voice systems foundation.</p>
+
+    <h3>CaptureLabz and Dataset Development</h3>
+    <ul>
+      <li>Designed and documented multilingual voice contribution flows for dataset collection and packaging.</li>
+      <li>Worked on contributor-linked capture logic, consent-aware collection, and structured export thinking for speech datasets.</li>
+      <li>Built public-facing explanatory content to support provenance, discoverability, and continuity around dataset development work.</li>
+      <li>Connected platform architecture to language, speech, preservation, and AI-training-oriented infrastructure rather than treating voice work as a side note.</li>
+    </ul>
+
+    <h3>Why the Dataset Work Matters</h3>
+    <p>The voice dataset work is part of a larger systems pattern: taking voice, language, metadata, contributor flows, and governance seriously enough that the infrastructure can support real collection, real packaging, and real delivery. That differentiates it from shallow AI branding and ties it back to long-standing experience in telecom, IVR, voice systems, and enterprise delivery.</p>
+  </section>
+
+  <section id="selected-experience">
+    <h2>Selected Professional Experience</h2>
+
+    <h3>Lovable.dev / 3MOF.org — Product Technical Manager</h3>
+    <p><strong>December 2024 – Present</strong></p>
+    <ul>
+      <li>Led development of an AI-integrated health, athlete, and lifecycle management platform supporting training, rehabilitation, recruitment, and role-based workflows.</li>
+      <li>Worked across compliance-aware architecture, including HIPAA, SOX, and broader governance-sensitive design patterns.</li>
+      <li>Integrated Supabase, QuickBooks-related financial logic, multilingual workflows, and structured healthcare-oriented data handling.</li>
+      <li>Directed system flows, access logic, documentation, and product architecture for connected platform development under 3MOF.</li>
+    </ul>
+
+    <h3>Verizon Wireless — Release Manager / Project Manager</h3>
+    <p><strong>July 2021 – December 2024</strong></p>
+    <ul>
+      <li>Managed enterprise release and delivery work tied to billing, revenue processes, data migration, infrastructure readiness, and SOX-sensitive operating environments.</li>
+      <li>Worked with major customer and financial data domains, including very large record environments and structured release governance.</li>
+      <li>Led data-center-related migration and coordination efforts across multi-region environments.</li>
+      <li>Integrated Azure DevOps, CI/CD, approval gates, and broader DevSecOps-adjacent delivery patterns.</li>
+    </ul>
+
+    <h3>Wipro / UnitedHealth Group — Senior Technical Project Manager</h3>
+    <p><strong>March 2021 – July 2021</strong></p>
+    <ul>
+      <li>Led high-scale enterprise migration programs, including Windows and Outlook-related deployment efforts across large user populations.</li>
+      <li>Worked with Soarian Financials, payer-linked workflows, Medicare-related reimbursement logic, and enterprise change management.</li>
+      <li>Coordinated Azure, ServiceNow, and related operational tooling in a healthcare-sensitive delivery environment.</li>
+    </ul>
+
+    <h3>Volkswagen / Fox Rent A Car / Europcar — Senior Technical Project Manager</h3>
+    <p><strong>December 2020 – March 2021</strong></p>
+    <ul>
+      <li>Worked across SAP-connected environments, PCI-sensitive contexts, and cloud or data-governance aligned delivery.</li>
+      <li>Managed telecom, access, migration, and infrastructure-oriented operating concerns tied to distributed business systems.</li>
+      <li>Helped connect ERP, payment, reporting, and cloud-transition requirements in a high-complexity environment.</li>
+    </ul>
+
+    <h3>Earlier Enterprise Work</h3>
+    <p>Additional experience includes LISI Aeronautics, Dine Equity, Tower Orthopedics, Thales, Warner Brothers, NBC/Tumblr, Barrett-Jackson, Cisco Systems, Intellys, Reliant Group, Washington Mutual projects, Sprint, OHSU, Software.com, BellSouth-related coordination, and other delivery roles spanning enterprise networks, telecom, cloud, helpdesk consolidation, website modernization, reporting, and infrastructure transitions.</p>
+  </section>
+
+  <section id="voice-telecom">
+    <h2>Voice, IVR, VoIP, and Cisco Systems</h2>
+    <p>Michael’s current speech and dataset work is grounded in a much older telecom and voice systems foundation. That foundation includes enterprise voice, routing, carrier coordination, interactive voice response environments, and unified messaging history.</p>
+
+    <ul>
+      <li><strong>SRI and Periphonics</strong> — work associated with voice brokerage and IVR-linked operating contexts, supporting continuity between earlier voice systems and later speech infrastructure work.</li>
+      <li><strong>Cisco VoIP and Call Manager</strong> — enterprise call routing, unified messaging, and PBX-to-IP migration experience tied to production environments.</li>
+      <li><strong>Telecom Infrastructure</strong> — T1, DS3, WAN/LAN, carrier handoffs, wireless surveys, network readiness, and multi-site technical coordination.</li>
+    </ul>
+  </section>
+
+  <section id="infrastructure-compliance">
+    <h2>Infrastructure and Compliance Background</h2>
+    <p>Michael’s technical profile combines infrastructure depth with compliance-aware delivery. That includes data centers, email and messaging migrations, cloud transitions, SAP and billing environments, healthcare-linked reporting, and broader governance constraints under frameworks such as HIPAA, SOX, PCI DSS, and GDPR-oriented controls.</p>
+    <p>This matters because the 3MOF and CaptureLabz product family is being shaped by someone with delivery history in enterprise environments where architecture, reporting, operational discipline, and accountability matter.</p>
+  </section>
+
+  <hr style="margin-top:32px;">
+
+  <h2>Continue Learning</h2>
+  <ul style="padding-left:18px; line-height:1.6;">
+    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+    <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+    <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+  </ul>
+
+  <p style="margin-top:32px;">
+    <a href="https://xpguess.com">Go to the XPGuess App</a>
+  </p>
+
+  <h2>Compliance Notice</h2>
+  <p>
+    XPGuess is an educational platform. It does not provide medical services,
+    act as a healthcare provider, or replace professional care.
+    All fitness and support tools exist for training documentation,
+    reflection, and athlete protection.
+  </p>
+
+  <section aria-labelledby="terminology-provenance"
+           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+
+    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+
+    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+
+    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+
+    <p>
+      Reference:
+      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
+        “Beginning and Staying with the Basics: Building from the Ground Up”
+      </a>
+    </p>
+
+    <p>
+      Additional work:
+      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
+        Coach Teaches Animals: Gymnastics Stretching
+      </a>
+    </p>
+  </section>
+
+  <p class="footer-note" style="margin-top:32px;">
+    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  </p>
+
+  <p style="margin-top:18px;">
+    <a href="#top">Back to top</a>
+  </p>
+</main>
+</body>
+</html>
+```
+
+The next fix I’d make is replacing “Selected Professional Experience” with your full role stack in this same template, instead of the selected version.
