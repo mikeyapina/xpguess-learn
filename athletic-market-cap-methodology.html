@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3HB79N4XWD');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Athletic Market Cap™ Methodology | XPGuess Learn</title>
+  <meta name="description" content="Athletic Market Cap™ (AMV) is a verifiable athlete valuation framework built on identity, training, XP, demand, revenue, readiness, and auditability." />
+
+  <link rel="canonical" href="https://learn.xpguess.com/athletic-market-cap-methodology.html" />
+
+  <meta name="robots" content="index,follow" />
+  <meta name="googlebot" content="index,follow" />
+
+  <style>
+    :root { color-scheme: light; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#fafafa; margin:0; padding:0; color:#111;
+    }
+    main {
+      max-width:720px; margin:40px auto; background:#fff;
+      padding:32px; border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
+    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
+    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
+    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
+    p, li{ color:#333; line-height:1.7; }
+    a{ color:#111; text-decoration:underline; }
+    a:visited{ color:#111; }
+    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
+    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
+    .callout{
+      padding:12px 14px;
+      background:#f4f6ff;
+      border:1px solid #e4e8ff;
+      border-radius:8px;
+    }
+    .onpage{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:14px 16px;
+    }
+    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
+    .footer-note{ font-size:12px; color:#777; }
+    code{
+      background:#f6f6f6;
+      padding:2px 6px;
+      border-radius:6px;
+      font-size:0.95em;
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
+      { "@type": "ListItem", "position": 3, "name": "Athletic Market Cap Methodology", "item": "https://learn.xpguess.com/athletic-market-cap-methodology.html" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Athletic Market Cap™ Methodology | XPGuess Learn",
+    "description": "Athletic Market Cap™ (AMV) is a verifiable athlete valuation framework built on identity, training, XP, demand, revenue, readiness, and auditability.",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://learn.xpguess.com/athletic-market-cap-methodology.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "XPGuess",
+      "url": "https://xpguess.com"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "XPGuess Learn"
+    },
+    "datePublished": "2026-04-05",
+    "dateModified": "2026-04-05"
+  }
+  </script>
+</head>
+
+<body>
+<main>
+  <a id="top"></a>
+
+  <div style="margin-bottom:24px;">
+    <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
+  </div>
+
+  <hr>
+
+  <header style="margin-bottom:22px;">
+    <p class="kicker">Methodology · Athlete valuation · Verifiable performance systems</p>
+    <h1>Athletic Market Cap™ Methodology</h1>
+    <p class="lede">
+      Athletic Market Cap™ (AMV) is a proposed valuation framework for athletes built on verifiable development signals, measurable market activity, and auditable scoring logic. It is designed to move athlete valuation away from guesswork, follower counts, and static scouting impressions toward continuous, traceable evidence.
+    </p>
+  </header>
+
+  <section class="onpage" aria-label="On this page">
+    <strong>On this page</strong>
+    <ul>
+      <li><a href="#what-it-is">What Athletic Market Cap™ is</a></li>
+      <li><a href="#problem">Why current athlete valuation breaks down</a></li>
+      <li><a href="#stack">The innovation stack</a></li>
+      <li><a href="#formula">Formula and model structure</a></li>
+      <li><a href="#weights">Weight justification</a></li>
+      <li><a href="#audit">Audit trail and traceability</a></li>
+      <li><a href="#comparison">Comparison to traditional athlete valuation</a></li>
+      <li><a href="#example">Worked athlete example</a></li>
+      <li><a href="#implementation">Implementation and governance</a></li>
+      <li><a href="#positioning">Trademark and category positioning</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section id="what-it-is">
+    <h2>What Athletic Market Cap™ Is</h2>
+    <p>
+      Athletic Market Cap™ is not just a branding phrase. It is intended as a <strong>new composite metric</strong> that expresses an athlete’s measurable economic potential using real, system-generated signals rather than public hype.
+    </p>
+    <div class="callout">
+      <strong>Working definition:</strong><br>
+      Athletic Market Cap™ (AMV) is the standardized, verifiable valuation of an athlete’s economic potential based on identity, training, performance, demand, revenue, readiness, and growth.
+    </div>
+    <p>
+      It is best understood as a <strong>valuation framework</strong>, not a security, not a guaranteed price, and not a transfer fee replacement. Its purpose is to create a structured decision layer for sponsors, operators, scouts, and investors.
+    </p>
+  </section>
+
+  <hr>
+
+  <section id="problem">
+    <h2>Why Current Athlete Valuation Breaks Down</h2>
+    <p>
+      Traditional sports and talent markets rely on fragmented or subjective signals:
+    </p>
+    <ul>
+      <li>Scouting opinions without transparent audit trails</li>
+      <li>Follower counts that say little about verified development</li>
+      <li>Static ratings that do not update continuously</li>
+      <li>Closed transfer or sponsorship logic with limited public accountability</li>
+    </ul>
+    <p>
+      In most systems, the athlete’s actual development process is invisible. That creates a persistent gap between <strong>effort</strong>, <strong>proof</strong>, and <strong>value</strong>.
+    </p>
+  </section>
+
+  <hr>
+
+  <section id="stack">
+    <h2>The Innovation Stack</h2>
+    <p>
+      Athletic Market Cap™ only becomes credible when each layer beneath it is verifiable.
+    </p>
+    <p><code>HUGS ID™ (identity)</code><br>
+       ↓<br>
+       <code>Training verification</code><br>
+       ↓<br>
+       <code>Canonical XP aggregation</code><br>
+       ↓<br>
+       <code>Market metrics (demand + revenue)</code><br>
+       ↓<br>
+       <code>Opportunity Score / readiness</code><br>
+       ↓<br>
+       <code>Athletic Market Cap™ valuation layer</code><br>
+       ↓<br>
+       <code>Sponsor matching / market action</code>
+    </p>
+    <p>
+      The breakthrough is not any one number by itself. The breakthrough is that every visible output can be traced back to a system of record.
+    </p>
+  </section>
+
+  <hr>
+
+  <section id="formula">
+    <h2>Formula and Model Structure</h2>
+    <p>
+      Athletic Market Cap™ is best modeled as a weighted composite, not as a simple rebrand of Opportunity Score or Demand Score.
+    </p>
+    <div class="callout">
+      <strong>Core model:</strong><br>
+      <code>AMV = f(XP, Demand, Revenue, Tier, Growth Velocity)</code>
+    </div>
+
+    <h3>Weighted structure</h3>
+    <p>
+      A strong starting methodology is:
+    </p>
+    <p><code>
+      AMV = (XP_norm × 0.30) + (Demand_norm × 0.25) + (Revenue_norm × 0.25) + (Tier_score × 0.15) + (Velocity_score × 0.05)
+    </code></p>
+
+    <p>
+      Then:
+    </p>
+    <p><code>AMV_final = Base_Value × Scaling_Factor</code></p>
+
+    <h3>Why this is a new composite metric</h3>
+    <ul>
+      <li><strong>Opportunity Score</strong> is a readiness filter, not a valuation output.</li>
+      <li><strong>Demand Score</strong> is market interest, but too narrow to represent full athlete value.</li>
+      <li><strong>Athletic Market Cap™</strong> is a multi-signal valuation framework designed to express asset-like potential.</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section id="weights">
+    <h2>Weight Justification</h2>
+
+    <h3>XP — 30%</h3>
+    <p>
+      XP is the strongest verifiable base signal because it reflects accumulated development activity. When canonical and auditable, XP functions as the athlete’s primary proof-of-work layer.
+    </p>
+
+    <h3>Demand — 25%</h3>
+    <p>
+      Demand captures whether the market is responding to the athlete. This may include views, interest, presales, or demand scoring systems tied to actual storefront or ecosystem activity.
+    </p>
+
+    <h3>Revenue — 25%</h3>
+    <p>
+      Revenue is one of the clearest proofs that attention has converted into value. It should not dominate the model, but it is too important to ignore because it confirms commercial viability.
+    </p>
+
+    <h3>Tier / Readiness — 15%</h3>
+    <p>
+      Tier represents sponsor and market readiness. It absorbs signals such as compliance, verification, structured activity, and brand suitability. This lowers risk for external partners.
+    </p>
+
+    <h3>Growth Velocity — 5%</h3>
+    <p>
+      Velocity captures momentum across 30/60/90-day windows. It prevents the valuation layer from becoming too static and helps distinguish currently accelerating athletes from dormant profiles.
+    </p>
+  </section>
+
+  <hr>
+
+  <section id="audit">
+    <h2>Audit Trail and Traceability</h2>
+    <p>
+      A valuation framework is only defensible if each output can be traced back to its inputs.
+    </p>
+
+    <h3>Minimum audit chain</h3>
+    <p><code>
+      AMV output → component scores → raw metrics → source tables/views → event logs / ledger
+    </code></p>
+
+    <h3>Illustrative source structure</h3>
+    <ul>
+      <li><strong>XP:</strong> canonical XP totals view or ledger-backed rollup</li>
+      <li><strong>Training:</strong> training logs, fitness sessions, verified workout activity</li>
+      <li><strong>Games:</strong> match roster and participation records</li>
+      <li><strong>Revenue:</strong> store, orders, or payment-linked summaries</li>
+      <li><strong>Demand:</strong> market metrics and storefront demand signals</li>
+      <li><strong>Readiness:</strong> compliance, guardian approval, media consent, support signals</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Audit principle:</strong><br>
+      Every number displayed publicly should have a defined canonical source and a reproducible calculation path.
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="comparison">
+    <h2>Comparison to Traditional Athlete Valuation</h2>
+    <p>
+      Athletic Market Cap™ differs from traditional athlete valuation in both methodology and transparency.
+    </p>
+
+    <ul>
+      <li><strong>Traditional:</strong> guessed transfer-style value, subjective sponsor selection, static scouting</li>
+      <li><strong>AMV:</strong> computed from real development signals, public proof layers, and market activity</li>
+    </ul>
+
+    <p>
+      In older systems, athlete value is often opaque and insider-controlled. In the AMV model, the objective is to create a framework where the athlete’s development and opportunity layers become visible and auditable.
+    </p>
+  </section>
+
+  <hr>
+
+  <section id="example">
+    <h2>Worked Athlete Example</h2>
+    <p>
+      A live athlete page can demonstrate the logic more clearly than theory alone.
+    </p>
+
+    <p>
+      Example profile elements may include:
+    </p>
+    <ul>
+      <li>Canonical XP total</li>
+      <li>Demand score</li>
+      <li>Revenue proof</li>
+      <li>Verified Training Profile</li>
+      <li>Sponsor-readiness or tier label</li>
+    </ul>
+
+    <p>
+      In this framework, the athlete page stops being a static profile and begins functioning more like a public-facing balance sheet for development.
+    </p>
+
+    <div class="callout">
+      <strong>Interpretation example:</strong><br>
+      High XP + active demand + real revenue + compliance-ready status = stronger valuation and stronger sponsor matching potential.
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="implementation">
+    <h2>Implementation and Governance</h2>
+
+    <h3>What should be published publicly</h3>
+    <ul>
+      <li>Valuation methodology summary</li>
+      <li>Component definitions</li>
+      <li>High-level weighting logic</li>
+      <li>Safe athlete-facing outputs</li>
+    </ul>
+
+    <h3>What should remain internal or controlled</h3>
+    <ul>
+      <li>Raw guardian data</li>
+      <li>Private compliance detail</li>
+      <li>Sensitive therapy/support notes</li>
+      <li>Internal anti-fraud checks</li>
+    </ul>
+
+    <h3>Governance requirements</h3>
+    <ul>
+      <li>Canonical source-of-truth rules for every KPI</li>
+      <li>Versioning for methodology changes</li>
+      <li>Documented normalization functions</li>
+      <li>Formal dispute and audit process</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section id="positioning">
+    <h2>Trademark and Category Positioning</h2>
+    <p>
+      Athletic Market Cap™ should be positioned as a new standard for athlete valuation, not as a speculative financial instrument.
+    </p>
+
+    <h3>Recommended positioning line</h3>
+    <p>
+      <strong>Athletic Market Cap™ = The first standardized, verifiable valuation of an athlete’s economic potential based on real development signals.</strong>
+    </p>
+
+    <h3>Possible taglines</h3>
+    <ul>
+      <li>Development as an asset class</li>
+      <li>The balance sheet for human performance</li>
+      <li>What an athlete is actually worth</li>
+    </ul>
+
+    <h3>Important language discipline</h3>
+    <p>
+      Avoid framing AMV as a security, guarantee, or tradeable promise. It is strongest as a <strong>valuation framework</strong>, <strong>decision-support layer</strong>, and <strong>market visibility model</strong>.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Conclusion</h2>
+    <p>
+      Athletic Market Cap™ is not just a new metric. It is a new way of organizing athlete identity, development, market activity, and sponsor readiness into a coherent valuation layer.
+    </p>
+    <p>
+      If implemented with disciplined sources, clear governance, and auditable math, AMV can become a serious category-defining standard for athlete valuation and market matching.
+    </p>
+  </section>
+
+  <hr style="margin-top:32px;">
+
+  <h2>Continue Learning</h2>
+  <ul style="padding-left:18px; line-height:1.6;">
+    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+    <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+    <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+  </ul>
+
+  <p style="margin-top:32px;">
+    <a href="https://xpguess.com">Go to the XPGuess App</a>
+  </p>
+
+  <h2>Compliance Notice</h2>
+  <p>
+    XPGuess is an educational platform. It does not provide medical services,
+    act as a healthcare provider, or replace professional care.
+    All fitness and support tools exist for training documentation,
+    reflection, and athlete protection.
+  </p>
+
+  <section aria-labelledby="terminology-provenance"
+           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+
+    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+
+    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+
+    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+
+    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+
+    <p>
+      Reference:
+      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
+        “Beginning and Staying with the Basics: Building from the Ground Up”
+      </a>
+    </p>
+
+    <p>
+      Additional work:
+      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
+        Coach Teaches Animals: Gymnastics Stretching
+      </a>
+    </p>
+  </section>
+
+  <p class="footer-note" style="margin-top:32px;">
+    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  </p>
+
+  <p style="margin-top:18px;">
+    <a href="#top">Back to top</a>
+  </p>
+
+</main>
+</body>
+</html>
