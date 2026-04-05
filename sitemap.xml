@@ -44,6 +44,22 @@
   </url>
 
   <!-- ========================= -->
+  <!-- AMV / ATHLETE VALUATION   -->
+  <!-- ========================= -->
+  <url>
+    <loc>https://learn.xpguess.com/athletic-market-cap-methodology.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://learn.xpguess.com/athletic-market-cap-faq.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <!-- ========================= -->
   <!-- MIC MODE / LANGUAGE       -->
   <!-- ========================= -->
   <url>
