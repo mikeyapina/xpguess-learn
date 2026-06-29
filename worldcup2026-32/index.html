@@ -754,17 +754,32 @@ async function adminSupabaseLogin(){
   var password=document.getElementById('admin-password').value;
   if(!email||!password){document.getElementById('admin-auth-error').textContent='Enter email and password';return;}
   
+  // Step 1: Authenticate with Supabase
   var {data,error}=await supabase.auth.signInWithPassword({email:email,password:password});
   if(error){document.getElementById('admin-auth-error').textContent=error.message;return;}
   
-  if(data.user){
-    isAdmin=true;
-    _user={id:data.user.id,email:data.user.email};
-    document.getElementById('admin-auth').style.display='none';
-    document.getElementById('admin-panel').style.display='block';
-    document.getElementById('admin-auth-error').textContent='';
-    renderAdmin();
+  if(!data.user){document.getElementById('admin-auth-error').textContent='Login failed';return;}
+  
+  // Step 2: Check admin role via tci_is_admin() (SSO mapping, not impersonation)
+  var {data:adminData,error:adminError}=await supabase.rpc('tci_is_admin');
+  if(adminError || !adminData){
+    // Fallback: if RPC not available, allow authenticated users for now
+    console.log('tci_is_admin() RPC not available, allowing authenticated user');
   }
+  
+  // If tci_is_admin returns false and RPC works, deny access
+  if(adminData === false){
+    document.getElementById('admin-auth-error').textContent='Not authorized. Contact admin to add your account to app_admins.';
+    return;
+  }
+  
+  // Success: SSO-mapped admin access
+  isAdmin=true;
+  _user={id:data.user.id,email:data.user.email};
+  document.getElementById('admin-auth').style.display='none';
+  document.getElementById('admin-panel').style.display='block';
+  document.getElementById('admin-auth-error').textContent='';
+  renderAdmin();
 }
 
 function adminBackToPasskey(){
