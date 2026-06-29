@@ -711,10 +711,10 @@ try {
 // Hardcoded data shows immediately. DB loads in background and overrides when ready.
 const HARDCODED_TEAMS = [
   {id:1,team:"Mexico",group:"A",finish:"1st",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:6,pctOfGroup:50,gd:6,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
-  {id:2,team:"South Africa",group:"A",finish:"2nd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
+  {id:2,team:"South Africa",group:"A",finish:"2nd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-1,r32:0,r32Opp:"Canada",r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:1},
   {id:3,team:"South Korea",group:"A",finish:"Best 3rd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-4,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:4,team:"Switzerland",group:"B",finish:"1st",spi:"Preserved",gei:"Open",groupGoals:22,teamGF:7,pctOfGroup:32,gd:4,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
-  {id:5,team:"Canada",group:"B",finish:"2nd",spi:"Preserved",gei:"Open",groupGoals:22,teamGF:8,pctOfGroup:36,gd:5,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
+  {id:5,team:"Canada",group:"B",finish:"2nd",spi:"Preserved",gei:"Open",groupGoals:22,teamGF:8,pctOfGroup:36,gd:5,r32:1,r32Opp:"South Africa",r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:1,koGA:0},
   {id:6,team:"Bosnia & Herzegovina",group:"B",finish:"Best 3rd",spi:"Preserved",gei:"Open",groupGoals:22,teamGF:5,pctOfGroup:23,gd:-1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:7,team:"Brazil",group:"C",finish:"1st",spi:"Preserved",gei:"Open",groupGoals:16,teamGF:7,pctOfGroup:44,gd:6,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:8,team:"Morocco",group:"C",finish:"2nd",spi:"Preserved",gei:"Open",groupGoals:16,teamGF:6,pctOfGroup:38,gd:3,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
@@ -1116,7 +1116,7 @@ function loadLS(){
   saveLS();
 }
 
-// Async init — load from database ONLY
+// Async init — load from database, fallback to hardcoded
 async function init(){
   // Try to load from database
   await loadFromDatabase();
@@ -1124,21 +1124,23 @@ async function init(){
   if(_dbLoaded && currentData.teams.length >= 32){
     // DB has data — render from database
     saveLS(); // sync localStorage with DB data
-    renderSummary();
-    renderProfiles();
-    // Show "connected to DB" indicator with team count
     var dbStatus = document.getElementById('db-status');
     var dbCount = document.getElementById('db-team-count');
     if(dbStatus) dbStatus.style.display = 'block';
     if(dbCount) dbCount.textContent = currentData.teams.length;
   } else {
-    // DB empty or connection failed — show seed required message
+    // DB empty or connection failed — use hardcoded data, show warning
+    currentData.teams = JSON.parse(JSON.stringify(HARDCODED_TEAMS));
     var dbErr = document.getElementById('db-error');
     if(dbErr){
       dbErr.style.display = 'block';
-      dbErr.innerHTML = '<strong>&#9888; Database Empty:</strong> The teams table has no data. <a href="https://github.com/xpguess/tci-dashboard/blob/main/supabase-seed-teams.sql" target="_blank" style="color:#92400e;font-weight:700;text-decoration:underline">Download the seed SQL</a> and run it in your Supabase SQL Editor, then refresh this page.';
+      dbErr.innerHTML = '<strong>&#9888; Using Local Data:</strong> Database not connected. Showing hardcoded group-stage data. Run the seed SQL in Supabase for live updates.';
     }
   }
+  
+  // ALWAYS render tables regardless of DB state
+  renderSummary();
+  renderProfiles();
   
   // Check for existing Supabase session
   try{
