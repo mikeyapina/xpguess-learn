@@ -339,13 +339,11 @@ details.toggle-section table{min-width:100%;table-layout:auto}
     <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
     <details class="toggle-section" style="margin-top:.8rem">
       <summary>View 24 fixtures</summary>
-      <!-- SPI Breakdown (inside toggle) -->
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
-        <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
-        <div class="table-container" style="border:none;box-shadow:none">
-          <table>
-            <thead><tr><th>Group</th><th>Fixture</th><th>Expected</th><th>Result</th><th>SPI</th></tr></thead>
-            <tbody id="spi-body">
+      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
+      <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
+        <table>
+          <thead><tr><th>Group</th><th>Fixture</th><th>Expected</th><th>Result</th><th>SPI</th></tr></thead>
+          <tbody id="spi-body">
               <tr><td>A</td><td>Mexico vs Czechia</td><td>Mexico advances</td><td>Mexico won</td><td class="result-win">&#10003; Held</td></tr>
               <tr><td>A</td><td>South Africa vs South Korea</td><td>SA advances</td><td>SA advanced</td><td class="result-win">&#10003; Held</td></tr>
               <tr><td>B</td><td>Switzerland vs Qatar</td><td>Switzerland advances</td><td>Switzerland won</td><td class="result-win">&#10003; Held</td></tr>
@@ -373,7 +371,6 @@ details.toggle-section table{min-width:100%;table-layout:auto}
             </tbody>
           </table>
         </div>
-      </div>
     </details>
   </div>
   <!-- GEI Card -->
@@ -383,21 +380,19 @@ details.toggle-section table{min-width:100%;table-layout:auto}
     <div class="card-label">12 groups classified by competitive environment pattern.</div>
     <details class="toggle-section" style="margin-top:.8rem">
       <summary>View group breakdown</summary>
-      <!-- GEI Breakdown (inside toggle) -->
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
-        <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Group Data by GEI Type</h3>
-        <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team's Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
-        <div class="table-container" style="border:none;box-shadow:none">
-          <table>
-            <thead><tr>
-              <th onclick="sortGEI(0)">Group &#8597;</th>
-              <th onclick="sortGEI(1)">GEI &#8597;</th>
-              <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
-              <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
-              <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
-              <th onclick="sortGEI(5)">Rule &#8597;</th>
-            </tr></thead>
-            <tbody id="gei-body">
+      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Group Data by GEI Type</h3>
+      <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team's Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
+      <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
+        <table>
+          <thead><tr>
+            <th onclick="sortGEI(0)">Group &#8597;</th>
+            <th onclick="sortGEI(1)">GEI &#8597;</th>
+            <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(5)">Rule &#8597;</th>
+          </tr></thead>
+          <tbody id="gei-body">
               <tr class="border-l-red-500" style="border-left:3px solid #dc2626"><td title="Mexico, South Africa, South Korea, Czechia">A</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
               <tr><td title="Canada, Bosnia &amp; Herzegovina, Qatar, Switzerland">B</td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
               <tr><td title="Brazil, Morocco, Haiti, Scotland">C</td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
@@ -414,12 +409,10 @@ details.toggle-section table{min-width:100%;table-layout:auto}
           </table>
         </div>
         <p style="color:#64748b;font-size:.8rem;margin-top:.5rem"><strong>How to read:</strong> Germany 67% (10 goals) = created dominance. Groups A &amp; D winners 50-57% with 6-8 goals = won flat groups.</p>
-      </div>
     </details>
   </div>
 </div>
 
-<!-- Breakdown tables now inside toggle <details> elements -->
 </details>
 </section>
 
