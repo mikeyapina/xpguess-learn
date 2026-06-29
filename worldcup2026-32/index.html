@@ -376,6 +376,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   
   function _oa(mode){
     _am = mode;
+    window._authMode = mode;
     var m = document.getElementById('auth-modal');
     if(!m) return;
     m.classList.add('show');
@@ -431,18 +432,29 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
         var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:window.location.href}});
         if(r.error){
           if(er) { er.textContent = r.error.message; er.style.display = 'block'; }
-        } else if(r.user){
+        } else if(r.user && r.session){
+          // Signed up and auto-confirmed
           _ca();
           window._user = {id:r.user.id,email:r.user.email};
           _updateUI();
+        } else if(r.user && !r.session){
+          // Account created but needs email confirmation
+          if(er) { 
+            er.innerHTML = '<strong>Account created!</strong><br>Check your email for a confirmation link. If you don\'t see it, check spam.<br><br><em>Or ask your admin to disable "Email confirmations" in Supabase settings.</em>'; 
+            er.style.display = 'block'; 
+          }
+          // Stay on modal so user sees the message
         } else {
-          if(er) { er.textContent = 'Check your email for confirmation!'; er.style.display = 'block'; }
-          _ca();
+          if(er) { er.textContent = 'Account created! Check your email.'; er.style.display = 'block'; }
         }
       } else {
         var r = await sb.auth.signInWithPassword({email:em,password:pw});
         if(r.error){
-          if(er) { er.textContent = r.error.message; er.style.display = 'block'; }
+          var msg = r.error.message;
+          if(msg && msg.toLowerCase().indexOf('invalid') >= 0 && msg.toLowerCase().indexOf('credentials') >= 0){
+            msg = 'Invalid credentials. If you just signed up, check your email for a confirmation link before signing in. Otherwise, check your email/password.';
+          }
+          if(er) { er.textContent = msg; er.style.display = 'block'; }
         } else if(r.user){
           _ca();
           window._user = {id:r.user.id,email:r.user.email};
@@ -516,7 +528,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   
   // Download JSON — queries Supabase or uses hardcoded fallback
   async function _doDownload(){
-    var btn = event && event.target ? event.target : null;
+    var btn = document.querySelector('#download-user button, #auth-bar button');
     if(btn) { btn.textContent = 'Preparing...'; btn.disabled = true; }
     
     var teams = [];
