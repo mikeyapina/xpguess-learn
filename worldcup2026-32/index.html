@@ -243,16 +243,20 @@ details.accordion-section>summary::after{content:'\25BC';font-size:1rem;color:#9
 details.accordion-section[open]>summary::after{transform:rotate(180deg)}
 details.accordion-section>summary+*{padding:.5rem 0}
 /* Toggle sections (SPI/GEI breakdowns inside cards) */
+details.toggle-section{width:100%}
 details.toggle-section>summary{list-style:none;cursor:pointer;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;font-size:.8rem;display:inline-block}
 details.toggle-section>summary::-webkit-details-marker{display:none}
 details.toggle-section>summary::before{content:'\25BC';margin-right:.3rem;font-size:.7rem}
 details.toggle-section[open]>summary::before{content:'\25B2'}
 details.toggle-section[open]>summary{margin-bottom:.5rem}
+details.toggle-section .table-container{max-width:100%;overflow-x:auto}
+details.toggle-section table{min-width:100%;table-layout:auto}
 @media(max-width:768px){.cards-grid{grid-template-columns:1fr}th,td{padding:.5rem .6rem;font-size:.8rem}.tabs{justify-content:center}}
 </style>
 <base target="_blank">
 </head>
 <body>
+<script>/* Force toggles closed before render */document.querySelectorAll&&document.querySelectorAll('details.toggle-section').forEach(function(d){d.removeAttribute('open');});</script>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
 
 <main>
