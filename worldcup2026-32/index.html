@@ -250,7 +250,15 @@ details.toggle-section>summary::before{content:'\25BC';margin-right:.3rem;font-s
 details.toggle-section[open]>summary::before{content:'\25B2'}
 details.toggle-section[open]>summary{margin-bottom:.5rem}
 details.toggle-section .table-container{max-width:100%;overflow-x:auto}
-details.toggle-section table{min-width:100%;table-layout:auto}
+details.toggle-section table{min-width:100%;table-layout:auto;font-size:.8rem}
+details.toggle-section td, details.toggle-section th{padding:.4rem .5rem;white-space:nowrap}
+/* Group composition popup */
+.group-popup{display:none;position:absolute;background:#0f172a;color:#fff;padding:.8rem 1rem;border-radius:8px;font-size:.85rem;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.2);min-width:180px}
+.group-popup.show{display:block}
+.group-popup strong{color:#d4a843;display:block;margin-bottom:.3rem;font-size:.9rem}
+.group-popup span{display:block;padding:.15rem 0}
+.group-letter{cursor:pointer;color:#0f172a;font-weight:700;position:relative}
+.group-letter:hover{text-decoration:underline;color:#d4a843}
 @media(max-width:768px){.cards-grid{grid-template-columns:1fr}th,td{padding:.5rem .6rem;font-size:.8rem}.tabs{justify-content:center}}
 </style>
 <base target="_blank">
@@ -258,6 +266,7 @@ details.toggle-section table{min-width:100%;table-layout:auto}
 <body>
 <script>/* Force toggles closed before render */document.querySelectorAll&&document.querySelectorAll('details.toggle-section').forEach(function(d){d.removeAttribute('open');});</script>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
+<div class="group-popup" id="group-popup"></div>
 
 <main>
 <!-- GA -->
@@ -393,18 +402,18 @@ details.toggle-section table{min-width:100%;table-layout:auto}
             <th onclick="sortGEI(5)">Rule &#8597;</th>
           </tr></thead>
           <tbody id="gei-body">
-              <tr class="border-l-red-500" style="border-left:3px solid #dc2626"><td title="Mexico, South Africa, South Korea, Czechia">A</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
-              <tr><td title="Canada, Bosnia &amp; Herzegovina, Qatar, Switzerland">B</td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
-              <tr><td title="Brazil, Morocco, Haiti, Scotland">C</td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
-              <tr style="border-left:3px solid #dc2626"><td title="United States, Australia, New Zealand, Paraguay">D</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>57%</strong></td><td>8</td><td>14</td><td>45-60% share</td></tr>
-              <tr style="border-left:3px solid #2563eb"><td title="Germany, Curaçao, Ecuador, Türkiye">E</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><strong>67%</strong></td><td>10</td><td>15</td><td>&gt;60% share</td></tr>
-              <tr><td title="Netherlands, Japan, Sweden, Cameroon">F</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>10</td><td>26</td><td>&lt;45% + SPI held</td></tr>
-              <tr><td title="Belgium, Egypt, Iran, New Zealand">G</td><td><span class="gei-badge gei-open">Open</span></td><td>39%</td><td>7</td><td>18</td><td>&lt;45% (est.)</td></tr>
-              <tr><td title="Spain, Cabo Verde, Saudi Arabia, Uruguay">H</td><td><span class="gei-badge gei-open">Open</span></td><td>40%</td><td>8</td><td>20</td><td>&lt;45% + SPI held</td></tr>
-              <tr><td title="France, Norway, Iraq, Panama">I</td><td><span class="gei-badge gei-open">Open</span></td><td>37%</td><td>7</td><td>19</td><td>&lt;45% + SPI held</td></tr>
-              <tr><td title="Argentina, Austria, Algeria, Jordan">J</td><td><span class="gei-badge gei-open">Open</span></td><td>41%</td><td>7</td><td>17</td><td>&lt;45% + SPI held</td></tr>
-              <tr style="border-left:3px solid #ea580c"><td title="Portugal, DR Congo, Uzbekistan, Colombia">K</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>38%</td><td>8</td><td>21</td><td>&lt;45% + SPI <strong>broke</strong></td></tr>
-              <tr><td title="England, Croatia, Ghana, Panama">L</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>6</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+              <tr style="border-left:3px solid #dc2626"><td><span class="group-letter" onclick="showGroup(event,'A','Mexico','South Africa','South Korea','Czechia')">A</span></td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'B','Canada','Bosnia &amp; Herzegovina','Qatar','Switzerland')">B</span></td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'C','Brazil','Morocco','Haiti','Scotland')">C</span></td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+              <tr style="border-left:3px solid #dc2626"><td><span class="group-letter" onclick="showGroup(event,'D','United States','Australia','New Zealand','Paraguay')">D</span></td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>57%</strong></td><td>8</td><td>14</td><td>45-60% share</td></tr>
+              <tr style="border-left:3px solid #2563eb"><td><span class="group-letter" onclick="showGroup(event,'E','Germany','Curaçao','Ecuador','Türkiye')">E</span></td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><strong>67%</strong></td><td>10</td><td>15</td><td>&gt;60% share</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'F','Netherlands','Japan','Sweden','Cameroon')">F</span></td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>10</td><td>26</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'G','Belgium','Egypt','Iran','New Zealand')">G</span></td><td><span class="gei-badge gei-open">Open</span></td><td>39%</td><td>7</td><td>18</td><td>&lt;45% (est.)</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'H','Spain','Cabo Verde','Saudi Arabia','Uruguay')">H</span></td><td><span class="gei-badge gei-open">Open</span></td><td>40%</td><td>8</td><td>20</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'I','France','Norway','Iraq','Panama')">I</span></td><td><span class="gei-badge gei-open">Open</span></td><td>37%</td><td>7</td><td>19</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'J','Argentina','Austria','Algeria','Jordan')">J</span></td><td><span class="gei-badge gei-open">Open</span></td><td>41%</td><td>7</td><td>17</td><td>&lt;45% + SPI held</td></tr>
+              <tr style="border-left:3px solid #ea580c"><td><span class="group-letter" onclick="showGroup(event,'K','Portugal','DR Congo','Uzbekistan','Colombia')">K</span></td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>38%</td><td>8</td><td>21</td><td>&lt;45% + SPI <strong>broke</strong></td></tr>
+              <tr><td><span class="group-letter" onclick="showGroup(event,'L','England','Croatia','Ghana','Panama')">L</span></td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>6</td><td>16</td><td>&lt;45% + SPI held</td></tr>
             </tbody>
           </table>
         </div>
@@ -869,7 +878,25 @@ function showTip(ev,text) {
   p.style.top=(rect.bottom+window.scrollY+8)+'px';
   _tipTimer=setTimeout(function(){if(p)p.style.display='none';},5000);
 }
-document.addEventListener('click',function(){var p=document.getElementById('tip-popup');if(p)p.style.display='none';if(_tipTimer){clearTimeout(_tipTimer);_tipTimer=null;}});
+
+// Group composition popup — click group letter to see all 4 teams
+function showGroup(ev,grp,t1,t2,t3,t4){
+  try{if(ev&&ev.stopPropagation)ev.stopPropagation();}catch(e){}
+  var popup=document.getElementById('group-popup');
+  if(!popup)return;
+  popup.innerHTML='<strong>Group '+grp+'</strong><span>'+t1+'</span><span>'+t2+'</span><span>'+t3+'</span><span>'+t4+'</span>';
+  popup.classList.add('show');
+  var rect=(ev&&ev.target&&ev.target.getBoundingClientRect)?ev.target.getBoundingClientRect():{left:100,bottom:100};
+  popup.style.left=(rect.left+window.scrollX)+'px';
+  popup.style.top=(rect.bottom+window.scrollY+6)+'px';
+  if(_groupTimer)clearTimeout(_groupTimer);
+  _groupTimer=setTimeout(function(){popup.classList.remove('show');},4000);
+}
+var _groupTimer=null;
+document.addEventListener('click',function(){
+  var p=document.getElementById('tip-popup');if(p)p.style.display='none';if(_tipTimer){clearTimeout(_tipTimer);_tipTimer=null;}
+  var g=document.getElementById('group-popup');if(g)g.classList.remove('show');if(_groupTimer){clearTimeout(_groupTimer);_groupTimer=null;}
+});
 
 function renderSummary() {
   var tbody=document.getElementById('summary-body'); if(!tbody)return;
