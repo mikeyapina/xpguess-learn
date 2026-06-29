@@ -762,14 +762,10 @@ async function adminSupabaseLogin(){
   
   // Step 2: Check admin role via tci_is_admin() (SSO mapping, not impersonation)
   var {data:adminData,error:adminError}=await supabase.rpc('tci_is_admin');
-  if(adminError || !adminData){
-    // Fallback: if RPC not available, allow authenticated users for now
-    console.log('tci_is_admin() RPC not available, allowing authenticated user');
-  }
   
-  // If tci_is_admin returns false and RPC works, deny access
-  if(adminData === false){
-    document.getElementById('admin-auth-error').textContent='Not authorized. Contact admin to add your account to app_admins.';
+  // If RPC fails or returns false, deny access
+  if(adminError || adminData !== true){
+    document.getElementById('admin-auth-error').textContent='Not authorized. Your account is not in app_admins. Contact NTG admin.';
     return;
   }
   
