@@ -276,8 +276,14 @@ details.accordion-section>summary+*{padding:.5rem 0}
 
   <!-- Auth -->
   <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b"><strong>Offline Mode:</strong> Supabase connection unavailable. Sign-in and database saves are disabled.</div>
-<div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e"></div>
-<div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>&#9989; Database Connected:</strong> Data loaded from Supabase. Admin edits will persist.</div>
+<div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e">
+  <strong>&#9888; Database Empty:</strong> The <code>public.teams</code> table has no data.<br><br>
+  <strong>To fix:</strong> Run the seed SQL in your Supabase dashboard:<br>
+  1. Go to your <a href="https://supabase.com/dashboard/project/cckhswhugilbmiarwbvt/editor" target="_blank" style="color:#92400e;text-decoration:underline;font-weight:700">Supabase SQL Editor</a><br>
+  2. Paste the seed SQL (see <code>supabase-seed-teams.sql</code> in your repo)<br>
+  3. Click Run — then refresh this page
+</div>
+<div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>&#9989; Database Connected:</strong> <span id="db-team-count"></span> teams loaded from Supabase. Admin edits will persist.</div>
 
   <div id="auth-bar" class="auth-box" style="margin-top:1rem">
     <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
@@ -756,25 +762,41 @@ function teamToRow(t) {
   };
 }
 
-// Load from Supabase — overrides hardcoded data when available
+// Load from Supabase — auto-seed if table is empty
 async function loadFromDatabase() {
   try {
     var { data, error } = await supabase.from('teams').select('*');
-    if (error) { console.log('Supabase read error:', error.message); _dbError = error.message; throw error; }
+    if (error) { 
+      console.log('Supabase read error:', error.message); 
+      _dbError = error.message; 
+      _dbLoaded = false;
+      return; 
+    }
     if (data && data.length >= 32) {
+      // Table has data — use it
       currentData.teams = data.map(rowToTeam);
       _dbLoaded = true;
       _dbError = null;
       console.log('Loaded ' + data.length + ' teams from Supabase');
       return;
     }
-    // Empty table — try to auto-seed
-    console.log('DB table empty — auto-seeding...');
+    // Table exists but is empty — auto-seed from hardcoded data
+    console.log('DB table empty — auto-seeding 32 teams...');
     await seedSupabase();
-    _dbLoaded = true;
-    _dbError = null;
+    // Re-read after seed
+    var { data: data2 } = await supabase.from('teams').select('*');
+    if (data2 && data2.length >= 32) {
+      currentData.teams = data2.map(rowToTeam);
+      _dbLoaded = true;
+      _dbError = null;
+      console.log('Auto-seeded and loaded ' + data2.length + ' teams');
+    } else {
+      _dbError = 'Auto-seed failed. Run supabase-seed-teams.sql manually.';
+      _dbLoaded = false;
+    }
   } catch(e) {
-    _dbError = _dbError || 'Cannot connect to database. Admin edits will not persist.';
+    _dbError = _dbError || 'Cannot connect to Supabase. Check your connection and anon key.';
+    _dbLoaded = false;
     console.log('DB load failed:', _dbError);
   }
 }
@@ -1087,34 +1109,28 @@ function loadLS(){
   saveLS();
 }
 
-// Async init — render immediately with hardcoded data, load DB in background
+// Async init — load from database ONLY
 async function init(){
-  // Render tables immediately with hardcoded data
-  loadLS();
-  renderSummary();
-  renderProfiles();
+  // Try to load from database
+  await loadFromDatabase();
   
-  // Try to load from database (overrides hardcoded when ready)
-  try {
-    await loadFromDatabase();
-    if(_dbLoaded){
-      // DB loaded successfully — re-render with live data
-      loadLS();
-      renderSummary();
-      renderProfiles();
-      // Show "connected to DB" indicator
-      var dbStatus = document.getElementById('db-status');
-      if(dbStatus) dbStatus.style.display = 'block';
-    } else if(_dbError){
-      // Show DB error but data still displays from hardcoded
-      var dbErr = document.getElementById('db-error');
-      if(dbErr){
-        dbErr.style.display = 'block';
-        dbErr.innerHTML = '<strong>Database:</strong> ' + _dbError + ' <em>Showing local data. Admin edits will not persist.</em>';
-      }
+  if(_dbLoaded && currentData.teams.length >= 32){
+    // DB has data — render from database
+    saveLS(); // sync localStorage with DB data
+    renderSummary();
+    renderProfiles();
+    // Show "connected to DB" indicator with team count
+    var dbStatus = document.getElementById('db-status');
+    var dbCount = document.getElementById('db-team-count');
+    if(dbStatus) dbStatus.style.display = 'block';
+    if(dbCount) dbCount.textContent = currentData.teams.length;
+  } else {
+    // DB empty or connection failed — show seed required message
+    var dbErr = document.getElementById('db-error');
+    if(dbErr){
+      dbErr.style.display = 'block';
+      dbErr.innerHTML = '<strong>&#9888; Database Empty:</strong> The teams table has no data. <a href="https://github.com/xpguess/tci-dashboard/blob/main/supabase-seed-teams.sql" target="_blank" style="color:#92400e;font-weight:700;text-decoration:underline">Download the seed SQL</a> and run it in your Supabase SQL Editor, then refresh this page.';
     }
-  } catch(e) {
-    console.log('DB init error:', e);
   }
   
   // Check for existing Supabase session
