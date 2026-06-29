@@ -161,7 +161,7 @@
 }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 html{background:#fafafa}
@@ -306,13 +306,52 @@ details.toggle-section td, details.toggle-section th{padding:.4rem .5rem;white-s
 
   <div id="auth-bar" class="auth-box" style="margin-top:1rem">
     <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
-      <div style="margin-top:.5rem"><button onclick="openAuth('signup')">Create Free Account</button><button class="secondary" onclick="openAuth('login')">Sign In</button></div>
+      <div style="margin-top:.5rem"><button id="btn-signup">Create Free Account</button><button id="btn-login" class="secondary">Sign In</button></div>
     </div>
     <div id="auth-user" style="display:none"><strong id="user-email"></strong>
       <div style="margin-top:.3rem"><button onclick="doDownload()">&#128190; Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
     </div>
   </div>
 </header>
+
+<!-- EARLY AUTH SCRIPT — wires buttons before main script loads -->
+<script>
+(function(){
+  var _am = 'signup';
+  function _oa(mode){
+    _am = mode;
+    var m = document.getElementById('auth-modal');
+    if(!m) return;
+    m.classList.add('show');
+    var t = document.getElementById('auth-title');
+    var b = document.getElementById('auth-btn');
+    var st = document.getElementById('auth-switch-text');
+    var sl = document.getElementById('auth-switch-link');
+    if(t) t.textContent = mode==='signup'?'Create Free Account':'Sign In';
+    if(b) b.textContent = mode==='signup'?'Create Account':'Sign In';
+    if(st) st.textContent = mode==='signup'?'Already have an account?':'Need an account?';
+    if(sl) sl.textContent = mode==='signup'?'Sign in':'Create one';
+    var e = document.getElementById('auth-error');
+    if(e) e.textContent = '';
+  }
+  function _tm(){_oa(_am==='signup'?'login':'signup');}
+  function _ca(){var m=document.getElementById('auth-modal');if(m)m.classList.remove('show');}
+  
+  document.addEventListener('DOMContentLoaded', function(){
+    var bs = document.getElementById('btn-signup');
+    var bl = document.getElementById('btn-login');
+    if(bs) bs.addEventListener('click', function(){_oa('signup');});
+    if(bl) bl.addEventListener('click', function(){_oa('login');});
+    var sw = document.getElementById('auth-switch-link');
+    if(sw) sw.addEventListener('click', _tm);
+    var cl = document.querySelector('.modal-overlay');
+    if(cl) cl.addEventListener('click', function(e){if(e.target===this)_ca();});
+  });
+  
+  // Expose to global for main script
+  window._earlyAuth = {openAuth: _oa, toggleAuthMode: _tm, closeAuth: _ca};
+})();
+</script>
 
 <!-- TOC -->
 <section style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
@@ -1146,6 +1185,16 @@ function loadLS(){
 
 // Async init — load from database, fallback to hardcoded
 async function init(){
+  // Wire auth buttons ( IDs instead of inline onclick for reliability )
+  var btnSignup = document.getElementById('btn-signup');
+  var btnLogin = document.getElementById('btn-login');
+  if(btnSignup) btnSignup.addEventListener('click', function(){ openAuth('signup'); });
+  if(btnLogin) btnLogin.addEventListener('click', function(){ openAuth('login'); });
+  
+  // Wire download button
+  var btnDownload = document.querySelector('#download-guest button');
+  if(btnDownload) btnDownload.addEventListener('click', function(){ openAuth('signup'); });
+  
   // Try to load from database
   await loadFromDatabase();
   
