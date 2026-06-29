@@ -318,14 +318,25 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   </div>
 </header>
 
-<!-- EARLY AUTH SCRIPT — wires buttons before main script loads -->
+<!-- EARLY AUTH SCRIPT — fully self-contained Supabase auth -->
 <script>
 (function(){
-  // Use SAME variable name as main script so submitAuth works
-  window._authMode = 'signup';
+  var _am = 'signup';
+  var _sup = null;
+  
+  function _getSup(){
+    if(_sup) return _sup;
+    if(window.supabase && window.supabase.createClient){
+      _sup = window.supabase.createClient(
+        'https://cckhswhugilbmiarwbvt.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w'
+      );
+    }
+    return _sup;
+  }
   
   function _oa(mode){
-    window._authMode = mode;
+    _am = mode;
     var m = document.getElementById('auth-modal');
     if(!m) return;
     m.classList.add('show');
@@ -340,24 +351,87 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     var e = document.getElementById('auth-error');
     if(e) { e.textContent = ''; e.style.display = 'none'; }
   }
-  function _tm(){_oa(window._authMode==='signup'?'login':'signup');}
+  function _tm(){_oa(_am==='signup'?'login':'signup');}
   function _ca(){var m=document.getElementById('auth-modal');if(m)m.classList.remove('show');}
   
-  // Basic submit handler — works even before main script loads
-  function _submit(){
+  // FULL auth handler — does Supabase signUp/signIn directly
+  async function _submit(){
     var em = document.getElementById('auth-email').value.trim();
     var pw = document.getElementById('auth-password').value;
     var er = document.getElementById('auth-error');
+    var btn = document.getElementById('auth-btn');
+    
     if(!em || !pw){
       if(er) { er.textContent = 'Please enter email and password.'; er.style.display = 'block'; }
       return;
     }
-    // If main script loaded, its submitAuth will override this
-    if(typeof submitAuth === 'function'){
-      submitAuth();
-    } else {
-      if(er) { er.textContent = 'Loading auth system... please wait a moment and try again.'; er.style.display = 'block'; }
+    if(pw.length < 6){
+      if(er) { er.textContent = 'Password must be 6+ characters.'; er.style.display = 'block'; }
+      return;
     }
+    
+    var sb = _getSup();
+    if(!sb){
+      if(er) { er.textContent = 'Auth system loading... try again in 2 seconds.'; er.style.display = 'block'; }
+      return;
+    }
+    
+    if(btn) { btn.textContent = 'Loading...'; btn.disabled = true; }
+    
+    try {
+      if(_am === 'signup'){
+        var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:window.location.href}});
+        if(r.error){
+          if(er) { er.textContent = r.error.message; er.style.display = 'block'; }
+        } else if(r.user){
+          _ca();
+          window._user = {id:r.user.id,email:r.user.email};
+          _updateUI();
+        } else {
+          if(er) { er.textContent = 'Check your email for confirmation!'; er.style.display = 'block'; }
+          _ca();
+        }
+      } else {
+        var r = await sb.auth.signInWithPassword({email:em,password:pw});
+        if(r.error){
+          if(er) { er.textContent = r.error.message; er.style.display = 'block'; }
+        } else if(r.user){
+          _ca();
+          window._user = {id:r.user.id,email:r.user.email};
+          _updateUI();
+        }
+      }
+    } catch(e) {
+      if(er) { er.textContent = 'Error: ' + (e.message || 'Unknown error'); er.style.display = 'block'; }
+    }
+    
+    if(btn) { btn.textContent = _am==='signup'?'Create Account':'Sign In'; btn.disabled = false; }
+  }
+  
+  function _updateUI(){
+    var g = document.getElementById('auth-guest');
+    var u = document.getElementById('auth-user');
+    var e = document.getElementById('user-email');
+    var dg = document.getElementById('download-guest');
+    var du = document.getElementById('download-user');
+    if(window._user){
+      if(g) g.style.display = 'none';
+      if(u) { u.style.display = 'block'; if(e) e.textContent = window._user.email; }
+      if(dg) dg.style.display = 'none';
+      if(du) du.style.display = 'block';
+    } else {
+      if(g) g.style.display = 'block';
+      if(u) u.style.display = 'none';
+      if(dg) dg.style.display = 'block';
+      if(du) du.style.display = 'none';
+    }
+  }
+  
+  async function _logout(){
+    var sb = _getSup();
+    if(sb) await sb.auth.signOut();
+    window._user = null;
+    _updateUI();
   }
   
   document.addEventListener('DOMContentLoaded', function(){
@@ -373,10 +447,30 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     if(btn) btn.addEventListener('click', _submit);
     var cl = document.querySelector('.modal-overlay');
     if(cl) cl.addEventListener('click', function(e){if(e.target===this)_ca();});
+    
+    // Check existing session
+    setTimeout(async function(){
+      var sb = _getSup();
+      if(sb){
+        try{
+          var r = await sb.auth.getSession();
+          if(r.data && r.data.session && r.data.session.user){
+            window._user = {id:r.data.session.user.id,email:r.data.session.user.email};
+            _updateUI();
+          }
+        }catch(e){}
+      }
+    }, 2000);
   });
   
-  // Expose to global for main script
-  window._earlyAuth = {openAuth: _oa, toggleAuthMode: _tm, closeAuth: _ca, submit: _submit};
+  // Expose globally so main script can take over when loaded
+  window._authMode = _am;
+  window.openAuth = _oa;
+  window.closeAuth = _ca;
+  window.toggleAuthMode = _tm;
+  window.submitAuth = _submit;
+  window.doLogout = _logout;
+  window._user = null;
 })();
 </script>
 
