@@ -370,13 +370,22 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
       return;
     }
     
+    // Wait for Supabase CDN to load (with retry)
     var sb = _getSup();
+    var retries = 0;
+    while(!sb && retries < 30){
+      if(btn) btn.textContent = 'Loading auth... (' + (retries+1) + ')';
+      await new Promise(function(r){setTimeout(r,200)});
+      sb = _getSup();
+      retries++;
+    }
     if(!sb){
-      if(er) { er.textContent = 'Auth system loading... try again in 2 seconds.'; er.style.display = 'block'; }
+      if(er) { er.textContent = 'Auth system failed to load. Check your internet connection and refresh.'; er.style.display = 'block'; }
+      if(btn) { btn.textContent = _am==='signup'?'Create Account':'Sign In'; btn.disabled = false; }
       return;
     }
     
-    if(btn) { btn.textContent = 'Loading...'; btn.disabled = true; }
+    if(btn) { btn.textContent = 'Signing in...'; btn.disabled = true; }
     
     try {
       if(_am === 'signup'){
@@ -447,6 +456,9 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     if(btn) btn.addEventListener('click', _submit);
     var cl = document.querySelector('.modal-overlay');
     if(cl) cl.addEventListener('click', function(e){if(e.target===this)_ca();});
+    // Wire download buttons
+    var dlBtns = document.querySelectorAll('button[onclick*="doDownload"]');
+    dlBtns.forEach(function(b){b.removeAttribute('onclick');b.addEventListener('click',_doDownload);});
     
     // Check existing session
     setTimeout(async function(){
@@ -463,6 +475,22 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     }, 2000);
   });
   
+  // Download JSON — works independently of main script
+  function _doDownload(){
+    var data = {
+      meta: {source:'World Cup 2026 TCI Dashboard',url:'https://name-the-game.com',updated:new Date().toISOString()},
+      teams: (window.currentData && currentData.teams) || []
+    };
+    var blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'wc2026-tci-data.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},100);
+  }
+  
   // Expose globally so main script can take over when loaded
   window._authMode = _am;
   window.openAuth = _oa;
@@ -470,6 +498,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   window.toggleAuthMode = _tm;
   window.submitAuth = _submit;
   window.doLogout = _logout;
+  window.doDownload = _doDownload;
   window._user = null;
 })();
 </script>
