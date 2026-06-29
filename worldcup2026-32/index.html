@@ -108,9 +108,9 @@ footer li{margin-bottom:.2rem}
   <!-- Key Terms -->
   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#64748b;line-height:1.6;">
     <strong style="color:#0f172a">Key Terms:</strong>
-    <strong style="color:#0f172a">SPI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" onclick="showTip(event,'Strategic Performance Index — did Matchday 3 preserve competitive ordering? 83.3% means expected teams advanced in 20 of 24 fixtures.')">&#9432;</span> = Strategic Performance Index
-    <strong style="color:#0f172a">GEI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" onclick="showTip(event,'Group Environment Index — what type of competitive environment each group created. Suppressed (flat), Open (balanced), Inverted (SPI broke), Dominant (one team controlled).')">&#9432;</span> = Group Environment Index
-    <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" onclick="showTip(event,'Tournament Carryover Index — does group environment predict knockout success? The core research question.')">&#9432;</span> = Tournament Carryover Index
+    <strong style="color:#0f172a">SPI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Strategic Performance Index — did Matchday 3 preserve competitive ordering?" onclick="showTip(event,'Strategic Performance Index — did Matchday 3 preserve competitive ordering? 83.3% means expected teams advanced in 20 of 24 fixtures.')">&#9432;</span> = Strategic Performance Index
+    <strong style="color:#0f172a">GEI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index — Suppressed, Open, Inverted, or Dominant" onclick="showTip(event,'Group Environment Index — what type of competitive environment each group created. Suppressed (flat), Open (balanced), Inverted (SPI broke), Dominant (one team controlled).')">&#9432;</span> = Group Environment Index
+    <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Tournament Carryover Index — does group environment predict knockout success?" onclick="showTip(event,'Tournament Carryover Index — does group environment predict knockout success? The core research question.')">&#9432;</span> = Tournament Carryover Index
   </div>
 
   <div style="margin-top:1rem"><span class="badge">LIVE — TCI Research in Progress</span></div>
@@ -157,14 +157,14 @@ footer li{margin-bottom:.2rem}
     <div class="card-value">83.3%</div>
     <div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures — expected teams advanced.</div>
     <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
-    <button onclick="toggleSPI()" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View 24 fixtures</button>
+    <button onclick="toggleSPI(this)" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View 24 fixtures</button>
   </div>
   <!-- GEI Card -->
   <div class="card">
     <div class="card-title">GEI Classification</div>
     <div class="card-value">4 Types</div>
     <div class="card-label">12 groups classified by competitive environment pattern.</div>
-    <button onclick="toggleGEI()" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View group breakdown</button>
+    <button onclick="toggleGEI(this)" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View group breakdown</button>
   </div>
 </div>
 
@@ -177,9 +177,9 @@ footer li{margin-bottom:.2rem}
       <thead><tr>
         <th onclick="sortGEI(0)">Group &#8597;</th>
         <th onclick="sortGEI(1)">GEI &#8597;</th>
-        <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by #1 team" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
-        <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by #1 team" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
-        <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
+        <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
+        <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
+        <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
         <th onclick="sortGEI(5)">Rule &#8597;</th>
       </tr></thead>
       <tbody id="gei-body">
@@ -251,15 +251,46 @@ footer li{margin-bottom:.2rem}
     <table>
       <thead><tr>
         <th>Team</th><th>Grp</th><th>Finish</th>
-        <th>GEI <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index" onclick="showTip(event,'Group Environment Index — Suppressed, Open, Inverted, or Dominant')">&#9432;</span></th>
-        <th>R32 <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Round of 32" onclick="showTip(event,'Round of 32 — first knockout round')">&#9432;</span></th>
-        <th>R16 <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Round of 16" onclick="showTip(event,'Round of 16 — second knockout round')">&#9432;</span></th>
+        <th>GEI <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index — Suppressed, Open, Inverted, or Dominant" onclick="showTip(event,'Group Environment Index — Suppressed, Open, Inverted, or Dominant')">&#9432;</span></th>
+        <th>R32 <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Round of 32 — first knockout round" onclick="showTip(event,'Round of 32 — first knockout round')">&#9432;</span></th>
+        <th>R16 <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Round of 16 — second knockout round" onclick="showTip(event,'Round of 16 — second knockout round')">&#9432;</span></th>
         <th>QF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Quarter Final" onclick="showTip(event,'Quarter Final')">&#9432;</span></th>
         <th>SF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Semi Final" onclick="showTip(event,'Semi Final')">&#9432;</span></th>
-        <th>KO GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Knockout Goals For" onclick="showTip(event,'Knockout Goals For')">&#9432;</span></th>
-        <th>KO GA <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Knockout Goals Against" onclick="showTip(event,'Knockout Goals Against')">&#9432;</span></th>
+        <th>KO GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Knockout Goals For — total goals scored in all knockout rounds" onclick="showTip(event,'Knockout Goals For — total goals scored in all knockout rounds')">&#9432;</span></th>
+        <th>KO GA <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Knockout Goals Against — total goals conceded in all knockout rounds" onclick="showTip(event,'Knockout Goals Against — total goals conceded in all knockout rounds')">&#9432;</span></th>
       </tr></thead>
-      <tbody id="summary-body"></tbody>
+      <tbody id="summary-body"><tr><td class="team-cell">Mexico</td><td>A</td><td>1st</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">South Africa</td><td>A</td><td>2nd</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">South Korea</td><td>A</td><td>Best 3rd</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Switzerland</td><td>B</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Canada</td><td>B</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Bosnia &amp; Herzegovina</td><td>B</td><td>Best 3rd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Brazil</td><td>C</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Morocco</td><td>C</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Haiti</td><td>C</td><td>Best 3rd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">United States</td><td>D</td><td>1st</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Paraguay</td><td>D</td><td>2nd</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Australia</td><td>D</td><td>Best 3rd</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Germany</td><td>E</td><td>1st</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Ecuador</td><td>E</td><td>2nd</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Netherlands</td><td>F</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Japan</td><td>F</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Sweden</td><td>F</td><td>Best 3rd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Belgium</td><td>G</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Egypt</td><td>G</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Iran</td><td>G</td><td>Best 3rd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Spain</td><td>H</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Uruguay</td><td>H</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Cabo Verde</td><td>H</td><td>Best 3rd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">France</td><td>I</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Norway</td><td>I</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Argentina</td><td>J</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Austria</td><td>J</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Portugal</td><td>K</td><td>1st</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Colombia</td><td>K</td><td>2nd</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">DR Congo</td><td>K</td><td>Best 3rd</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">England</td><td>L</td><td>1st</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Croatia</td><td>L</td><td>2nd</td><td><span class="gei-badge gei-open">Open</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr></tbody>
     </table>
   </div>
 </div>
@@ -291,7 +322,38 @@ footer li{margin-bottom:.2rem}
       <th onclick="sortTable(14)">KO GF &#8597;</th>
       <th onclick="sortTable(15)">KO GA &#8597;</th>
     </tr></thead>
-    <tbody id="profiles-body"></tbody>
+    <tbody id="profiles-body"><tr><td class="team-cell">Mexico</td><td>A</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>12</td><td>6</td><td>50%</td><td>+6</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">South Africa</td><td>A</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>12</td><td>2</td><td>17%</td><td>-1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">South Korea</td><td>A</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>12</td><td>2</td><td>17%</td><td>-4</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Switzerland</td><td>B</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>22</td><td>7</td><td>32%</td><td>+4</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Canada</td><td>B</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>22</td><td>8</td><td>36%</td><td>+5</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Bosnia &amp; Herzegovina</td><td>B</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>22</td><td>5</td><td>23%</td><td>-1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Brazil</td><td>C</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>7</td><td>44%</td><td>+6</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Morocco</td><td>C</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>6</td><td>38%</td><td>+3</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Haiti</td><td>C</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>2</td><td>13%</td><td>-4</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">United States</td><td>D</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>14</td><td>7</td><td>50%</td><td>+2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Paraguay</td><td>D</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>14</td><td>2</td><td>14%</td><td>-2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Australia</td><td>D</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td>14</td><td>3</td><td>21%</td><td>-1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Germany</td><td>E</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td>15</td><td>10</td><td>67%</td><td>+9</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Ecuador</td><td>E</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td>15</td><td>2</td><td>13%</td><td>-5</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Netherlands</td><td>F</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>26</td><td>10</td><td>38%</td><td>+6</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Japan</td><td>F</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>26</td><td>7</td><td>27%</td><td>+3</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Sweden</td><td>F</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>26</td><td>7</td><td>27%</td><td>-1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Belgium</td><td>G</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>18</td><td>7</td><td>39%</td><td>+2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Egypt</td><td>G</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>18</td><td>5</td><td>28%</td><td>0</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Iran</td><td>G</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>18</td><td>4</td><td>22%</td><td>-1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Spain</td><td>H</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>20</td><td>8</td><td>40%</td><td>+6</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Uruguay</td><td>H</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>20</td><td>5</td><td>25%</td><td>0</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Cabo Verde</td><td>H</td><td>Best 3rd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>20</td><td>4</td><td>20%</td><td>-2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">France</td><td>I</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>19</td><td>7</td><td>37%</td><td>+5</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Norway</td><td>I</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>19</td><td>5</td><td>26%</td><td>0</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Argentina</td><td>J</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>17</td><td>7</td><td>41%</td><td>+5</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Austria</td><td>J</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>17</td><td>5</td><td>29%</td><td>+2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Portugal</td><td>K</td><td>1st</td><td>Not Preserved</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>21</td><td>7</td><td>33%</td><td>+3</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Colombia</td><td>K</td><td>2nd</td><td>Not Preserved</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>21</td><td>8</td><td>38%</td><td>+5</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">DR Congo</td><td>K</td><td>Best 3rd</td><td>Not Preserved</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>21</td><td>4</td><td>19%</td><td>-2</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">England</td><td>L</td><td>1st</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>6</td><td>38%</td><td>+4</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr>
+<tr><td class="team-cell">Croatia</td><td>L</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>5</td><td>31%</td><td>+1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr></tbody>
   </table>
 </div>
 </section>
@@ -406,13 +468,10 @@ footer li{margin-bottom:.2rem}
 </div>
 
 <script>
-// ========== SUPABASE ==========
+// ========== SUPABASE AUTH ==========
 const SUPABASE_URL = 'https://cckhswhugilbmiarwbvt.supabase.co';
-const SUPABASE_KEY = '';
-let supabase = null;
-if (window.supabase) {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-}
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ========== DATA ==========
 const TEAMS = [
@@ -468,8 +527,8 @@ function geiBadge(gei) {
   return '<span class="gei-badge '+(map[gei]||'')+'">'+gei+'</span>';
 }
 
-function toggleSPI() { var el=document.getElementById('spi-breakdown'),btn=event.target; if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide 24 fixtures';}else{el.style.display='none';btn.innerHTML='\u25BC View 24 fixtures';} }
-function toggleGEI() { var el=document.getElementById('gei-breakdown'),btn=event.target; if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide group breakdown';}else{el.style.display='none';btn.innerHTML='\u25BC View group breakdown';} }
+function toggleSPI(btn) { var el=document.getElementById('spi-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide 24 fixtures';}else{el.style.display='none';btn.innerHTML='\u25BC View 24 fixtures';} }
+function toggleGEI(btn) { var el=document.getElementById('gei-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide group breakdown';}else{el.style.display='none';btn.innerHTML='\u25BC View group breakdown';} }
 
 function showTip(ev,text) {
   ev.stopPropagation();
@@ -553,23 +612,21 @@ async function submitAuth() {
   var email = document.getElementById('auth-email').value.trim();
   var password = document.getElementById('auth-password').value;
   if(!email||!password){document.getElementById('auth-error').textContent='Enter email and password';return;}
-  if(supabase){
-    if(_authMode==='signup'){
-      var {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:window.location.href}});
-      if(error){document.getElementById('auth-error').textContent=error.message;return;}
-      alert('Check your email for confirmation!'); closeAuth();
-    }else{
-      var {data,error}=await supabase.auth.signInWithPassword({email,password});
-      if(error){document.getElementById('auth-error').textContent=error.message;return;}
-      closeAuth();
-    }
+  if(password.length<6){document.getElementById('auth-error').textContent='Password must be 6+ characters';return;}
+  if(_authMode==='signup'){
+    var {data,error}=await supabase.auth.signUp({email:email,password:password,options:{emailRedirectTo:window.location.href}});
+    if(error){document.getElementById('auth-error').textContent=error.message;return;}
+    if(data.user){_user={id:data.user.id,email:data.user.email};updateAuthUI();closeAuth();}
+    else{alert('Check your email for confirmation!');closeAuth();}
   }else{
-    document.getElementById('auth-error').textContent='Supabase not configured. Add VITE_SUPABASE_ANON_KEY to your environment.';
+    var {data,error}=await supabase.auth.signInWithPassword({email:email,password:password});
+    if(error){document.getElementById('auth-error').textContent=error.message;return;}
+    if(data.user){_user={id:data.user.id,email:data.user.email};updateAuthUI();closeAuth();}
   }
 }
 
 async function doLogout() {
-  if(supabase) await supabase.auth.signOut();
+  await supabase.auth.signOut();
   _user = null;
   updateAuthUI();
 }
@@ -664,24 +721,46 @@ function exportJSON(){
 function saveLS(){localStorage.setItem('xpguess-tci-data',JSON.stringify(currentData));}
 function loadLS(){
   var saved=localStorage.getItem('xpguess-tci-data');
-  if(saved){try{var p=JSON.parse(saved);if(p.teams&&p.teams.length===32)currentData=p;}catch(e){}}
+  if(saved){
+    try{
+      var p=JSON.parse(saved);
+      // Only use saved data if it has exactly 32 teams with valid structure
+      if(p.teams && p.teams.length===32 && p.teams[0].team && p.teams[0].group){
+        currentData=p;
+      } else {
+        // Invalid/corrupted data - reset to default
+        console.log('Invalid localStorage data, using defaults');
+        saveLS();
+      }
+    }catch(e){
+      console.log('Error parsing localStorage, using defaults');
+      saveLS();
+    }
+  } else {
+    // First visit - save defaults
+    saveLS();
+  }
 }
 
-// Init
-loadLS();
-renderSummary();
-renderProfiles();
+// Init after DOM ready
+document.addEventListener('DOMContentLoaded',function(){
+  loadLS();
+  renderSummary();
+  renderProfiles();
+});
 
-// Check Supabase auth
-if(supabase){
-  supabase.auth.getSession().then(function(r){
-    if(r.data.session){_user={id:r.data.session.user.id,email:r.data.session.user.email};updateAuthUI();}
-  });
-  supabase.auth.onAuthStateChange(function(event,session){
-    if(session){_user={id:session.user.id,email:session.user.email};}else{_user=null;}
+// Check for existing Supabase session
+supabase.auth.getSession().then(function(r){
+  if(r.data && r.data.session && r.data.session.user){
+    _user={id:r.data.session.user.id,email:r.data.session.user.email};
     updateAuthUI();
-  });
-}
+  }
+});
+supabase.auth.onAuthStateChange(function(event,session){
+  if(session && session.user){_user={id:session.user.id,email:session.user.email};}
+  else{_user=null;}
+  updateAuthUI();
+});
 
 // Close modal on overlay click
 document.getElementById('auth-modal').addEventListener('click',function(e){if(e.target===this)closeAuth();});
