@@ -242,6 +242,10 @@ details.accordion-section>summary>h2{margin:0;padding:0;border:none}
 details.accordion-section>summary::after{content:'\25BC';font-size:1rem;color:#94a3b8;margin-left:.5rem;transition:transform .2s}
 details.accordion-section[open]>summary::after{transform:rotate(180deg)}
 details.accordion-section>summary+*{padding:.5rem 0}
+/* Toggle sections (SPI/GEI breakdowns inside cards) */
+details.toggle-section>summary{list-style:none;cursor:pointer;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;font-size:.8rem;display:inline-block}
+details.toggle-section>summary::-webkit-details-marker{display:none}
+details.toggle-section[open]>summary{margin-bottom:.5rem}
 @media(max-width:768px){.cards-grid{grid-template-columns:1fr}th,td{padding:.5rem .6rem;font-size:.8rem}.tabs{justify-content:center}}
 </style>
 <base target="_blank">
@@ -327,85 +331,89 @@ details.accordion-section>summary+*{padding:.5rem 0}
     <div class="card-value">83.3%</div>
     <div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures — expected teams advanced.</div>
     <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
-    <button onclick="toggleSPI(this)" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View 24 fixtures</button>
+    <details class="toggle-section" style="margin-top:.8rem">
+      <summary>&#9660; View 24 fixtures</summary>
+      <!-- SPI Breakdown (inside toggle) -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
+        <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
+        <div class="table-container" style="border:none;box-shadow:none">
+          <table>
+            <thead><tr><th>Group</th><th>Fixture</th><th>Expected</th><th>Result</th><th>SPI</th></tr></thead>
+            <tbody id="spi-body">
+              <tr><td>A</td><td>Mexico vs Czechia</td><td>Mexico advances</td><td>Mexico won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>A</td><td>South Africa vs South Korea</td><td>SA advances</td><td>SA advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>B</td><td>Switzerland vs Qatar</td><td>Switzerland advances</td><td>Switzerland won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>B</td><td>Canada vs Bosnia</td><td>Canada advances</td><td>Canada won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>C</td><td>Brazil vs Scotland</td><td>Brazil advances</td><td>Brazil won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>C</td><td>Morocco vs Haiti</td><td>Morocco advances</td><td>Morocco advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>D</td><td>USA vs Paraguay</td><td>USA advances</td><td>USA won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>D</td><td>Australia vs New Zealand</td><td>Australia advances</td><td>Australia advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>E</td><td>Germany vs Ecuador</td><td>Germany advances</td><td>Germany won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>E</td><td>Curaçao vs Türkiye</td><td>Ecuador advances</td><td>Ecuador advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>F</td><td>Netherlands vs Japan</td><td>Netherlands advances</td><td>Netherlands won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>F</td><td>Sweden vs Cameroon</td><td>Sweden advances</td><td>Sweden advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>G</td><td>Belgium vs Iran</td><td>Belgium advances</td><td>Belgium won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>G</td><td>Egypt vs New Zealand</td><td>Egypt advances</td><td>Egypt advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>H</td><td>Spain vs Uruguay</td><td>Spain advances</td><td>Spain won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>H</td><td>Cabo Verde vs Saudi Arabia</td><td>Cabo Verde advances</td><td>Cabo Verde advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>I</td><td>France vs Norway</td><td>France advances</td><td>France won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>I</td><td>Iraq vs Panama</td><td>Norway advances</td><td>Norway advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>J</td><td>Argentina vs Austria</td><td>Argentina advances</td><td>Argentina won</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>J</td><td>Algeria vs Jordan</td><td>Austria advances</td><td>Austria advanced</td><td class="result-win">&#10003; Held</td></tr>
+              <tr><td>K</td><td>Colombia vs Portugal</td><td>Colombia advances</td><td>Portugal won</td><td class="result-loss">&#10007; Broken</td></tr>
+              <tr><td>K</td><td>DR Congo vs Uzbekistan</td><td>Portugal advances</td><td>DR Congo upset</td><td class="result-loss">&#10007; Broken</td></tr>
+              <tr><td>L</td><td>England vs Croatia</td><td>England advances</td><td>Croatia won</td><td class="result-loss">&#10007; Broken</td></tr>
+              <tr><td>L</td><td>Ghana vs Panama</td><td>Croatia advances</td><td>Ghana drew</td><td class="result-loss">&#10007; Broken</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
   </div>
   <!-- GEI Card -->
   <div class="card">
     <div class="card-title">GEI Classification</div>
     <div class="card-value">4 Types</div>
     <div class="card-label">12 groups classified by competitive environment pattern.</div>
-    <button onclick="toggleGEI(this)" style="margin-top:.8rem;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">&#9660; View group breakdown</button>
+    <details class="toggle-section" style="margin-top:.8rem">
+      <summary>&#9660; View group breakdown</summary>
+      <!-- GEI Breakdown (inside toggle) -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
+        <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Group Data by GEI Type</h3>
+        <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team's Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
+        <div class="table-container" style="border:none;box-shadow:none">
+          <table>
+            <thead><tr>
+              <th onclick="sortGEI(0)">Group &#8597;</th>
+              <th onclick="sortGEI(1)">GEI &#8597;</th>
+              <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
+              <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
+              <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
+              <th onclick="sortGEI(5)">Rule &#8597;</th>
+            </tr></thead>
+            <tbody id="gei-body">
+              <tr class="border-l-red-500" style="border-left:3px solid #dc2626"><td title="Mexico, South Africa, South Korea, Czechia">A</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
+              <tr><td title="Canada, Bosnia &amp; Herzegovina, Qatar, Switzerland">B</td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td title="Brazil, Morocco, Haiti, Scotland">C</td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+              <tr style="border-left:3px solid #dc2626"><td title="United States, Australia, New Zealand, Paraguay">D</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>57%</strong></td><td>8</td><td>14</td><td>45-60% share</td></tr>
+              <tr style="border-left:3px solid #2563eb"><td title="Germany, Curaçao, Ecuador, Türkiye">E</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><strong>67%</strong></td><td>10</td><td>15</td><td>&gt;60% share</td></tr>
+              <tr><td title="Netherlands, Japan, Sweden, Cameroon">F</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>10</td><td>26</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td title="Belgium, Egypt, Iran, New Zealand">G</td><td><span class="gei-badge gei-open">Open</span></td><td>39%</td><td>7</td><td>18</td><td>&lt;45% (est.)</td></tr>
+              <tr><td title="Spain, Cabo Verde, Saudi Arabia, Uruguay">H</td><td><span class="gei-badge gei-open">Open</span></td><td>40%</td><td>8</td><td>20</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td title="France, Norway, Iraq, Panama">I</td><td><span class="gei-badge gei-open">Open</span></td><td>37%</td><td>7</td><td>19</td><td>&lt;45% + SPI held</td></tr>
+              <tr><td title="Argentina, Austria, Algeria, Jordan">J</td><td><span class="gei-badge gei-open">Open</span></td><td>41%</td><td>7</td><td>17</td><td>&lt;45% + SPI held</td></tr>
+              <tr style="border-left:3px solid #ea580c"><td title="Portugal, DR Congo, Uzbekistan, Colombia">K</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>38%</td><td>8</td><td>21</td><td>&lt;45% + SPI <strong>broke</strong></td></tr>
+              <tr><td title="England, Croatia, Ghana, Panama">L</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>6</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color:#64748b;font-size:.8rem;margin-top:.5rem"><strong>How to read:</strong> Germany 67% (10 goals) = created dominance. Groups A &amp; D winners 50-57% with 6-8 goals = won flat groups.</p>
+      </div>
+    </details>
   </div>
 </div>
 
-<!-- GEI Breakdown -->
-<div id="gei-breakdown" style="display:none;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;margin-top:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
-  <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Group Data by GEI Type</h3>
-  <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team's Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
-  <div class="table-container" style="border:none;box-shadow:none">
-    <table>
-      <thead><tr>
-        <th onclick="sortGEI(0)">Group &#8597;</th>
-        <th onclick="sortGEI(1)">GEI &#8597;</th>
-        <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team — the GEI metric')">&#9432;</span> &#8597;</th>
-        <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
-        <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals — all goals by all teams in this group')">&#9432;</span> &#8597;</th>
-        <th onclick="sortGEI(5)">Rule &#8597;</th>
-      </tr></thead>
-      <tbody id="gei-body">
-        <tr class="border-l-red-500" style="border-left:3px solid #dc2626"><td title="Mexico, South Africa, South Korea, Czechia">A</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
-        <tr><td title="Canada, Bosnia &amp; Herzegovina, Qatar, Switzerland">B</td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
-        <tr><td title="Brazil, Morocco, Haiti, Scotland">C</td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
-        <tr style="border-left:3px solid #dc2626"><td title="United States, Australia, New Zealand, Paraguay">D</td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>57%</strong></td><td>8</td><td>14</td><td>45-60% share</td></tr>
-        <tr style="border-left:3px solid #2563eb"><td title="Germany, Curaçao, Ecuador, Türkiye">E</td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><strong>67%</strong></td><td>10</td><td>15</td><td>&gt;60% share</td></tr>
-        <tr><td title="Netherlands, Japan, Sweden, Cameroon">F</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>10</td><td>26</td><td>&lt;45% + SPI held</td></tr>
-        <tr><td title="Belgium, Egypt, Iran, New Zealand">G</td><td><span class="gei-badge gei-open">Open</span></td><td>39%</td><td>7</td><td>18</td><td>&lt;45% (est.)</td></tr>
-        <tr><td title="Spain, Cabo Verde, Saudi Arabia, Uruguay">H</td><td><span class="gei-badge gei-open">Open</span></td><td>40%</td><td>8</td><td>20</td><td>&lt;45% + SPI held</td></tr>
-        <tr><td title="France, Norway, Iraq, Panama">I</td><td><span class="gei-badge gei-open">Open</span></td><td>37%</td><td>7</td><td>19</td><td>&lt;45% + SPI held</td></tr>
-        <tr><td title="Argentina, Austria, Algeria, Jordan">J</td><td><span class="gei-badge gei-open">Open</span></td><td>41%</td><td>7</td><td>17</td><td>&lt;45% + SPI held</td></tr>
-        <tr style="border-left:3px solid #ea580c"><td title="Portugal, DR Congo, Uzbekistan, Colombia">K</td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>38%</td><td>8</td><td>21</td><td>&lt;45% + SPI <strong>broke</strong></td></tr>
-        <tr><td title="England, Croatia, Ghana, Panama">L</td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>6</td><td>16</td><td>&lt;45% + SPI held</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="color:#64748b;font-size:.8rem;margin-top:.5rem"><strong>How to read:</strong> Germany 67% (10 goals) = created dominance. Groups A &amp; D winners 50-57% with 6-8 goals = won flat groups.</p>
-</div>
-
-<!-- SPI Breakdown -->
-<div id="spi-breakdown" style="display:none;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;margin-top:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)">
-  <h3 style="margin:0 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #d4a843">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
-  <div class="table-container" style="border:none;box-shadow:none">
-    <table>
-      <thead><tr><th>Group</th><th>Fixture</th><th>Expected</th><th>Result</th><th>SPI</th></tr></thead>
-      <tbody id="spi-body">
-        <tr><td>A</td><td>Mexico vs Czechia</td><td>Mexico advances</td><td>Mexico won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>A</td><td>South Africa vs South Korea</td><td>SA advances</td><td>SA advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>B</td><td>Switzerland vs Qatar</td><td>Switzerland advances</td><td>Switzerland won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>B</td><td>Canada vs Bosnia</td><td>Canada advances</td><td>Canada won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>C</td><td>Brazil vs Scotland</td><td>Brazil advances</td><td>Brazil won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>C</td><td>Morocco vs Haiti</td><td>Morocco advances</td><td>Morocco advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>D</td><td>USA vs Paraguay</td><td>USA advances</td><td>USA won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>D</td><td>Australia vs New Zealand</td><td>Australia advances</td><td>Australia advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>E</td><td>Germany vs Ecuador</td><td>Germany advances</td><td>Germany won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>E</td><td>Curaçao vs Türkiye</td><td>Ecuador advances</td><td>Ecuador advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>F</td><td>Netherlands vs Japan</td><td>Netherlands advances</td><td>Netherlands won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>F</td><td>Sweden vs Cameroon</td><td>Sweden advances</td><td>Sweden advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>G</td><td>Belgium vs Iran</td><td>Belgium advances</td><td>Belgium won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>G</td><td>Egypt vs New Zealand</td><td>Egypt advances</td><td>Egypt advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>H</td><td>Spain vs Uruguay</td><td>Spain advances</td><td>Spain won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>H</td><td>Cabo Verde vs Saudi Arabia</td><td>Cabo Verde advances</td><td>Cabo Verde advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>I</td><td>France vs Norway</td><td>France advances</td><td>France won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>I</td><td>Iraq vs Panama</td><td>Norway advances</td><td>Norway advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>J</td><td>Argentina vs Austria</td><td>Argentina advances</td><td>Argentina won</td><td class="result-win">&#10003; Held</td></tr>
-        <tr><td>J</td><td>Algeria vs Jordan</td><td>Austria advances</td><td>Austria advanced</td><td class="result-win">&#10003; Held</td></tr>
-        <tr style="background:#fef2f2"><td>K</td><td>Colombia vs Portugal</td><td>Colombia advances</td><td>Portugal won</td><td class="result-loss">&#10007; Broken</td></tr>
-        <tr style="background:#fef2f2"><td>K</td><td>DR Congo vs Uzbekistan</td><td>Portugal advances</td><td>DR Congo upset</td><td class="result-loss">&#10007; Broken</td></tr>
-        <tr style="background:#fef2f2"><td>L</td><td>England vs Croatia</td><td>England advances</td><td>Croatia won</td><td class="result-loss">&#10007; Broken</td></tr>
-        <tr style="background:#fef2f2"><td>L</td><td>Ghana vs Panama</td><td>Croatia advances</td><td>Ghana drew</td><td class="result-loss">&#10007; Broken</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<!-- Breakdown tables now inside toggle <details> elements -->
 </details>
 </section>
 
@@ -848,9 +856,6 @@ function geiBadge(gei) {
   const map = {Suppressed:'gei-suppressed',Open:'gei-open',Inverted:'gei-inverted',Dominant:'gei-dominant'};
   return '<span class="gei-badge '+(map[gei]||'')+'">'+gei+'</span>';
 }
-
-function toggleSPI(btn) { var el=document.getElementById('spi-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide 24 fixtures';}else{el.style.display='none';btn.innerHTML='\u25BC View 24 fixtures';} }
-function toggleGEI(btn) { var el=document.getElementById('gei-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide group breakdown';}else{el.style.display='none';btn.innerHTML='\u25BC View group breakdown';} }
 
 function showTip(ev,text) {
   try { if(ev && ev.stopPropagation) ev.stopPropagation(); } catch(e){}
