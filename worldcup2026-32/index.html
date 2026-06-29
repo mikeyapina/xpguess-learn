@@ -243,15 +243,19 @@ details.accordion-section>summary::after{content:'\25BC';font-size:1rem;color:#9
 details.accordion-section[open]>summary::after{transform:rotate(180deg)}
 details.accordion-section>summary+*{padding:.5rem 0}
 /* Toggle sections (SPI/GEI breakdowns inside cards) */
-details.toggle-section{width:100%}
+details.toggle-section{width:100%;max-width:100%}
 details.toggle-section>summary{list-style:none;cursor:pointer;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;font-size:.8rem;display:inline-block}
 details.toggle-section>summary::-webkit-details-marker{display:none}
 details.toggle-section>summary::before{content:'\25BC';margin-right:.3rem;font-size:.7rem}
 details.toggle-section[open]>summary::before{content:'\25B2'}
 details.toggle-section[open]>summary{margin-bottom:.5rem}
-details.toggle-section .table-container{max-width:100%;overflow-x:auto}
-details.toggle-section table{min-width:100%;table-layout:auto;font-size:.8rem}
-details.toggle-section td, details.toggle-section th{padding:.4rem .5rem;white-space:nowrap}
+/* Card overflow - prevent tables from breaking out */
+.card{overflow:hidden}
+.card .table-container{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.card table{font-size:.8rem;min-width:100%}
+.card td,.card th{padding:.4rem .5rem;white-space:nowrap}
+/* Mobile: stack cards */
+@media(max-width:768px){.cards-grid{grid-template-columns:1fr!important}}
 /* Group composition popup */
 .group-popup{display:none;position:absolute;background:#0f172a;color:#fff;padding:.8rem 1rem;border-radius:8px;font-size:.85rem;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.2);min-width:180px}
 .group-popup.show{display:block}
