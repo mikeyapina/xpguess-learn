@@ -741,9 +741,10 @@ let _dbLoaded = false;
 let _dbError = null;
 
 // Convert Supabase row (snake_case) to JS object (camelCase)
+// Uses id_int as integer key, name as team name (public.teams schema)
 function rowToTeam(r) {
   return {
-    id: r.id, team: r.team, group: r.group_name, finish: r.finish, spi: r.spi, gei: r.gei,
+    id: r.id_int, team: r.name || r.team, group: r.group_name, finish: r.finish, spi: r.spi, gei: r.gei,
     groupGoals: r.group_goals, teamGF: r.team_gf, pctOfGroup: r.pct_of_group, gd: r.gd,
     r32: r.r32, r32Opp: r.r32_opp, r16: r.r16, r16Opp: r.r16_opp,
     qf: r.qf, qfOpp: r.qf_opp, sf: r.sf, sfOpp: r.sf_opp,
@@ -752,9 +753,10 @@ function rowToTeam(r) {
 }
 
 // Convert JS object (camelCase) to Supabase row (snake_case)
+// Uses id_int for upsert, name for team name
 function teamToRow(t) {
   return {
-    id: t.id, team: t.team, group_name: t.group, finish: t.finish, spi: t.spi, gei: t.gei,
+    id_int: t.id, name: t.team, team: t.team, group_name: t.group, finish: t.finish, spi: t.spi, gei: t.gei,
     group_goals: t.groupGoals, team_gf: t.teamGF, pct_of_group: t.pctOfGroup, gd: t.gd,
     r32: t.r32, r32_opp: t.r32Opp, r16: t.r16, r16_opp: t.r16Opp,
     qf: t.qf, qf_opp: t.qfOpp, sf: t.sf, sf_opp: t.sfOpp,
@@ -805,7 +807,7 @@ async function loadFromDatabase() {
 async function seedSupabase() {
   var rows = HARDCODED_TEAMS.map(teamToRow);
   for (var i = 0; i < rows.length; i++) {
-    await supabase.from('teams').upsert(rows[i], { onConflict: 'id' });
+    await supabase.from('teams').upsert(rows[i], { onConflict: 'id_int' });
   }
 }
 
@@ -826,7 +828,7 @@ async function saveTeamToDB(teamId, updates) {
   if (updates.koGA !== undefined) row.ko_ga = updates.koGA;
   
   try {
-    var { error } = await supabase.from('teams').update(row).eq('id', teamId);
+    var { error } = await supabase.from('teams').update(row).eq('id_int', teamId);
     if (error) console.log('Save error for team ' + teamId + ':', error.message);
   } catch(e) { console.log('Network error saving team ' + teamId); }
 }
