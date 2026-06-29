@@ -321,9 +321,11 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
 <!-- EARLY AUTH SCRIPT — wires buttons before main script loads -->
 <script>
 (function(){
-  var _am = 'signup';
+  // Use SAME variable name as main script so submitAuth works
+  window._authMode = 'signup';
+  
   function _oa(mode){
-    _am = mode;
+    window._authMode = mode;
     var m = document.getElementById('auth-modal');
     if(!m) return;
     m.classList.add('show');
@@ -336,24 +338,45 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     if(st) st.textContent = mode==='signup'?'Already have an account?':'Need an account?';
     if(sl) sl.textContent = mode==='signup'?'Sign in':'Create one';
     var e = document.getElementById('auth-error');
-    if(e) e.textContent = '';
+    if(e) { e.textContent = ''; e.style.display = 'none'; }
   }
-  function _tm(){_oa(_am==='signup'?'login':'signup');}
+  function _tm(){_oa(window._authMode==='signup'?'login':'signup');}
   function _ca(){var m=document.getElementById('auth-modal');if(m)m.classList.remove('show');}
+  
+  // Basic submit handler — works even before main script loads
+  function _submit(){
+    var em = document.getElementById('auth-email').value.trim();
+    var pw = document.getElementById('auth-password').value;
+    var er = document.getElementById('auth-error');
+    if(!em || !pw){
+      if(er) { er.textContent = 'Please enter email and password.'; er.style.display = 'block'; }
+      return;
+    }
+    // If main script loaded, its submitAuth will override this
+    if(typeof submitAuth === 'function'){
+      submitAuth();
+    } else {
+      if(er) { er.textContent = 'Loading auth system... please wait a moment and try again.'; er.style.display = 'block'; }
+    }
+  }
   
   document.addEventListener('DOMContentLoaded', function(){
     var bs = document.getElementById('btn-signup');
     var bl = document.getElementById('btn-login');
+    var bd = document.getElementById('btn-download-auth');
     if(bs) bs.addEventListener('click', function(){_oa('signup');});
     if(bl) bl.addEventListener('click', function(){_oa('login');});
+    if(bd) bd.addEventListener('click', function(){_oa('signup');});
     var sw = document.getElementById('auth-switch-link');
     if(sw) sw.addEventListener('click', _tm);
+    var btn = document.getElementById('auth-btn');
+    if(btn) btn.addEventListener('click', _submit);
     var cl = document.querySelector('.modal-overlay');
     if(cl) cl.addEventListener('click', function(e){if(e.target===this)_ca();});
   });
   
   // Expose to global for main script
-  window._earlyAuth = {openAuth: _oa, toggleAuthMode: _tm, closeAuth: _ca};
+  window._earlyAuth = {openAuth: _oa, toggleAuthMode: _tm, closeAuth: _ca, submit: _submit};
 })();
 </script>
 
@@ -630,7 +653,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
 <div id="download-guest" class="gate-cta">
   <h3>&#128227; Download the Complete Tournament Dataset</h3>
   <p>Get the full JSON dataset with all 32 teams, GEI classifications, and knockout results. Updated after each round.</p>
-  <button onclick="openAuth('signup')">Create Free Account to Download</button>
+  <button id="btn-download-auth">Create Free Account to Download</button>
   <p style="font-size:.8rem;color:#a8a29e;margin-top:.8rem">Join researchers, practitioners, and analysts using TCI data. Free forever.</p>
 </div>
 <div id="download-user" style="display:none">
@@ -724,7 +747,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   <input type="email" id="auth-email" placeholder="Email" style="margin-bottom:.5rem">
   <input type="password" id="auth-password" placeholder="Password (min 6 characters)">
   <div class="error" id="auth-error"></div>
-  <button onclick="submitAuth()" id="auth-btn">Create Account</button>
+  <button id="auth-btn">Create Account</button>
   <div class="switch"><span id="auth-switch-text">Already have an account?</span> <a onclick="toggleAuthMode()" id="auth-switch-link">Sign in</a></div>
 </div>
 </div>
