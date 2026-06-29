@@ -401,13 +401,25 @@ footer li{margin-bottom:.2rem}
 <h2>&#128274; Admin — Edit Knockout Results</h2>
 <div id="admin-login">
   <div class="update-note" style="background:#fef3c7;border-color:#fcd34d">
-    <strong>Admin Access Required</strong><br>Enter the admin passkey to edit team knockout results.
+    <strong>Admin Access — Step 1: Passkey</strong><br>Enter the admin passkey to proceed to authentication.
   </div>
   <div style="display:flex;gap:.5rem;max-width:400px;margin-top:.5rem">
     <input type="password" id="admin-passkey" placeholder="Enter admin passkey..." style="flex:1;padding:.6rem .8rem;border:1px solid #e2e8f0;border-radius:6px;font-size:.9rem">
-    <button onclick="adminLogin()" style="padding:.6rem 1.2rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer">Login</button>
+    <button onclick="adminCheckPasskey()" style="padding:.6rem 1.2rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer">Continue</button>
   </div>
   <div id="admin-error" style="color:#dc2626;font-size:.85rem;margin-top:.5rem"></div>
+</div>
+<div id="admin-auth" style="display:none">
+  <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
+    <strong>Admin Access — Step 2: Supabase Sign-In</strong><br>Sign in with your admin account to save edits to the database.
+  </div>
+  <div style="display:flex;flex-direction:column;gap:.5rem;max-width:400px;margin-top:.5rem">
+    <input type="email" id="admin-email" placeholder="Admin email..." style="padding:.6rem .8rem;border:1px solid #e2e8f0;border-radius:6px;font-size:.9rem">
+    <input type="password" id="admin-password" placeholder="Admin password..." style="padding:.6rem .8rem;border:1px solid #e2e8f0;border-radius:6px;font-size:.9rem">
+    <button onclick="adminSupabaseLogin()" style="padding:.6rem 1.2rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer">Sign In to Database</button>
+    <button onclick="adminBackToPasskey()" style="padding:.4rem 1.2rem;background:transparent;color:#64748b;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">Back</button>
+  </div>
+  <div id="admin-auth-error" style="color:#dc2626;font-size:.85rem;margin-top:.5rem"></div>
 </div>
 <div id="admin-panel" style="display:none">
   <div class="update-note" style="background:#dcfce7;border-color:#86efac;margin-bottom:.5rem">
@@ -468,13 +480,13 @@ footer li{margin-bottom:.2rem}
 </div>
 
 <script>
-// ========== SUPABASE AUTH ==========
+// ========== SUPABASE ==========
 const SUPABASE_URL = 'https://cckhswhugilbmiarwbvt.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ========== DATA ==========
-const TEAMS = [
+// ========== FALLBACK DATA (used if Supabase table doesn't exist yet) ==========
+const HARDCODED_TEAMS = [
   {id:1,team:"Mexico",group:"A",finish:"1st",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:6,pctOfGroup:50,gd:6,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:2,team:"South Africa",group:"A",finish:"2nd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:3,team:"South Korea",group:"A",finish:"Best 3rd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-4,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
@@ -509,7 +521,79 @@ const TEAMS = [
   {id:32,team:"Croatia",group:"L",finish:"2nd",spi:"Preserved",gei:"Open",groupGoals:16,teamGF:5,pctOfGroup:31,gd:1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0}
 ];
 
-let currentData = { teams: JSON.parse(JSON.stringify(TEAMS)), date: "2026-06-28", round: "Round of 32 - Day 1" };
+let currentData = { teams: [], date: "2026-06-28", round: "Round of 32 - Day 1" };
+
+// Convert Supabase row (snake_case) to JS object (camelCase)
+function rowToTeam(r) {
+  return {
+    id: r.id, team: r.team, group: r.group_name, finish: r.finish, spi: r.spi, gei: r.gei,
+    groupGoals: r.group_goals, teamGF: r.team_gf, pctOfGroup: r.pct_of_group, gd: r.gd,
+    r32: r.r32, r32Opp: r.r32_opp, r16: r.r16, r16Opp: r.r16_opp,
+    qf: r.qf, qfOpp: r.qf_opp, sf: r.sf, sfOpp: r.sf_opp,
+    final: r.final, finalOpp: r.final_opp, koGF: r.ko_gf, koGA: r.ko_ga
+  };
+}
+
+// Convert JS object (camelCase) to Supabase row (snake_case)
+function teamToRow(t) {
+  return {
+    id: t.id, team: t.team, group_name: t.group, finish: t.finish, spi: t.spi, gei: t.gei,
+    group_goals: t.groupGoals, team_gf: t.teamGF, pct_of_group: t.pctOfGroup, gd: t.gd,
+    r32: t.r32, r32_opp: t.r32Opp, r16: t.r16, r16_opp: t.r16Opp,
+    qf: t.qf, qf_opp: t.qfOpp, sf: t.sf, sf_opp: t.sfOpp,
+    final: t.final, final_opp: t.finalOpp, ko_gf: t.koGF, ko_ga: t.koGA
+  };
+}
+
+// Load from Supabase (or fallback to hardcoded)
+async function loadFromDatabase() {
+  try {
+    var { data, error } = await supabase.from('teams').select('*');
+    if (error) { console.log('Supabase read error:', error.message); throw error; }
+    if (data && data.length >= 32) {
+      currentData.teams = data.map(rowToTeam);
+      console.log('Loaded ' + data.length + ' teams from Supabase');
+      return;
+    }
+    // Table exists but empty — seed it
+    console.log('Seeding Supabase with 32 teams...');
+    await seedSupabase();
+    currentData.teams = JSON.parse(JSON.stringify(HARDCODED_TEAMS));
+  } catch(e) {
+    console.log('Using hardcoded fallback (Supabase not ready yet)');
+    currentData.teams = JSON.parse(JSON.stringify(HARDCODED_TEAMS));
+  }
+}
+
+// Seed Supabase with hardcoded data
+async function seedSupabase() {
+  var rows = HARDCODED_TEAMS.map(teamToRow);
+  for (var i = 0; i < rows.length; i++) {
+    await supabase.from('teams').upsert(rows[i], { onConflict: 'id' });
+  }
+}
+
+// Save a single team update to Supabase
+async function saveTeamToDB(teamId, updates) {
+  var row = {};
+  if (updates.r32 !== undefined) row.r32 = updates.r32 === null ? null : (updates.r32 ? 1 : 0);
+  if (updates.r32Opp !== undefined) row.r32_opp = updates.r32Opp || null;
+  if (updates.r16 !== undefined) row.r16 = updates.r16 === null ? null : (updates.r16 ? 1 : 0);
+  if (updates.r16Opp !== undefined) row.r16_opp = updates.r16Opp || null;
+  if (updates.qf !== undefined) row.qf = updates.qf === null ? null : (updates.qf ? 1 : 0);
+  if (updates.qfOpp !== undefined) row.qf_opp = updates.qfOpp || null;
+  if (updates.sf !== undefined) row.sf = updates.sf === null ? null : (updates.sf ? 1 : 0);
+  if (updates.sfOpp !== undefined) row.sf_opp = updates.sfOpp || null;
+  if (updates.final !== undefined) row.final = updates.final === null ? null : (updates.final ? 1 : 0);
+  if (updates.finalOpp !== undefined) row.final_opp = updates.finalOpp || null;
+  if (updates.koGF !== undefined) row.ko_gf = updates.koGF;
+  if (updates.koGA !== undefined) row.ko_ga = updates.koGA;
+  
+  try {
+    var { error } = await supabase.from('teams').update(row).eq('id', teamId);
+    if (error) console.log('Save error for team ' + teamId + ':', error.message);
+  } catch(e) { console.log('Network error saving team ' + teamId); }
+}
 let isAdmin = false;
 let adminEdits = {};
 let sortCol = null, sortAsc = false;
@@ -654,19 +738,48 @@ function doDownload() {
 }
 
 // ========== ADMIN ==========
-function adminLogin(){
+function adminCheckPasskey(){
   var pw=document.getElementById('admin-passkey').value;
   if(pw==='xpguess-tci-admin-2026'){
-    isAdmin=true;
     document.getElementById('admin-login').style.display='none';
-    document.getElementById('admin-panel').style.display='block';
+    document.getElementById('admin-auth').style.display='block';
     document.getElementById('admin-error').textContent='';
-    renderAdmin();
   }else{
     document.getElementById('admin-error').textContent='Incorrect passkey.';
   }
 }
-function adminLogout(){isAdmin=false;adminEdits={};document.getElementById('admin-login').style.display='block';document.getElementById('admin-panel').style.display='none';}
+
+async function adminSupabaseLogin(){
+  var email=document.getElementById('admin-email').value.trim();
+  var password=document.getElementById('admin-password').value;
+  if(!email||!password){document.getElementById('admin-auth-error').textContent='Enter email and password';return;}
+  
+  var {data,error}=await supabase.auth.signInWithPassword({email:email,password:password});
+  if(error){document.getElementById('admin-auth-error').textContent=error.message;return;}
+  
+  if(data.user){
+    isAdmin=true;
+    _user={id:data.user.id,email:data.user.email};
+    document.getElementById('admin-auth').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    document.getElementById('admin-auth-error').textContent='';
+    renderAdmin();
+  }
+}
+
+function adminBackToPasskey(){
+  document.getElementById('admin-auth').style.display='none';
+  document.getElementById('admin-login').style.display='block';
+}
+
+function adminLogout(){
+  isAdmin=false;
+  adminEdits={};
+  doLogout();
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('admin-auth').style.display='none';
+  document.getElementById('admin-login').style.display='block';
+}
 
 function renderAdmin(){
   var tbody=document.getElementById('admin-body');if(!tbody)return;
@@ -694,20 +807,25 @@ function adminEdit(id,field,value){
   }
 }
 
-function saveAdminEdits(){
+async function saveAdminEdits(){
   var updates=Object.values(adminEdits).filter(function(u){return Object.keys(u).length>1;});
-  updates.forEach(function(u){
+  document.getElementById('save-status').innerHTML='<span style="color:#d4a843;font-weight:700">Saving to database...</span>';
+  
+  for(var i=0;i<updates.length;i++){
+    var u=updates[i];
     var t=currentData.teams.find(function(x){return x.id===u.id;});
     if(t){
       ['r32','r16','qf','sf','final','r32Opp','r16Opp','qfOpp','sfOpp','finalOpp','koGF','koGA'].forEach(function(f){
         if(u[f]!==undefined)t[f]=u[f];
       });
+      await saveTeamToDB(u.id, u);
     }
-  });
+  }
+  
   adminEdits={};
   saveLS();
   renderSummary();renderProfiles();renderAdmin();
-  document.getElementById('save-status').innerHTML='<span style="color:green;font-weight:700">Saved!</span>';
+  document.getElementById('save-status').innerHTML='<span style="color:green;font-weight:700">Saved to database!</span>';
   setTimeout(function(){document.getElementById('save-status').textContent='';},2000);
 }
 
@@ -742,25 +860,30 @@ function loadLS(){
   }
 }
 
-// Init after DOM ready
-document.addEventListener('DOMContentLoaded',function(){
+// Async init — load from database then render
+async function init(){
+  await loadFromDatabase();
   loadLS();
   renderSummary();
   renderProfiles();
-});
-
-// Check for existing Supabase session
-supabase.auth.getSession().then(function(r){
-  if(r.data && r.data.session && r.data.session.user){
-    _user={id:r.data.session.user.id,email:r.data.session.user.email};
+  
+  // Check for existing Supabase session
+  try{
+    var r = await supabase.auth.getSession();
+    if(r.data && r.data.session && r.data.session.user){
+      _user={id:r.data.session.user.id,email:r.data.session.user.email};
+      updateAuthUI();
+    }
+  }catch(e){}
+  
+  supabase.auth.onAuthStateChange(function(event,session){
+    if(session && session.user){_user={id:session.user.id,email:session.user.email};}
+    else{_user=null;}
     updateAuthUI();
-  }
-});
-supabase.auth.onAuthStateChange(function(event,session){
-  if(session && session.user){_user={id:session.user.id,email:session.user.email};}
-  else{_user=null;}
-  updateAuthUI();
-});
+  });
+}
+
+init();
 
 // Close modal on overlay click
 document.getElementById('auth-modal').addEventListener('click',function(e){if(e.target===this)closeAuth();});
