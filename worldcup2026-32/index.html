@@ -233,6 +233,14 @@ footer h2{font-size:1.1rem;color:#0f172a;margin-bottom:.5rem;border:none;padding
 footer ul{padding-left:1.2rem;margin-bottom:1rem}
 footer li{margin-bottom:.2rem}
 .compliance{font-size:.8rem;color:#94a3b8;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e2e8f0}
+/* ===== ACCORDION ===== */
+.accordion-header{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;transition:all .2s;margin-bottom:0}
+.accordion-header:hover{background:#f1f5f9;border-color:#cbd5e1}
+.accordion-header h2{margin:0;padding:0;border:none}
+.accordion-arrow{font-size:1rem;color:#94a3b8;transition:transform .2s;margin-left:.5rem}
+.accordion-header.open .accordion-arrow{transform:rotate(180deg)}
+.accordion-content{display:none!important;padding:.5rem 0}
+.accordion-content.open{display:block!important}
 @media(max-width:768px){.cards-grid{grid-template-columns:1fr}th,td{padding:.5rem .6rem;font-size:.8rem}.tabs{justify-content:center}}
 </style>
 <base target="_blank">
@@ -266,7 +274,9 @@ footer li{margin-bottom:.2rem}
   <div style="margin-top:1rem"><span class="badge">LIVE — TCI Research in Progress</span></div>
 
   <!-- Auth -->
-  <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b"><strong>Offline Mode:</strong> Supabase connection unavailable. Sorting, filtering, and toggles still work. Sign-in and database saves are disabled.</div>
+  <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b"><strong>Offline Mode:</strong> Supabase connection unavailable. Sign-in and database saves are disabled.</div>
+<div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e"></div>
+<div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>&#9989; Database Connected:</strong> Data loaded from Supabase. Admin edits will persist.</div>
 
   <div id="auth-bar" class="auth-box" style="margin-top:1rem">
     <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
@@ -300,7 +310,8 @@ footer li{margin-bottom:.2rem}
 
 <!-- ========== GROUP STAGE RESULTS ========== -->
 <section id="summary">
-<h2>&#128202; Group Stage Results</h2>
+<div class="accordion-header" id="summary-content-header" onclick="toggleAccordion('summary-content')"><h2>&#128202; Group Stage Results</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="summary-content">
 
 <div class="cards-grid">
   <!-- SPI Card -->
@@ -388,13 +399,15 @@ footer li{margin-bottom:.2rem}
     </table>
   </div>
 </div>
+</div>
 </section>
 
 <div class="phase-divider"></div>
 
 <!-- ========== KNOCKOUT TRACKING ========== -->
 <section id="knockout">
-<h2>&#128101; Knockout Tracking — All 32 Teams</h2>
+<div class="accordion-header" id="knockout-content-header" onclick="toggleAccordion('knockout-content')"><h2>&#128101; Knockout Tracking — All 32 Teams</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="knockout-content">
 <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem">Group stage complete. 32 teams qualified. Results update as each knockout round completes.</p>
 
 <div class="card">
@@ -446,13 +459,15 @@ footer li{margin-bottom:.2rem}
     </table>
   </div>
 </div>
+</div>
 </section>
 
 <div class="phase-divider"></div>
 
 <!-- ========== TEAM PROFILES ========== -->
 <section id="profiles">
-<h2>&#128200; Team Profiles (Sortable)</h2>
+<div class="accordion-header" id="profiles-content-header" onclick="toggleAccordion('profiles-content')"><h2>&#128200; Team Profiles (Sortable)</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="profiles-content">
 <div class="filter-row">
   <select id="filter-gei" onchange="renderProfiles()"><option value="">All GEI Types</option><option>Suppressed</option><option>Open</option><option>Inverted</option><option>Dominant</option></select>
   <select id="filter-finish" onchange="renderProfiles()"><option value="">All Finishes</option><option>1st</option><option>2nd</option><option>Best 3rd</option></select>
@@ -508,13 +523,15 @@ footer li{margin-bottom:.2rem}
 <tr><td class="team-cell">Croatia</td><td>L</td><td>2nd</td><td>Preserved</td><td><span class="gei-badge gei-open">Open</span></td><td>16</td><td>5</td><td>31%</td><td>+1</td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td><span class="result-pending">—</span></td><td>—</td><td>—</td></tr></tbody>
   </table>
 </div>
+</div>
 </section>
 
 <div class="phase-divider"></div>
 
 <!-- ========== METHODOLOGY (SEO-optimized semantic section) ========== -->
 <section id="framework">
-<h2>&#128208; The TCI Methodology — NTG Framework</h2>
+<div class="accordion-header" id="framework-content-header" onclick="toggleAccordion('framework-content')"><h2>&#128208; The TCI Methodology — NTG Framework</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="framework-content">
 <p style="color:#64748b;font-size:.9rem;margin-bottom:1rem">The <strong>Tournament Carryover Index (TCI)</strong> is a novel research framework developed by <a href="https://name-the-game.com">Name The Game</a> using <strong>Natural Technical Governance (NTG)</strong> — a first-principles methodology for documenting competitive dynamics in football tournaments. TCI is part of the broader NTG ecosystem powered by <strong>HUGS ID</strong>, alongside athlete classification systems (AMC), CaptureLabz training documentation, ArteRegistry creative cataloging, and Mic Mode expression tools. The TCI methodology introduces three proprietary metrics: <strong>SPI</strong> (Strategic Performance Index), <strong>GEI</strong> (Group Environment Index), and <strong>TCI</strong> (Tournament Carryover Index).</p>
 
 <div class="cards-grid">
@@ -535,13 +552,15 @@ footer li{margin-bottom:.2rem}
 <h3 style="font-size:1.1rem;color:#0f172a;margin:1.5rem 0 .5rem">About the NTG TCI Research Platform</h3>
 <p style="color:#64748b;font-size:.9rem;line-height:1.6">This dashboard is built on <strong>Natural Technical Governance (NTG)</strong> by <a href="https://name-the-game.com">Name The Game</a> — a methodology that documents competitive dynamics using first principles. NTG powers the entire name-the-game ecosystem including HUGS ID athlete identity profiles, AMC athlete classification, CaptureLabz training documentation, ArteRegistry creative cataloging, and Mic Mode expression tools. All TCI data is open, reproducible, and available for download as JSON. Researchers can use TCI data with Python, R, Excel, or any analytics tool.</p>
 <p style="color:#64748b;font-size:.9rem;line-height:1.6;margin-top:.5rem">The TCI framework is being pioneered during the <strong>2026 FIFA World Cup</strong> (United States, Canada, Mexico) with 12 groups of 4 teams and 32 qualified teams entering the knockout phase. HUGS ID tracks each team's competitive journey — from group environment through knockout rounds — creating a permanent record of how competitive environments shape tournament outcomes. Create a free account to download the complete dataset.</p>
+</div>
 </section>
 
 <div class="phase-divider"></div>
 
 <!-- ========== DOWNLOAD ========== -->
 <section id="download">
-<h2>&#128190; Download Dataset</h2>
+<div class="accordion-header" id="download-content-header" onclick="toggleAccordion('download-content')"><h2>&#128190; Download Dataset</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="download-content">
 <div id="download-guest" class="gate-cta">
   <h3>&#128227; Download the Complete Tournament Dataset</h3>
   <p>Get the full JSON dataset with all 32 teams, GEI classifications, and knockout results. Updated after each round.</p>
@@ -552,11 +571,13 @@ footer li{margin-bottom:.2rem}
   <p style="color:#64748b;font-size:.9rem;margin-bottom:1rem">Download the complete tournament dataset as JSON.</p>
   <button onclick="doDownload()" style="padding:.6rem 1.2rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer">&#128190; Download JSON Dataset</button>
 </div>
+</div>
 </section>
 
 <!-- ========== ADMIN ========== -->
 <section id="admin-section">
-<h2>&#128274; Admin — Edit Knockout Results</h2>
+<div class="accordion-header" id="admin-content-header" onclick="toggleAccordion('admin-content')"><h2>&#128274; Admin — Edit Knockout Results</h2><span class="accordion-arrow">&#9660;</span></div>
+<div class="accordion-content" id="admin-content">
 <div id="admin-login">
   <div class="update-note" style="background:#fef3c7;border-color:#fcd34d">
     <strong>Admin Access — Step 1: Passkey</strong><br>Enter the admin passkey to proceed to authentication.
@@ -597,6 +618,7 @@ footer li{margin-bottom:.2rem}
       <tbody id="admin-body"></tbody>
     </table>
   </div>
+</div>
 </div>
 </section>
 
@@ -672,7 +694,8 @@ try {
   supabase = mockSupabase;
 }
 
-// ========== FALLBACK DATA (used if Supabase table doesn't exist yet) ==========
+// ========== DATA: Database primary, hardcoded fallback ==========
+// Hardcoded data shows immediately. DB loads in background and overrides when ready.
 const HARDCODED_TEAMS = [
   {id:1,team:"Mexico",group:"A",finish:"1st",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:6,pctOfGroup:50,gd:6,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
   {id:2,team:"South Africa",group:"A",finish:"2nd",spi:"Preserved",gei:"Suppressed",groupGoals:12,teamGF:2,pctOfGroup:17,gd:-1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0},
@@ -708,7 +731,9 @@ const HARDCODED_TEAMS = [
   {id:32,team:"Croatia",group:"L",finish:"2nd",spi:"Preserved",gei:"Open",groupGoals:16,teamGF:5,pctOfGroup:31,gd:1,r32:null,r32Opp:null,r16:null,r16Opp:null,qf:null,qfOpp:null,sf:null,sfOpp:null,final:null,finalOpp:null,koGF:0,koGA:0}
 ];
 
-let currentData = { teams: [], date: "2026-06-28", round: "Round of 32 - Day 1" };
+let currentData = { teams: JSON.parse(JSON.stringify(HARDCODED_TEAMS)), date: "2026-06-28", round: "Round of 32 - Day 1" };
+let _dbLoaded = false;
+let _dbError = null;
 
 // Convert Supabase row (snake_case) to JS object (camelCase)
 function rowToTeam(r) {
@@ -732,23 +757,26 @@ function teamToRow(t) {
   };
 }
 
-// Load from Supabase (or fallback to hardcoded)
+// Load from Supabase — overrides hardcoded data when available
 async function loadFromDatabase() {
   try {
     var { data, error } = await supabase.from('teams').select('*');
-    if (error) { console.log('Supabase read error:', error.message); throw error; }
+    if (error) { console.log('Supabase read error:', error.message); _dbError = error.message; throw error; }
     if (data && data.length >= 32) {
       currentData.teams = data.map(rowToTeam);
+      _dbLoaded = true;
+      _dbError = null;
       console.log('Loaded ' + data.length + ' teams from Supabase');
       return;
     }
-    // Table exists but empty — seed it
-    console.log('Seeding Supabase with 32 teams...');
+    // Empty table — try to auto-seed
+    console.log('DB table empty — auto-seeding...');
     await seedSupabase();
-    currentData.teams = JSON.parse(JSON.stringify(HARDCODED_TEAMS));
+    _dbLoaded = true;
+    _dbError = null;
   } catch(e) {
-    console.log('Using hardcoded fallback (Supabase not ready yet)');
-    currentData.teams = JSON.parse(JSON.stringify(HARDCODED_TEAMS));
+    _dbError = _dbError || 'Cannot connect to database. Admin edits will not persist.';
+    console.log('DB load failed:', _dbError);
   }
 }
 
@@ -801,15 +829,30 @@ function geiBadge(gei) {
 function toggleSPI(btn) { var el=document.getElementById('spi-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide 24 fixtures';}else{el.style.display='none';btn.innerHTML='\u25BC View 24 fixtures';} }
 function toggleGEI(btn) { var el=document.getElementById('gei-breakdown'); if(el.style.display==='none'){el.style.display='block';btn.innerHTML='\u25B2 Hide group breakdown';}else{el.style.display='none';btn.innerHTML='\u25BC View group breakdown';} }
 
+// Accordion toggle for main sections
+function toggleAccordion(contentId) {
+  var content = document.getElementById(contentId);
+  var header = document.getElementById(contentId + '-header');
+  if(!content || !header) return;
+  if(content.classList.contains('open')){
+    content.classList.remove('open');
+    header.classList.remove('open');
+  }else{
+    content.classList.add('open');
+    header.classList.add('open');
+  }
+}
+
 function showTip(ev,text) {
-  ev.stopPropagation();
+  try { if(ev && ev.stopPropagation) ev.stopPropagation(); } catch(e){}
   if(_tipTimer){clearTimeout(_tipTimer);_tipTimer=null;}
   var p=document.getElementById('tip-popup'),t=document.getElementById('tip-text');
+  if(!p || !t) return;
   t.textContent=text; p.style.display='block';
-  var rect=ev.target.getBoundingClientRect();
+  var rect=(ev && ev.target && ev.target.getBoundingClientRect)?ev.target.getBoundingClientRect():{left:100,bottom:100};
   p.style.left=(rect.left+window.scrollX-10)+'px';
   p.style.top=(rect.bottom+window.scrollY+8)+'px';
-  _tipTimer=setTimeout(function(){p.style.display='none';},5000);
+  _tipTimer=setTimeout(function(){if(p)p.style.display='none';},5000);
 }
 document.addEventListener('click',function(){var p=document.getElementById('tip-popup');if(p)p.style.display='none';if(_tipTimer){clearTimeout(_tipTimer);_tipTimer=null;}});
 
@@ -1058,17 +1101,35 @@ function loadLS(){
   }
 }
 
-// Async init — load from database then render
+// Async init — render immediately with hardcoded data, load DB in background
 async function init(){
-  // Show offline banner if Supabase CDN failed
-  if(supabase === mockSupabase){
-    var banner = document.getElementById('offline-banner');
-    if(banner) banner.style.display = 'block';
-  }
-  await loadFromDatabase();
+  // Render tables immediately with hardcoded data
   loadLS();
   renderSummary();
   renderProfiles();
+  
+  // Try to load from database (overrides hardcoded when ready)
+  try {
+    await loadFromDatabase();
+    if(_dbLoaded){
+      // DB loaded successfully — re-render with live data
+      loadLS();
+      renderSummary();
+      renderProfiles();
+      // Show "connected to DB" indicator
+      var dbStatus = document.getElementById('db-status');
+      if(dbStatus) dbStatus.style.display = 'block';
+    } else if(_dbError){
+      // Show DB error but data still displays from hardcoded
+      var dbErr = document.getElementById('db-error');
+      if(dbErr){
+        dbErr.style.display = 'block';
+        dbErr.innerHTML = '<strong>Database:</strong> ' + _dbError + ' <em>Showing local data. Admin edits will not persist.</em>';
+      }
+    }
+  } catch(e) {
+    console.log('DB init error:', e);
+  }
   
   // Check for existing Supabase session
   try{
