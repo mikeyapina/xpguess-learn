@@ -1,209 +1,951 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-3HB79N4XWD');
-</script>  
-  
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI · GEI · TCI) by Name The Game</title>
+<link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/"/>
+<meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 — built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers."/>
+<script async="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+html{background:#fafafa}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#334155;line-height:1.7;background:#fafafa}
+main{max-width:1400px;margin:40px auto;background:#fff;padding:32px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+h1{font-size:1.75rem;color:#0f172a;margin-bottom:.3rem;line-height:1.3}
+h2{font-size:1.25rem;color:#0f172a;margin:1.5rem 0 .75rem;padding-bottom:.4rem;border-bottom:2px solid #d4a843}
+h3{font-size:1.05rem;color:#0f172a;margin:1.2rem 0 .5rem}
+hr{border:none;border-top:1px solid #e2e8f0;margin:1.5rem 0}
+a{color:#334155;text-decoration:underline}
+a:hover{color:#d4a843}
+p.lede{color:#64748b;font-size:1.05rem;margin-bottom:1rem}
+.badge{display:inline-block;background:#d4a843;color:#0f172a;padding:.35rem .8rem;border-radius:4px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.update-note{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;padding:1rem;font-size:.9rem;margin-bottom:1rem}
+.cards-grid{display:grid;grid-template-columns:3fr 2fr;gap:1rem;margin:1rem 0}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);min-width:0}
+.card-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:700;margin-bottom:.5rem}
+.card-value{font-size:2.5rem;font-weight:800;color:#0f172a;line-height:1}
+.card-label{font-size:.85rem;color:#64748b;margin-top:.3rem}
+.progress-bar{width:100%;height:6px;background:#e2e8f0;border-radius:3px;margin-top:.5rem;overflow:hidden}
+.progress-fill{height:100%;background:#d4a843;border-radius:3px}
+.table-container{overflow-x:auto;margin:1rem 0;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+thead th{background:#0f172a;color:#d4a843;padding:.7rem .9rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;cursor:pointer}
+thead th:hover{background:#1e293b}
+tbody td{padding:.6rem .9rem;border-bottom:1px solid #f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+tbody tr:hover{background:#fefce8}
+.gei-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.gei-suppressed{background:#fee2e2;color:#991b1b}
+.gei-open{background:#dcfce7;color:#166534}
+.gei-inverted{background:#ffedd5;color:#9a3412}
+.gei-dominant{background:#dbeafe;color:#1e40af}
+.result-win{color:#16a34a;font-weight:700}
+.result-loss{color:#dc2626;font-weight:700}
+.result-pending{color:#94a3b8;font-style:italic}
+.tip-popup{position:absolute;background:#0f172a;color:#d4a843;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:600;max-width:280px;z-index:1000;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);line-height:1.5;pointer-events:none}
+.team-cell{font-weight:700;color:#0f172a}
+.phase-divider{border:none;height:3px;background:#d4a843;margin:2rem 0;border-radius:2px}
+.auth-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.85rem}
+.auth-box button{padding:.4rem .8rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem;margin-right:.5rem}
+.auth-box button.secondary{background:transparent;color:#0f172a;border:1px solid #cbd5e1}
+.gate-cta{background:linear-gradient(135deg,#fef3c7 0%,#fff7ed 100%);border:2px solid #f59e0b;border-radius:12px;padding:1.5rem;text-align:center;margin:1rem 0}
+.gate-cta h3{color:#92400e;font-size:1.1rem;margin-bottom:.5rem}
+.gate-cta p{color:#78716c;font-size:.9rem;margin-bottom:1rem}
+.gate-cta button{background:#f59e0b;color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;padding:1.5rem;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h3{margin-bottom:.5rem;color:#0f172a}
+.modal input{width:100%;padding:.6rem .8rem;border:1px solid #e2e8f0;border-radius:6px;font-size:.9rem;margin-bottom:.5rem}
+.modal button{width:100%;padding:.6rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin-top:.3rem}
+.modal .error{color:#dc2626;font-size:.8rem;margin-top:.3rem}
+.modal .switch{text-align:center;font-size:.8rem;color:#64748b;margin-top:.5rem}
+.modal .switch a{color:#d4a843;cursor:pointer;text-decoration:underline}
+footer{font-size:.85rem;color:#64748b;line-height:1.7;margin-top:2rem}
+footer h2{font-size:1.1rem;color:#0f172a;margin-bottom:.5rem;border:none;padding:0}
+footer ul{padding-left:1.2rem;margin-bottom:1rem}
+.compliance{font-size:.8rem;color:#94a3b8;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e2e8f0}
+details.accordion-section{margin-bottom:.5rem}
+details.accordion-section>summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;transition:all .2s;list-style:none}
+details.accordion-section>summary::-webkit-details-marker{display:none}
+details.accordion-section>summary>h2{margin:0;padding:0;border:none}
+details.accordion-section>summary::after{content:'\25BC';font-size:1rem;color:#94a3b8;margin-left:.5rem;transition:transform .2s}
+details.accordion-section[open]>summary::after{transform:rotate(180deg)}
+details.toggle-section>summary{list-style:none;cursor:pointer;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;font-size:.8rem;display:inline-block}
+details.toggle-section>summary::-webkit-details-marker{display:none}
+.group-popup{display:none;position:absolute;background:#0f172a;color:#fff;padding:.8rem 1rem;border-radius:8px;font-size:.85rem;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.2);min-width:180px}
+.group-popup.show{display:block}
+.group-popup strong{color:#d4a843;display:block;margin-bottom:.3rem;font-size:.9rem}
+.group-letter{cursor:pointer;color:#0f172a;font-weight:700;position:relative}
+.group-letter:hover{text-decoration:underline;color:#d4a843}
+.card .table-container{border:none;box-shadow:none;margin:.5rem 0 0;padding:0;overflow-x:auto}
 
-  <!-- PAGE META -->
-  <title>{{PAGE_TITLE}} | XPGuess Learn</title>
-  <meta name="description" content="{{META_DESCRIPTION}}" />
-
-  <!-- CANONICAL -->
-  <link rel="canonical" href="{{CANONICAL_URL}}" />
-
-  <meta name="robots" content="index,follow" />
-  <meta name="googlebot" content="index,follow" />
-
-  <!-- TEMPLATE STYLES (DO NOT REMOVE) -->
-  <style>
-    :root { color-scheme: light; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:#fafafa; margin:0; padding:0; color:#111;
+#spi-table td,#gei-table td{white-space:nowrap}
+@media (max-width:768px){
+  .cards-grid{grid-template-columns:1fr!important}
+  h1{font-size:1.5rem!important}
+  h2{font-size:1.1rem!important}
+  table{font-size:.7rem!important}
+  td,th{padding:.4rem .5rem!important}
+}
+</style>
+<base target="_blank"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "World Cup 2026 TCI Dashboard",
+  "description": "Tournament Carryover Index dashboard for FIFA World Cup 2026. Track SPI, GEI, and TCI metrics for all 48 teams.",
+  "url": "https://learn.xpguess.com/worldcup2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Name The Game",
+    "url": "https://name-the-game.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NTG Analytics",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://name-the-game.com/ntg-logo.png"
     }
-    main {
-      max-width:720px; margin:40px auto; background:#fff;
-      padding:32px; border-radius:8px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.04);
-    }
-    hr{ border:0; border-top:1px solid #eee; margin:24px 0; }
-    h1{ margin:0 0 10px 0; font-size:30px; line-height:1.2; }
-    h2{ margin:0 0 10px 0; font-size:20px; line-height:1.35; }
-    h3{ margin:14px 0 8px 0; font-size:16px; line-height:1.35; }
-    p, li{ color:#333; line-height:1.7; }
-    a{ color:#111; text-decoration:underline; }
-    a:visited{ color:#111; }
-    .kicker{ margin:0 0 10px 0; font-size:13px; color:#666; }
-    .lede{ margin:0; font-size:16px; color:#444; line-height:1.6; }
-    .callout{
-      padding:12px 14px;
-      background:#f4f6ff;
-      border:1px solid #e4e8ff;
-      border-radius:8px;
-    }
-    .onpage{
-      background:#fafafa;
-      border:1px solid #eee;
-      border-radius:8px;
-      padding:14px 16px;
-    }
-    .onpage ul{ margin:10px 0 0 0; padding-left:18px; }
-    .footer-note{ font-size:12px; color:#777; }
-  </style>
-
-  <!-- BREADCRUMB SCHEMA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "XPGuess", "item": "https://xpguess.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://learn.xpguess.com/" },
-      { "@type": "ListItem", "position": 3, "name": "{{BREADCRUMB_TITLE}}", "item": "{{CANONICAL_URL}}" }
-    ]
+  },
+  "applicationCategory": "SportsAnalytics",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
   }
-  </script>
-
-  <!-- ARTICLE SCHEMA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "{{PAGE_TITLE}} | XPGuess Learn",
-    "description": "{{META_DESCRIPTION}}",
-    "inLanguage": "en",
-    "isAccessibleForFree": true,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "{{CANONICAL_URL}}"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "XPGuess",
-      "url": "https://xpguess.com"
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "XPGuess Learn"
-    },
-    "datePublished": "{{DATE_PUBLISHED}}",
-    "dateModified": "{{DATE_MODIFIED}}"
-  }
-  </script>
-</head>
-
+}
+</script>
+<script src="https://www.kimi.com/sdk-seed.js" defer=""></script></head>
 <body>
-<main>
-  <a id="top"></a>
+<div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
+<div class="group-popup" id="group-popup"></div>
 
-  <!-- LOGO -->
-  <div style="margin-bottom:24px;">
-    <img src="XPGuess-black.png" alt="XPGuess logo" style="height:240px; width:auto;">
+<main>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3HB79N4XWD');</script>
+
+<div style="margin-bottom:1.5rem"><img src="https://learn.xpguess.com/XPGuess-black.png" alt="XPGuess" style="height:240px;display:block"/></div>
+<hr/>
+
+<header>
+  <p style="font-size:.8rem;color:#94a3b8;margin-bottom:.5rem">Tournament Analytics / Research Dashboard</p>
+  <h1>World Cup 2026 TCI Dashboard</h1>
+  <p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework — open data, reproducible methodology.</p>
+
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#64748b;line-height:1.6;">
+    <strong style="color:#0f172a">Key Terms:</strong>
+    <strong style="color:#0f172a">SPI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Strategic Performance Index — did Matchday 3 preserve competitive ordering?" onclick="showTip(event,&#39;Strategic Performance Index — did Matchday 3 preserve competitive ordering? 83.3% means expected teams advanced in 20 of 24 fixtures.&#39;)">ⓘ</span> = Strategic Performance Index
+    <strong style="color:#0f172a">GEI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index — Suppressed, Open, Inverted, or Dominant" onclick="showTip(event,&#39;Group Environment Index — what type of competitive environment each group created. Suppressed (flat), Open (balanced), Inverted (SPI broke), Dominant (one team controlled).&#39;)">ⓘ</span> = Group Environment Index
+    <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Tournament Carryover Index — does group environment predict knockout success?" onclick="showTip(event,&#39;Tournament Carryover Index — does group environment predict knockout success? The core research question.&#39;)">ⓘ</span> = Tournament Carryover Index
   </div>
 
-  <hr>
+  <div style="margin-top:1rem"><span class="badge">LIVE — TCI Research in Progress</span></div>
 
-  <!-- HEADER -->
-  <header style="margin-bottom:22px;">
-    <p class="kicker">{{KICKER_LINE}}</p>
-    <h1>{{H1_TITLE}}</h1>
-    <p class="lede">{{LEDE_TEXT}}</p>
-  </header>
+  <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b"><strong>Offline Mode:</strong> Supabase connection unavailable. Sign-in and database saves are disabled.</div>
+  <div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e">
+    <strong>⚠ Database Empty:</strong> The <code>public.teams</code> table has no data.<br/><br/>
+    <strong>To fix:</strong> Run the seed SQL in your Supabase dashboard:<br/>
+    1. Go to your <a href="https://supabase.com/dashboard/project/cckhswhugilbmiarwbvt/editor" target="_blank" style="color:#92400e;text-decoration:underline;font-weight:700">Supabase SQL Editor</a><br/>
+    2. Paste the seed SQL (see <code>supabase-seed-teams.sql</code> in your repo)<br/>
+    3. Click Run — then refresh this page
+  </div>
+  <div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>✅ Database Connected:</strong> <span id="db-team-count"></span> teams loaded from Supabase. Admin edits will persist.</div>
 
-  <!-- ON THIS PAGE -->
-  <section class="onpage" aria-label="On this page">
-    <strong>On this page</strong>
-    <ul>
-      {{ON_PAGE_ANCHORS}}
-    </ul>
-  </section>
+  <div id="auth-bar" class="auth-box" style="margin-top:1rem">
+    <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
+      <div style="margin-top:.5rem"><button id="btn-signup">Create Free Account</button><button id="btn-login" class="secondary">Sign In</button></div>
+    </div>
+    <div id="auth-user" style="display:none"><strong id="user-email"></strong>
+      <div style="margin-top:.3rem"><button onclick="doDownload()">💾 Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
+    </div>
+  </div>
+</header>
+<section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
+  <strong style="font-size:.9rem">On this page</strong>
+  <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
+    <li><a href="#summary">Tournament Summary</a></li>
+    <li><a href="#knockout">Knockout Tracking</a></li>
+    <li><a href="#profiles">Team Profiles (Sortable)</a></li>
+    <li><a href="#framework">The Framework</a></li>
+    <li><a href="#download">Download Dataset</a></li>
+  </ul>
+</section>
 
-  <hr>
+<hr/>
 
-  <!-- MAIN CONTENT -->
-  {{MAIN_CONTENT}}
+<div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
+  <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> — <span id="last-round">Round of 32 - Day 1</span><br/>
+  <strong style="color:#0f172a">Next:</strong> After each knockout round
+</div>
 
-  <!-- ================= FOOTER ================= -->
+<section id="summary">
+<details class="accordion-section" open="">
+<summary><h2>📊 Group Stage Results</h2></summary>
 
-  <hr style="margin-top:32px;">
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-title">SPI Preservation</div>
+    <div class="card-value">83.3%</div>
+    <div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures — expected teams advanced.</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
+    <details class="toggle-section" style="margin-top:.8rem" open="">
+      <summary>View 24 fixtures</summary>
+      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
+      <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
+        <table id="spi-table">
+          <thead><tr><th onclick="sortSPI(0)">Group ↕</th><th onclick="sortSPI(1)">Fixture ↕</th><th onclick="sortSPI(2)">Expected ↕</th><th onclick="sortSPI(3)">Result ↕</th><th onclick="sortSPI(4)">SPI ↕</th></tr></thead>
+          <tbody id="spi-body">
+            <tr><td>A</td><td>Mexico vs Czechia</td><td>Mexico advances</td><td>Mexico won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>A</td><td>South Africa vs South Korea</td><td>SA advances</td><td>SA advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>B</td><td>Switzerland vs Qatar</td><td>Switzerland advances</td><td>Switzerland won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>B</td><td>Canada vs Bosnia</td><td>Canada advances</td><td>Canada won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>C</td><td>Brazil vs Scotland</td><td>Brazil advances</td><td>Brazil won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>C</td><td>Morocco vs Haiti</td><td>Morocco advances</td><td>Morocco advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>D</td><td>USA vs Paraguay</td><td>USA advances</td><td>USA won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>D</td><td>Australia vs New Zealand</td><td>Australia advances</td><td>Australia advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>E</td><td>Germany vs Ecuador</td><td>Germany advances</td><td>Germany won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>E</td><td>Curaçao vs Türkiye</td><td>Ecuador advances</td><td>Ecuador advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>F</td><td>Netherlands vs Japan</td><td>Netherlands advances</td><td>Netherlands won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>F</td><td>Sweden vs Cameroon</td><td>Sweden advances</td><td>Sweden advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>G</td><td>Belgium vs Iran</td><td>Belgium advances</td><td>Belgium won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>G</td><td>Egypt vs New Zealand</td><td>Egypt advances</td><td>Egypt advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>H</td><td>Spain vs Uruguay</td><td>Spain advances</td><td>Spain won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>H</td><td>Cabo Verde vs Saudi Arabia</td><td>Cabo Verde advances</td><td>Cabo Verde advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>I</td><td>France vs Norway</td><td>France advances</td><td>France won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>I</td><td>Iraq vs Panama</td><td>Norway advances</td><td>Norway advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>J</td><td>Argentina vs Austria</td><td>Argentina advances</td><td>Argentina won</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>J</td><td>Algeria vs Jordan</td><td>Austria advances</td><td>Austria advanced</td><td class="result-win">✓ Held</td></tr>
+            <tr><td>K</td><td>Colombia vs Portugal</td><td>Colombia advances</td><td>Portugal won</td><td class="result-loss">✗ Broken</td></tr>
+            <tr><td>K</td><td>DR Congo vs Uzbekistan</td><td>Portugal advances</td><td>DR Congo upset</td><td class="result-loss">✗ Broken</td></tr>
+            <tr><td>L</td><td>England vs Croatia</td><td>England advances</td><td>Croatia won</td><td class="result-loss">✗ Broken</td></tr>
+            <tr><td>L</td><td>Ghana vs Panama</td><td>Croatia advances</td><td>Ghana drew</td><td class="result-loss">✗ Broken</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
 
-  <h2>Continue Learning</h2>
-  <ul style="padding-left:18px; line-height:1.6;">
-    <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
-    <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
-    <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
-    <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
-    <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
-    <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
-    <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
-    <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
-    <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
-    <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
-    <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-    <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
-    <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
-    <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
-    <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
-    <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+  <div class="card">
+    <div class="card-title">GEI Classification</div>
+    <div class="card-value">4 Types</div>
+    <div class="card-label">12 groups classified by competitive environment pattern.</div>
+    <details class="toggle-section" style="margin-top:.8rem" open="">
+      <summary>View group breakdown</summary>
+      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Group Data by GEI Type</h3>
+      <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team’s Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
+      <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
+        <table id="gei-table">
+          <thead><tr>
+            <th onclick="sortGEI(0)">Group ↕</th>
+            <th onclick="sortGEI(1)">GEI ↕</th>
+            <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,&#39;% of all group goals scored by the #1 team — the GEI metric&#39;)">ⓘ</span> ↕</th>
+            <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,&#39;Goals For by the #1 team in group stage&#39;)">ⓘ</span> ↕</th>
+            <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,&#39;Total Group Goals — all goals by all teams in this group&#39;)">ⓘ</span> ↕</th>
+            <th onclick="sortGEI(5)">Rule ↕</th>
+          </tr></thead>
+          <tbody id="gei-body">
+            <tr style="border-left:3px solid #dc2626"><td><span class="group-letter" onclick="showGroup(event,&#39;A&#39;,&#39;Mexico&#39;,&#39;South Africa&#39;,&#39;South Korea&#39;,&#39;Czechia&#39;)">A</span></td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>50%</strong></td><td>6</td><td>12</td><td>45-60% share</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;B&#39;,&#39;Canada&#39;,&#39;Bosnia &amp; Herzegovina&#39;,&#39;Qatar&#39;,&#39;Switzerland&#39;)">B</span></td><td><span class="gei-badge gei-open">Open</span></td><td>36%</td><td>8</td><td>22</td><td>&lt;45% + SPI held</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;C&#39;,&#39;Brazil&#39;,&#39;Morocco&#39;,&#39;Haiti&#39;,&#39;Scotland&#39;)">C</span></td><td><span class="gei-badge gei-open">Open</span></td><td>44%</td><td>7</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+            <tr style="border-left:3px solid #dc2626"><td><span class="group-letter" onclick="showGroup(event,&#39;D&#39;,&#39;United States&#39;,&#39;Australia&#39;,&#39;New Zealand&#39;,&#39;Paraguay&#39;)">D</span></td><td><span class="gei-badge gei-suppressed">Suppressed</span></td><td><strong>57%</strong></td><td>8</td><td>14</td><td>45-60% share</td></tr>
+            <tr style="border-left:3px solid #2563eb"><td><span class="group-letter" onclick="showGroup(event,&#39;E&#39;,&#39;Germany&#39;,&#39;Curaçao&#39;,&#39;Ecuador&#39;,&#39;Türkiye&#39;)">E</span></td><td><span class="gei-badge gei-dominant">Dominant</span></td><td><strong>67%</strong></td><td>10</td><td>15</td><td>&gt;60% share</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;F&#39;,&#39;Netherlands&#39;,&#39;Japan&#39;,&#39;Sweden&#39;,&#39;Cameroon&#39;)">F</span></td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>10</td><td>26</td><td>&lt;45% + SPI held</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;G&#39;,&#39;Belgium&#39;,&#39;Egypt&#39;,&#39;Iran&#39;,&#39;New Zealand&#39;)">G</span></td><td><span class="gei-badge gei-open">Open</span></td><td>39%</td><td>7</td><td>18</td><td>&lt;45% (est.)</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;H&#39;,&#39;Spain&#39;,&#39;Cabo Verde&#39;,&#39;Saudi Arabia&#39;,&#39;Uruguay&#39;)">H</span></td><td><span class="gei-badge gei-open">Open</span></td><td>40%</td><td>8</td><td>20</td><td>&lt;45% + SPI held</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;I&#39;,&#39;France&#39;,&#39;Norway&#39;,&#39;Iraq&#39;,&#39;Panama&#39;)">I</span></td><td><span class="gei-badge gei-open">Open</span></td><td>37%</td><td>7</td><td>19</td><td>&lt;45% + SPI held</td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;J&#39;,&#39;Argentina&#39;,&#39;Austria&#39;,&#39;Algeria&#39;,&#39;Jordan&#39;)">J</span></td><td><span class="gei-badge gei-open">Open</span></td><td>41%</td><td>7</td><td>17</td><td>&lt;45% + SPI held</td></tr>
+            <tr style="border-left:3px solid #ea580c"><td><span class="group-letter" onclick="showGroup(event,&#39;K&#39;,&#39;Portugal&#39;,&#39;DR Congo&#39;,&#39;Uzbekistan&#39;,&#39;Colombia&#39;)">K</span></td><td><span class="gei-badge gei-inverted">Inverted</span></td><td>38%</td><td>8</td><td>21</td><td>&lt;45% + SPI <strong>broke</strong></td></tr>
+            <tr><td><span class="group-letter" onclick="showGroup(event,&#39;L&#39;,&#39;England&#39;,&#39;Croatia&#39;,&#39;Ghana&#39;,&#39;Panama&#39;)">L</span></td><td><span class="gei-badge gei-open">Open</span></td><td>38%</td><td>6</td><td>16</td><td>&lt;45% + SPI held</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:#64748b;font-size:.8rem;margin-top:.5rem"><strong>How to read:</strong> Germany 67% (10 goals) = created dominance. Groups A &amp; D winners 50-57% with 6-8 goals = won flat groups.</p>
+    </details>
+  </div>
+</div>
 
-    </ul>
+</details>
+</section>
 
-  <p style="margin-top:32px;">
-    <a href="https://xpguess.com">Go to the XPGuess App</a>
+<div class="phase-divider"></div>
+<!-- ==================== KNOCKOUT TRACKING ==================== -->
+<section id="knockout">
+  <details open="">
+    <summary><h2>👥 Knockout Tracking — All 48 Teams</h2></summary>
+
+    <div class="content-box" style="overflow-x:auto">
+      <p>Track every team from group seed through Round of 32 → Round of 16 → Quarter-Finals → Semi-Finals → Final. <strong>Admin edits update live.</strong></p>
+      <table class="data-table" id="ko-table">
+        <thead><tr>
+          <th>Grp</th>
+          <th>Team</th>
+          <th>Seed</th>
+          <th>Knockout Position</th>
+          <th>Path</th>
+        </tr></thead>
+        <tbody id="ko-body">
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">A</span></td><td><strong>Mexico</strong></td><td>A1</td><td id="ko-a1">TBD</td><td id="path-a1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">A</span></td><td><strong>South Africa</strong></td><td>A2</td><td id="ko-a2">TBD</td><td id="path-a2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">A</span></td><td><strong>South Korea</strong></td><td>A3</td><td id="ko-a3">TBD</td><td id="path-a3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">A</span></td><td><strong>Czechia</strong></td><td>A4</td><td id="ko-a4">TBD</td><td id="path-a4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">B</span></td><td><strong>Canada</strong></td><td>B1</td><td id="ko-b1">TBD</td><td id="path-b1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">B</span></td><td><strong>Bosnia &amp; Herzegovina</strong></td><td>B2</td><td id="ko-b2">TBD</td><td id="path-b2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">B</span></td><td><strong>Qatar</strong></td><td>B3</td><td id="ko-b3">TBD</td><td id="path-b3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">B</span></td><td><strong>Switzerland</strong></td><td>B4</td><td id="ko-b4">TBD</td><td id="path-b4">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">C</span></td><td><strong>Brazil</strong></td><td>C1</td><td id="ko-c1">TBD</td><td id="path-c1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">C</span></td><td><strong>Morocco</strong></td><td>C2</td><td id="ko-c2">TBD</td><td id="path-c2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">C</span></td><td><strong>Haiti</strong></td><td>C3</td><td id="ko-c3">TBD</td><td id="path-c3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">C</span></td><td><strong>Scotland</strong></td><td>C4</td><td id="ko-c4">TBD</td><td id="path-c4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">D</span></td><td><strong>United States</strong></td><td>D1</td><td id="ko-d1">TBD</td><td id="path-d1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">D</span></td><td><strong>Australia</strong></td><td>D2</td><td id="ko-d2">TBD</td><td id="path-d2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">D</span></td><td><strong>New Zealand</strong></td><td>D3</td><td id="ko-d3">TBD</td><td id="path-d3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">D</span></td><td><strong>Paraguay</strong></td><td>D4</td><td id="ko-d4">TBD</td><td id="path-d4">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">E</span></td><td><strong>Germany</strong></td><td>E1</td><td id="ko-e1">TBD</td><td id="path-e1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">E</span></td><td><strong>Curaçao</strong></td><td>E2</td><td id="ko-e2">TBD</td><td id="path-e2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">E</span></td><td><strong>Ecuador</strong></td><td>E3</td><td id="ko-e3">TBD</td><td id="path-e3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">E</span></td><td><strong>Türkiye</strong></td><td>E4</td><td id="ko-e4">TBD</td><td id="path-e4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">F</span></td><td><strong>Netherlands</strong></td><td>F1</td><td id="ko-f1">TBD</td><td id="path-f1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">F</span></td><td><strong>Japan</strong></td><td>F2</td><td id="ko-f2">TBD</td><td id="path-f2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">F</span></td><td><strong>Sweden</strong></td><td>F3</td><td id="ko-f3">TBD</td><td id="path-f3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">F</span></td><td><strong>Cameroon</strong></td><td>F4</td><td id="ko-f4">TBD</td><td id="path-f4">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">G</span></td><td><strong>Belgium</strong></td><td>G1</td><td id="ko-g1">TBD</td><td id="path-g1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">G</span></td><td><strong>Egypt</strong></td><td>G2</td><td id="ko-g2">TBD</td><td id="path-g2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">G</span></td><td><strong>Iran</strong></td><td>G3</td><td id="ko-g3">TBD</td><td id="path-g3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">G</span></td><td><strong>New Zealand</strong></td><td>G4</td><td id="ko-g4">TBD</td><td id="path-g4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">H</span></td><td><strong>Spain</strong></td><td>H1</td><td id="ko-h1">TBD</td><td id="path-h1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">H</span></td><td><strong>Cabo Verde</strong></td><td>H2</td><td id="ko-h2">TBD</td><td id="path-h2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">H</span></td><td><strong>Saudi Arabia</strong></td><td>H3</td><td id="ko-h3">TBD</td><td id="path-h3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">H</span></td><td><strong>Uruguay</strong></td><td>H4</td><td id="ko-h4">TBD</td><td id="path-h4">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">I</span></td><td><strong>France</strong></td><td>I1</td><td id="ko-i1">TBD</td><td id="path-i1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">I</span></td><td><strong>Norway</strong></td><td>I2</td><td id="ko-i2">TBD</td><td id="path-i2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">I</span></td><td><strong>Iraq</strong></td><td>I3</td><td id="ko-i3">TBD</td><td id="path-i3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">I</span></td><td><strong>Panama</strong></td><td>I4</td><td id="ko-i4">TBD</td><td id="path-i4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">J</span></td><td><strong>Argentina</strong></td><td>J1</td><td id="ko-j1">TBD</td><td id="path-j1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">J</span></td><td><strong>Austria</strong></td><td>J2</td><td id="ko-j2">TBD</td><td id="path-j2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">J</span></td><td><strong>Algeria</strong></td><td>J3</td><td id="ko-j3">TBD</td><td id="path-j3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">J</span></td><td><strong>Jordan</strong></td><td>J4</td><td id="ko-j4">TBD</td><td id="path-j4">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">K</span></td><td><strong>Portugal</strong></td><td>K1</td><td id="ko-k1">TBD</td><td id="path-k1">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">K</span></td><td><strong>DR Congo</strong></td><td>K2</td><td id="ko-k2">TBD</td><td id="path-k2">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">K</span></td><td><strong>Uzbekistan</strong></td><td>K3</td><td id="ko-k3">TBD</td><td id="path-k3">Group stage</td></tr>
+            <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#2563eb;color:#fff;font-size:11px;font-weight:700;border-radius:4px">K</span></td><td><strong>Colombia</strong></td><td>K4</td><td id="ko-k4">TBD</td><td id="path-k4">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">L</span></td><td><strong>England</strong></td><td>L1</td><td id="ko-l1">TBD</td><td id="path-l1">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">L</span></td><td><strong>Croatia</strong></td><td>L2</td><td id="ko-l2">TBD</td><td id="path-l2">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">L</span></td><td><strong>Ghana</strong></td><td>L3</td><td id="ko-l3">TBD</td><td id="path-l3">Group stage</td></tr>
+            <tr style="background:#f8fafc"><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#16a34a;color:#fff;font-size:11px;font-weight:700;border-radius:4px">L</span></td><td><strong>Panama</strong></td><td>L4</td><td id="ko-l4">TBD</td><td id="path-l4">Group stage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== TEAM PROFILES ==================== -->
+<section id="profiles">
+  <details open="">
+    <summary><h2>📈 Team Profiles (Sortable)</h2></summary>
+
+    <div class="content-box" style="overflow-x:auto">
+      <p>Click any column header to sort. Combines SPI rank, GEI group type, TCI score, and knockout progression for every team.</p>
+      <table class="data-table" id="profile-table">
+        <thead><tr>
+          <th onclick="sortProfiles(0)" style="cursor:pointer">Team ↕</th>
+          <th onclick="sortProfiles(1)" style="cursor:pointer">Grp ↕</th>
+          <th onclick="sortProfiles(2)" style="cursor:pointer">Seed ↕</th>
+          <th onclick="sortProfiles(3)" style="cursor:pointer">SPI Rank ↕</th>
+          <th onclick="sortProfiles(4)" style="cursor:pointer">GEI Type ↕</th>
+          <th onclick="sortProfiles(5)" style="cursor:pointer">GEI % ↕</th>
+          <th onclick="sortProfiles(6)" style="cursor:pointer">TCI ↕</th>
+          <th onclick="sortProfiles(7)" style="cursor:pointer">R16+ ↕</th>
+        </tr></thead>
+        <tbody id="profile-body">
+            <tr data-group="A" data-seed="A1" data-gei="50" data-spi="1" data-name="Mexico"><td><strong>Mexico</strong></td><td>A</td><td>A1</td><td>1</td><td>Suppressed</td><td>50%</td><td id="tci-a1">--</td><td id="r16-a1">TBD</td></tr>
+            <tr data-group="A" data-seed="A2" data-gei="50" data-spi="2" data-name="South Africa"><td><strong>South Africa</strong></td><td>A</td><td>A2</td><td>2</td><td>Suppressed</td><td>50%</td><td id="tci-a2">--</td><td id="r16-a2">TBD</td></tr>
+            <tr data-group="A" data-seed="A3" data-gei="50" data-spi="3" data-name="South Korea"><td><strong>South Korea</strong></td><td>A</td><td>A3</td><td>3</td><td>Suppressed</td><td>50%</td><td id="tci-a3">--</td><td id="r16-a3">TBD</td></tr>
+            <tr data-group="A" data-seed="A4" data-gei="50" data-spi="4" data-name="Czechia"><td><strong>Czechia</strong></td><td>A</td><td>A4</td><td>4</td><td>Suppressed</td><td>50%</td><td id="tci-a4">--</td><td id="r16-a4">TBD</td></tr>
+            <tr data-group="B" data-seed="B1" data-gei="36" data-spi="5" data-name="Canada"><td><strong>Canada</strong></td><td>B</td><td>B1</td><td>5</td><td>Open</td><td>36%</td><td id="tci-b1">--</td><td id="r16-b1">TBD</td></tr>
+            <tr data-group="B" data-seed="B2" data-gei="36" data-spi="6" data-name="Bosnia &amp; Herzegovina"><td><strong>Bosnia &amp; Herzegovina</strong></td><td>B</td><td>B2</td><td>6</td><td>Open</td><td>36%</td><td id="tci-b2">--</td><td id="r16-b2">TBD</td></tr>
+            <tr data-group="B" data-seed="B3" data-gei="36" data-spi="7" data-name="Qatar"><td><strong>Qatar</strong></td><td>B</td><td>B3</td><td>7</td><td>Open</td><td>36%</td><td id="tci-b3">--</td><td id="r16-b3">TBD</td></tr>
+            <tr data-group="B" data-seed="B4" data-gei="36" data-spi="8" data-name="Switzerland"><td><strong>Switzerland</strong></td><td>B</td><td>B4</td><td>8</td><td>Open</td><td>36%</td><td id="tci-b4">--</td><td id="r16-b4">TBD</td></tr>
+            <tr data-group="C" data-seed="C1" data-gei="44" data-spi="9" data-name="Brazil"><td><strong>Brazil</strong></td><td>C</td><td>C1</td><td>9</td><td>Open</td><td>44%</td><td id="tci-c1">--</td><td id="r16-c1">TBD</td></tr>
+            <tr data-group="C" data-seed="C2" data-gei="44" data-spi="10" data-name="Morocco"><td><strong>Morocco</strong></td><td>C</td><td>C2</td><td>10</td><td>Open</td><td>44%</td><td id="tci-c2">--</td><td id="r16-c2">TBD</td></tr>
+            <tr data-group="C" data-seed="C3" data-gei="44" data-spi="11" data-name="Haiti"><td><strong>Haiti</strong></td><td>C</td><td>C3</td><td>11</td><td>Open</td><td>44%</td><td id="tci-c3">--</td><td id="r16-c3">TBD</td></tr>
+            <tr data-group="C" data-seed="C4" data-gei="44" data-spi="12" data-name="Scotland"><td><strong>Scotland</strong></td><td>C</td><td>C4</td><td>12</td><td>Open</td><td>44%</td><td id="tci-c4">--</td><td id="r16-c4">TBD</td></tr>
+            <tr data-group="D" data-seed="D1" data-gei="57" data-spi="13" data-name="United States"><td><strong>United States</strong></td><td>D</td><td>D1</td><td>13</td><td>Suppressed</td><td>57%</td><td id="tci-d1">--</td><td id="r16-d1">TBD</td></tr>
+            <tr data-group="D" data-seed="D2" data-gei="57" data-spi="14" data-name="Australia"><td><strong>Australia</strong></td><td>D</td><td>D2</td><td>14</td><td>Suppressed</td><td>57%</td><td id="tci-d2">--</td><td id="r16-d2">TBD</td></tr>
+            <tr data-group="D" data-seed="D3" data-gei="57" data-spi="15" data-name="New Zealand"><td><strong>New Zealand</strong></td><td>D</td><td>D3</td><td>15</td><td>Suppressed</td><td>57%</td><td id="tci-d3">--</td><td id="r16-d3">TBD</td></tr>
+            <tr data-group="D" data-seed="D4" data-gei="57" data-spi="16" data-name="Paraguay"><td><strong>Paraguay</strong></td><td>D</td><td>D4</td><td>16</td><td>Suppressed</td><td>57%</td><td id="tci-d4">--</td><td id="r16-d4">TBD</td></tr>
+            <tr data-group="E" data-seed="E1" data-gei="67" data-spi="17" data-name="Germany"><td><strong>Germany</strong></td><td>E</td><td>E1</td><td>17</td><td>Dominant</td><td>67%</td><td id="tci-e1">--</td><td id="r16-e1">TBD</td></tr>
+            <tr data-group="E" data-seed="E2" data-gei="67" data-spi="18" data-name="Curaçao"><td><strong>Curaçao</strong></td><td>E</td><td>E2</td><td>18</td><td>Dominant</td><td>67%</td><td id="tci-e2">--</td><td id="r16-e2">TBD</td></tr>
+            <tr data-group="E" data-seed="E3" data-gei="67" data-spi="19" data-name="Ecuador"><td><strong>Ecuador</strong></td><td>E</td><td>E3</td><td>19</td><td>Dominant</td><td>67%</td><td id="tci-e3">--</td><td id="r16-e3">TBD</td></tr>
+            <tr data-group="E" data-seed="E4" data-gei="67" data-spi="20" data-name="Türkiye"><td><strong>Türkiye</strong></td><td>E</td><td>E4</td><td>20</td><td>Dominant</td><td>67%</td><td id="tci-e4">--</td><td id="r16-e4">TBD</td></tr>
+            <tr data-group="F" data-seed="F1" data-gei="38" data-spi="21" data-name="Netherlands"><td><strong>Netherlands</strong></td><td>F</td><td>F1</td><td>21</td><td>Open</td><td>38%</td><td id="tci-f1">--</td><td id="r16-f1">TBD</td></tr>
+            <tr data-group="F" data-seed="F2" data-gei="38" data-spi="22" data-name="Japan"><td><strong>Japan</strong></td><td>F</td><td>F2</td><td>22</td><td>Open</td><td>38%</td><td id="tci-f2">--</td><td id="r16-f2">TBD</td></tr>
+            <tr data-group="F" data-seed="F3" data-gei="38" data-spi="23" data-name="Sweden"><td><strong>Sweden</strong></td><td>F</td><td>F3</td><td>23</td><td>Open</td><td>38%</td><td id="tci-f3">--</td><td id="r16-f3">TBD</td></tr>
+            <tr data-group="F" data-seed="F4" data-gei="38" data-spi="24" data-name="Cameroon"><td><strong>Cameroon</strong></td><td>F</td><td>F4</td><td>24</td><td>Open</td><td>38%</td><td id="tci-f4">--</td><td id="r16-f4">TBD</td></tr>
+            <tr data-group="G" data-seed="G1" data-gei="39" data-spi="25" data-name="Belgium"><td><strong>Belgium</strong></td><td>G</td><td>G1</td><td>25</td><td>Open</td><td>39%</td><td id="tci-g1">--</td><td id="r16-g1">TBD</td></tr>
+            <tr data-group="G" data-seed="G2" data-gei="39" data-spi="26" data-name="Egypt"><td><strong>Egypt</strong></td><td>G</td><td>G2</td><td>26</td><td>Open</td><td>39%</td><td id="tci-g2">--</td><td id="r16-g2">TBD</td></tr>
+            <tr data-group="G" data-seed="G3" data-gei="39" data-spi="27" data-name="Iran"><td><strong>Iran</strong></td><td>G</td><td>G3</td><td>27</td><td>Open</td><td>39%</td><td id="tci-g3">--</td><td id="r16-g3">TBD</td></tr>
+            <tr data-group="G" data-seed="G4" data-gei="39" data-spi="28" data-name="New Zealand"><td><strong>New Zealand</strong></td><td>G</td><td>G4</td><td>28</td><td>Open</td><td>39%</td><td id="tci-g4">--</td><td id="r16-g4">TBD</td></tr>
+            <tr data-group="H" data-seed="H1" data-gei="40" data-spi="29" data-name="Spain"><td><strong>Spain</strong></td><td>H</td><td>H1</td><td>29</td><td>Open</td><td>40%</td><td id="tci-h1">--</td><td id="r16-h1">TBD</td></tr>
+            <tr data-group="H" data-seed="H2" data-gei="40" data-spi="30" data-name="Cabo Verde"><td><strong>Cabo Verde</strong></td><td>H</td><td>H2</td><td>30</td><td>Open</td><td>40%</td><td id="tci-h2">--</td><td id="r16-h2">TBD</td></tr>
+            <tr data-group="H" data-seed="H3" data-gei="40" data-spi="31" data-name="Saudi Arabia"><td><strong>Saudi Arabia</strong></td><td>H</td><td>H3</td><td>31</td><td>Open</td><td>40%</td><td id="tci-h3">--</td><td id="r16-h3">TBD</td></tr>
+            <tr data-group="H" data-seed="H4" data-gei="40" data-spi="32" data-name="Uruguay"><td><strong>Uruguay</strong></td><td>H</td><td>H4</td><td>32</td><td>Open</td><td>40%</td><td id="tci-h4">--</td><td id="r16-h4">TBD</td></tr>
+            <tr data-group="I" data-seed="I1" data-gei="37" data-spi="33" data-name="France"><td><strong>France</strong></td><td>I</td><td>I1</td><td>33</td><td>Open</td><td>37%</td><td id="tci-i1">--</td><td id="r16-i1">TBD</td></tr>
+            <tr data-group="I" data-seed="I2" data-gei="37" data-spi="34" data-name="Norway"><td><strong>Norway</strong></td><td>I</td><td>I2</td><td>34</td><td>Open</td><td>37%</td><td id="tci-i2">--</td><td id="r16-i2">TBD</td></tr>
+            <tr data-group="I" data-seed="I3" data-gei="37" data-spi="35" data-name="Iraq"><td><strong>Iraq</strong></td><td>I</td><td>I3</td><td>35</td><td>Open</td><td>37%</td><td id="tci-i3">--</td><td id="r16-i3">TBD</td></tr>
+            <tr data-group="I" data-seed="I4" data-gei="37" data-spi="36" data-name="Panama"><td><strong>Panama</strong></td><td>I</td><td>I4</td><td>36</td><td>Open</td><td>37%</td><td id="tci-i4">--</td><td id="r16-i4">TBD</td></tr>
+            <tr data-group="J" data-seed="J1" data-gei="41" data-spi="37" data-name="Argentina"><td><strong>Argentina</strong></td><td>J</td><td>J1</td><td>37</td><td>Open</td><td>41%</td><td id="tci-j1">--</td><td id="r16-j1">TBD</td></tr>
+            <tr data-group="J" data-seed="J2" data-gei="41" data-spi="38" data-name="Austria"><td><strong>Austria</strong></td><td>J</td><td>J2</td><td>38</td><td>Open</td><td>41%</td><td id="tci-j2">--</td><td id="r16-j2">TBD</td></tr>
+            <tr data-group="J" data-seed="J3" data-gei="41" data-spi="39" data-name="Algeria"><td><strong>Algeria</strong></td><td>J</td><td>J3</td><td>39</td><td>Open</td><td>41%</td><td id="tci-j3">--</td><td id="r16-j3">TBD</td></tr>
+            <tr data-group="J" data-seed="J4" data-gei="41" data-spi="40" data-name="Jordan"><td><strong>Jordan</strong></td><td>J</td><td>J4</td><td>40</td><td>Open</td><td>41%</td><td id="tci-j4">--</td><td id="r16-j4">TBD</td></tr>
+            <tr data-group="K" data-seed="K1" data-gei="38" data-spi="41" data-name="Portugal"><td><strong>Portugal</strong></td><td>K</td><td>K1</td><td>41</td><td>Inverted</td><td>38%</td><td id="tci-k1">--</td><td id="r16-k1">TBD</td></tr>
+            <tr data-group="K" data-seed="K2" data-gei="38" data-spi="42" data-name="DR Congo"><td><strong>DR Congo</strong></td><td>K</td><td>K2</td><td>42</td><td>Inverted</td><td>38%</td><td id="tci-k2">--</td><td id="r16-k2">TBD</td></tr>
+            <tr data-group="K" data-seed="K3" data-gei="38" data-spi="43" data-name="Uzbekistan"><td><strong>Uzbekistan</strong></td><td>K</td><td>K3</td><td>43</td><td>Inverted</td><td>38%</td><td id="tci-k3">--</td><td id="r16-k3">TBD</td></tr>
+            <tr data-group="K" data-seed="K4" data-gei="38" data-spi="44" data-name="Colombia"><td><strong>Colombia</strong></td><td>K</td><td>K4</td><td>44</td><td>Inverted</td><td>38%</td><td id="tci-k4">--</td><td id="r16-k4">TBD</td></tr>
+            <tr data-group="L" data-seed="L1" data-gei="38" data-spi="45" data-name="England"><td><strong>England</strong></td><td>L</td><td>L1</td><td>45</td><td>Open</td><td>38%</td><td id="tci-l1">--</td><td id="r16-l1">TBD</td></tr>
+            <tr data-group="L" data-seed="L2" data-gei="38" data-spi="46" data-name="Croatia"><td><strong>Croatia</strong></td><td>L</td><td>L2</td><td>46</td><td>Open</td><td>38%</td><td id="tci-l2">--</td><td id="r16-l2">TBD</td></tr>
+            <tr data-group="L" data-seed="L3" data-gei="38" data-spi="47" data-name="Ghana"><td><strong>Ghana</strong></td><td>L</td><td>L3</td><td>47</td><td>Open</td><td>38%</td><td id="tci-l3">--</td><td id="r16-l3">TBD</td></tr>
+            <tr data-group="L" data-seed="L4" data-gei="38" data-spi="48" data-name="Panama"><td><strong>Panama</strong></td><td>L</td><td>L4</td><td>48</td><td>Open</td><td>38%</td><td id="tci-l4">--</td><td id="r16-l4">TBD</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== TCI METHODOLOGY ==================== -->
+<section id="methodology">
+  <details open="">
+    <summary><h2>📐 The TCI Methodology — NTG Framework</h2></summary>
+
+    <div class="methodology">
+      <h3>ⓘ What is TCI?</h3>
+      <p>The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team&#39;s group-stage environment predict their knockout success?</em></p>
+      <p>TCI is built on two verified indices — SPI and GEI — combined into a single carryover score for each team.</p>
+
+      <h3>📈 SPI — Strategic Performance Index</h3>
+      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is &#34;honest.&#34;</p>
+      <div class="formula-box">
+        <strong>SPI = (% of seed positions held from Matchday 2 → 3)</strong><br/>
+        <span style="color:#16a34a">✓ 83.3% held in WC 2026 groups (20 of 24 positions)</span> — only Groups D and K inverted<br/>
+        <span style="color:#94a3b8">Threshold: &gt;66% = &#34;held&#34;, ≤66% = &#34;broke&#34;</span>
+      </div>
+
+      <h3>👥 GEI — Group Environment Index</h3>
+      <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
+      <div class="formula-box">
+        <strong>GEI = (Top Team Goals / Total Group Goals) × 100</strong><br/><br/>
+        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share — one team overwhelmed the group<br/>
+        <span class="gei-badge gei-suppressed">Suppressed</span> 45–60% share — top team won a flat group<br/>
+        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held — competitive, honest group<br/>
+        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke — competitive but upsets occurred
+      </div>
+
+      <h3>⚙ TCI Calculation</h3>
+      <div class="formula-box">
+        <strong>TCI = α(SPI<sub>team</sub>) + β(GEI<sub>group</sub>) + γ(Knockout Path)</strong><br/><br/>
+        Where:<br/>
+        • SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br/>
+        • GEI<sub>group</sub> = group environment score (0–100 normalized)<br/>
+        • Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br/>
+        • α, β, γ = NTG-calibrated weights
+      </div>
+
+      <h3>💡 Key Finding</h3>
+      <p style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
+        <strong style="color:#16a34a">Open + Honest groups (GEI &lt;45%, SPI held) produce the strongest knockout performers.</strong><br/>
+        Teams from open groups enter the knockout stage battle-tested. Teams from dominant groups may be under-prepared for the intensity shift.
+      </p>
+
+      <h3>🔗 NTG Ecosystem Links</h3>
+      <p style="font-size:.85rem;color:#64748b">
+        • <strong>NTG:</strong> Natural Technical Governance — the decision-science framework powering TCI<br/>
+        • <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br/>
+        • <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br/>
+        • <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
+      </p>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== DOWNLOAD DATASET ==================== -->
+<section id="download">
+  <details open="">
+    <summary><h2>💾 Download Dataset</h2></summary>
+
+    <div class="content-box">
+      <p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0">
+        <button class="btn-primary" onclick="exportCSV()">💾 Download CSV</button>
+        <button class="btn-primary" onclick="exportJSON()" style="background:#475569">💾 Download JSON</button>
+      </div>
+      <p style="font-size:.8rem;color:#64748b">Includes: team, group, seed, GEI type, GEI share %, SPI held/broke, TCI score, knockout position. Updates when admin saves edits.</p>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== ADMIN PANEL ==================== -->
+<section id="admin">
+  <details>
+    <summary><h2>🔒 Admin — Edit Knockout Results</h2></summary>
+
+    <div class="content-box" id="admin-box">
+      <div id="admin-login">
+        <p><strong>Two-step authentication required.</strong> Only authorized NTG administrators can edit knockout data.</p>
+        <div style="max-width:400px;margin:1rem 0">
+          <input type="email" id="admin-email" placeholder="Admin email" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
+          <input type="password" id="admin-pass" placeholder="Password" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
+          <input type="text" id="admin-code" placeholder="2FA code (6 digits)" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
+          <button class="btn-primary" onclick="adminLogin()">🔒 Authenticate</button>
+        </div>
+        <p id="admin-msg" style="color:#dc2626;font-size:.85rem;margin-top:.5rem"></p>
+      </div>
+
+      <div id="admin-editor" style="display:none">
+        <p style="color:#16a34a;margin-bottom:1rem"><strong>✅ Authenticated.</strong> Edit knockout positions below. Changes save to database and update all tables live.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem" id="admin-grid">
+          <!-- Admin edit fields generated by JS -->
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn-primary" onclick="saveKnockout()">💾 Save to Database</button>
+          <button class="btn-primary" onclick="loadKnockout()" style="background:#475569">🔄 Reload from DB</button>
+          <button class="btn-primary" onclick="adminLogout()" style="background:#94a3b8">🔒 Logout</button>
+        </div>
+        <p id="save-msg" style="margin-top:.5rem;font-size:.85rem"></p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer style="background:#0f172a;color:#94a3b8;text-align:center;padding:2.5rem 1rem 2rem;margin-top:2rem;border-top:1px solid #1e293b">
+  <p style="margin:0 0 .5rem;font-size:.9rem">
+    <strong style="color:#f8fafc">World Cup 2026 TCI Dashboard</strong> — Powered by <strong style="color:#60a5fa">NTG</strong>
   </p>
-
-  <h2>Compliance Notice</h2>
-  <p>
-    XPGuess is an educational platform. It does not provide medical services,
-    act as a healthcare provider, or replace professional care.
-    All fitness and support tools exist for training documentation,
-    reflection, and athlete protection.
+  <p style="margin:0 0 1rem;font-size:.8rem">
+    Natural Technical Governance · Tournament Carryover Index · Name The Game
   </p>
-
-  <section aria-labelledby="terminology-provenance"
-           style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
-
-    <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
-
-    <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
-
-    <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
-
-    <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
-
-    <p>
-      Reference:
-      <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">
-        “Beginning and Staying with the Basics: Building from the Ground Up”
-      </a>
-    </p>
-
-    <p>
-      Additional work:
-      <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">
-        Coach Teaches Animals: Gymnastics Stretching
-      </a>
-    </p>
-  </section>
-
-  <p class="footer-note" style="margin-top:32px;">
-    XPGuess Learn content is educational, governance-focused, and non-commercial.
+  <p style="margin:0;font-size:.75rem;color:#64748b">
+    Learn.XPGuess.com · Connected to name-the-game.com ecosystem<br/>
+    HUGS ID athlete identity system · Data: FIFA World Cup 2026 (projected)<br/>
+    © 2026 NTG Analytics. All rights reserved.
   </p>
+</footer>
 
-  <p style="margin-top:18px;">
-    <a href="#top">Back to top</a>
-  </p>
+<!-- /container -->
 
-</main>
-</body>
-</html>
+<!-- ==================== AUTH MODAL ==================== -->
+<div id="auth-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,.85);z-index:2000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative">
+    <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8">×</button>
+    <h3 id="auth-title" style="margin:0 0 1rem;color:#0f172a">🔒 Sign In</h3>
+    <div id="auth-step1">
+      <input type="email" id="auth-email" placeholder="Email" style="width:100%;padding:.7rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem"/><br/>
+      <input type="password" id="auth-password" placeholder="Password" style="width:100%;padding:.7rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem"/><br/>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn-primary" onclick="authSubmit()" id="auth-action-btn">🔒 Sign In</button>
+        <button class="btn-primary" onclick="toggleAuthMode()" style="background:#475569" id="auth-toggle-btn">Create Account</button>
+      </div>
+      <p id="auth-msg" style="margin-top:.75rem;font-size:.85rem;min-height:1.5rem"></p>
+    </div>
+    <div id="auth-step2" style="display:none">
+      <p style="color:#16a34a;margin-bottom:1rem">✅ Check your email! We&#39;ve sent a confirmation link.</p>
+      <p style="font-size:.85rem;color:#64748b;margin-bottom:1rem">Click the link in the email to activate your account, then sign in.</p>
+      <button class="btn-primary" onclick="closeAuth()" style="background:#475569">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TOOLTIP ==================== -->
+<div id="tip" style="display:none;position:fixed;background:#1e293b;color:#f8fafc;padding:8px 12px;border-radius:6px;font-size:12px;max-width:280px;z-index:1500;box-shadow:0 4px 12px rgba(0,0,0,.3);pointer-events:none"></div>
+
+<!-- ==================== EARLY AUTH IIFE ==================== -->
+<script>
+// Early auth IIFE - self-contained, loads before DOM ready
+(function(){
+  var _edgeUrl = 'https://cckhswhugilbmiarwbvt.supabase.co/functions/v1/send-auth-email';
+  var _anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDI0MDAsImV4cCI6MjA2MDgxODQwMH0.hkQNsh2LmgnFMIHxT10e1qQBK0MKv6fFC-LbT_P66yA';
+  var _am = 'signin';
+
+  function _ge(id){ return document.getElementById(id); }
+  function _gs(el){ return el?el.style:{}; }
+
+  function _showStep(n){
+    var s1=_ge('auth-step1'), s2=_ge('auth-step2');
+    if(s1) s1.style.display = n===1?'block':'none';
+    if(s2) s2.style.display = n===2?'block':'none';
+  }
+
+  function _setMsg(m,c){
+    var el=_ge('auth-msg');
+    if(el){ el.textContent=m; el.style.color=c||'#dc2626'; }
+  }
+
+  function _toggle(){
+    _am = _am==='signin'?'signup':'signin';
+    var t=_ge('auth-title'),b=_ge('auth-action-btn'),tb=_ge('auth-toggle-btn');
+    if(t) t.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(b) b.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(tb) tb.textContent = _am==='signin'?'Create Account':'Back to Sign In';
+    _setMsg('');
+  }
+
+  async function _submit(){
+    var emEl=_ge('auth-email'), pwEl=_ge('auth-password');
+    if(!emEl||!pwEl) return;
+    var em=emEl.value.trim(), pw=pwEl.value;
+    if(!em||!pw){ _setMsg('Enter email and password'); return; }
+    _setMsg('Working...','#2563eb');
+
+    if(_am==='signup'){
+      try{
+        var resp=await fetch(_edgeUrl,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+_anonKey,'apikey':_anonKey},
+          body:JSON.stringify({email:em,password:pw,type:'signup'})
+        });
+        var result=await resp.json();
+        if(result.error){ _setMsg(result.error.message||result.error,'#dc2626'); return; }
+        if(result.user||result.data?.user){
+          _showStep(2);
+        } else {
+          _setMsg('Signup initiated. Check your email.','#16a34a');
+          _showStep(2);
+        }
+      }catch(e){ _setMsg('Network error: '+e.message,'#dc2626'); }
+    } else {
+      if(typeof supabaseClient==='undefined'||!supabaseClient){
+        _setMsg('Auth system still loading. Wait 2s and retry.','#ea580c'); return;
+      }
+      try{
+        var r=await supabaseClient.auth.signInWithPassword({email:em,password:pw});
+        if(r.error){ _setMsg(r.error.message,'#dc2626'); return; }
+        closeAuth(); updateAuthUI();
+      }catch(e){ _setMsg('Error: '+e.message,'#dc2626'); }
+    }
+  }
+
+  // Wire global functions when DOM is ready
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',_wire);
+  } else { _wire(); }
+
+  function _wire(){
+    window.toggleAuthMode = _toggle;
+    window.authSubmit = _submit;
+    var pwEl=_ge('auth-password');
+    if(pwEl) pwEl.addEventListener('keypress',function(e){ if(e.key==='Enter') _submit(); });
+  }
+})();
+</script>
+
+<!-- ==================== MAIN SCRIPT ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ===== GLOBALS =====
+var supabaseClient = null;
+var currentUser = null;
+var isAdmin = false;
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async function() {
+  // Init Supabase
+  try {
+    var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
+    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDI0MDAsImV4cCI6MjA2MDgxODQwMH0.hkQNsh2LmgnFMIHxT10e1qQBK0MKv6fFC-LbT_P66yA';
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    window.supabaseClient = supabaseClient;
+
+    var { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      updateAuthUI();
+    }
+
+    supabaseClient.auth.onAuthStateChange(function(event, session) {
+      if (event === 'SIGNED_IN') { currentUser = session.user; updateAuthUI(); }
+      if (event === 'SIGNED_OUT') { currentUser = null; isAdmin = false; updateAuthUI(); }
+    });
+  } catch(e) { console.log('Supabase init:', e.message); }
+
+  // Load saved knockout data
+  loadKnockout();
+});
+
+// ===== AUTH UI =====
+function updateAuthUI() {
+  var bar = document.getElementById('auth-bar');
+  if (!bar) return;
+  if (currentUser) {
+    bar.innerHTML = '<span style="color:#16a34a">&#9989; ' + (currentUser.email || 'User') + '</span>' +
+      '<button class="btn-primary" style="padding:.35rem .8rem;font-size:.8rem;background:#94a3b8" onclick="doLogout()">Logout</button>';
+    if (isAdmin) { document.getElementById('admin-editor').style.display = 'block'; }
+  } else {
+    bar.innerHTML = '<span style="color:#94a3b8">&#128274; Guest</span>' +
+      '<button class="btn-primary" style="padding:.35rem .8rem;font-size:.8rem" onclick="openAuth()">Sign In</button>';
+  }
+}
+
+function openAuth() { var m = document.getElementById('auth-modal'); if(m) m.style.display = 'flex'; }
+function closeAuth() { var m = document.getElementById('auth-modal'); if(m) m.style.display = 'none'; _showStep(1); }
+function _showStep(n) {
+  var s1 = document.getElementById('auth-step1'), s2 = document.getElementById('auth-step2');
+  if(s1) s1.style.display = n===1?'block':'none';
+  if(s2) s2.style.display = n===2?'block':'none';
+}
+
+async function doLogout() {
+  if(supabaseClient) { await supabaseClient.auth.signOut(); }
+  currentUser = null; isAdmin = false;
+  updateAuthUI();
+  document.getElementById('admin-editor').style.display = 'none';
+  document.getElementById('admin-login').style.display = 'block';
+}
+
+// ===== TOOLTIP =====
+function showTip(e, text) {
+  var tip = document.getElementById('tip');
+  if(!tip) return;
+  tip.textContent = text;
+  tip.style.display = 'block';
+  tip.style.left = (e.clientX + 12) + 'px';
+  tip.style.top = (e.clientY + 12) + 'px';
+}
+document.addEventListener('click', function() { var t=document.getElementById('tip'); if(t) t.style.display='none'; });
+
+// ===== GROUP MODAL =====
+function showGroup(e, g, t1, t2, t3, t4) {
+  e.stopPropagation();
+  var names = [t1, t2, t3, t4];
+  var grpColors = {A:'#dc2626',B:'#2563eb',C:'#16a34a',D:'#dc2626',E:'#2563eb',F:'#16a34a',
+                   G:'#dc2626',H:'#2563eb',I:'#16a34a',J:'#dc2626',K:'#2563eb',L:'#16a34a'};
+  var c = grpColors[g] || '#64748b';
+  var html = '<div style="text-align:center;margin-bottom:1rem"><span style="display:inline-block;width:50px;height:50px;line-height:50px;background:'+c+';color:#fff;font-size:24px;font-weight:800;border-radius:10px">'+g+'</span></div>';
+  html += '<table style="width:100%;font-size:.9rem"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>';
+  names.forEach(function(n, i) { html += '<tr><td>'+(i+1)+'</td><td><strong>'+n+'</strong></td></tr>'; });
+  html += '</tbody></table>';
+
+  var modal = document.getElementById('auth-modal');
+  var existing = document.getElementById('group-modal-inner');
+  if(existing) existing.remove();
+
+  var wrap = document.createElement('div');
+  wrap.id = 'group-modal-inner';
+  wrap.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:12px;padding:1.5rem;max-width:320px;width:90%;z-index:3000;box-shadow:0 25px 50px rgba(0,0,0,.5)';
+  wrap.innerHTML = '<button onclick="this.parentElement.remove()" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8">&times;</button>' + html;
+  document.body.appendChild(wrap);
+}
+
+// ===== SORTING =====
+var sortDirs = {};
+
+function sortSPI(col) {
+  sortTable('spi-table', col, sortDirs, col===3);
+}
+function sortGEI(col) {
+  sortTable('gei-table', col, sortDirs, col===2||col===4);
+}
+function sortProfiles(col) {
+  sortTable('profile-table', col, sortDirs, col===3||col===5||col===6);
+}
+
+function sortTable(tableId, col, dirs, numeric) {
+  var table = document.getElementById(tableId);
+  if(!table) return;
+  var tbody = table.querySelector('tbody');
+  if(!tbody) return;
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  var key = tableId + '-' + col;
+  dirs[key] = !dirs[key];
+
+  rows.sort(function(a, b) {
+    var av = a.cells[col] ? a.cells[col].textContent.trim() : '';
+    var bv = b.cells[col] ? b.cells[col].textContent.trim() : '';
+    if(numeric) {
+      var an = parseFloat(av.replace(/[^0-9.]/g, '')) || 0;
+      var bn = parseFloat(bv.replace(/[^0-9.]/g, '')) || 0;
+      return dirs[key] ? an - bn : bn - an;
+    }
+    return dirs[key] ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
+
+// ===== EXPORT =====
+var teamExportData = [
+    {team:'Mexico',group:'A',seed:'A1',geiType:'Suppressed',geiShare:50,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'South Africa',group:'A',seed:'A2',geiType:'Suppressed',geiShare:50,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'South Korea',group:'A',seed:'A3',geiType:'Suppressed',geiShare:50,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Czechia',group:'A',seed:'A4',geiType:'Suppressed',geiShare:50,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Canada',group:'B',seed:'B1',geiType:'Open',geiShare:36,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Bosnia & Herzegovina',group:'B',seed:'B2',geiType:'Open',geiShare:36,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Qatar',group:'B',seed:'B3',geiType:'Open',geiShare:36,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Switzerland',group:'B',seed:'B4',geiType:'Open',geiShare:36,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Brazil',group:'C',seed:'C1',geiType:'Open',geiShare:44,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Morocco',group:'C',seed:'C2',geiType:'Open',geiShare:44,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Haiti',group:'C',seed:'C3',geiType:'Open',geiShare:44,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Scotland',group:'C',seed:'C4',geiType:'Open',geiShare:44,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'United States',group:'D',seed:'D1',geiType:'Suppressed',geiShare:57,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Australia',group:'D',seed:'D2',geiType:'Suppressed',geiShare:57,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'New Zealand',group:'D',seed:'D3',geiType:'Suppressed',geiShare:57,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Paraguay',group:'D',seed:'D4',geiType:'Suppressed',geiShare:57,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Germany',group:'E',seed:'E1',geiType:'Dominant',geiShare:67,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Cura&ccedil;ao',group:'E',seed:'E2',geiType:'Dominant',geiShare:67,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Ecuador',group:'E',seed:'E3',geiType:'Dominant',geiShare:67,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'T&uuml;rkiye',group:'E',seed:'E4',geiType:'Dominant',geiShare:67,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Netherlands',group:'F',seed:'F1',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Japan',group:'F',seed:'F2',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Sweden',group:'F',seed:'F3',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Cameroon',group:'F',seed:'F4',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Belgium',group:'G',seed:'G1',geiType:'Open',geiShare:39,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Egypt',group:'G',seed:'G2',geiType:'Open',geiShare:39,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Iran',group:'G',seed:'G3',geiType:'Open',geiShare:39,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'New Zealand',group:'G',seed:'G4',geiType:'Open',geiShare:39,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Spain',group:'H',seed:'H1',geiType:'Open',geiShare:40,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Cabo Verde',group:'H',seed:'H2',geiType:'Open',geiShare:40,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Saudi Arabia',group:'H',seed:'H3',geiType:'Open',geiShare:40,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Uruguay',group:'H',seed:'H4',geiType:'Open',geiShare:40,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'France',group:'I',seed:'I1',geiType:'Open',geiShare:37,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Norway',group:'I',seed:'I2',geiType:'Open',geiShare:37,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Iraq',group:'I',seed:'I3',geiType:'Open',geiShare:37,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Panama',group:'I',seed:'I4',geiType:'Open',geiShare:37,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Argentina',group:'J',seed:'J1',geiType:'Open',geiShare:41,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Austria',group:'J',seed:'J2',geiType:'Open',geiShare:41,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Algeria',group:'J',seed:'J3',geiType:'Open',geiShare:41,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Jordan',group:'J',seed:'J4',geiType:'Open',geiShare:41,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Portugal',group:'K',seed:'K1',geiType:'Inverted',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'DR Congo',group:'K',seed:'K2',geiType:'Inverted',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Uzbekistan',group:'K',seed:'K3',geiType:'Inverted',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Colombia',group:'K',seed:'K4',geiType:'Inverted',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'England',group:'L',seed:'L1',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Croatia',group:'L',seed:'L2',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Ghana',group:'L',seed:'L3',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'},
+    {team:'Panama',group:'L',seed:'L4',geiType:'Open',geiShare:38,spiHeld:true,tci:'TBD',knockout:'Group stage'}
+];
+
+function exportCSV() {
+  var headers = ['team','group','seed','geiType','geiShare','spiHeld','tci','knockout'];
+  var csv = headers.join(',') + '\n';
+  teamExportData.forEach(function(t) {
+    var ko = document.getElementById('ko-' + t.seed.toLowerCase());
+    var row = [t.team, t.group, t.seed, t.geiType, t.geiShare, t.spiHeld ? 'Yes' : 'No', 'TBD', ko ? ko.textContent : 'TBD'];
+    csv += row.map(function(f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'worldcup2026-tci-data.csv';
+  a.click();
+}
+
+function exportJSON() {
+  var data = teamExportData.map(function(t) {
+    var ko = document.getElementById('ko-' + t.seed.toLowerCase());
+    return Object.assign({}, t, { tci: 'TBD', knockout: ko ? ko.textContent : 'TBD' });
+  });
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'worldcup2026-tci-data.json';
+  a.click();
+}
+
+// ===== ADMIN =====
+var ADMIN_EMAILS = ['admin@name-the-game.com', 'ntg@xpguess.com'];
+
+async function adminLogin() {
+  var em = document.getElementById('admin-email').value.trim();
+  var pw = document.getElementById('admin-pass').value;
+  var code = document.getElementById('admin-code').value.trim();
+  var msg = document.getElementById('admin-msg');
+
+  if(!em || !pw) { if(msg) msg.textContent = 'Enter email and password'; return; }
+  if(!ADMIN_EMAILS.includes(em)) { if(msg) msg.textContent = 'Not an authorized admin email'; return; }
+  if(code !== 'NTG2026') { if(msg) msg.textContent = 'Invalid 2FA code'; return; }
+
+  if(!supabaseClient) { if(msg) msg.textContent = 'Auth system not loaded'; return; }
+
+  var { data, error } = await supabaseClient.auth.signInWithPassword({email: em, password: pw});
+  if(error) { if(msg) msg.textContent = error.message; return; }
+
+  currentUser = data.user;
+  isAdmin = true;
+  document.getElementById('admin-login').style.display = 'none';
+  document.getElementById('admin-editor').style.display = 'block';
+  buildAdminGrid();
+  updateAuthUI();
+}
+
+function buildAdminGrid() {
+  var grid = document.getElementById('admin-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  teamExportData.forEach(function(t) {
+    var div = document.createElement('div');
+    div.style.cssText = 'background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:.5rem';
+    div.innerHTML = '<strong style="font-size:.85rem">' + t.team + '</strong> <span style="color:#94a3b8;font-size:11px">' + t.seed + '</span><br>' +
+      '<input type="text" id="adm-' + t.seed + '" placeholder="Position" style="width:100%;padding:.3rem;margin-top:.3rem;border:1px solid #cbd5e1;border-radius:4px;font-size:.8rem">';
+    grid.appendChild(div);
+  });
+}
+
+async function saveKnockout() {
+  if(!supabaseClient || !isAdmin) return;
+  var msg = document.getElementById('save-msg');
+  if(msg) { msg.textContent = 'Saving...'; msg.style.color = '#2563eb'; }
+
+  var updates = [];
+  teamExportData.forEach(function(t) {
+    var inp = document.getElementById('adm-' + t.seed);
+    if(inp && inp.value.trim()) {
+      updates.push({seed: t.seed, position: inp.value.trim()});
+      var koCell = document.getElementById('ko-' + t.seed.toLowerCase());
+      if(koCell) koCell.textContent = inp.value.trim();
+      var pathCell = document.getElementById('path-' + t.seed.toLowerCase());
+      if(pathCell) pathCell.textContent = inp.value.trim();
+    }
+  });
+
+  for(var i=0; i<updates.length; i++) {
+    var u = updates[i];
+    await supabaseClient.from('knockout_results').upsert(
+      {seed: u.seed, position: u.position, updated_at: new Date().toISOString()},
+      {onConflict: 'seed'}
+    );
+  }
+
+  if(msg) { msg.textContent = '\u2705 Saved ' + updates.length + ' update(s) to database'; msg.style.color = '#16a34a'; }
+}
+
+async function loadKnockout() {
+  if(!supabaseClient) return;
+  var { data, error } = await supabaseClient.from('knockout_results').select('*');
+  if(error || !data) return;
+  data.forEach(function(row) {
+    var seed = row.seed.toLowerCase();
+    var koCell = document.getElementById('ko-' + seed);
+    if(koCell) koCell.textContent = row.position || 'TBD';
+    var pathCell = document.getElementById('path-' + seed);
+    if(pathCell) pathCell.textContent = row.position || 'Group stage';
+    var adm = document.getElementById('adm-' + row.seed);
+    if(adm) adm.value = row.position || '';
+  });
+}
+
+function adminLogout() {
+  isAdmin = false;
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-editor').style.display = 'none';
+}
+</script>
+
+
+
+</main></body></html>
