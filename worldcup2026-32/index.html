@@ -396,7 +396,11 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   function _tm(){_oa(_am==='signup'?'login':'signup');}
   function _ca(){var m=document.getElementById('auth-modal');if(m)m.classList.remove('show');}
   
-  // FULL auth handler — does Supabase signUp/signIn directly
+  // Edge Function URL for auth emails (bypasses broken Supabase SMTP)
+  var _edgeUrl = 'https://cckhswhugilbmiarwbvt.supabase.co/functions/v1/send-auth-email';
+  var _anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
+  
+  // FULL auth handler — uses Edge Function for signup (Resend REST API), direct Supabase for signin
   async function _submit(){
     var em = document.getElementById('auth-email').value.trim();
     var pw = document.getElementById('auth-password').value;
@@ -412,58 +416,74 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
       return;
     }
     
-    // Wait for Supabase CDN to load (with retry)
-    var sb = _getSup();
-    var retries = 0;
-    while(!sb && retries < 30){
-      if(btn) btn.textContent = 'Loading auth... (' + (retries+1) + ')';
-      await new Promise(function(r){setTimeout(r,200)});
+    // For signin, wait for Supabase CDN to load. For signup (Edge Function), we don't need it.
+    var sb = null;
+    if(_am === 'login' || _am === 'signin'){
       sb = _getSup();
-      retries++;
-    }
-    if(!sb){
-      if(er) { er.textContent = 'Auth system failed to load. Check your internet connection and refresh.'; er.style.display = 'block'; }
-      if(btn) { btn.textContent = _am==='signup'?'Create Account':'Sign In'; btn.disabled = false; }
-      return;
+      var retries = 0;
+      while(!sb && retries < 30){
+        if(btn) btn.textContent = 'Loading auth... (' + (retries+1) + ')';
+        await new Promise(function(r){setTimeout(r,200)});
+        sb = _getSup();
+        retries++;
+      }
+      if(!sb){
+        if(er) { er.textContent = 'Auth system failed to load. Check your internet connection and refresh.'; er.style.display = 'block'; }
+        if(btn) { btn.textContent = 'Sign In'; btn.disabled = false; }
+        return;
+      }
     }
     
-    if(btn) { btn.textContent = 'Signing in...'; btn.disabled = true; }
+    if(btn) { btn.textContent = _am==='signup'?'Creating account...':'Signing in...'; btn.disabled = true; }
     
     try {
       if(_am === 'signup'){
-        var redirectUrl = 'https://xpguess.com';
-        var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:redirectUrl}});
-        if(r.error){
-          var msg = r.error.message;
-          // User already exists but not confirmed — try to resend confirmation
-          if(msg.toLowerCase().indexOf('already') >= 0 || msg.toLowerCase().indexOf('registered') >= 0 || msg.toLowerCase().indexOf('exists') >= 0){
-            if(btn) btn.textContent = 'Resending confirmation...';
-            try{
-              var resendR = await sb.auth.resend({type:'signup',email:em,options:{emailRedirectTo:redirectUrl}});
-              if(resendR.error){
-                if(er) { er.textContent = 'Account exists. Resend failed: ' + resendR.error.message; er.style.display = 'block'; }
-              } else {
-                if(er) { er.innerHTML = '<strong>Confirmation email resent!</strong><br>Check <strong>' + em + '</strong> inbox and spam folder.'; er.style.display = 'block'; }
-              }
-            }catch(e){
-              if(er) { er.textContent = 'Account exists but confirmation email could not be resent. Please contact support.'; er.style.display = 'block'; }
-            }
+        // USE EDGE FUNCTION — calls Resend REST API directly (same as NTG, this WORKS)
+        var resp, result, fetchErr;
+        try {
+          resp = await fetch(_edgeUrl, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + _anonKey,
+              'apikey': _anonKey
+            },
+            body: JSON.stringify({ email: em, password: pw, type: 'signup' })
+          });
+          result = await resp.json();
+        } catch(fetchError) {
+          fetchErr = fetchError;
+        }
+        
+        if(fetchErr){
+          // Network/CORS/fetch-level error — show exact details for debugging
+          if(er) { 
+            er.innerHTML = '<strong style="color:#991b1b">Connection failed</strong><br>' + 
+              'Error: ' + (fetchErr.message || 'Network error') + '<br>' +
+              '<small style="color:#78716c">Function: ' + _edgeUrl.replace(/\/\/[^\/]+\//,'//.../') + '</small>'; 
+            er.style.display = 'block'; 
+          }
+        } else if(!resp.ok || result.error){
+          var msg = result.error || 'Signup failed (HTTP ' + resp.status + '). Please try again.';
+          // User already exists
+          if(msg.toLowerCase().indexOf('already') >= 0 || msg.toLowerCase().indexOf('exists') >= 0){
+            if(er) { er.innerHTML = msg + '<br><a href="#" onclick="_oa(\'login\');return false;" style="color:#0f172a;text-decoration:underline;font-weight:700;">Sign in instead</a>'; er.style.display = 'block'; }
+          } else if(msg.indexOf('RESEND_API_KEY') >= 0 || msg.indexOf('SERVICE_ROLE_KEY') >= 0 || msg.indexOf('not configured') >= 0){
+            if(er) { er.innerHTML = '<strong style="color:#991b1b">Server config error</strong><br>The Edge Function secrets are not set. Contact support.<br><small style="color:#78716c">' + msg + '</small>'; er.style.display = 'block'; }
           } else {
             if(er) { er.textContent = msg; er.style.display = 'block'; }
           }
-        } else if(r.user && r.session){
-          _ca();
-          window._user = {id:r.user.id,email:r.user.email};
-          _updateUI();
-        } else if(r.user && !r.session){
+        } else if(result.success){
           if(er) { 
-            er.innerHTML = '<strong>Account created!</strong><br>A confirmation email was sent to <strong>' + em + '</strong>.<br>Check your inbox and spam folder.'; 
+            er.innerHTML = '<strong>Account created!</strong><br>A confirmation email was sent to <strong>' + em + '</strong>.<br>Check your inbox and spam folder.<br><small style="color:#78716c;">Sent via Resend REST API (NTG pattern)</small>'; 
             er.style.display = 'block'; 
           }
-        } else {
-          if(er) { er.textContent = 'Account created! Check your email.'; er.style.display = 'block'; }
+          // Show resend button
+          var resendDiv = document.getElementById('auth-resend');
+          if(resendDiv) resendDiv.style.display = 'block';
         }
       } else {
+        // Sign in uses direct Supabase (no email needed — this works fine)
         var r = await sb.auth.signInWithPassword({email:em,password:pw});
         if(r.error){
           var msg = r.error.message;
@@ -513,18 +533,41 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     _updateUI();
   }
   
-  // Manual resend confirmation email
+  // Manual resend confirmation email — via Edge Function (Resend REST API)
+  // Uses magiclink (no password needed) — user clicks link to confirm + sign in
   async function _resendConfirmation(){
     var em = document.getElementById('auth-email').value.trim();
     var er = document.getElementById('auth-error');
+    var btn = document.getElementById('auth-btn');
     if(!em){ if(er){ er.textContent = 'Enter your email first.'; er.style.display = 'block'; } return; }
-    var sb = _getSup();
-    if(!sb){ if(er){ er.textContent = 'Auth system not loaded yet.'; er.style.display = 'block'; } return; }
+    if(btn) btn.textContent = 'Sending magic link...';
     try{
-      var r = await sb.auth.resend({type:'signup',email:em,options:{emailRedirectTo:'https://xpguess.com'}});
-      if(r.error){ if(er){ er.textContent = 'Resend failed: ' + r.error.message; er.style.display = 'block'; } }
-      else { if(er){ er.innerHTML = '<strong>Confirmation email resent!</strong><br>Check <strong>' + em + '</strong> inbox and spam folder.'; er.style.display = 'block'; } }
-    }catch(e){ if(er){ er.textContent = 'Error resending: ' + (e.message||'Unknown'); er.style.display = 'block'; } }
+      var resp = await fetch(_edgeUrl, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + _anonKey,
+          'apikey': _anonKey
+        },
+        body: JSON.stringify({ email: em, password: 'resend-no-pass', type: 'resend' })
+      });
+      var result = await resp.json();
+      if(!resp.ok || result.error){ 
+        var errMsg = result.error || 'Unknown error';
+        if(errMsg.indexOf('No account found') >= 0){
+          if(er){ er.innerHTML = '<strong>No account found</strong><br>No account exists for <strong>' + em + '</strong>.<br><a href="#" onclick="_oa(\'signup\');return false;" style="color:#0f172a;text-decoration:underline;font-weight:700;">Create an account instead</a>'; er.style.display = 'block'; }
+        } else if(errMsg.indexOf('not configured') >= 0){
+          if(er){ er.innerHTML = '<strong style="color:#991b1b">Server config error</strong><br>Edge Function secrets not set. Contact support.<br><small style="color:#78716c">' + errMsg + '</small>'; er.style.display = 'block'; }
+        } else {
+          if(er){ er.textContent = 'Resend failed: ' + errMsg; er.style.display = 'block'; } 
+        }
+      } else { 
+        if(er){ er.innerHTML = '<strong>Magic link sent!</strong><br>Check <strong>' + em + '</strong> inbox and spam folder.<br>Click the link to confirm your email and sign in automatically.<br><small style="color:#78716c;">Sent via Resend REST API (NTG pattern)</small>'; er.style.display = 'block'; } 
+      }
+    }catch(e){ 
+      if(er){ er.innerHTML = '<strong style="color:#991b1b">Connection failed</strong><br>' + (e.message || 'Network error') + '<br><small style="color:#78716c">Function may not be deployed or secrets not set</small>'; er.style.display = 'block'; } 
+    }
+    if(btn) btn.textContent = _am==='signup'?'Create Account':'Sign In';
   }
   
   document.addEventListener('DOMContentLoaded', function(){
@@ -544,11 +587,23 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     var dlBtns = document.querySelectorAll('button[onclick*="doDownload"]');
     dlBtns.forEach(function(b){b.removeAttribute('onclick');b.addEventListener('click',_doDownload);});
     
-    // Check existing session
+    // Check existing session + listen for auth state changes (email confirmation)
     setTimeout(async function(){
       var sb = _getSup();
       if(sb){
         try{
+          // Listen for auth state changes (handles email confirmation callback)
+          sb.auth.onAuthStateChange(function(event, session){
+            if(event === 'SIGNED_IN' && session && session.user){
+              window._user = {id:session.user.id,email:session.user.email};
+              _updateUI();
+              _ca(); // Close modal if open
+            } else if(event === 'SIGNED_OUT'){
+              window._user = null;
+              _updateUI();
+            }
+          });
+          // Check existing session
           var r = await sb.auth.getSession();
           if(r.data && r.data.session && r.data.session.user){
             window._user = {id:r.data.session.user.id,email:r.data.session.user.email};
@@ -556,7 +611,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
           }
         }catch(e){}
       }
-    }, 2000);
+    }, 1000);
   });
   
   // Download JSON — queries Supabase or uses hardcoded fallback
