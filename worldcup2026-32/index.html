@@ -390,6 +390,8 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     if(sl) sl.textContent = mode==='signup'?'Sign in':'Create one';
     var e = document.getElementById('auth-error');
     if(e) { e.textContent = ''; e.style.display = 'none'; }
+    var resendDiv = document.getElementById('auth-resend');
+    if(resendDiv) resendDiv.style.display = 'none';
   }
   function _tm(){_oa(_am==='signup'?'login':'signup');}
   function _ca(){var m=document.getElementById('auth-modal');if(m)m.classList.remove('show');}
@@ -433,17 +435,29 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
         var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:redirectUrl}});
         if(r.error){
           var msg = r.error.message;
-          if(msg.indexOf('redirect') >= 0 || msg.indexOf('URL') >= 0){
-            msg = 'Signup error: redirect URL not allowed. Ask admin to add xpguess.com to Supabase redirect URLs.';
+          // User already exists but not confirmed — try to resend confirmation
+          if(msg.toLowerCase().indexOf('already') >= 0 || msg.toLowerCase().indexOf('registered') >= 0 || msg.toLowerCase().indexOf('exists') >= 0){
+            if(btn) btn.textContent = 'Resending confirmation...';
+            try{
+              var resendR = await sb.auth.resend({type:'signup',email:em,options:{emailRedirectTo:redirectUrl}});
+              if(resendR.error){
+                if(er) { er.textContent = 'Account exists. Resend failed: ' + resendR.error.message; er.style.display = 'block'; }
+              } else {
+                if(er) { er.innerHTML = '<strong>Confirmation email resent!</strong><br>Check <strong>' + em + '</strong> inbox and spam folder.'; er.style.display = 'block'; }
+              }
+            }catch(e){
+              if(er) { er.textContent = 'Account exists but confirmation email could not be resent. Please contact support.'; er.style.display = 'block'; }
+            }
+          } else {
+            if(er) { er.textContent = msg; er.style.display = 'block'; }
           }
-          if(er) { er.textContent = msg; er.style.display = 'block'; }
         } else if(r.user && r.session){
           _ca();
           window._user = {id:r.user.id,email:r.user.email};
           _updateUI();
         } else if(r.user && !r.session){
           if(er) { 
-            er.innerHTML = '<strong>Account created!</strong><br>A confirmation email was sent to <strong>' + em + '</strong>.<br>Check your inbox and spam folder.<br><br>If no email arrives, your admin needs to add <code>https://xpguess.com</code> and <code>https://learn.xpguess.com</code> to Supabase Redirect URLs.'; 
+            er.innerHTML = '<strong>Account created!</strong><br>A confirmation email was sent to <strong>' + em + '</strong>.<br>Check your inbox and spam folder.'; 
             er.style.display = 'block'; 
           }
         } else {
@@ -454,7 +468,10 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
         if(r.error){
           var msg = r.error.message;
           if(msg && msg.toLowerCase().indexOf('invalid') >= 0 && msg.toLowerCase().indexOf('credentials') >= 0){
-            msg = 'Invalid credentials. If you just signed up, check your email for a confirmation link before signing in. Otherwise, check your email/password.';
+            msg = 'Invalid credentials. This account may not be confirmed yet.';
+            // Show resend button
+            var resendDiv = document.getElementById('auth-resend');
+            if(resendDiv) resendDiv.style.display = 'block';
           }
           if(er) { er.textContent = msg; er.style.display = 'block'; }
         } else if(r.user){
@@ -494,6 +511,20 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     if(sb) await sb.auth.signOut();
     window._user = null;
     _updateUI();
+  }
+  
+  // Manual resend confirmation email
+  async function _resendConfirmation(){
+    var em = document.getElementById('auth-email').value.trim();
+    var er = document.getElementById('auth-error');
+    if(!em){ if(er){ er.textContent = 'Enter your email first.'; er.style.display = 'block'; } return; }
+    var sb = _getSup();
+    if(!sb){ if(er){ er.textContent = 'Auth system not loaded yet.'; er.style.display = 'block'; } return; }
+    try{
+      var r = await sb.auth.resend({type:'signup',email:em,options:{emailRedirectTo:'https://xpguess.com'}});
+      if(r.error){ if(er){ er.textContent = 'Resend failed: ' + r.error.message; er.style.display = 'block'; } }
+      else { if(er){ er.innerHTML = '<strong>Confirmation email resent!</strong><br>Check <strong>' + em + '</strong> inbox and spam folder.'; er.style.display = 'block'; } }
+    }catch(e){ if(er){ er.textContent = 'Error resending: ' + (e.message||'Unknown'); er.style.display = 'block'; } }
   }
   
   document.addEventListener('DOMContentLoaded', function(){
@@ -679,6 +710,7 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   window.sortSPITable = _sortSPITable;
   window.openTableModal = _openTableModal;
   window.closeTableModal = _closeTableModal;
+  window.resendConfirmation = _resendConfirmation;
   window._user = null;
 })();
 </script>
@@ -1050,6 +1082,9 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
   <input type="email" id="auth-email" placeholder="Email" style="margin-bottom:.5rem">
   <input type="password" id="auth-password" placeholder="Password (min 6 characters)">
   <div class="error" id="auth-error"></div>
+  <div id="auth-resend" style="display:none;margin:.5rem 0;text-align:center">
+    <button onclick="if(typeof resendConfirmation==='function')resendConfirmation();" style="background:none;border:1px solid #d4a843;color:#d4a843;padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:700">&#128231; Resend Confirmation Email</button>
+  </div>
   <button id="auth-btn">Create Account</button>
   <div class="switch"><span id="auth-switch-text">Already have an account?</span> <a onclick="toggleAuthMode()" id="auth-switch-link">Sign in</a></div>
 </div>
