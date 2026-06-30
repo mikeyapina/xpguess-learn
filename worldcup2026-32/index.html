@@ -156,7 +156,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
   <div id="auth-bar" class="auth-box" style="margin-top:1rem">
     <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
-      <div style="margin-top:.5rem"><button id="btn-signup">Create Free Account</button><button id="btn-login" class="secondary">Sign In</button></div>
+      <div style="margin-top:.5rem"><button id="btn-signup" onclick="openAuthSignup()">Create Free Account</button><button id="btn-login" class="secondary" onclick="openAuthSignin()">Sign In</button></div>
     </div>
     <div id="auth-user" style="display:none"><strong id="user-email"></strong>
       <div style="margin-top:.3rem"><button onclick="doDownload()">💾 Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
@@ -191,7 +191,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <div class="card-value">83.3%</div>
     <div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures — expected teams advanced.</div>
     <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
-    <details class="toggle-section" style="margin-top:.8rem" open="">
+    <details class="toggle-section" style="margin-top:.8rem">
       <summary>View 24 fixtures</summary>
       <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Matchday 3 — SPI Breakdown (20 of 24 preserved)</h3>
       <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
@@ -232,7 +232,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <div class="card-title">GEI Classification</div>
     <div class="card-value">4 Types</div>
     <div class="card-label">12 groups classified by competitive environment pattern.</div>
-    <details class="toggle-section" style="margin-top:.8rem" open="">
+    <details class="toggle-section" style="margin-top:.8rem">
       <summary>View group breakdown</summary>
       <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Group Data by GEI Type</h3>
       <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team’s Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
@@ -280,11 +280,11 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <p>Track every team from group seed through Round of 32 → Round of 16 → Quarter-Finals → Semi-Finals → Final. <strong>Admin edits update live.</strong></p>
       <table class="data-table" id="ko-table">
         <thead><tr>
-          <th>Grp</th>
-          <th>Team</th>
-          <th>Seed</th>
-          <th>Knockout Position</th>
-          <th>Path</th>
+          <th onclick="sortKO(0)" style="cursor:pointer">Grp ↕</th>
+          <th onclick="sortKO(1)" style="cursor:pointer">Team ↕</th>
+          <th onclick="sortKO(2)" style="cursor:pointer">Seed ↕</th>
+          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position ↕</th>
+          <th onclick="sortKO(4)" style="cursor:pointer">Path ↕</th>
         </tr></thead>
         <tbody id="ko-body">
             <tr><td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:#dc2626;color:#fff;font-size:11px;font-weight:700;border-radius:4px">A</span></td><td><strong>Mexico</strong></td><td>A1</td><td id="ko-a1">TBD</td><td id="path-a1">Group stage</td></tr>
@@ -344,7 +344,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <div class="phase-divider"></div>
 <!-- ==================== TEAM PROFILES ==================== -->
 <section id="profiles">
-  <details open="">
+  <details>
     <summary><h2>📈 Team Profiles (Sortable)</h2></summary>
 
     <div class="content-box" style="overflow-x:auto">
@@ -480,8 +480,8 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <div class="content-box">
       <p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0">
-        <button class="btn-primary" onclick="exportCSV()">💾 Download CSV</button>
-        <button class="btn-primary" onclick="exportJSON()" style="background:#475569">💾 Download JSON</button>
+        <button onclick="exportCSV()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">💾 Download CSV</button>
+        <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">💾 Download JSON</button>
       </div>
       <p style="font-size:.8rem;color:#64748b">Includes: team, group, seed, GEI type, GEI share %, SPI held/broke, TCI score, knockout position. Updates when admin saves edits.</p>
     </div>
@@ -524,40 +524,82 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 </section>
 
 <!-- ==================== FOOTER ==================== -->
-<footer style="background:#0f172a;color:#94a3b8;text-align:center;padding:2.5rem 1rem 2rem;margin-top:2rem;border-top:1px solid #1e293b">
-  <p style="margin:0 0 .5rem;font-size:.9rem">
-    <strong style="color:#f8fafc">World Cup 2026 TCI Dashboard</strong> — Powered by <strong style="color:#60a5fa">NTG</strong>
-  </p>
-  <p style="margin:0 0 1rem;font-size:.8rem">
-    Natural Technical Governance · Tournament Carryover Index · Name The Game
-  </p>
-  <p style="margin:0;font-size:.75rem;color:#64748b">
-    Learn.XPGuess.com · Connected to name-the-game.com ecosystem<br/>
-    HUGS ID athlete identity system · Data: FIFA World Cup 2026 (projected)<br/>
-    © 2026 NTG Analytics. All rights reserved.
-  </p>
-</footer>
+<!-- ==================== FOOTER (learn.xpguess.com approved) ==================== -->
+<hr style="margin-top:32px;"/>
+
+<h2>Continue Learning</h2>
+<ul style="padding-left:18px; line-height:1.6;">
+  <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+  <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+  <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+  <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+  <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+  <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+  <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+  <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+  <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+  <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+  <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+  <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+  <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+  <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+  <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+  <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+</ul>
+
+<p style="margin-top:32px;">
+  <a href="https://xpguess.com">Go to the XPGuess App</a>
+</p>
+
+<h2>Compliance Notice</h2>
+<p>
+  XPGuess is an educational platform. It does not provide medical services,
+  act as a healthcare provider, or replace professional care.
+  All fitness and support tools exist for training documentation,
+  reflection, and athlete protection.
+</p>
+
+<section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+  <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
+  <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+  <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
+  <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
+  <p>Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">“Beginning and Staying with the Basics: Building from the Ground Up”</a></p>
+  <p>Additional work: <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">Coach Teaches Animals: Gymnastics Stretching</a></p>
+</section>
+
+<p style="font-size:12px; color:#777; margin-top:32px;">
+  XPGuess Learn content is educational, governance-focused, and non-commercial.
+</p>
+
+<p style="margin-top:18px;">
+  <a href="#top">Back to top</a>
+</p>
 
 <!-- /container -->
 
 <!-- ==================== AUTH MODAL ==================== -->
 <div id="auth-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,.85);z-index:2000;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative">
-    <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8">×</button>
-    <h3 id="auth-title" style="margin:0 0 1rem;color:#0f172a">🔒 Sign In</h3>
+    <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8;line-height:1;padding:4px">×</button>
+    <h3 id="auth-title" style="margin:0 0 1.25rem;color:#0f172a;font-size:1.1rem">🔒 Sign In</h3>
     <div id="auth-step1">
-      <input type="email" id="auth-email" placeholder="Email" style="width:100%;padding:.7rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem"/><br/>
-      <input type="password" id="auth-password" placeholder="Password" style="width:100%;padding:.7rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem"/><br/>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-        <button class="btn-primary" onclick="authSubmit()" id="auth-action-btn">🔒 Sign In</button>
-        <button class="btn-primary" onclick="toggleAuthMode()" style="background:#475569" id="auth-toggle-btn">Create Account</button>
+      <label style="display:block;font-size:.8rem;color:#64748b;margin-bottom:.25rem;font-weight:600">Email</label>
+      <input type="email" id="auth-email" placeholder="you@example.com" style="width:100%;padding:.7rem;margin-bottom:.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"/><br/>
+      <label style="display:block;font-size:.8rem;color:#64748b;margin-bottom:.25rem;font-weight:600">Password</label>
+      <div style="position:relative;margin-bottom:1rem">
+        <input type="password" id="auth-password" placeholder="Enter password" style="width:100%;padding:.7rem 2.5rem .7rem .7rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"/>
+        <button type="button" onclick="togglePassword()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.1rem;padding:4px" title="Show password">👁</button>
       </div>
-      <p id="auth-msg" style="margin-top:.75rem;font-size:.85rem;min-height:1.5rem"></p>
+      <button class="btn-primary" onclick="authSubmit()" id="auth-action-btn" style="width:100%;margin-bottom:.5rem;padding:.7rem;font-size:.95rem">🔒 Sign In</button>
+      <button onclick="toggleAuthMode()" style="width:100%;padding:.7rem;font-size:.95rem;background:#fff;color:#475569;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer" id="auth-toggle-btn">Create Account</button>
+      <p style="text-align:center;margin-top:.75rem;font-size:.85rem"><a href="#" onclick="forgotPassword();return false" style="color:#64748b;text-decoration:underline">Forgot password?</a></p>
+      <p id="auth-msg" style="margin-top:.5rem;font-size:.85rem;min-height:1.5rem"></p>
     </div>
     <div id="auth-step2" style="display:none">
-      <p style="color:#16a34a;margin-bottom:1rem">✅ Check your email! We&#39;ve sent a confirmation link.</p>
+      <p style="color:#16a34a;margin-bottom:1rem">✅ Check your email! We’ve sent a confirmation link.</p>
       <p style="font-size:.85rem;color:#64748b;margin-bottom:1rem">Click the link in the email to activate your account, then sign in.</p>
-      <button class="btn-primary" onclick="closeAuth()" style="background:#475569">Got it</button>
+      <button onclick="closeAuth()" style="width:100%;padding:.7rem;font-size:.95rem;background:#fff;color:#475569;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer">Got it</button>
     </div>
   </div>
 </div>
@@ -570,9 +612,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 // Early auth IIFE - self-contained, loads before DOM ready
 (function(){
   var _edgeUrl = 'https://cckhswhugilbmiarwbvt.supabase.co/functions/v1/send-auth-email';
-  var _anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDI0MDAsImV4cCI6MjA2MDgxODQwMH0.hkQNsh2LmgnFMIHxT10e1qQBK0MKv6fFC-LbT_P66yA';
-  var _am = 'signin';
-
+  var _anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
   function _ge(id){ return document.getElementById(id); }
   function _gs(el){ return el?el.style:{}; }
 
@@ -587,48 +627,68 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     if(el){ el.textContent=m; el.style.color=c||'#dc2626'; }
   }
 
+  function _getMode(){ return window._authMode || 'signin'; }
+
   function _toggle(){
-    _am = _am==='signin'?'signup':'signin';
+    var mode = _getMode()==='signin'?'signup':'signin';
+    window._authMode = mode;
     var t=_ge('auth-title'),b=_ge('auth-action-btn'),tb=_ge('auth-toggle-btn');
-    if(t) t.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
-    if(b) b.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
-    if(tb) tb.textContent = _am==='signin'?'Create Account':'Back to Sign In';
+    if(t) t.innerHTML = mode==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(b) b.innerHTML = mode==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(tb) tb.textContent = mode==='signin'?'Create Account':'Back to Sign In';
     _setMsg('');
   }
 
+  var _isSending = false;
   async function _submit(){
+    if(_isSending) return;
     var emEl=_ge('auth-email'), pwEl=_ge('auth-password');
     if(!emEl||!pwEl) return;
     var em=emEl.value.trim(), pw=pwEl.value;
     if(!em||!pw){ _setMsg('Enter email and password'); return; }
+    _isSending = true;
     _setMsg('Working...','#2563eb');
 
-    if(_am==='signup'){
+    // SIGNIN: use Supabase Auth directly (NOT Edge Function)
+    if(_getMode()==='signin'){
       try{
-        var resp=await fetch(_edgeUrl,{
-          method:'POST',
-          headers:{'Content-Type':'application/json','Authorization':'Bearer '+_anonKey,'apikey':_anonKey},
-          body:JSON.stringify({email:em,password:pw,type:'signup'})
-        });
-        var result=await resp.json();
-        if(result.error){ _setMsg(result.error.message||result.error,'#dc2626'); return; }
-        if(result.user||result.data?.user){
-          _showStep(2);
-        } else {
-          _setMsg('Signup initiated. Check your email.','#16a34a');
-          _showStep(2);
+        if(typeof supabaseClient==='undefined' || !supabaseClient || !supabaseClient.auth){
+          _setMsg('Auth system loading. Wait 2s and retry.','#ea580c');
+          _isSending = false;
+          return;
         }
-      }catch(e){ _setMsg('Network error: '+e.message,'#dc2626'); }
-    } else {
-      if(typeof supabaseClient==='undefined'||!supabaseClient){
-        _setMsg('Auth system still loading. Wait 2s and retry.','#ea580c'); return;
-      }
-      try{
-        var r=await supabaseClient.auth.signInWithPassword({email:em,password:pw});
-        if(r.error){ _setMsg(r.error.message,'#dc2626'); return; }
-        closeAuth(); updateAuthUI();
+        var r = await supabaseClient.auth.signInWithPassword({email:em,password:pw});
+        if(r.error){ _setMsg(r.error.message,'#dc2626'); _isSending = false; return; }
+        currentUser = r.data.user;
+        closeAuth();
+        updateAuthUI();
       }catch(e){ _setMsg('Error: '+e.message,'#dc2626'); }
+      _isSending = false;
+      return;
     }
+
+    // SIGNUP / RESEND: use Edge Function (email flows only)
+    try{
+      var resp=await fetch(_edgeUrl,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+_anonKey,'apikey':_anonKey},
+        body:JSON.stringify({email:em,password:pw,type:_getMode()})
+      });
+      var result=await resp.json().catch(function(){ return {error:'Server error'}; });
+
+      if(!resp.ok || result.error){
+        _setMsg(result.error?.message || result.error || 'Request failed ('+resp.status+')','#dc2626');
+        _isSending = false;
+        return;
+      }
+
+      if(_getMode()==='signup' && result.success){
+        _showStep(2);
+      } else {
+        _setMsg(result.message || 'Done','#16a34a');
+      }
+    }catch(e){ _setMsg('Network error: '+e.message,'#dc2626'); }
+    _isSending = false;
   }
 
   // Wire global functions when DOM is ready
@@ -636,13 +696,26 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     document.addEventListener('DOMContentLoaded',_wire);
   } else { _wire(); }
 
+  function _setMode(mode){
+    _am = mode;
+    var t=_ge('auth-title'),b=_ge('auth-action-btn'),tb=_ge('auth-toggle-btn');
+    if(t) t.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(b) b.innerHTML = _am==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+    if(tb) tb.textContent = _am==='signin'?'Create Account':'Back to Sign In';
+    _setMsg('');
+  }
+
   function _wire(){
     window.toggleAuthMode = _toggle;
     window.authSubmit = _submit;
+    window.setAuthMode = _setMode;
+    window._authEdgeUrl = _edgeUrl;
+    window._authAnonKey = _anonKey;
     var pwEl=_ge('auth-password');
     if(pwEl) pwEl.addEventListener('keypress',function(e){ if(e.key==='Enter') _submit(); });
   }
 })();
+
 </script>
 
 <!-- ==================== MAIN SCRIPT ==================== -->
@@ -658,7 +731,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Init Supabase
   try {
     var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
-    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDI0MDAsImV4cCI6MjA2MDgxODQwMH0.hkQNsh2LmgnFMIHxT10e1qQBK0MKv6fFC-LbT_P66yA';
+    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
     supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
     window.supabaseClient = supabaseClient;
 
@@ -698,6 +771,42 @@ function _showStep(n) {
   var s1 = document.getElementById('auth-step1'), s2 = document.getElementById('auth-step2');
   if(s1) s1.style.display = n===1?'block':'none';
   if(s2) s2.style.display = n===2?'block':'none';
+}
+function _setAuthModeUI(mode) {
+  var t=document.getElementById('auth-title'), b=document.getElementById('auth-action-btn'), tb=document.getElementById('auth-toggle-btn');
+  if(t) t.innerHTML = mode==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+  if(b) b.innerHTML = mode==='signin'?'&#128274; Sign In':'&#128274; Create Account';
+  if(tb) tb.textContent = mode==='signin'?'Create Account':'Back to Sign In';
+  var msg=document.getElementById('auth-msg'); if(msg) msg.textContent='';
+  window._authMode = mode;
+}
+function openAuthSignup() { openAuth(); _setAuthModeUI('signup'); }
+function openAuthSignin() { openAuth(); _setAuthModeUI('signin'); }
+
+function togglePassword() {
+  var pw = document.getElementById('auth-password');
+  var btn = event.target;
+  if(pw && pw.type === 'password') { pw.type = 'text'; btn.innerHTML = '&#128064;'; btn.title = 'Hide password'; }
+  else if(pw) { pw.type = 'password'; btn.innerHTML = '&#128065;'; btn.title = 'Show password'; }
+}
+
+async function forgotPassword() {
+  var em = document.getElementById('auth-email').value.trim();
+  var msg = document.getElementById('auth-msg');
+  var edgeUrl = window._authEdgeUrl || 'https://cckhswhugilbmiarwbvt.supabase.co/functions/v1/send-auth-email';
+  var anonKey = window._authAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
+  if(!em) { if(msg) { msg.textContent = 'Enter your email first'; msg.style.color = '#dc2626'; } return; }
+  if(msg) { msg.textContent = 'Sending reset link...'; msg.style.color = '#2563eb'; }
+  try {
+    var resp = await fetch(edgeUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + anonKey, 'apikey': anonKey },
+      body: JSON.stringify({ email: em, type: 'forgot' })
+    });
+    var result = await resp.json().catch(function(){ return {error:'Server error'}; });
+    if(!resp.ok || result.error) { if(msg) { msg.textContent = result.error || 'Request failed'; msg.style.color = '#dc2626'; } return; }
+    if(msg) { msg.textContent = 'Password reset link sent! Check your email.'; msg.style.color = '#16a34a'; }
+  } catch(e) { if(msg) { msg.textContent = 'Error: ' + e.message; msg.style.color = '#dc2626'; } }
 }
 
 async function doLogout() {
@@ -753,6 +862,9 @@ function sortGEI(col) {
 }
 function sortProfiles(col) {
   sortTable('profile-table', col, sortDirs, col===3||col===5||col===6);
+}
+function sortKO(col) {
+  sortTable('ko-table', col, sortDirs, col===0);
 }
 
 function sortTable(tableId, col, dirs, numeric) {
@@ -831,6 +943,7 @@ var teamExportData = [
 ];
 
 function exportCSV() {
+  if(!currentUser){ openAuthSignin(); return; }
   var headers = ['team','group','seed','geiType','geiShare','spiHeld','tci','knockout'];
   var csv = headers.join(',') + '\n';
   teamExportData.forEach(function(t) {
@@ -846,6 +959,7 @@ function exportCSV() {
 }
 
 function exportJSON() {
+  if(!currentUser){ openAuthSignin(); return; }
   var data = teamExportData.map(function(t) {
     var ko = document.getElementById('ko-' + t.seed.toLowerCase());
     return Object.assign({}, t, { tci: 'TBD', knockout: ko ? ko.textContent : 'TBD' });
