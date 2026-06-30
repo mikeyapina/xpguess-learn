@@ -429,21 +429,23 @@ details.toggle-section[open]>summary{margin-bottom:.5rem}
     
     try {
       if(_am === 'signup'){
-        var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:window.location.href}});
+        var redirectUrl = 'https://xpguess.com';
+        var r = await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:redirectUrl}});
         if(r.error){
-          if(er) { er.textContent = r.error.message; er.style.display = 'block'; }
+          var msg = r.error.message;
+          if(msg.indexOf('redirect') >= 0 || msg.indexOf('URL') >= 0){
+            msg = 'Signup error: redirect URL not allowed. Ask admin to add xpguess.com to Supabase redirect URLs.';
+          }
+          if(er) { er.textContent = msg; er.style.display = 'block'; }
         } else if(r.user && r.session){
-          // Signed up and auto-confirmed
           _ca();
           window._user = {id:r.user.id,email:r.user.email};
           _updateUI();
         } else if(r.user && !r.session){
-          // Account created but needs email confirmation
           if(er) { 
-            er.innerHTML = '<strong>Account created!</strong><br>Check your email for a confirmation link. If you don\'t see it, check spam.<br><br><em>Or ask your admin to disable "Email confirmations" in Supabase settings.</em>'; 
+            er.innerHTML = '<strong>Account created!</strong><br>A confirmation email was sent to <strong>' + em + '</strong>.<br>Check your inbox and spam folder.<br><br>If no email arrives, your admin needs to add <code>https://xpguess.com</code> and <code>https://learn.xpguess.com</code> to Supabase Redirect URLs.'; 
             er.style.display = 'block'; 
           }
-          // Stay on modal so user sees the message
         } else {
           if(er) { er.textContent = 'Account created! Check your email.'; er.style.display = 'block'; }
         }
