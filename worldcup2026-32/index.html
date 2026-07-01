@@ -203,7 +203,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <hr>
 
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
-  <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> &mdash; <span id="last-round">Round of 32 - Day 1</span><br>
+  <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> &mdash; <span id="last-round">Round of 32 - Day 1</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
   <strong style="color:#0f172a">Next:</strong> After each knockout round
 </div>
 
@@ -816,7 +816,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
           <button class="btn-primary" onclick="saveKnockout()">&#128190; Save to Database</button>
           <button class="btn-primary" onclick="loadKnockout()" style="background:#475569">&#128260; Reload from DB</button>
-          <button class="btn-primary" onclick="adminLogout()" style="background:#94a3b8">&#128274; Logout</button>
+          <button class="btn-primary" onclick="adminLogout()" style="background:#dc2626;color:#fff">&#128274; Logout</button>
         </div>
         <p id="save-msg" style="margin-top:.5rem;font-size:.85rem"></p>
       </div>
@@ -1639,6 +1639,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   } catch(e) { console.log('Supabase init:', e.message); }
 
+  // Set initial timestamp
+  var tsEl = document.getElementById('last-timestamp');
+  if(tsEl) tsEl.textContent = '(' + formatTimestamp() + ')';
+
   // Load saved knockout data
   loadKnockout();
 
@@ -1652,7 +1656,7 @@ function updateAuthUI() {
   if (!bar) return;
   if (currentUser) {
     bar.innerHTML = '<span style="color:#16a34a">&#9989; ' + (currentUser.email || 'User') + '</span>' +
-      '<button class="btn-primary" style="padding:.35rem .8rem;font-size:.8rem;background:#94a3b8" onclick="doLogout()">Logout</button>';
+      '<button class="btn-primary" style="padding:.35rem .8rem;font-size:.8rem;background:#dc2626;color:#fff" onclick="doLogout()">Logout</button>';
     if (isAdmin) { document.getElementById('admin-editor').style.display = 'block'; }
     toggleKPIAccess();
     toggleMetricAccess();
@@ -3061,6 +3065,17 @@ async function loadKnockout() {
 }
 
 // ===== DB STATUS BANNER =====
+function formatTimestamp() {
+  var now = new Date();
+  var y = now.getFullYear();
+  var m = String(now.getMonth()+1).padStart(2,'0');
+  var d = String(now.getDate()).padStart(2,'0');
+  var h = String(now.getHours()).padStart(2,'0');
+  var min = String(now.getMinutes()).padStart(2,'0');
+  var s = String(now.getSeconds()).padStart(2,'0');
+  return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+}
+
 function showLoadStatus(html, type) {
   var id = 'db-load-status';
   var el = document.getElementById(id);
@@ -3071,6 +3086,9 @@ function showLoadStatus(html, type) {
     if(badge && badge.parentNode) badge.parentNode.insertBefore(el, badge.nextSibling);
   }
   if(el) { el.innerHTML = html; el.style.marginTop = '.5rem'; }
+  // Also update the Last Updated timestamp
+  var tsEl = document.getElementById('last-timestamp');
+  if(tsEl) tsEl.textContent = '(' + formatTimestamp() + ')';
 }
 
 // Seed-to-name map built from groups data, used by both loaders
@@ -3172,7 +3190,7 @@ async function loadGroupsFromDB() {
       });
     });
 
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' groups loaded</strong> &mdash; team names updated from DB</div>','ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' ' + t('groups') + ' loaded</strong> &mdash; ' + formatTimestamp() + '</div>','ok');
 
     // Now load matches (after seedMap is built)
     loadMatchesFromDB();
@@ -3265,7 +3283,7 @@ async function loadMatchesFromDB() {
       }
     });
 
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + matches.length + ' matches loaded</strong> &mdash; ' + updated + ' teams updated</div>','ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + matches.length + ' matches loaded &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
 
   } catch(e) { console.error('loadMatches error:', e); }
 }
