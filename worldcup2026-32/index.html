@@ -3081,7 +3081,7 @@ async function loadGroupsFromDB() {
   try {
     var { data: groups, error } = await supabaseClient.from('wc2026_groups').select('*').eq('tournament','WC2026');
 
-    console.log('loadMatchesFromDB: query returned', matches ? matches.length : 0, 'matches');
+    console.log('loadGroupsFromDB: query returned', groups ? groups.length : 0, 'groups');
     if(error) {
       showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (groups):</strong> ' + error.message + '</div>','error');
       return;
