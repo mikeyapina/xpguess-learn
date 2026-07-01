@@ -2094,16 +2094,28 @@ function sortFSI(col) {
 
 // ===== CONTINENT DETECTION =====
 function getContinent(teamName) {
-  // Normalize for matching
+  // First check DB metadata
   var n = (teamName || '').toLowerCase().trim();
+  for(var seed in dbTeamMetadata) {
+    if(dbTeamMetadata[seed] && dbTeamMetadata[seed].team_name && 
+       dbTeamMetadata[seed].team_name.toLowerCase() === n) {
+      return dbTeamMetadata[seed].continent_code || 'unknown';
+    }
+  }
+  // Fallback to hardcoded mapping
   var continents = {
-    'north_america': ['mexico','usa','united states','canada','panama','costa rica','honduras','jamaica','haiti','curacao','cura\u00e7ao','cuba','guatemala','el salvador','trinidad'],
+    'north_america': ['mexico','usa','united states','canada','panama','costa rica','honduras','jamaica','haiti','curacao','curaçao','cuba','guatemala','el salvador','trinidad'],
     'south_america': ['brazil','argentina','uruguay','colombia','paraguay','ecuador','chile','peru','bolivia','venezuela'],
-    'europe': ['germany','france','spain','england','netherlands','portugal','belgium','italy','croatia','switzerland','czechia','czech republic','bosnia','bosnia and herzegovina','scotland','sweden','norway','austria','turkey','t\u00fcrkiye','wales','poland','serbia','denmark','ukraine','hungary','romania','slovakia','slovenia','greece','finland','ireland','northern ireland','iceland','albania','north macedonia','bulgaria','belarus','russia','lithuania','latvia','estonia','moldova','cyprus','malta','luxembourg','liechtenstein','andorra','san marino','gibraltar','kosovo','montenegro','armenia','azerbaijan','georgia','israel','kazakhstan'],
-    'africa': ['morocco','egypt','senegal','nigeria','ghana','cameroon','ivory coast','c\u00f4te d\'ivoire','cote d\'ivoire','algeria','tunisia','south africa','cape verde','cabo verde','dr congo','democratic republic of congo','congo','mali','burkina faso','guinea','zambia','zimbabwe','mozambique','angola','gabon','equatorial guinea','libya','sudan','ethiopia','madagascar','mauritania','benin','uganda','kenya','tanzania','malawi','namibia','botswana','rwanda','burundi','djibouti','eritrea','somalia','central african republic','chad','comoros','lesotho','eswatini','gambia','liberia','sierra leone','togo','sao tome','seychelles','mauritius','south sudan'],
+    'europe': ['germany','france','spain','england','netherlands','portugal','belgium','italy','croatia','switzerland','czechia','czech republic','bosnia','bosnia and herzegovina','scotland','sweden','norway','austria','turkey','türkiye','wales','poland','serbia','denmark','ukraine','hungary','romania','slovakia','slovenia','greece','finland','ireland','northern ireland','iceland','albania','north macedonia','bulgaria','belarus','russia','lithuania','latvia','estonia','moldova','cyprus','malta','luxembourg','liechtenstein','andorra','san marino','gibraltar','kosovo','montenegro','armenia','azerbaijan','georgia','israel','kazakhstan'],
+    'africa': ['morocco','egypt','senegal','nigeria','ghana','cameroon','ivory coast','côte d'ivoire','cote d'ivoire','algeria','tunisia','south africa','cape verde','cabo verde','dr congo','democratic republic of congo','congo','mali','burkina faso','guinea','zambia','zimbabwe','mozambique','angola','gabon','equatorial guinea','libya','sudan','ethiopia','madagascar','mauritania','benin','uganda','kenya','tanzania','malawi','namibia','botswana','rwanda','burundi','djibouti','eritrea','somalia','central african republic','chad','comoros','lesotho','eswatini','gambia','liberia','sierra leone','togo','sao tome','seychelles','mauritius','south sudan'],
     'asia': ['japan','south korea','korea republic','iran','saudi arabia','qatar','iraq','uzbekistan','jordan','australia','china','uae','united arab emirates','bahrain','oman','syria','lebanon','palestine','kuwait','tajikistan','thailand','vietnam','malaysia','indonesia','singapore','philippines','india','bangladesh','pakistan','afghanistan','mongolia','myanmar','cambodia','laos','brunei','timor leste','nepal','bhutan','sri lanka','maldives','kyrgyzstan','turkmenistan','north korea','korea dpr','chinese taipei','hong kong','guam'],
     'oceania': ['new zealand','fiji','new caledonia','tahiti','papua new guinea','solomon islands','vanuatu','samoa','tonga','cook islands','american samoa']
   };
+  for(var cont in continents) {
+    if(continents[cont].some(function(c) { return n.indexOf(c) >= 0; })) return cont;
+  }
+  return 'unknown';
+};
   for(var cont in continents) {
     if(continents[cont].some(function(c) { return n.indexOf(c) >= 0; })) return cont;
   }
@@ -2145,17 +2157,11 @@ function renderContinentKPI() {
   if(!cards || !tbody) return;
 
   // WC2026 Prize Money Tiers (USD millions)
-  var prizeTiers = {
-    'Group Stage': 9.5,
-    'Round of 32': 13,
-    'Round of 16': 19,
-    'Quarter-Finals': 25,
-    'Semi-Finals': 30,
-    'Fourth Place': 27.5,
-    'Third Place': 28.5,
-    'Runner-up': 35,
-    'Winner': 45
-  };
+  var prizeTiers = Object.keys(dbPrizeTiers).length > 0 ? dbPrizeTiers : {
+    'Group Stage': 9.5, 'Round of 32': 13, 'Round of 16': 19,
+    'Quarter-Finals': 25, 'Semi-Finals': 30, 'Fourth Place': 27.5,
+    'Third Place': 28.5, 'Runner-up': 35, 'Winner': 45
+  }; // Uses dbPrizeTiers if loaded, else fallback
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
@@ -2413,9 +2419,9 @@ function renderFSIReport() {
       // Financial value = group position weight * GEI environment multiplier
       // Higher position (1st) = more valuable
       // Open environment = more marketable
-      var posWeight = {1: 4, 2: 3, 3: 2, 4: 1}[s.pos] || 1;
-      var envMult = (g.environment_type === 'open') ? 1.3 : (g.environment_type === 'balanced') ? 1.1 : (g.environment_type === 'dominant') ? 0.9 : 0.8;
-      var geiScore = 1 + ((1 - (g.gei || 0.5)) * 0.4); // lower GEI = more competitive = more valuable
+      var posWeight = (dbFSIConfig['pos_weight_' + s.pos] || {1:4,2:3,3:2,4:1}[s.pos] || 1);
+      var envMult = (dbFSIConfig['env_mult_' + (g.environment_type || 'default')] || dbFSIConfig['env_mult_default'] || 0.8);
+      var geiScore = (dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (dbFSIConfig['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
       teamValue[s.team] = { team: s.team, group: g.group_letter, pos: s.pos, env: g.environment_type || 'balanced', gei: g.gei || 0, value: posWeight * envMult * geiScore, goals: s.gf || 0, pts: s.pts || 0 };
     });
   });
@@ -2580,7 +2586,13 @@ function buildKPIData() {
     var l = teamExportData.find(function(x) { return x.team === loser; });
     if(l) { var el = (l.geiType||'').toLowerCase(); if(envs[el]) envs[el].eliminated++; }
   });
-  var verdicts = { suppressed: 'Higher-GEI teams from constrained groups show lower knockout survival.', balanced: 'Balanced environment teams demonstrate moderate advancement.', open: 'Open environment teams show strongest knockout performance.', dominant: 'Single-team dominance may under-prepare for knockout intensity.', inverted: 'SPI-broke groups produce unpredictable outcomes.' };
+  var verdicts = dbKPIVerdicts || {
+    suppressed: 'Higher-GEI teams from constrained groups show lower knockout survival when facing open/balanced opponents.',
+    balanced: 'Balanced environment teams demonstrate moderate advancement. TCI neutral zone.',
+    open: 'Open environment teams show strongest knockout performance. Battle-tested hypothesis supported.',
+    dominant: 'Single-team dominance may under-prepare for knockout intensity shift.',
+    inverted: 'SPI-broke groups produce unpredictable outcomes. Lower predictability.'
+  };
   for(var e in envs) {
     var d = envs[e]; d.groups = d.groups.size;
     d.avgGei = d.teams > 0 ? (d.geiSum / d.teams).toFixed(1) : 0;
@@ -2655,9 +2667,9 @@ function buildFSIData() {
   groups.forEach(function(g) {
     var st = Array.isArray(g.standings) ? g.standings : [];
     st.forEach(function(s) {
-      var posWeight = {1: 4, 2: 3, 3: 2, 4: 1}[s.pos] || 1;
-      var envMult = (g.environment_type === 'open') ? 1.3 : (g.environment_type === 'balanced') ? 1.1 : (g.environment_type === 'dominant') ? 0.9 : 0.8;
-      var geiScore = 1 + ((1 - (g.gei || 0.5)) * 0.4);
+      var posWeight = (dbFSIConfig['pos_weight_' + s.pos] || {1:4,2:3,3:2,4:1}[s.pos] || 1);
+      var envMult = (dbFSIConfig['env_mult_' + (g.environment_type || 'default')] || dbFSIConfig['env_mult_default'] || 0.8);
+      var geiScore = (dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (dbFSIConfig['gei_factor'] || 0.4));
       teamValue[s.team] = { value: posWeight * envMult * geiScore };
     });
   });
