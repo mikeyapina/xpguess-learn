@@ -134,6 +134,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -3080,7 +3081,7 @@ async function loadGroupsFromDB() {
   try {
     var { data: groups, error } = await supabaseClient.from('wc2026_groups').select('*').eq('tournament','WC2026');
 
-    console.log('loadGroupsFromDB: query returned', groups ? groups.length : 0, 'groups');
+    console.log('loadMatchesFromDB: query returned', matches ? matches.length : 0, 'matches');
     if(error) {
       showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (groups):</strong> ' + error.message + '</div>','error');
       return;
@@ -3113,7 +3114,7 @@ async function loadGroupsFromDB() {
         }
       });
 
-      console.log('loadGroupsFromDB: building GEI row for group', g.group_letter);
+      // Match processed
       // Build GEI table row from scratch
       var geiBody = document.getElementById('gei-body');
       if(geiBody) {
@@ -3128,7 +3129,7 @@ async function loadGroupsFromDB() {
         geiBody.appendChild(tr);
       }
 
-      console.log('loadGroupsFromDB: GEI row appended for', g.group_letter);
+      // GEI row updated
       // Update TEAM PROFILES table rows for this group
       var envLabel = ucFirst(g.environment_type || 'balanced');
       var envClass = (g.environment_type || 'balanced').toLowerCase();
@@ -3197,7 +3198,7 @@ async function loadMatchesFromDB() {
   if(!supabaseClient) return;
   try {
     var { data: matches, error } = await supabaseClient.from('wc2026_matches').select('*').eq('tournament','WC2026').order('match_id',{ascending:true});
-    console.log('loadGroupsFromDB: query returned', groups ? groups.length : 0, 'groups');
+    console.log('loadMatchesFromDB: query returned', matches ? matches.length : 0, 'matches');
     if(error) { showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (matches):</strong> ' + error.message + '</div>','error'); return; }
     if(!matches || matches.length === 0) {
       showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data.</div>','warn');
@@ -3266,7 +3267,7 @@ async function loadMatchesFromDB() {
         if(idx2 >= 0) teamExportData[idx2].knockout = 'Eliminated ' + (m.stage || '');
       }
 
-      console.log('loadGroupsFromDB: GEI row appended for', g.group_letter);
+      // GEI row updated
       // Update TEAM PROFILES R16+ column by seed
       if(winnerSeed) {
         var profRow = document.querySelector('#profile-table tbody tr[data-seed="' + winnerSeed + '"]');
