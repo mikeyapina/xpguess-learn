@@ -2911,22 +2911,36 @@ function renderEPIReport() {
   if(analysisDiv) {
     var html = '<strong>Environment Preservation Analysis:</strong><br><ul style="margin:.5rem 0 .5rem 1.2rem">';
 
-    // Find strongest/weakest
-    var strongest = epiRows[0];
-    var weakest = epiRows[epiRows.length - 1];
+    // Filter out environments with 0 qualified teams (N/A)
+    var activeRows = epiRows.filter(function(d) { return d.qualified > 0; });
+    var inactiveRows = epiRows.filter(function(d) { return d.qualified === 0; });
 
-    html += '<li><strong>Strongest preservation:</strong> ' + strongest.label + ' environments at ' + strongest.epi + '% EPI — ' + strongest.alive + ' of ' + strongest.qualified + ' teams still competing</li>';
-    html += '<li><strong>Weakest preservation:</strong> ' + weakest.label + ' environments at ' + weakest.epi + '% EPI — ' + weakest.alive + ' of ' + weakest.qualified + ' teams remain</li>';
+    // Strongest/weakest among ACTIVE environments only
+    if(activeRows.length > 0) {
+      var strongest = activeRows[0];
+      html += '<li><strong>Strongest preservation:</strong> ' + strongest.label + ' environments at ' + strongest.epi + '% EPI — ' + strongest.alive + ' of ' + strongest.qualified + ' teams still competing</li>';
 
-    // Goal decay analysis
-    var lowestDecay = epiRows.slice().sort(function(a,b) { return parseFloat(a.goalDecay) - parseFloat(b.goalDecay); })[0];
-    var highestDecay = epiRows.slice().sort(function(a,b) { return parseFloat(b.goalDecay) - parseFloat(a.goalDecay); })[0];
+      var weakest = activeRows[activeRows.length - 1];
+      html += '<li><strong>Weakest active preservation:</strong> ' + weakest.label + ' environments at ' + weakest.epi + '% EPI — ' + weakest.alive + ' of ' + weakest.qualified + ' teams still competing</li>';
+    }
 
-    html += '<li><strong>Lowest goal decay:</strong> ' + lowestDecay.label + ' (' + lowestDecay.goalDecay + '%) — preserved offensive production best in transition to knockouts</li>';
-    html += '<li><strong>Highest goal decay:</strong> ' + highestDecay.label + ' (' + highestDecay.goalDecay + '%) — lost ' + highestDecay.goalDecay + '% of group-stage offensive output in knockouts</li>';
+    // Goal decay analysis — only among active environments
+    if(activeRows.length > 0) {
+      var sortedDecay = activeRows.slice().sort(function(a,b) { return parseFloat(a.goalDecay) - parseFloat(b.goalDecay); });
+      var lowestDecay = sortedDecay[0];
+      var highestDecay = sortedDecay[sortedDecay.length - 1];
 
-    // Anomalies
-    var anomalies = epiRows.filter(function(d) {
+      html += '<li><strong>Lowest goal decay:</strong> ' + lowestDecay.label + ' environments (' + lowestDecay.goalDecay + '%) — preserved offensive production best in transition to knockouts</li>';
+      html += '<li><strong>Highest goal decay:</strong> ' + highestDecay.label + ' environments (' + highestDecay.goalDecay + '%) — lost ' + highestDecay.goalDecay + '% of group-stage offensive output in knockouts</li>';
+    }
+
+    // Inactive categories
+    inactiveRows.forEach(function(d) {
+      html += '<li><strong>Inactive category:</strong> ' + d.label + ' has no active groups in the current classification</li>';
+    });
+
+    // Anomalies — only among active environments
+    var anomalies = activeRows.filter(function(d) {
       return d.env === 'suppressed' && parseFloat(d.epi) > 75;
     });
     if(anomalies.length > 0) {
