@@ -2098,7 +2098,7 @@ function sortFSI(col) {
 function getContinent(teamName) {
   // First check DB metadata
   var n = (teamName || '').toLowerCase().trim();
-  for(var seed in dbTeamMetadata) {
+  for(var seed in (typeof dbTeamMetadata !== 'undefined' ? dbTeamMetadata : {})) {
     if(dbTeamMetadata[seed] && dbTeamMetadata[seed].team_name && 
        dbTeamMetadata[seed].team_name.toLowerCase() === n) {
       return dbTeamMetadata[seed].continent_code || 'unknown';
@@ -2154,7 +2154,7 @@ function renderContinentKPI() {
   if(!cards || !tbody) return;
 
   // WC2026 Prize Money Tiers (USD millions)
-  var prizeTiers = Object.keys(dbPrizeTiers).length > 0 ? dbPrizeTiers : {
+  var prizeTiers = (typeof dbPrizeTiers !== 'undefined' && dbPrizeTiers && Object.keys(dbPrizeTiers).length > 0) ? dbPrizeTiers : {
     'Group Stage': 9.5, 'Round of 32': 13, 'Round of 16': 19,
     'Quarter-Finals': 25, 'Semi-Finals': 30, 'Fourth Place': 27.5,
     'Third Place': 28.5, 'Runner-up': 35, 'Winner': 45
@@ -2416,9 +2416,9 @@ function renderFSIReport() {
       // Financial value = group position weight * GEI environment multiplier
       // Higher position (1st) = more valuable
       // Open environment = more marketable
-      var posWeight = (dbFSIConfig['pos_weight_' + s.pos] || {1:4,2:3,3:2,4:1}[s.pos] || 1);
-      var envMult = (dbFSIConfig['env_mult_' + (g.environment_type || 'default')] || dbFSIConfig['env_mult_default'] || 0.8);
-      var geiScore = (dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (dbFSIConfig['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
+      var posWeight = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['pos_weight_' + s.pos]) || {1:4,2:3,3:2,4:1}[s.pos] || 1;
+      var envMult = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_' + (g.environment_type || 'default')]) || (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_default']) || 0.8;
+      var geiScore = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
       teamValue[s.team] = { team: s.team, group: g.group_letter, pos: s.pos, env: g.environment_type || 'balanced', gei: g.gei || 0, value: posWeight * envMult * geiScore, goals: s.gf || 0, pts: s.pts || 0 };
     });
   });
@@ -2583,7 +2583,7 @@ function buildKPIData() {
     var l = teamExportData.find(function(x) { return x.team === loser; });
     if(l) { var el = (l.geiType||'').toLowerCase(); if(envs[el]) envs[el].eliminated++; }
   });
-  var verdicts = dbKPIVerdicts || {
+  var verdicts = (typeof dbKPIVerdicts !== 'undefined' && dbKPIVerdicts) ? dbKPIVerdicts : {
     suppressed: 'Higher-GEI teams from constrained groups show lower knockout survival when facing open/balanced opponents.',
     balanced: 'Balanced environment teams demonstrate moderate advancement. TCI neutral zone.',
     open: 'Open environment teams show strongest knockout performance. Battle-tested hypothesis supported.',
@@ -2664,9 +2664,9 @@ function buildFSIData() {
   groups.forEach(function(g) {
     var st = Array.isArray(g.standings) ? g.standings : [];
     st.forEach(function(s) {
-      var posWeight = (dbFSIConfig['pos_weight_' + s.pos] || {1:4,2:3,3:2,4:1}[s.pos] || 1);
-      var envMult = (dbFSIConfig['env_mult_' + (g.environment_type || 'default')] || dbFSIConfig['env_mult_default'] || 0.8);
-      var geiScore = (dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (dbFSIConfig['gei_factor'] || 0.4));
+      var posWeight = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['pos_weight_' + s.pos]) || {1:4,2:3,3:2,4:1}[s.pos] || 1;
+      var envMult = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_' + (g.environment_type || 'default')]) || (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_default']) || 0.8;
+      var geiScore = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_factor'] || 0.4));
       teamValue[s.team] = { value: posWeight * envMult * geiScore };
     });
   });
@@ -3062,6 +3062,13 @@ function showLoadStatus(html, type) {
 
 // Seed-to-name map built from groups data, used by both loaders
 var dbSeedMap = {};
+var dbPrizeTiers = {};
+var dbFSIConfig = {};
+var dbKPIVerdicts = {};
+var dbTeamMetadata = {};
+
+
+});
 
 // All matches loaded from DB — used by exports and results table
 var dbMatches = [];
@@ -3079,11 +3086,15 @@ async function loadGroupsFromDB() {
       return;
     }
     if(!groups || groups.length === 0) {
-      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>RLS Blocked:</strong> wc2026_groups returned 0 rows. Run this in Supabase SQL Editor:<br><code style="background:#fff;padding:2px 4px;border-radius:3px">ALTER TABLE wc2026_groups ENABLE ROW LEVEL SECURITY; CREATE POLICY "public_read_groups" ON wc2026_groups FOR SELECT USING (true);</code></div>','warn');
+      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_groups has no data. Run the seed SQL in Supabase SQL Editor.</div>','warn');
       return;
     }
 
     window._dbGroups = groups; // store for KPI report
+
+    // Clear GEI table body before rebuilding
+    var geiBody = document.getElementById('gei-body');
+    if(geiBody) geiBody.innerHTML = '';
 
     // Build seed->name map: "D1" -> "USA", "F4" -> "Tunisia"
     groups.forEach(function(g) {
@@ -3102,18 +3113,19 @@ async function loadGroupsFromDB() {
         }
       });
 
-      // Update GEI table row for this group
-      var geiRows = document.querySelectorAll('#gei-table tbody tr');
-      geiRows.forEach(function(tr) {
-        var gCell = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
-        if(gCell === g.group_letter) {
-          if(tr.cells[1]) tr.cells[1].innerHTML = '<span class="gei-badge gei-' + (g.environment_type || 'balanced') + '">' + ucFirst(g.environment_type || 'balanced') + '</span>';
-          if(tr.cells[2]) tr.cells[2].textContent = Math.round((g.gei || 0) * 100) + '%';
-          var top = standings[0];
-          if(tr.cells[3]) tr.cells[3].textContent = top ? top.team : '-';
-          if(tr.cells[4]) tr.cells[4].textContent = (top ? top.gf : 0) + '/' + (g.total_goals || 0);
-        }
-      });
+      // Build GEI table row from scratch
+      var geiBody = document.getElementById('gei-body');
+      if(geiBody) {
+        var tr = document.createElement('tr');
+        var top = standings[0];
+        tr.innerHTML = '<td>' + g.group_letter + '</td>' +
+          '<td><span class="gei-badge gei-' + (g.environment_type || 'balanced') + '">' + ucFirst(g.environment_type || 'balanced') + '</span></td>' +
+          '<td>' + Math.round((g.gei || 0) * 100) + '%</td>' +
+          '<td>' + (top ? top.team : '-') + '</td>' +
+          '<td>' + (top ? top.gf : 0) + '/' + (g.total_goals || 0) + '</td>' +
+          '<td>' + (g.environment_type || 'balanced') + '</td>';
+        geiBody.appendChild(tr);
+      }
 
       // Update TEAM PROFILES table rows for this group
       var envLabel = ucFirst(g.environment_type || 'balanced');
@@ -3167,6 +3179,13 @@ async function loadGroupsFromDB() {
     var knockoutRows = await loadKnockout();
     renderTeamsFromDB(knockoutRows);
 
+    // Render ALL KPI sections after data loads (regardless of login state)
+    renderKPIReport();
+    renderGroupMetric();
+    renderGoalTracker();
+    renderContinentKPI();
+    renderFSIReport();
+
   } catch(e) { console.error('loadGroups error:', e); showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Exception:</strong> ' + e.message + '</div>','error'); }
 }
 
@@ -3178,7 +3197,7 @@ async function loadMatchesFromDB() {
     var { data: matches, error } = await supabaseClient.from('wc2026_matches').select('*').eq('tournament','WC2026').order('match_id',{ascending:true});
     if(error) { showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (matches):</strong> ' + error.message + '</div>','error'); return; }
     if(!matches || matches.length === 0) {
-      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>RLS Blocked:</strong> wc2026_matches returned 0 rows. Run:<br><code style="background:#fff;padding:2px 4px;border-radius:3px">CREATE POLICY "public_read_matches" ON wc2026_matches FOR SELECT USING (true);</code></div>','warn');
+      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data.</div>','warn');
       return;
     }
 
