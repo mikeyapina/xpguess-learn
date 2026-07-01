@@ -154,10 +154,11 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   }
 }
 </script>
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
+
+
+
+
+
 <base target="_blank">
 </head>
 <body>
@@ -3004,7 +3005,13 @@ function renderTeamsFromDB(knockoutRows) {
   groups
     .sort(function(a,b){ return String(a.group_letter).localeCompare(String(b.group_letter)); })
     .forEach(function(g) {
-      var standings = Array.isArray(g.standings) ? g.standings : [];
+      // Handle standings as array or JSON string
+      var standings = g.standings;
+      if(typeof standings === 'string') {
+        try { standings = JSON.parse(standings); } catch(e) { standings = []; }
+      }
+      if(!Array.isArray(standings)) standings = [];
+
       standings
         .sort(function(a,b){ return Number(a.pos) - Number(b.pos); })
         .forEach(function(s) {
@@ -3299,7 +3306,10 @@ function renderAllFromCache() {
 async function loadGroupsFromDB() {
   console.log('loadGroupsFromDB: starting...');
   if(!supabaseClient) {
-    console.log('loadGroupsFromDB: no supabaseClient'); showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Supabase not connected</strong></div>','error'); return; }
+    console.log('loadGroupsFromDB: no supabaseClient');
+    showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Supabase not connected</strong></div>','error');
+    return;
+  }
   try {
     var { data: groups, error } = await supabaseClient.from('wc2026_groups').select('*').eq('tournament','WC2026');
 
@@ -3311,34 +3321,30 @@ async function loadGroupsFromDB() {
     if(!groups || groups.length === 0) {
       showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_groups has no data. Run the seed SQL in Supabase SQL Editor.</div>','warn');
       window._dbGroups = [];
-    } else {
-      window._dbGroups = groups; // store for KPI report
+      return;
     }
 
-    // Clear GEI table body before rebuilding
+    window._dbGroups = groups;
+
+    // Clear GEI table body
     var geiBody = document.getElementById('gei-body');
     if(geiBody) geiBody.innerHTML = '';
 
-    // Build seed->name map: "D1" -> "USA", "F4" -> "Tunisia"
+    // Single pass: build seed map, render GEI table
     groups.forEach(function(g) {
-      var standings = Array.isArray(g.standings) ? g.standings : [];
+      // Handle standings as array or JSON string
+      var standings = g.standings;
+      if(typeof standings === 'string') {
+        try { standings = JSON.parse(standings); } catch(e) { standings = []; }
+      }
+      if(!Array.isArray(standings)) standings = [];
+
+      // Build seed->name map
       standings.forEach(function(s) {
         dbSeedMap[g.group_letter + s.pos] = s.team;
       });
 
-      // Update KO table rows BY SEED (not name — avoids "USA" vs "United States" mismatch)
-      var koRows = document.querySelectorAll('#ko-table tbody tr');
-      koRows.forEach(function(tr) {
-        var seed = tr.cells[2] ? tr.cells[2].textContent.trim() : '';
-        var dbName = dbSeedMap[seed];
-        if(dbName && tr.cells[1]) {
-          tr.cells[1].innerHTML = '<strong>' + dbName + '</strong>';
-        }
-      });
-
-      // Match processed
-      // Build GEI table row from scratch
-      var geiBody = document.getElementById('gei-body');
+      // Build GEI table row
       if(geiBody) {
         var tr = document.createElement('tr');
         var top = standings[0];
@@ -3350,53 +3356,9 @@ async function loadGroupsFromDB() {
           '<td>' + (g.environment_type || 'balanced') + '</td>';
         geiBody.appendChild(tr);
       }
-
-      // GEI row updated
-      // Update TEAM PROFILES table rows for this group
-      var envLabel = ucFirst(g.environment_type || 'balanced');
-      var envClass = (g.environment_type || 'balanced').toLowerCase();
-      var geiPct = Math.round((g.gei || 0) * 100);
-
-      var profRows = document.querySelectorAll('#profile-table tbody tr');
-      profRows.forEach(function(tr) {
-        // Match by data-group attribute
-        var rowGroup = tr.getAttribute('data-group');
-        var rowSeed = tr.getAttribute('data-seed');
-        if(rowGroup === g.group_letter) {
-          // Update team name from standings
-          var pos = parseInt((rowSeed || '').replace(/[^0-9]/g,'')) || 0;
-          var standing = standings.find(function(s) { return s.pos === pos; });
-          if(standing && standing.team && tr.cells[0]) {
-            tr.cells[0].innerHTML = '<strong>' + standing.team + '</strong>';
-            tr.setAttribute('data-name', standing.team);
-          }
-          // Update GEI Type cell (index 4)
-          if(tr.cells[4]) {
-            tr.cells[4].innerHTML = '<span class="gei-badge gei-' + envClass + '">' + envLabel + '</span>';
-          }
-          // Update GEI % cell (index 5)
-          if(tr.cells[5]) tr.cells[5].textContent = geiPct + '%';
-          // Update data-gei for sorting
-          tr.setAttribute('data-gei', geiPct);
-        }
-      });
     });
 
-    // Update teamExportData
-    groups.forEach(function(g) {
-      var standings = Array.isArray(g.standings) ? g.standings : [];
-      standings.forEach(function(s) {
-        var seed = g.group_letter + s.pos;
-        var idx = teamExportData.findIndex(function(x) { return x.seed === seed; });
-        if(idx >= 0) {
-          teamExportData[idx].team = s.team;
-          teamExportData[idx].geiShare = Math.round((g.gei || 0) * 100);
-          teamExportData[idx].geiType = ucFirst(g.environment_type || 'balanced');
-        }
-      });
-    });
-
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' ' + t('groups') + ' loaded</strong> &mdash; ' + formatTimestamp() + '</div>','ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' groups loaded</strong> &mdash; ' + formatTimestamp() + '</div>','ok');
 
     // Now load matches (after seedMap is built)
     await loadMatchesFromDB();
@@ -3404,7 +3366,7 @@ async function loadGroupsFromDB() {
     var knockoutRows = await loadKnockout();
     renderTeamsFromDB(knockoutRows);
 
-    // Render ALL KPI sections after data loads (regardless of login state)
+    // Render ALL KPI sections after data loads
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
@@ -3414,9 +3376,11 @@ async function loadGroupsFromDB() {
     // Save to localStorage for offline use
     saveToLocalCache();
 
-  } catch(e) { console.error('loadGroups error:', e); showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Exception:</strong> ' + e.message + '</div>','error'); }
+  } catch(e) {
+    console.error('loadGroups error:', e);
+    showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Exception:</strong> ' + e.message + '</div>','error');
+  }
 }
-
 function ucFirst(str) { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
 
 async function loadMatchesFromDB() {
