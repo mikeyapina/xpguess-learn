@@ -158,6 +158,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -720,8 +721,15 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0">
         <button onclick="exportCSV()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download CSV</button>
         <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download JSON</button>
+        <button onclick="downloadFullJSON()" style="padding:.5rem 1rem;background:#0f172a;color:#d4a843;border:1px solid #0f172a;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:700">&#128190; Download Full Snapshot</button>
       </div>
-      <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. Updates from Supabase database.</p>
+      <div style="margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset</p>
+        <p style="font-size:.8rem;color:#64748b;margin:0 0 .5rem">Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
+        <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem">
+      </div>
+      <div style="margin-top:.5rem"><button onclick="clearLocalCache();location.reload();" style="padding:.3rem .8rem;background:transparent;color:#94a3b8;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.75rem">Clear Local Cache & Reload</button></div>
+      <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
     </div>
   </details>
 </section>
@@ -1605,8 +1613,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Load saved knockout data
   loadKnockout();
 
-  // Load groups from Supabase (which also triggers matches load after seedMap is built)
-  loadGroupsFromDB();
+  // Try localStorage cache first (offline-first)
+  if(hasLocalCache()) {
+    console.log('Loading from local cache...');
+    loadFromLocalCache();
+    renderAllFromCache();
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Loaded from cache</strong> &mdash; ' + (window._dbGroups||[]).length + ' groups, ' + (dbMatches||[]).length + ' matches</div>','ok');
+  } else {
+    // No cache — load from Supabase
+    console.log('No cache found, loading from Supabase...');
+    loadGroupsFromDB();
+  }
 });
 
 // ===== AUTH UI =====
@@ -3117,6 +3134,165 @@ var dbTeamMetadata = {};
 // All matches loaded from DB — used by exports and results table
 var dbMatches = [];
 
+// ===== LOCALSTORAGE CACHE =====
+var LOCAL_CACHE_KEY = 'wc2026_tci_cache';
+var CACHE_VERSION = '1.0';
+
+function saveToLocalCache() {
+  var cache = {
+    version: CACHE_VERSION,
+    savedAt: new Date().toISOString(),
+    groups: window._dbGroups || [],
+    matches: dbMatches || [],
+    seedMap: dbSeedMap || {},
+    teamExportData: teamExportData || []
+  };
+  try {
+    localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(cache));
+    console.log('Cache saved to localStorage');
+  } catch(e) { console.error('Failed to save cache:', e); }
+}
+
+function loadFromLocalCache() {
+  try {
+    var raw = localStorage.getItem(LOCAL_CACHE_KEY);
+    if(!raw) return false;
+    var cache = JSON.parse(raw);
+    if(cache.version !== CACHE_VERSION) { clearLocalCache(); return false; }
+
+    window._dbGroups = cache.groups || [];
+    dbMatches = cache.matches || [];
+    dbSeedMap = cache.seedMap || {};
+    teamExportData = cache.teamExportData || [];
+
+    console.log('Cache loaded from localStorage:', cache.groups.length, 'groups,', cache.matches.length, 'matches');
+    return true;
+  } catch(e) { console.error('Failed to load cache:', e); return false; }
+}
+
+function clearLocalCache() {
+  localStorage.removeItem(LOCAL_CACHE_KEY);
+  console.log('Cache cleared');
+}
+
+function hasLocalCache() {
+  try {
+    var raw = localStorage.getItem(LOCAL_CACHE_KEY);
+    if(!raw) return false;
+    var cache = JSON.parse(raw);
+    return cache.version === CACHE_VERSION && cache.groups && cache.groups.length > 0;
+  } catch(e) { return false; }
+}
+
+// ===== IMPORT / EXPORT FULL JSON =====
+function downloadFullJSON() {
+  var fullData = {
+    _exportMeta: {
+      version: CACHE_VERSION,
+      exportedAt: new Date().toISOString(),
+      source: 'wc2026_tci_dashboard',
+      format: 'full_snapshot'
+    },
+    groups: window._dbGroups || [],
+    matches: dbMatches || [],
+    seedMap: dbSeedMap || {},
+    teamExportData: teamExportData || []
+  };
+
+  var blob = new Blob([JSON.stringify(fullData, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'wc2026-full-snapshot-' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+
+  showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Full snapshot downloaded</strong></div>','ok');
+}
+
+function importJSONFile(file) {
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if(!data.groups || !Array.isArray(data.groups)) {
+        alert('Invalid file: missing groups array');
+        return;
+      }
+
+      // Validate and set data
+      window._dbGroups = data.groups || [];
+      dbMatches = data.matches || [];
+      dbSeedMap = data.seedMap || {};
+      teamExportData = data.teamExportData || [];
+
+      // Save to localStorage
+      saveToLocalCache();
+
+      // Re-render everything
+      renderAllFromCache();
+
+      showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Imported ' + data.groups.length + ' groups, ' + (data.matches||[]).length + ' matches</strong></div>','ok');
+    } catch(err) {
+      alert('Error importing file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function renderAllFromCache() {
+  // Rebuild all tables from cached data
+  var knockoutRows = [];
+  renderTeamsFromDB(knockoutRows);
+
+  // Rebuild GEI table
+  var geiBody = document.getElementById('gei-body');
+  if(geiBody) {
+    geiBody.innerHTML = '';
+    (window._dbGroups || []).forEach(function(g) {
+      var standings = Array.isArray(g.standings) ? g.standings : [];
+      var top = standings[0];
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + g.group_letter + '</td>' +
+        '<td><span class="gei-badge gei-' + (g.environment_type || 'balanced') + '">' + ucFirst(g.environment_type || 'balanced') + '</span></td>' +
+        '<td>' + Math.round((g.gei || 0) * 100) + '%</td>' +
+        '<td>' + (top ? top.team : '-') + '</td>' +
+        '<td>' + (top ? top.gf : 0) + '/' + (g.total_goals || 0) + '</td>' +
+        '<td>' + (g.environment_type || 'balanced') + '</td>';
+      geiBody.appendChild(tr);
+    });
+  }
+
+  // Rebuild results table
+  var rBody = document.getElementById('results-body');
+  if(rBody && dbMatches.length > 0) {
+    rBody.innerHTML = '';
+    dbMatches.forEach(function(m) {
+      var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
+      var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
+      var winnerClass = m.winner ? 'result-win' : 'result-pending';
+      var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
+        '<td>' + (m.stage || 'TBD') + '</td>' +
+        '<td>' + (m.date || 'TBD') + '</td>' +
+        '<td><strong>' + (m.team1 || '') + '</strong></td>' +
+        '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
+        '<td><strong>' + (m.team2 || '') + '</strong></td>' +
+        '<td class="' + winnerClass + '">' + (m.winner || 'Upcoming') + '</td>' +
+        '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
+      rBody.appendChild(tr);
+    });
+  }
+
+  // Render KPI sections
+  renderKPIReport();
+  renderGroupMetric();
+  renderGoalTracker();
+  renderContinentKPI();
+  renderFSIReport();
+}
+
+
 // ===== LOAD GROUPS + MATCHES FROM SUPABASE =====
 // Uses ACTUAL schema: wc2026_groups(group_letter,gei,environment_type,total_goals,standings jsonb)
 //                     wc2026_matches(match_id,team1,team2,winner,stage)
@@ -3234,6 +3410,9 @@ async function loadGroupsFromDB() {
     renderGoalTracker();
     renderContinentKPI();
     renderFSIReport();
+
+    // Save to localStorage for offline use
+    saveToLocalCache();
 
   } catch(e) { console.error('loadGroups error:', e); showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Exception:</strong> ' + e.message + '</div>','error'); }
 }
