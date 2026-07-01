@@ -646,13 +646,27 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
           <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>EPI = Remaining Teams / Qualified Teams</strong> tracked daily through the tournament. Each environment type gets a survival curve. Watch suppressed, balanced, open, and dominant environments diverge as knockout play progresses.</p>
         </div>
 
+        <!-- EPI Headline Finding -->
+        <div id="epi-headline" style="background:#0f172a;border-radius:12px;padding:1.5rem;margin:1rem 0;color:#fff">
+          <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#d4a843;font-weight:700;margin-bottom:.5rem">Current Observation</div>
+          <div id="epi-headline-text" style="font-size:1.15rem;line-height:1.5;color:#f8fafc"></div>
+          <div style="margin-top:.75rem;font-size:.8rem;color:#94a3b8">Updated after each knockout round.</div>
+        </div>
+
         <!-- EPI Summary Cards -->
         <div id="epi-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0"></div>
 
+        <!-- Environment Volatility Index (EVI) -->
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin:1rem 0">
+          <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700;margin-bottom:.5rem">Environment Volatility Index (EVI)</div>
+          <p style="font-size:.85rem;color:#64748b;margin:0 0 1rem">How much did each environment move today? EVI measures stability, not just survival.</p>
+          <div id="evi-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem"></div>
+        </div>
+
         <!-- Survival Curve Canvas -->
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1rem 0">
-          <h3 style="font-size:.9rem;color:#0f172a;margin:0 0 .5rem">&#128200; Environment Survival Curves</h3>
-          <canvas id="epi-canvas" width="800" height="400" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto"></canvas>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin:1rem 0">
+          <h3 style="font-size:1rem;color:#0f172a;margin:0 0 1rem;font-weight:700">&#128200; Environment Survival Curves</h3>
+          <canvas id="epi-canvas" width="1000" height="500" style="width:100%;height:auto;display:block;margin:0 auto"></canvas>
           <div style="display:flex;justify-content:center;gap:1rem;margin-top:.5rem;font-size:.75rem;color:#64748b">
             <span><span style="display:inline-block;width:12px;height:12px;background:#f59e0b;border-radius:2px;margin-right:.3rem"></span>Suppressed</span>
             <span><span style="display:inline-block;width:12px;height:12px;background:#3b82f6;border-radius:2px;margin-right:.3rem"></span>Balanced</span>
@@ -673,7 +687,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
               <th onclick="sortEPI(4)">EPI &#8597;</th>
               <th onclick="sortEPI(5)">Group Goals &#8597;</th>
               <th onclick="sortEPI(6)">KO Goals &#8597;</th>
-              <th onclick="sortEPI(7)">Goal Decay &#8597;</th>
+              <th onclick="sortEPI(7)">Offensive Preservation &#8597;</th>
               <th onclick="sortEPI(8)">Trend &#8597;</th>
             </tr></thead>
             <tbody id="epi-body"></tbody>
@@ -700,7 +714,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Research Narrative -->
         <div id="epi-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">EPI measures environment preservation across tournament phases. Goal Decay = (Group Goals - Knockout Goals) / Group Goals. Higher decay = environment lost offensive production in knockouts. Survival curves update after each match day.</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">EPI measures environment preservation across tournament phases. Offensive Preservation = (Group Goals - Knockout Goals) / Group Goals. Higher decay = environment lost offensive production in knockouts. Survival curves update after each match day.</p>
       </div>
     </div>
   </details>
@@ -2790,13 +2804,13 @@ function renderEPIReport() {
     }
   });
 
-  // Calculate EPI and Goal Decay for each environment
+  // Calculate EPI and Offensive Preservation for each environment
   var epiRows = [];
   for(var e in envData) {
     var d = envData[e];
     d.epi = d.qualified > 0 ? ((d.alive / d.qualified) * 100).toFixed(1) : 0;
-    d.goalDecay = d.groupGoals > 0 ? (((d.groupGoals - d.koGoals) / d.groupGoals) * 100).toFixed(1) : 0;
-    d.avgGoalDecay = d.groups.size > 0 ? (d.goalDecay / d.groups.size).toFixed(1) : 0;
+    d.offensivePreservation = d.groupGoals > 0 ? (((d.groupGoals - d.koGoals) / d.groupGoals) * 100).toFixed(1) : 0;
+    d.avgGoalDecay = d.groups.size > 0 ? (d.offensivePreservation / d.groups.size).toFixed(1) : 0;
 
     // Determine trend
     if(d.epi >= 75) d.trend = '&#9650; Strong Preservation';
@@ -2810,6 +2824,26 @@ function renderEPIReport() {
   // Sort by EPI descending
   epiRows.sort(function(a,b) { return parseFloat(b.epi) - parseFloat(a.epi); });
 
+  // Populate headline finding
+  var headlineText = document.getElementById('epi-headline-text');
+  if(headlineText && activeRows.length > 0) {
+    var topEnv = activeRows[0];
+    var tied = activeRows.filter(function(d) { return d.epi === topEnv.epi && d.env !== topEnv.env; });
+    var tiedNames = tied.map(function(d) { return d.label; }).join(' and ');
+    var headline = '';
+    if(tied.length > 0) {
+      headline = '<strong>' + topEnv.label + ' and ' + tiedNames + ' environments are tied for highest preservation (' + topEnv.epi + '%).</strong>';
+    } else {
+      headline = '<strong>' + topEnv.label + ' environments lead in preservation at ' + topEnv.epi + '% EPI.</strong>';
+    }
+    if(activeRows.length > 1) {
+      var bottom = activeRows[activeRows.length - 1];
+      headline += ' ' + bottom.label + ' environments have fallen to ' + bottom.epi + '%.';
+    }
+    headline += '<br><span style="color:#94a3b8;font-size:.9rem">Every match adds another observation to the survival curve.</span>';
+    headlineText.innerHTML = headline;
+  }
+
   // Render summary cards
   cards.innerHTML = '';
   epiRows.forEach(function(d) {
@@ -2821,7 +2855,7 @@ function renderEPIReport() {
       '<div style="font-size:2.5rem;font-weight:800;color:' + d.color + '">' + d.epi + '%</div>' +
       '<div style="font-size:.8rem;color:#64748b;margin-top:.25rem">EPI — ' + d.alive + '/' + d.qualified + ' alive</div>' +
       '<div style="margin-top:.5rem;font-size:.75rem;color:' + trendColor + '">' + d.trend + '</div>' +
-      '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + d.color + ';font-size:.75rem;color:#64748b">Goal Decay: ' + d.goalDecay + '%</div>';
+      '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + d.color + ';font-size:.75rem;color:#64748b">Offensive Preservation: ' + d.offensivePreservation + '%</div>';
     cards.appendChild(card);
   });
 
@@ -2838,7 +2872,7 @@ function renderEPIReport() {
       '<td style="font-weight:800;color:#0f172a">' + d.epi + '%</td>' +
       '<td>' + d.groupGoals + '</td>' +
       '<td>' + d.koGoals + '</td>' +
-      '<td style="color:#dc2626;font-weight:700">' + d.goalDecay + '%</td>' +
+      '<td style="color:#dc2626;font-weight:700">' + d.offensivePreservation + '%</td>' +
       '<td style="color:' + trendColor + ';font-size:.8rem">' + d.trend + '</td>';
     tbody.appendChild(tr);
   });
@@ -2904,6 +2938,31 @@ function renderEPIReport() {
     }
   }
 
+  // Render EVI (Environment Volatility Index)
+  var eviGrid = document.getElementById('evi-grid');
+  if(eviGrid) {
+    eviGrid.innerHTML = '';
+    epiRows.forEach(function(d) {
+      if(d.qualified === 0) return; // skip inactive
+      var delta = d.epiDelta || '0.0';
+      var deltaDir = parseFloat(delta) > 0 ? '&#9650;' : (parseFloat(delta) < 0 ? '&#9660;' : '&#9644;');
+      var deltaColor = parseFloat(delta) > 0 ? '#16a34a' : (parseFloat(delta) < 0 ? '#dc2626' : '#94a3b8');
+      var deltaSign = parseFloat(delta) >= 0 ? '+' : '';
+      var volatility = Math.abs(parseFloat(delta)).toFixed(1);
+      var volLabel = parseFloat(volatility) > 10 ? 'High Volatility' : (parseFloat(volatility) > 5 ? 'Moderate' : 'Stable');
+      var volColor = parseFloat(volatility) > 10 ? '#dc2626' : (parseFloat(volatility) > 5 ? '#f59e0b' : '#16a34a');
+
+      var div = document.createElement('div');
+      div.style.cssText = 'background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;text-align:center';
+      div.innerHTML =
+        '<div style="font-size:.75rem;color:' + d.color + ';font-weight:700;margin-bottom:.3rem">' + d.label + '</div>' +
+        '<div style="font-size:1.5rem;font-weight:800;color:#0f172a">' + d.epi + '%</div>' +
+        '<div style="font-size:.85rem;color:' + deltaColor + ';font-weight:700;margin-top:.25rem">' + deltaDir + ' ' + deltaSign + delta + '% today</div>' +
+        '<div style="margin-top:.5rem;font-size:.7rem;padding:.2rem .4rem;border-radius:4px;background:' + volColor + '20;color:' + volColor + ';display:inline-block">' + volLabel + '</div>';
+      eviGrid.appendChild(div);
+    });
+  }
+
   // Draw survival curves on canvas
   drawEPISurvivalCurves(dailyData, envColors);
 
@@ -2924,14 +2983,14 @@ function renderEPIReport() {
       html += '<li><strong>Weakest active preservation:</strong> ' + weakest.label + ' environments at ' + weakest.epi + '% EPI — ' + weakest.alive + ' of ' + weakest.qualified + ' teams still competing</li>';
     }
 
-    // Goal decay analysis — only among active environments
+    // Offensive preservation analysis — only among active environments
     if(activeRows.length > 0) {
-      var sortedDecay = activeRows.slice().sort(function(a,b) { return parseFloat(a.goalDecay) - parseFloat(b.goalDecay); });
+      var sortedDecay = activeRows.slice().sort(function(a,b) { return parseFloat(a.offensivePreservation) - parseFloat(b.offensivePreservation); });
       var lowestDecay = sortedDecay[0];
       var highestDecay = sortedDecay[sortedDecay.length - 1];
 
-      html += '<li><strong>Lowest goal decay:</strong> ' + lowestDecay.label + ' environments (' + lowestDecay.goalDecay + '%) — preserved offensive production best in transition to knockouts</li>';
-      html += '<li><strong>Highest goal decay:</strong> ' + highestDecay.label + ' environments (' + highestDecay.goalDecay + '%) — lost ' + highestDecay.goalDecay + '% of group-stage offensive output in knockouts</li>';
+      html += '<li><strong>Lowest offensive preservation:</strong> ' + lowestDecay.label + ' environments (' + lowestDecay.offensivePreservation + '%) — preserved offensive production best in transition to knockouts</li>';
+      html += '<li><strong>Highest offensive preservation:</strong> ' + highestDecay.label + ' environments (' + highestDecay.offensivePreservation + '%) — lost ' + highestDecay.offensivePreservation + '% of group-stage offensive output in knockouts</li>';
     }
 
     // Inactive categories
@@ -2948,7 +3007,7 @@ function renderEPIReport() {
     }
 
     html += '</ul>';
-    html += '<p style="margin-top:.5rem"><strong>Research value:</strong> Each match day adds another observation to the survival curve. You are building a longitudinal dataset of how competitive environments decay—or preserve—themselves once tournament phase changes. This is a governance question, not just a prediction.</p>';
+    html += '<p style="margin-top:.5rem"><strong>Research value:</strong> <strong>Every match day adds another observation to the survival curve.</strong> You are building a longitudinal dataset of how competitive environments decay—or preserve—themselves once tournament phase changes. This is a governance question, not just a prediction.</p>';
 
     analysisDiv.innerHTML = html;
   }
