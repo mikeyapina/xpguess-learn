@@ -3087,10 +3087,10 @@ async function loadGroupsFromDB() {
     }
     if(!groups || groups.length === 0) {
       showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_groups has no data. Run the seed SQL in Supabase SQL Editor.</div>','warn');
-      return;
+      window._dbGroups = [];
+    } else {
+      window._dbGroups = groups; // store for KPI report
     }
-
-    window._dbGroups = groups; // store for KPI report
 
     // Clear GEI table body before rebuilding
     var geiBody = document.getElementById('gei-body');
@@ -3176,7 +3176,7 @@ async function loadGroupsFromDB() {
     showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' ' + t('groups') + ' loaded</strong> &mdash; ' + formatTimestamp() + '</div>','ok');
 
     // Now load matches (after seedMap is built)
-    loadMatchesFromDB();
+    await loadMatchesFromDB();
 
     var knockoutRows = await loadKnockout();
     renderTeamsFromDB(knockoutRows);
@@ -3201,11 +3201,11 @@ async function loadMatchesFromDB() {
     if(error) { showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (matches):</strong> ' + error.message + '</div>','error'); return; }
     if(!matches || matches.length === 0) {
       showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data.</div>','warn');
-      return;
+      dbMatches = [];
+    } else {
+      // Store for exports
+      dbMatches = matches;
     }
-
-    // Store for exports
-    dbMatches = matches;
 
     // Build reverse map: name -> seed from dbSeedMap
     var nameToSeed = {};
