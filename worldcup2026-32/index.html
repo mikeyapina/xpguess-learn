@@ -822,6 +822,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem">
       </div>
       <div style="margin-top:.5rem"><button onclick="clearLocalCache();location.reload();" style="padding:.3rem .8rem;background:transparent;color:#94a3b8;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.75rem">Clear Local Cache & Reload</button></div>
+      <div style="margin-top:.25rem"><button onclick="localStorage.removeItem('wc2026_tci_cache');location.reload();" style="padding:.3rem .8rem;background:#dc2626;color:#fff;border:1px solid #dc2626;border-radius:6px;cursor:pointer;font-size:.75rem">&#128683; Force Clear All Cache & Reload</button></div>
       <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
     </div>
   </details>
@@ -1710,9 +1711,26 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Try localStorage cache first (offline-first)
   if(hasLocalCache()) {
     console.log('Loading from local cache...');
-    loadFromLocalCache();
-    renderAllFromCache();
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Loaded from cache</strong> &mdash; ' + (window._dbGroups||[]).length + ' groups, ' + (dbMatches||[]).length + ' matches</div>','ok');
+    var cacheLoaded = loadFromLocalCache();
+    if(!cacheLoaded || !window._dbGroups || window._dbGroups.length === 0) {
+      console.log('Cache invalid or empty, clearing and loading from Supabase...');
+      clearLocalCache();
+      loadGroupsFromDB();
+    } else {
+      // Validate cached groups have standings
+      var validCache = true;
+      window._dbGroups.forEach(function(g) {
+        if(!g.standings) { validCache = false; }
+      });
+      if(!validCache) {
+        console.log('Cache corrupted (missing standings), clearing...');
+        clearLocalCache();
+        loadGroupsFromDB();
+      } else {
+        renderAllFromCache();
+        showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Loaded from cache</strong> &mdash; ' + (window._dbGroups||[]).length + ' groups, ' + (dbMatches||[]).length + ' matches</div>','ok');
+      }
+    }
   } else {
     // No cache — load from Supabase
     console.log('No cache found, loading from Supabase...');
@@ -2714,6 +2732,13 @@ function renderEPIReport() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  // Validate data before processing
+  if(!groups || groups.length === 0) {
+    console.log('renderEPIReport: no groups data');
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1rem">No group data available. Loading from database...</td></tr>';
+    return;
+  }
+
   // Build per-environment data
   var envData = {};
   var envColors = {
@@ -2742,6 +2767,7 @@ function renderEPIReport() {
 
   // Process groups
   groups.forEach(function(g) {
+    if(!g) return;
     var env = (g.environment_type || 'balanced').toLowerCase();
     if(!envData[env]) env = 'balanced';
     var standings = g.standings;
@@ -3661,10 +3687,23 @@ var LOCAL_CACHE_KEY = 'wc2026_tci_cache';
 var CACHE_VERSION = '1.0';
 
 function saveToLocalCache() {
+  // Deep clone groups to ensure standings are serializable
+  var serializableGroups = (window._dbGroups || []).map(function(g) {
+    var clone = {};
+    for(var k in g) {
+      if(k === 'standings' && typeof g[k] === 'object') {
+        clone[k] = JSON.parse(JSON.stringify(g[k]));
+      } else {
+        clone[k] = g[k];
+      }
+    }
+    return clone;
+  });
+
   var cache = {
     version: CACHE_VERSION,
     savedAt: new Date().toISOString(),
-    groups: window._dbGroups || [],
+    groups: serializableGroups,
     matches: dbMatches || [],
     seedMap: dbSeedMap || {},
     teamExportData: teamExportData || []
@@ -3687,9 +3726,23 @@ function loadFromLocalCache() {
     dbSeedMap = cache.seedMap || {};
     teamExportData = cache.teamExportData || [];
 
-    console.log('Cache loaded from localStorage:', cache.groups.length, 'groups,', cache.matches.length, 'matches');
+    // Validate and repair loaded data
+    if(window._dbGroups && window._dbGroups.length > 0) {
+      window._dbGroups.forEach(function(g) {
+        if(!g.standings) g.standings = [];
+        if(typeof g.standings === 'string') {
+          try { g.standings = JSON.parse(g.standings); } catch(e) { g.standings = []; }
+        }
+        if(!Array.isArray(g.standings)) g.standings = [];
+      });
+    }
+    if(!dbMatches) dbMatches = [];
+    if(!dbSeedMap) dbSeedMap = {};
+    if(!teamExportData) teamExportData = [];
+
+    console.log('Cache loaded from localStorage:', (window._dbGroups||[]).length, 'groups,', (dbMatches||[]).length, 'matches');
     return true;
-  } catch(e) { console.error('Failed to load cache:', e); return false; }
+  } catch(e) { console.error('Failed to load cache:', e); clearLocalCache(); return false; }
 }
 
 function clearLocalCache() {
@@ -3762,6 +3815,20 @@ function importJSONFile(file) {
 }
 
 function renderAllFromCache() {
+  // Validate and repair cached data
+  if(window._dbGroups && window._dbGroups.length > 0) {
+    window._dbGroups.forEach(function(g) {
+      if(!g.standings) g.standings = [];
+      if(typeof g.standings === 'string') {
+        try { g.standings = JSON.parse(g.standings); } catch(e) { g.standings = []; }
+      }
+      if(!Array.isArray(g.standings)) g.standings = [];
+    });
+  }
+  if(!dbMatches) dbMatches = [];
+  if(!dbSeedMap) dbSeedMap = {};
+  if(!teamExportData) teamExportData = [];
+
   // Rebuild all tables from cached data
   var knockoutRows = [];
   renderTeamsFromDB(knockoutRows);
