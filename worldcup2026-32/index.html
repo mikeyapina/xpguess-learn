@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -132,6 +131,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   }
 }
 </script>
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -176,9 +176,15 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <div style="margin-top:.3rem"><button onclick="doDownload()">&#128190; Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
     </div>
   </div>
+
+  <!-- Language Toggle -->
+  <div style="display:flex;gap:.3rem;justify-content:flex-end;margin-top:.5rem">
+    <button id="lang-toggle-en" onclick="setLang('en')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:1">EN</button>
+    <button id="lang-toggle-es" onclick="setLang('es')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:.4">ES</button>
+  </div>
 </header>
 <section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
-  <strong style="font-size:.9rem">On this page</strong>
+  <strong id="on-this-page" style="font-size:.9rem">On this page</strong>
   <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
     <li><a href="#summary">Tournament Summary</a></li>
     <li><a href="#knockout">Knockout Tracking</a></li>
@@ -203,7 +209,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <section id="summary">
 <details class="accordion-section" open>
-<summary><h2>&#128202; Group Stage Results</h2></summary>
+<summary><h2 data-i18n="groupStageResults">&#128202; Group Stage Results</h2></summary>
 
 <div class="cards-grid">
   <div class="card">
@@ -294,7 +300,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT TRACKING ==================== -->
 <section id="knockout">
   <details open>
-    <summary><h2>&#128101; Knockout Tracking &mdash; All 48 Teams</h2></summary>
+    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2></summary>
 
     <div class="content-box" style="overflow-x:auto">
       <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
@@ -366,7 +372,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT RESULTS ==================== -->
 <section id="results">
   <details open>
-    <summary><h2>&#127942; Knockout Results &mdash; Match by Match</h2></summary>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2></summary>
     <div class="content-box">
       <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
       <div class="table-container">
@@ -386,7 +392,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
           </tbody>
         </table>
       </div>
-      <p style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
     </div>
   </details>
 </section>
@@ -396,12 +402,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KPI REPORT (GATED) ==================== -->
 <section id="kpi-report">
   <details open>
-    <summary><h2>&#128202; TCI KPI Report — By Environment Category</h2></summary>
+    <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2></summary>
     <div class="content-box">
       <div id="kpi-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>KPI Report is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to unlock the full TCI analytics dashboard with advancement rates, GEI impact scores, and environment-specific KPIs.</p>
-        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View KPIs</button>
+        <p data-i18n-html="kpiGuest" style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>KPI Report is available for registered users only.</strong></p>
+        <p data-i18n-html="kpiGuestDesc" style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to unlock the full TCI analytics dashboard with advancement rates, GEI impact scores, and environment-specific KPIs.</p>
+        <button onclick="openAuthSignin()" data-i18n="kpiSignIn" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View KPIs</button>
       </div>
       <div id="kpi-user" style="display:none">
         <p>Key Performance Indicators for each group environment type. Calculated from live match results.</p>
@@ -427,7 +433,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT GROUP METRIC (GATED) ==================== -->
 <section id="group-metric">
   <details open>
-    <summary><h2>&#127942; Knockout Group Metric — Day by Day</h2></summary>
+    <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2></summary>
     <div class="content-box">
       <div id="metric-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Group Metric is available for registered users only.</strong></p>
@@ -478,7 +484,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== GOAL PROGRESSION TRACKER (GATED) ==================== -->
 <section id="goal-tracker">
   <details open>
-    <summary><h2>&#9917; Goal Progression Tracker — Group Stage Baseline &#8594; Knockout</h2></summary>
+    <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2></summary>
     <div class="content-box">
       <div id="goal-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Goal Progression Tracker is available for registered users only.</strong></p>
@@ -532,7 +538,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== CONTINENT FINANCIAL KPI (GATED) ==================== -->
 <section id="continent-kpi">
   <details open>
-    <summary><h2>&#127758; Continental Knockout & Financial Resilience</h2></summary>
+    <summary><h2 data-i18n="continentalKpi">&#127758; Continental Knockout & Financial Resilience</h2></summary>
     <div class="content-box">
       <div id="cont-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Financial KPI is available for registered users only.</strong></p>
@@ -583,7 +589,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== FINAL SPARK INDEX (GATED) ==================== -->
 <section id="fsi-report">
   <details open>
-    <summary><h2>&#9889; Final Spark Index (FSI) &mdash; Financial Incentive Alignment</h2></summary>
+    <summary><h2 data-i18n="fsiReport">&#9889; Final Spark Index (FSI) — Financial Incentive Alignment</h2></summary>
     <div class="content-box">
       <div id="fsi-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Final Spark Index is available for registered users only.</strong></p>
@@ -640,7 +646,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TEAM PROFILES ==================== -->
 <section id="profiles">
   <details>
-    <summary><h2>&#128200; Team Profiles (Sortable)</h2></summary>
+    <summary><h2 data-i18n="teamProfiles">&#128200; Team Profiles (Sortable)</h2></summary>
 
     <div class="content-box" style="overflow-x:auto">
       <p>Compare every team &mdash; 48 total across 12 groups. Click any column header to sort by SPI rank, GEI environment type, TCI score, goals scored, and knockout progression.</p>
@@ -714,11 +720,11 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TCI METHODOLOGY ==================== -->
 <section id="methodology">
   <details open>
-    <summary><h2>&#128208; The TCI Methodology &mdash; NTG Framework</h2></summary>
+    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2></summary>
 
     <div class="methodology">
-      <h3>&#9432; What is TCI?</h3>
-      <p>The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
+      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
+      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
       <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
 
       <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
@@ -770,7 +776,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== DOWNLOAD DATASET ==================== -->
 <section id="download">
   <details open>
-    <summary><h2>&#128190; Download Dataset</h2></summary>
+    <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2></summary>
 
     <div class="content-box">
       <p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
@@ -788,7 +794,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== ADMIN PANEL ==================== -->
 <section id="admin">
   <details>
-    <summary><h2>&#128274; Admin &mdash; Edit Knockout Results</h2></summary>
+    <summary><h2 data-i18n="adminTitle">&#128274; Admin — Edit Knockout Results</h2></summary>
 
     <div class="content-box" id="admin-box">
       <div id="admin-login">
@@ -822,7 +828,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== FOOTER (learn.xpguess.com approved) ==================== -->
 <hr style="margin-top:32px;">
 
-<h2>Continue Learning</h2>
+<h2 data-i18n="continueLearning">Continue Learning</h2>
 <ul style="padding-left:18px; line-height:1.6;">
   <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
   <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
@@ -846,7 +852,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <a href="https://xpguess.com">Go to the XPGuess App</a>
 </p>
 
-<h2>Compliance Notice</h2>
+<h2 data-i18n="compliance">Compliance Notice</h2>
 <p>
   XPGuess is an educational platform. It does not provide medical services,
   act as a healthcare provider, or replace professional care.
@@ -953,7 +959,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <div id="auth-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,.85);z-index:2000;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative">
     <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8;line-height:1;padding:4px">&times;</button>
-    <h3 id="auth-title" style="margin:0 0 1.25rem;color:#0f172a;font-size:1.1rem">&#128274; Sign In</h3>
+    <h3 id="auth-title" style="margin:0 0 1.25rem;color:#0f172a;font-size:1.1rem">&#128274; <span data-i18n="authSignin">Sign In</span></h3>
     <div id="auth-step1">
       <label style="display:block;font-size:.8rem;color:#64748b;margin-bottom:.25rem;font-weight:600">Email</label>
       <input type="email" id="auth-email" placeholder="you@example.com" style="width:100%;padding:.7rem;margin-bottom:.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"><br>
@@ -1100,6 +1106,517 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 var supabaseClient = null;
 var currentUser = null;
 var isAdmin = false;
+
+// ===== I18N =====
+var currentLang = localStorage.getItem('tci-lang') || 'en';
+var TRANSLATIONS = {
+  en: {
+    // Header
+    dashboardTitle: 'World Cup 2026 TCI Dashboard',
+    dashboardSubtitle: 'Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework — open data, reproducible methodology.',
+    keyTerms: 'Key Terms',
+    live: 'LIVE — TCI Research in Progress',
+    freeAccess: 'Free Access: Create an account to download datasets and get updates.',
+    createAccount: 'Create Free Account',
+    signIn: 'Sign In',
+    signOut: 'Sign Out',
+    onThisPage: 'On this page',
+    lastUpdated: 'Last Updated',
+    nextUpdate: 'Next',
+    afterEachRound: 'After each knockout round',
+    // Sections
+    tournamentSummary: 'Tournament Summary',
+    groupStageResults: 'Group Stage Results',
+    spiPreservation: 'SPI Preservation',
+    spiLabel: 'The gate held in {held} of {total} Matchday 3 fixtures — expected teams advanced.',
+    viewFixtures: 'View 24 fixtures',
+    geiClassification: 'GEI Classification',
+    geiTypes: 'Types',
+    geiLabel: '{count} groups classified by competitive environment: Constrained, Open, Dominant, or Inverted.',
+    viewBreakdown: 'View group breakdown',
+    knockoutTracking: 'Knockout Tracking — All 48 Teams',
+    knockoutTrackingDesc: 'Track every team from group seed through Round of 32 → Round of 16 → Quarter-Finals → Semi-Finals → Final. Admin edits update live.',
+    knockoutResults: 'Knockout Results — Match by Match',
+    knockoutResultsDesc: 'Live results from Round of 32 through the Final. <strong>Updates automatically</strong> from your Supabase database.',
+    matchesPending: 'Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.',
+    // GEI types
+    constrained: 'Constrained',
+    open: 'Open',
+    balanced: 'Balanced',
+    dominant: 'Dominant',
+    inverted: 'Inverted',
+    // KPI sections
+    tciKpiReport: 'TCI KPI Report — By Environment Category',
+    kpiGuest: 'KPI Report is available for registered users only.',
+    kpiGuestDesc: 'Sign in to unlock the full TCI analytics dashboard with advancement rates, GEI impact scores, and environment-specific KPIs.',
+    kpiSignIn: 'Sign In to View KPIs',
+    kpiDesc: 'Key Performance Indicators for each group environment type. Calculated from live match results.',
+    knockoutGroupMetric: 'Knockout Group Metric — Day by Day',
+    metricGuest: 'Group Metric is available for registered users only.',
+    metricGuestDesc: 'Sign in to track each group\'s knockout performance as the tournament progresses — wins, eliminations, advancement rates, and day-by-day progression.',
+    metricSignIn: 'Sign In to View Group Metrics',
+    metricDesc: 'Track every group through the knockout rounds. <strong>Updates live</strong> as matches complete.',
+    goalTracker: 'Goal Progression Tracker — Group Stage Baseline → Knockout',
+    goalGuest: 'Goal Progression Tracker is available for registered users only.',
+    goalGuestDesc: 'Sign in to track every team\'s goal output from group-stage baseline through each knockout round. See how groups perform offensively as the tournament advances.',
+    goalSignIn: 'Sign In to View Goal Tracker',
+    goalDesc: 'Each team\'s <strong>group-stage goal total</strong> is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked ✖.',
+    continentalKpi: 'Continental Knockout & Financial Resilience',
+    contGuest: 'Continental Financial KPI is available for registered users only.',
+    contGuestDesc: 'Sign in to track how each continent performs in the knockout stage — teams alive, eliminations by round, and total FIFA prize money earned.',
+    contSignIn: 'Sign In to View Continental KPIs',
+    fsiReport: 'Final Spark Index (FSI) — Financial Incentive Alignment',
+    fsiGuest: 'Final Spark Index is available for registered users only.',
+    fsiGuestDesc: 'Sign in to access the FSI — a metric that reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in match outcomes.',
+    fsiSignIn: 'Sign In to View FSI',
+    fsiPitch: 'XPGuess reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in the results.',
+    fsiGuardrail: 'Guardrail: FSI does not prove manipulation. It measures whether financial incentives leave statistically detectable fingerprints in match outcomes.',
+    fsiCore: 'Core Question',
+    fsiCoreQ: 'Before kickoff, which result would create the strongest projected financial position based on prize distribution, matchup value, and continental resilience — and did that result happen?',
+    supportMission: 'Support the Mission',
+    supportGuest: 'Sign in to support the mission and see how your contributions power open tournament analytics.',
+    ntgMission: 'Name The Game builds open tools so that athletes, artists, and communities can train, preserve their languages, and share their culture with the world.',
+    ntgMissionDesc: 'Through projects like CaptureLabz™, ArteRegistry™, and Mic Mode™, we are creating a global archive of voices, languages, cultural histories, and talent development. Every language contains cultural knowledge — CaptureLabz helps communities record and preserve their voices for future generations.',
+    donate: 'Donate to Support the Platform',
+    donate5: 'Record language data',
+    donate10: 'Training tools',
+    donate25: 'Preserving cultural knowledge',
+    donate50: 'New learning tools',
+    donateNow: '❤ Donate to Support the Platform',
+    // Team Profiles
+    teamProfiles: 'Team Profiles (Sortable)',
+    teamProfilesDesc: 'Compare every team — 48 total across 12 groups. Click any column header to sort by SPI rank, GEI environment type, TCI score, goals scored, and knockout progression.',
+    // Methodology
+    methodology: 'The TCI Methodology — NTG Framework',
+    whatIsTci: 'What is TCI?',
+    tciIntro: 'The Tournament Carryover Index (TCI) is a predictive metric developed by Name The Game (NTG) under the Natural Technical Governance (NTG) framework. TCI asks: Does a team\'s group-stage environment predict their knockout success?',
+    spiTitle: 'SPI — Strategic Performance Index',
+    spiDesc: 'SPI measures whether the competitive ordering established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."',
+    spiFormula: 'SPI = (% of seed positions held from Matchday 2 → 3)',
+    spiHeld: '✓ {pct}% held in WC 2026 groups ({held} of {total} positions) — only Groups D and K inverted',
+    spiThreshold: 'Threshold: >66% = "held", ≤66% = "broke"',
+    geiTitle: 'GEI — Group Environment Index',
+    geiDesc: 'GEI classifies each group by measuring how much the top team dominated goal-scoring. A high share means the group was flat or restringido; a low share means it was open and competitive.',
+    geiFormula: 'GEI = (Top Team Goals / Total Group Goals) × 100',
+    geiConstrained: 'Constrained 45–60% share — top team won a flat group',
+    geiOpen: 'Open <45% share + SPI held — competitive, honest group',
+    geiDominant: 'Dominant >60% share — one team overwhelmed the group',
+    geiInverted: 'Inverted <45% share + SPI broke — competitive but upsets occurred',
+    tciCalc: 'TCI Calculation',
+    tciFormulaDesc: 'TCI = α(SPIteam) + β(GEIgroup) + γ(Knockout Path)',
+    tciWhere: 'Where:',
+    tciSpiTeam: 'SPIteam = did this team hold its Matchday 2 seed? (1/0)',
+    tciGeiGroup: 'GEIgroup = group environment score (0–100 normalized)',
+    tciKnockout: 'Knockout Path = progression depth bonus (0, 1, 2, 3, 4)',
+    tciWeights: 'α, β, γ = NTG-calibrated weights',
+    currentObservation: 'Current Observation',
+    currentObservationText: 'Teams emerging from Open + Honest groups (GEI <45%, SPI held) have shown stronger knockout performance in matches analyzed so far. The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed.',
+    ecosystemLinks: 'NTG Ecosystem Links',
+    ntgFramework: 'NTG: Natural Technical Governance — the decision-science framework powering TCI',
+    hugsId: 'HUGS ID: Athlete identity system connecting player data across NTG platforms',
+    ntgPrimary: 'name-the-game.com: Primary NTG platform for tournament analytics',
+    ntgEducational: 'Learn.XPGuess.com: Educational deployment of NTG methodology (this dashboard)',
+    // Download
+    downloadDataset: 'Download Dataset',
+    downloadDesc: 'Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.',
+    downloadCSV: 'Download CSV',
+    downloadJSON: 'Download JSON',
+    csvSheets: 'CSV: Two sheets — (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. JSON: Full tournament object with groupStandings + knockoutMatches arrays. Updates from Supabase database.',
+    // Admin
+    adminTitle: 'Admin — Edit Knockout Results',
+    adminSignin: 'Sign in as admin to edit knockout positions.',
+    adminLogin: 'Admin Login',
+    adminLogout: 'Logout',
+    adminSeed: 'Seed',
+    adminPosition: 'Position',
+    adminSave: 'Save',
+    // Auth modal
+    authSignin: 'Sign In',
+    authSignup: 'Create Account',
+    authEmail: 'Email',
+    authPassword: 'Password',
+    authForgot: 'Forgot password?',
+    authNoAccount: 'No account?',
+    authHasAccount: 'Already have an account?',
+    authCreate: 'Create',
+    authReset: 'Send Reset Link',
+    authResetTitle: 'Reset Password',
+    authBackToSignin: 'Back to Sign In',
+    // Footer
+    continueLearning: 'Continue Learning',
+    compliance: 'Compliance Notice',
+    complianceText: 'XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider, or replace professional care. All fitness and support tools exist for training documentation, reflection, and athlete protection.',
+    terminology: 'Terminology, Frameworks, and Foundational Work',
+    backToTop: 'Back to top',
+    // Status
+    loading: 'Loading...',
+    guest: 'Guest',
+    liveBadge: 'LIVE',
+    // Table headers
+    group: 'Grp',
+    team: 'Team',
+    seed: 'Seed',
+    knockoutPosition: 'Knockout Position',
+    path: 'Path',
+    envType: 'Env Type',
+    geiPct: 'GEI',
+    teams: 'Teams',
+    played: 'Played',
+    advanced: 'Advanced',
+    eliminated: 'Eliminated',
+    advancePct: 'Advance %',
+    avgGei: 'Avg GEI',
+    avgGoals: 'Avg Goals',
+    tciVerdict: 'TCI Verdict',
+    survivalPct: 'Survival %',
+    latestRound: 'Latest Round',
+    tciTrend: 'TCI Trend',
+    wins: 'Wins',
+    losses: 'Losses',
+    groupStageGoals: 'Group Stage Goals',
+    r32Goals: 'R32 Goals',
+    r16Goals: 'R16 Goals',
+    qfGoals: 'QF Goals',
+    sfGoals: 'SF Goals',
+    finalGoals: 'Final Goals',
+    koTotal: 'Knockout Total',
+    tourneyTotal: 'Tournament Total',
+    goalDrop: 'Goal Drop %',
+    status: 'Status',
+    score: 'Score',
+    winner: 'Winner',
+    notes: 'Notes',
+    date: 'Date',
+    match: 'Match',
+    stage: 'Stage',
+    team1: 'Team 1',
+    team2: 'Team 2',
+    fsiAligned: 'Aligned',
+    fsiDelta: 'Delta',
+    incentiveT1: 'Incentive T1',
+    incentiveT2: 'Incentive T2',
+    fsiNote: 'FSI Note',
+    continent: 'Continent',
+    alive: 'Alive',
+    out: 'Out',
+    r32Out: 'R32 Out',
+    r16Out: 'R16 Out',
+    qfOut: 'QF Out',
+    sfPlus: 'SF+',
+    earningsPerTeam: 'Earnings/Team',
+    totalEarnings: 'Total Earnings',
+    resilience: 'Resilience Score',
+    fsiAlignmentRate: 'FSI Alignment Rate',
+    avgPreservationDelta: 'Avg Preservation Delta',
+    misalignedResults: 'Misaligned Results',
+    fsiScorecard: 'FSI Scorecard',
+    fsiInterpretationHigh: 'High alignment detected. Tournament outcomes closely follow projected financial incentives. This does not indicate manipulation — it may simply reflect that higher-value matchups naturally produce predictable results.',
+    fsiInterpretationMed: 'Moderate alignment. Some matches follow financial incentives, while others produce upsets. This is typical for knockout tournaments where single-game variance is high.',
+    fsiInterpretationLow: 'Low alignment. Tournament outcomes frequently diverge from projected financial optima. This suggests competitive integrity is strong — upsets are occurring despite financial incentives favoring different outcomes.',
+    financiallyOptimal: 'Financially Optimal',
+    actualWinner: 'Actual Winner',
+    // Group popup
+    groupStage: 'Group stage',
+    stillCompeting: 'still competing',
+    // Goal analysis
+    overall: 'Overall',
+    byEnvironment: 'By Environment Type',
+    // Support section labels
+    ntgPoweredBy: 'Powered by HUGS ID™',
+    ntgDescription: 'A global platform for learning, culture, athletics, and creative talent. Our mission is to empower people everywhere with the tools to train, share their culture, preserve languages, and create opportunities through education and technology.',
+    ntgBuilt: 'Built so that every nation can learn from each other — and every person can grow.',
+    ntgEcosystem: 'Name The Game Ecosystem',
+    ntgPlatform: 'Platform',
+    ntgTrain: 'Train',
+    ntgCulture: 'Culture',
+    ntgLearn: 'Learn',
+    ntgSystem: 'System',
+    ntgOpportunities: 'Opportunities',
+    ntgExpression: 'Expression',
+  },
+  es: {
+    // Header
+    dashboardTitle: 'Panel TCI — Copa del Mundo 2026',
+    dashboardSubtitle: 'Midiendo cómo los entornos competitivos de grupos influyen en el rendimiento de eliminación. Marco SPI, GEI y TCI — datos abiertos, metodología reproducible.',
+    keyTerms: 'Términos Clave',
+    live: 'EN VIVO — Investigación TCI en Progreso',
+    freeAccess: 'Acceso Gratuito: Crea una cuenta para descargar datos y recibir actualizaciones.',
+    createAccount: 'Crear Cuenta Gratis',
+    signIn: 'Iniciar Sesión',
+    signOut: 'Cerrar Sesión',
+    onThisPage: 'En esta página',
+    lastUpdated: 'Última Actualización',
+    nextUpdate: 'Próxima',
+    afterEachRound: 'Después de cada ronda de eliminación',
+    // Sections
+    tournamentSummary: 'Resumen del Torneo',
+    groupStageResults: 'Resultados de Fase de Grupos',
+    spiPreservation: 'Preservación SPI',
+    spiLabel: 'La puerta se mantuvo en {held} de {total} partidos de la Jornada 3 — los favoritos avanzaron.',
+    viewFixtures: 'Ver 24 partidos',
+    geiClassification: 'Clasificación GEI',
+    geiTypes: 'Tipos',
+    geiLabel: '{count} grupos clasificados por entorno competitivo: Restringido, Abierto, Dominante o Invertido.',
+    viewBreakdown: 'Ver desglose por grupo',
+    knockoutTracking: 'Seguimiento de Eliminación — 48 Equipos',
+    knockoutTrackingDesc: 'Sigue cada equipo desde la clasificación del grupo hasta Octavos → Cuartos → Semifinales → Final. Las ediciones de administrador se actualizan en vivo.',
+    knockoutResults: 'Resultados de Eliminación — Partido por Partido',
+    knockoutResultsDesc: 'Resultados en vivo desde Octavos de Final hasta la Final. <strong>Se actualiza automáticamente</strong> desde tu base de datos Supabase.',
+    matchesPending: 'Los partidos sin marcador son próximos encuentros. SPI y preservation_delta se muestran en el conjunto de datos descargable.',
+    // GEI types
+    constrained: 'Restringido',
+    open: 'Abierto',
+    balanced: 'Equilibrado',
+    dominant: 'Dominante',
+    inverted: 'Invertido',
+    // KPI sections
+    tciKpiReport: 'Reporte KPI TCI — Por Categoría de Entorno',
+    kpiGuest: 'El Reporte KPI está disponible solo para usuarios registrados.',
+    kpiGuestDesc: 'Inicia sesión para desbloquear el panel de análisis TCI completo con tasas de avance, puntajes de impacto GEI y KPI específicos por entorno.',
+    kpiSignIn: 'Iniciar Sesión para Ver KPIs',
+    knockoutGroupMetric: 'Métrica de Grupos en Eliminación — Día a Día',
+    metricGuest: 'La Métrica de Grupos está disponible solo para usuarios registrados.',
+    metricGuestDesc: 'Inicia sesión para seguir el rendimiento de cada grupo en eliminación a medida que avanza el torneo — victorias, eliminaciones, tasas de avance y progresión diaria.',
+    metricSignIn: 'Iniciar Sesión para Ver Métricas',
+    metricDesc: 'Sigue cada grupo a través de las rondas de eliminación. <strong>Actualización en vivo</strong> a medida que se completan los partidos.',
+    goalTracker: 'Seguimiento de Goles — Fase de Grupos → Eliminación',
+    goalGuest: 'El Seguimiento de Goles está disponible solo para usuarios registrados.',
+    goalGuestDesc: 'Inicia sesión para seguir la producción de goles de cada equipo desde la fase de grupos hasta cada ronda de eliminación.',
+    goalSignIn: 'Iniciar Sesión para Ver Goles',
+    goalDesc: 'El <strong>total de goles de fase de grupos</strong> de cada equipo es su línea base. Las rondas de eliminación suman partido a partido.',
+    continentalKpi: 'Eliminación Continental y Resiliencia Financiera',
+    contGuest: 'El KPI Continental está disponible solo para usuarios registrados.',
+    contGuestDesc: 'Inicia sesión para ver cómo cada continente se desempeña en eliminación — equipos vivos, eliminaciones por ronda y dinero total de premios FIFA.',
+    contSignIn: 'Iniciar Sesión para Ver KPI Continental',
+    fsiReport: 'Índice de Chispa Final (FSI) — Alineación de Incentivos Financieros',
+    fsiGuest: 'El Índice de Chispa Final está disponible solo para usuarios registrados.',
+    fsiGuestDesc: 'Inicia sesión para acceder al FSI — una métrica que ingenieriza inversamente los incentivos del torneo y mide si dejan huellas detectables.',
+    fsiSignIn: 'Iniciar Sesión para Ver FSI',
+    fsiPitch: 'XPGuess ingenieriza inversamente los incentivos del torneo y mide si esos incentivos dejan huellas detectables en los resultados.',
+    fsiGuardrail: 'Salvaguarda: El FSI no prueba manipulación. Mide si los incentivos financieros dejan huellas estadísticamente detectables.',
+    fsiCore: 'Pregunta Central',
+    fsiCoreQ: 'Antes del pitazo inicial, ¿qué resultado crearía la posición financiera proyectada más fuerte basada en distribución de premios, valor del enfrentamiento y resiliencia continental — y sucedió ese resultado?',
+    supportMission: 'Apoyar la Misión',
+    supportGuest: 'Inicia sesión para apoyar la misión y ver cómo tus contribuciones impulsan el análisis abierto de torneos.',
+    ntgMission: 'Name The Game construye herramientas abiertas para que atletas, artistas y comunidades puedan entrenar, preservar sus idiomas y compartir su cultura.',
+    ntgMissionDesc: 'A través de proyectos como CaptureLabz™, ArteRegistry™ y Mic Mode™, creamos un archivo global de voces, idiomas, historias culturales y desarrollo de talento.',
+    donate: 'Donar para Apoyar la Plataforma',
+    donate5: 'Registrar datos de idioma',
+    donate10: 'Herramientas de entrenamiento',
+    donate25: 'Preservar conocimiento cultural',
+    donate50: 'Nuevas herramientas de aprendizaje',
+    donateNow: '❤ Donar para Apoyar la Plataforma',
+    // Team Profiles
+    teamProfiles: 'Perfiles de Equipos (Ordenables)',
+    teamProfilesDesc: 'Compara cada equipo — 48 en total en 12 grupos. Ordena por SPI, GEI, TCI, goles y progresión en eliminación.',
+    // Methodology
+    methodology: 'Metodología TCI — Marco NTG',
+    whatIsTci: '¿Qué es TCI?',
+    tciIntro: 'El Índice de Arrastre de Torneo (TCI) es una métrica predictiva desarrollada por Name The Game (NTG). El TCI pregunta: ¿El entorno de grupo de un equipo predice su éxito en eliminación?',
+    spiTitle: 'SPI — Índice de Rendimiento Estratégico',
+    spiDesc: 'El SPI mide si el orden competitivo de la Jornada 2 se preservó en la Jornada 3. Si los favoritos mantuvieron sus posiciones, el SPI es alto.',
+    spiFormula: 'SPI = (% de posiciones preservadas de Jornada 2 → 3)',
+    spiHeld: '✓ {pct}% se mantuvo en grupos del Mundial 2026 ({held} de {total} posiciones) — solo Grupos D y K se invirtieron',
+    spiThreshold: 'Umbral: >66% = "se mantuvo", ≤66% = "se rompió"',
+    geiTitle: 'GEI — Índice de Entorno de Grupo',
+    geiDesc: 'El GEI clasifica cada grupo midiendo cuánto dominó el equipo líder en goles. Una alta proporción significa un grupo plano o restringido; baja significa abierto y competitivo.',
+    geiFormula: 'GEI = (Goles del Líder / Goles Totales del Grupo) × 100',
+    geiConstrained: 'Restringido 45–60% — el líder ganó un grupo plano',
+    geiOpen: 'Abierto <45% + SPI mantenido — grupo competitivo y honesto',
+    geiDominant: 'Dominante >60% — un equipo dominó el grupo',
+    geiInverted: 'Invertido <45% + SPI roto — competitivo pero con sorpresas',
+    tciCalc: 'Cálculo TCI',
+    tciFormulaDesc: 'TCI = α(SPIequipo) + β(GEIgrupo) + γ(Ronda de Eliminación)',
+    tciWhere: 'Donde:',
+    tciSpiTeam: 'SPIequipo = ¿mantuvo su posición de Jornada 2? (1/0)',
+    tciGeiGroup: 'GEIgrupo = puntaje de entorno (0–100 normalizado)',
+    tciKnockout: 'Ronda de Eliminación = bono de profundidad (0, 1, 2, 3, 4)',
+    tciWeights: 'α, β, γ = pesos calibrados por NTG',
+    currentObservation: 'Observación Actual',
+    currentObservationText: 'Los equipos de grupos Abiertos + Honestos (GEI <45%, SPI mantenido) han mostrado mejor rendimiento en eliminación en los partidos analizados hasta ahora. El TCI continúa evaluando si este patrón persiste.',
+    ecosystemLinks: 'Enlaces del Ecosistema NTG',
+    ntgFramework: 'NTG: Gobernanza Técnica Natural — el marco que impulsa el TCI',
+    hugsId: 'HUGS ID: Sistema de identidad atlética conectando datos entre plataformas NTG',
+    ntgPrimary: 'name-the-game.com: Plataforma NTG principal para análisis de torneos',
+    ntgEducational: 'Learn.XPGuess.com: Despliegue educativo de la metodología NTG (este panel)',
+    // Download
+    downloadDataset: 'Descargar Datos',
+    downloadDesc: 'Exporta el conjunto TCI completo como CSV o JSON para análisis en Excel, R, Python o Tableau.',
+    downloadCSV: 'Descargar CSV',
+    downloadJSON: 'Descargar JSON',
+    csvSheets: 'CSV: Dos hojas — (1) Clasificación de 48 equipos, GEI, SPI, posición (2) Partidos con marcadores, ganadores, penales, SPI, delta. JSON: Objeto completo.',
+    // Admin
+    adminTitle: 'Admin — Editar Resultados de Eliminación',
+    adminSignin: 'Inicia sesión como admin para editar posiciones.',
+    adminLogin: 'Login Admin',
+    adminLogout: 'Cerrar Sesión',
+    adminSeed: 'Seed',
+    adminPosition: 'Posición',
+    adminSave: 'Guardar',
+    // Auth modal
+    authSignin: 'Iniciar Sesión',
+    authSignup: 'Crear Cuenta',
+    authEmail: 'Correo',
+    authPassword: 'Contraseña',
+    authForgot: '¿Olvidaste tu contraseña?',
+    authNoAccount: '¿No tienes cuenta?',
+    authHasAccount: '¿Ya tienes cuenta?',
+    authCreate: 'Crear',
+    authReset: 'Enviar Enlace',
+    authResetTitle: 'Restablecer Contraseña',
+    authBackToSignin: 'Volver a Iniciar Sesión',
+    // Footer
+    continueLearning: 'Continuar Aprendiendo',
+    compliance: 'Aviso de Cumplimiento',
+    complianceText: 'XPGuess es una plataforma educativa. No proporciona servicios médicos ni reemplaza la atención profesional.',
+    terminology: 'Terminología, Marcos y Trabajo Fundamental',
+    backToTop: 'Volver arriba',
+    // Status
+    loading: 'Cargando...',
+    guest: 'Invitado',
+    liveBadge: 'EN VIVO',
+    // Table headers
+    group: 'Grp',
+    team: 'Equipo',
+    seed: 'Seed',
+    knockoutPosition: 'Posición',
+    path: 'Ruta',
+    envType: 'Entorno',
+    geiPct: 'GEI',
+    teams: 'Equipos',
+    played: 'Jugados',
+    advanced: 'Avanzaron',
+    eliminated: 'Eliminados',
+    advancePct: '% Avance',
+    avgGei: 'GEI Prom.',
+    avgGoals: 'Goles Prom.',
+    tciVerdict: 'Veredicto TCI',
+    survivalPct: '% Supervivencia',
+    latestRound: 'Última Ronda',
+    tciTrend: 'Tendencia TCI',
+    wins: 'Victorias',
+    losses: 'Derrotas',
+    groupStageGoals: 'Goles Fase Grupos',
+    r32Goals: 'Goles R32',
+    r16Goals: 'Goles R16',
+    qfGoals: 'Goles CF',
+    sfGoals: 'Goles SF',
+    finalGoals: 'Goles Final',
+    koTotal: 'Total Eliminación',
+    tourneyTotal: 'Total Torneo',
+    goalDrop: '% Caída Goles',
+    status: 'Estado',
+    score: 'Marcador',
+    winner: 'Ganador',
+    notes: 'Notas',
+    date: 'Fecha',
+    match: 'Partido',
+    stage: 'Ronda',
+    team1: 'Equipo 1',
+    team2: 'Equipo 2',
+    fsiAligned: 'Alineado',
+    fsiDelta: 'Delta',
+    incentiveT1: 'Incentivo E1',
+    incentiveT2: 'Incentivo E2',
+    fsiNote: 'Nota FSI',
+    continent: 'Continente',
+    alive: 'Vivos',
+    out: 'Fuera',
+    r32Out: 'Fuera R32',
+    r16Out: 'Fuera R16',
+    qfOut: 'Fuera CF',
+    sfPlus: 'SF+',
+    earningsPerTeam: 'Ganancias/Equipo',
+    totalEarnings: 'Ganancias Totales',
+    resilience: 'Puntaje Resiliencia',
+    fsiAlignmentRate: 'Tasa Alineación FSI',
+    avgPreservationDelta: 'Delta Promedio',
+    misalignedResults: 'Resultados Desalineados',
+    fsiScorecard: 'Tarjeta Puntaje FSI',
+    fsiInterpretationHigh: 'Alta alineación detectada. Los resultados siguen de cerca los incentivos financieros proyectados. Esto no indica manipulación — puede reflejar que enfrentamientos de mayor valor producen resultados predecibles.',
+    fsiInterpretationMed: 'Alineación moderada. Algunos partidos siguen incentivos financieros, mientras otros producen sorpresas. Típico de torneos de eliminación donde la varianza de un solo partido es alta.',
+    fsiInterpretationLow: 'Baja alineación. Los resultados frecuentemente divergen de los optima financieros. Esto sugiere integridad competitiva fuerte — las sorpresas ocurren a pesar de los incentivos.',
+    financiallyOptimal: 'Óptimo Financiero',
+    actualWinner: 'Ganador Real',
+    // Group popup
+    groupStage: 'Fase de grupos',
+    stillCompeting: 'sigue compitiendo',
+    // Goal analysis
+    overall: 'General',
+    byEnvironment: 'Por Tipo de Entorno',
+    // Support
+    ntgPoweredBy: 'Impulsado por HUGS ID™',
+    ntgDescription: 'Una plataforma global para aprendizaje, cultura, atletismo y talento creativo. Nuestra misión es empoderar a personas con herramientas para entrenar, compartir su cultura, preservar idiomas y crear oportunidades.',
+    ntgBuilt: 'Construido para que cada nación pueda aprender de las demás — y cada persona pueda crecer.',
+    ntgEcosystem: 'Ecosistema Name The Game',
+    ntgPlatform: 'Plataforma',
+    ntgTrain: 'Entrenar',
+    ntgCulture: 'Cultura',
+    ntgLearn: 'Aprender',
+    ntgSystem: 'Sistema',
+    ntgOpportunities: 'Oportunidades',
+    ntgExpression: 'Expresión',
+  }
+};
+
+function t(key, vars) {
+  var str = (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.en[key] || key;
+  if(vars) {
+    for(var k in vars) { str = str.replace(new RegExp('{' + k + '}', 'g'), vars[k]); }
+  }
+  return str;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('tci-lang', lang);
+  document.documentElement.lang = lang;
+  document.getElementById('lang-toggle-en').style.opacity = lang === 'en' ? '1' : '0.4';
+  document.getElementById('lang-toggle-es').style.opacity = lang === 'es' ? '1' : '0.4';
+  renderAllTranslatedContent();
+}
+
+function renderAllTranslatedContent() {
+  // Update all [data-i18n] elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if(key) {
+      // Preserve emoji/icon prefix (text before first word)
+      var prefix = '';
+      var html = el.innerHTML;
+      var match = html.match(/^([&#\d;\s]+|[^\w\s]*\s*)/);
+      if(match) prefix = match[0];
+      el.innerHTML = prefix + t(key);
+    }
+  });
+
+  // Update [data-i18n-placeholder] elements
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if(key) el.placeholder = t(key);
+  });
+
+  // Update [data-i18n-html] elements (full HTML replacement)
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-html');
+    if(key) el.innerHTML = t(key);
+  });
+
+  // Re-render all KPI sections if user is logged in
+  if(currentUser) {
+    renderKPIReport();
+    renderGroupMetric();
+    renderGoalTracker();
+    renderContinentKPI();
+    renderFSIReport();
+  }
+  toggleKPIAccess();
+  toggleMetricAccess();
+  toggleGoalAccess();
+  toggleContAccess();
+  toggleSupportAccess();
+  toggleFSIAccess();
+}
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
@@ -2080,12 +2597,12 @@ function renderFSIReport() {
   // Render scorecard
   if(scorecard) {
     var interpret = '';
-    if(parseFloat(fsiPct) >= 75) interpret = 'High alignment detected. Tournament outcomes closely follow projected financial incentives. This does not indicate manipulation — it may simply reflect that higher-value matchups (stronger teams, more competitive groups) naturally produce predictable results.';
-    else if(parseFloat(fsiPct) >= 50) interpret = 'Moderate alignment. Some matches follow financial incentives, while others produce upsets. This is typical for knockout tournaments where single-game variance is high.';
-    else interpret = 'Low alignment. Tournament outcomes frequently diverge from projected financial optima. This suggests competitive integrity is strong — upsets are occurring despite financial incentives favoring different outcomes.';
+    if(parseFloat(fsiPct) >= 75) interpret = t('fsiInterpretationHigh');
+    else if(parseFloat(fsiPct) >= 50) interpret = t('fsiInterpretationMed');
+    else interpret = t('fsiInterpretationLow');
 
     scorecard.innerHTML =
-      '<h4 style="font-size:.9rem;color:#0f172a;margin:0 0 .5rem">&#9889; FSI Scorecard</h4>' +
+      '<h4 style="font-size:.9rem;color:#0f172a;margin:0 0 .5rem">&#9889; '+t('fsiScorecard')+'</h4>' +
       '<p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0 0 .5rem"><strong>Alignment Rate:</strong> ' + fsiPct + '% (' + alignedCount + '/' + totalPlayed + ' matches)</p>' +
       '<p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0 0 .5rem"><strong>Interpretation:</strong> ' + interpret + '</p>' +
       '<p style="font-size:.8rem;color:#94a3b8;margin:.5rem 0 0;padding-top:.5rem;border-top:1px solid #e2e8f0">FOO (Financially Optimal Outcome) is derived from: group position weight x environment marketability x competitive balance score. This is a projection model, not an accusation.</p>';
@@ -2719,13 +3236,13 @@ async function loadMatchesFromDB() {
         var koCell = document.getElementById('ko-' + winnerSeed.toLowerCase());
         var pathCell = document.getElementById('path-' + winnerSeed.toLowerCase());
         if(koCell) { koCell.innerHTML = '<span class="result-win">' + (m.stage || 'Advanced') + '</span>'; updated++; }
-        if(pathCell) pathCell.textContent = (m.stage || 'Advanced') + ' - Winner';
+        if(pathCell) pathCell.textContent = (m.stage || t('advanced')) + ' - Winner';
       }
       if(loserSeed) {
         var koCell2 = document.getElementById('ko-' + loserSeed.toLowerCase());
         var pathCell2 = document.getElementById('path-' + loserSeed.toLowerCase());
         if(koCell2 && koCell2.textContent === 'TBD') { koCell2.innerHTML = '<span class="result-loss">Eliminated ' + (m.stage || '') + '</span>'; }
-        if(pathCell2) pathCell2.textContent = 'Eliminated ' + (m.stage || '');
+        if(pathCell2) pathCell2.textContent = t('eliminated') + ' ' + (m.stage || '');
       }
 
       if(winnerSeed) {
@@ -2902,11 +3419,11 @@ function renderKPIReport() {
 
   // Render cards
   var cardColors = {
-    suppressed: { bg: '#fef3c7', border: '#f59e0b', text: '#92400e', label: 'Constrained' },
-    balanced:   { bg: '#eff6ff', border: '#3b82f6', text: '#1e3a5f', label: 'Balanced' },
-    open:       { bg: '#dcfce7', border: '#16a34a', text: '#14532d', label: 'Open' },
-    dominant:   { bg: '#fee2e2', border: '#dc2626', text: '#7f1d1d', label: 'Dominant' },
-    inverted:   { bg: '#ffedd5', border: '#f97316', text: '#7c2d12', label: 'Inverted' }
+    suppressed: { bg: '#fef3c7', border: '#f59e0b', text: '#92400e', label: t('constrained') },
+    balanced:   { bg: '#eff6ff', border: '#3b82f6', text: '#1e3a5f', label: t('balanced') },
+    open:       { bg: '#dcfce7', border: '#16a34a', text: '#14532d', label: t('open') },
+    dominant:   { bg: '#fee2e2', border: '#dc2626', text: '#7f1d1d', label: t('dominant') },
+    inverted:   { bg: '#ffedd5', border: '#f97316', text: '#7c2d12', label: t('inverted') }
   };
 
   var verdicts = {
