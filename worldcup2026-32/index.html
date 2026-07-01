@@ -467,9 +467,17 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:.5rem">
           <table id="group-goal-table">
             <thead><tr>
-              <th>Group</th><th>Env</th><th>Group Stage Goals</th>
-              <th>R32 Goals</th><th>R16 Goals</th><th>QF Goals</th><th>SF Goals</th><th>Final Goals</th>
-              <th>Knockout Total</th><th>Tournament Total</th><th>Goal Drop %</th>
+              <th onclick="sortGroupGoal(0)" style="cursor:pointer">Group &#8597;</th>
+              <th onclick="sortGroupGoal(1)" style="cursor:pointer">Env &#8597;</th>
+              <th onclick="sortGroupGoal(2)" style="cursor:pointer">Group Stage Goals &#8597;</th>
+              <th onclick="sortGroupGoal(3)" style="cursor:pointer">R32 Goals &#8597;</th>
+              <th onclick="sortGroupGoal(4)" style="cursor:pointer">R16 Goals &#8597;</th>
+              <th onclick="sortGroupGoal(5)" style="cursor:pointer">QF Goals &#8597;</th>
+              <th onclick="sortGroupGoal(6)" style="cursor:pointer">SF Goals &#8597;</th>
+              <th onclick="sortGroupGoal(7)" style="cursor:pointer">Final Goals &#8597;</th>
+              <th onclick="sortGroupGoal(8)" style="cursor:pointer">Knockout Total &#8597;</th>
+              <th onclick="sortGroupGoal(9)" style="cursor:pointer">Tournament Total &#8597;</th>
+              <th onclick="sortGroupGoal(10)" style="cursor:pointer">Goal Drop % &#8597;</th>
             </tr></thead>
             <tbody id="group-goal-body"></tbody>
           </table>
@@ -480,10 +488,18 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:.5rem">
           <table id="team-goal-table">
             <thead><tr>
-              <th>Team</th><th>Grp</th><th>Seed</th>
-              <th>Group Stage (Baseline)</th>
-              <th>R32</th><th>R16</th><th>QF</th><th>SF</th><th>Final</th>
-              <th>Knockout Total</th><th>Tournament Total</th><th>Status</th>
+              <th onclick="sortTeamGoal(0)" style="cursor:pointer">Team &#8597;</th>
+              <th onclick="sortTeamGoal(1)" style="cursor:pointer">Grp &#8597;</th>
+              <th onclick="sortTeamGoal(2)" style="cursor:pointer">Seed &#8597;</th>
+              <th onclick="sortTeamGoal(3)" style="cursor:pointer">Group Stage (Baseline) &#8597;</th>
+              <th onclick="sortTeamGoal(4)" style="cursor:pointer">R32 &#8597;</th>
+              <th onclick="sortTeamGoal(5)" style="cursor:pointer">R16 &#8597;</th>
+              <th onclick="sortTeamGoal(6)" style="cursor:pointer">QF &#8597;</th>
+              <th onclick="sortTeamGoal(7)" style="cursor:pointer">SF &#8597;</th>
+              <th onclick="sortTeamGoal(8)" style="cursor:pointer">Final &#8597;</th>
+              <th onclick="sortTeamGoal(9)" style="cursor:pointer">Knockout Total &#8597;</th>
+              <th onclick="sortTeamGoal(10)" style="cursor:pointer">Tournament Total &#8597;</th>
+              <th onclick="sortTeamGoal(11)" style="cursor:pointer">Status &#8597;</th>
             </tr></thead>
             <tbody id="team-goal-body"></tbody>
           </table>
@@ -2117,6 +2133,13 @@ function sortCont(col) {
 function sortFSI(col) {
   sortTable('fsi-table', col, sortDirs, col===7 || col===9);
 }
+function sortTeamGoal(col) {
+  sortTable('team-goal-table', col, sortDirs, col >= 3 && col <= 10);
+}
+function sortGroupGoal(col) {
+  sortTable('group-goal-table', col, sortDirs, col >= 2 && col <= 10);
+}
+
 
 // ===== CONTINENT DETECTION =====
 function getContinent(teamName) {
