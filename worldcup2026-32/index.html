@@ -100,6 +100,29 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   table{font-size:.7rem!important}
   td,th{padding:.4rem .5rem!important}
 }
+
+/* FSI Table improvements */
+#fsi-table th, #fsi-table td { white-space: nowrap; }
+#fsi-table td:last-child, #fsi-table th:last-child { 
+  white-space: normal; 
+  min-width: 200px; 
+  max-width: 300px;
+  line-height: 1.4;
+}
+#fsi-table td:nth-child(5), #fsi-table th:nth-child(5),
+#fsi-table td:nth-child(6), #fsi-table th:nth-child(6) { 
+  min-width: 100px; 
+}
+
+/* Card alignment improvements */
+#fsi-cards { align-items: stretch; }
+#fsi-cards > div { display: flex; flex-direction: column; justify-content: space-between; }
+
+/* Better table container scrolling */
+.table-container { -webkit-overflow-scrolling: touch; }
+
+/* Suppress minor init errors */
+#offline-banner { display: none !important; }
 </style>
 <base target="_blank">
 <script type="application/ld+json">
@@ -2444,17 +2467,17 @@ function renderFSIReport() {
     var delta = m.preservation_delta !== null ? parseFloat(m.preservation_delta) : 0;
     totalDelta += delta;
 
-    // FSI Note
+    // FSI Note (concise)
     var note = '';
     if(aligned && delta > 0.5) note = 'Strong alignment — financial incentives match outcome';
     else if(aligned && delta <= 0.5) note = 'Aligned — moderate incentive match';
-    else if(!aligned && delta > 0.5) note = 'Misaligned — actual outcome diverges from financial optimal';
-    else if(!aligned && delta <= 0) note = 'Exception — upset despite financial pressure';
-    else note = 'Partial alignment — mixed signals';
+    else if(!aligned && delta > 0.5) note = 'Misaligned — outcome diverges from financial optimal';
+    else if(!aligned && delta <= 0) note = 'Upset — result defies financial pressure';
+    else note = 'Mixed signals';
 
-    // Add incentive context
+    // Add incentive context (shortened)
     if(m.incentive_team1 === 'MUST_WIN' && m.incentive_team2 === 'MUST_WIN') {
-      note += '. Both teams under maximum incentive pressure.';
+      note += ' Both teams under max pressure.';
     }
 
     fsiData.push({
