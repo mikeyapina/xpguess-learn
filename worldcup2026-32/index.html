@@ -184,27 +184,27 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   </div>
 </header>
 <section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
-  <strong id="on-this-page" style="font-size:.9rem">On this page</strong>
+  <strong id="on-this-page" data-i18n="onThisPage" style="font-size:.9rem">On this page</strong>
   <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
-    <li><a href="#summary">Tournament Summary</a></li>
-    <li><a href="#knockout">Knockout Tracking</a></li>
-    <li><a href="#results">Knockout Results</a></li>
+    <li><a href="#summary" data-i18n="tournamentSummary">Tournament Summary</a></li>
+    <li><a href="#knockout" data-i18n="knockoutTracking">Knockout Tracking</a></li>
+    <li><a href="#results" data-i18n="knockoutResults">Knockout Results</a></li>
     <li><a href="#kpi-report">&#128274; TCI KPI Report</a></li>
     <li><a href="#group-metric">&#128274; Knockout Group Metric</a></li>
     <li><a href="#goal-tracker">&#128274; Goal Progression Tracker</a></li>
     <li><a href="#continent-kpi">&#128274; Continental Financial KPI</a></li>
     <li><a href="#fsi-report">&#128274; Final Spark Index (FSI)</a></li>
-    <li><a href="#profiles">Team Profiles (Sortable)</a></li>
-    <li><a href="#framework">The Framework</a></li>
-    <li><a href="#download">Download Dataset</a></li>
+    <li><a href="#profiles" data-i18n="teamProfiles">Team Profiles (Sortable)</a></li>
+    <li><a href="#framework" data-i18n="methodology">The Framework</a></li>
+    <li><a href="#download" data-i18n="downloadDataset">Download Dataset</a></li>
   </ul>
 </section>
 
 <hr>
 
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
-  <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> &mdash; <span id="last-round">Round of 32 - Day 1</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
-  <strong style="color:#0f172a">Next:</strong> After each knockout round
+  <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> &mdash; <span id="last-round">Round of 32 - Day 1</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
+  <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span>
 </div>
 
 <section id="summary">
@@ -257,7 +257,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <div class="card">
     <div class="card-title">GEI Classification</div>
     <div class="card-value">4 Types</div>
-    <div class="card-label">12 groups classified by competitive environment: Constrained, Open, Dominant, or Inverted.</div>
+    <div data-i18n="geiLabel" data-i18n-vars="count:12" class="card-label">12 groups classified by competitive environment: Constrained, Open, Dominant, or Inverted.</div>
     <details class="toggle-section" style="margin-top:.8rem">
       <summary>View group breakdown</summary>
       <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Group Data by GEI Type</h3>
@@ -745,7 +745,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
       </div>
 
-      <h3>&#9881; TCI Calculation</h3>
+      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
       <div class="formula-box">
         <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
         Where:<br>
@@ -755,13 +755,13 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
       </div>
 
-      <h3>&#128161; Current Observation</h3>
-      <p style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
+      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
+      <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
         <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
         The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
       </p>
 
-      <h3>&#128279; NTG Ecosystem Links</h3>
+      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
       <p style="font-size:.85rem;color:#64748b">
         &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
         &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
@@ -779,7 +779,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2></summary>
 
     <div class="content-box">
-      <p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
+      <p data-i18n="downloadDesc">Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0">
         <button onclick="exportCSV()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download CSV</button>
         <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download JSON</button>
@@ -884,7 +884,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   </div>
   <div id="support-user" style="display:none;margin:2rem 0">
     <div class="phase-divider"></div>
-    <h2 style="color:#0f172a;font-size:1.25rem;margin-bottom:.25rem">&#127758; Support the Mission</h2>
+    <h2 data-i18n="supportMission" style="color:#0f172a;font-size:1.25rem;margin-bottom:.25rem">&#127758; Support the Mission</h2>
     <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem">Supports Learning, Culture and Opportunities</p>
 
     <div class="content-box" style="background:#fafaf9;border:1px solid #e2e8f0">
@@ -1580,13 +1580,35 @@ function renderAllTranslatedContent() {
   // Update all [data-i18n] elements
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
-    if(key) {
-      // Preserve emoji/icon prefix (text before first word)
-      var prefix = '';
+    if(!key) return;
+    var translated = t(key);
+    // For links: preserve any lock emoji prefix, update text
+    if(el.tagName === 'A') {
+      var hasLock = el.innerHTML.indexOf('&#128274;') >= 0;
+      el.innerHTML = (hasLock ? '&#128274; ' : '') + translated;
+    }
+    // For buttons: preserve icon, update text
+    else if(el.tagName === 'BUTTON') {
+      var iconMatch = el.innerHTML.match(/^&#\d+;\s*/);
+      var icon = iconMatch ? iconMatch[0] : '';
+      el.innerHTML = icon + translated;
+    }
+    // For headers and other elements: preserve emoji prefix, update rest
+    else {
       var html = el.innerHTML;
-      var match = html.match(/^([&#\d;\s]+|[^\w\s]*\s*)/);
-      if(match) prefix = match[0];
-      el.innerHTML = prefix + t(key);
+      // Check if there's an HTML entity or emoji at the start
+      var prefix = '';
+      // Match HTML entities like &#128202; or &#128200; etc.
+      var entityMatch = html.match(/^(\s*&#\d+;\s*)+/);
+      if(entityMatch) {
+        prefix = entityMatch[0];
+      }
+      // Also check for Unicode emoji
+      var emojiMatch = html.match(/^(\s*[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\s*)/u);
+      if(emojiMatch && !prefix) {
+        prefix = emojiMatch[0];
+      }
+      el.innerHTML = prefix + translated;
     }
   });
 
