@@ -1671,6 +1671,9 @@ function renderAllTranslatedContent() {
     renderContinentKPI();
     renderFSIReport();
     renderEPIReport();
+  } catch(e) {
+    console.error('renderAllFromCache error:', e);
+  }
   }
   toggleKPIAccess();
   toggleMetricAccess();
@@ -2723,6 +2726,7 @@ function toggleEPIAccess() {
 }
 
 function renderEPIReport() {
+  try {
   var cards = document.getElementById('epi-cards');
   var tbody = document.getElementById('epi-body');
   var dailyBody = document.getElementById('epi-daily-body');
@@ -2732,10 +2736,15 @@ function renderEPIReport() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  // Defensive: filter out invalid groups
+  groups = groups.filter(function(g) {
+    return g && g.standings && (Array.isArray(g.standings) || typeof g.standings === 'string');
+  });
+
   // Validate data before processing
   if(!groups || groups.length === 0) {
-    console.log('renderEPIReport: no groups data');
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1rem">No group data available. Loading from database...</td></tr>';
+    console.log('renderEPIReport: no valid groups with standings');
+    if(tbody) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1rem">No group data available. Loading from database...</td></tr>';
     return;
   }
 
@@ -3006,6 +3015,11 @@ function renderEPIReport() {
       ctx.textAlign = 'center';
       ctx.fillText('No match days recorded yet. Survival curves will appear after matches complete.', canvas.width/2, canvas.height/2);
     }
+  }
+  } catch(e) {
+    console.error('renderEPIReport error:', e);
+    var tbody = document.getElementById('epi-body');
+    if(tbody) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#dc2626;padding:1rem">Error rendering EPI data. Check console for details.</td></tr>';
   }
 
   // Render analysis narrative
@@ -3815,8 +3829,12 @@ function importJSONFile(file) {
 }
 
 function renderAllFromCache() {
+  try {
   // Validate and repair cached data
   if(window._dbGroups && window._dbGroups.length > 0) {
+    window._dbGroups = window._dbGroups.filter(function(g) {
+      return g && g.standings !== undefined;
+    });
     window._dbGroups.forEach(function(g) {
       if(!g.standings) g.standings = [];
       if(typeof g.standings === 'string') {
