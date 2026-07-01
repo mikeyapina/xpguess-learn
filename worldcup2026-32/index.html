@@ -2745,6 +2745,7 @@ function renderEPIReport() {
     var env = (g.environment_type || 'balanced').toLowerCase();
     if(!envData[env]) env = 'balanced';
     var standings = g.standings;
+    if(!standings) standings = [];
     if(typeof standings === 'string') {
       try { standings = JSON.parse(standings); } catch(e) { standings = []; }
     }
@@ -2762,15 +2763,18 @@ function renderEPIReport() {
 
   // Group matches by date for daily snapshots
   var matchesByDate = {};
-  matches.forEach(function(m) {
-    if(!m.date) return;
-    if(!matchesByDate[m.date]) matchesByDate[m.date] = [];
-    matchesByDate[m.date].push(m);
-  });
+  if(matches && matches.length > 0) {
+    matches.forEach(function(m) {
+      if(!m || !m.date) return;
+      if(!matchesByDate[m.date]) matchesByDate[m.date] = [];
+      matchesByDate[m.date].push(m);
+    });
+  }
 
   // Process each match
+  if(!matches || matches.length === 0) return;
   matches.forEach(function(m) {
-    if(!m.winner || !m.team1 || !m.team2) return;
+    if(!m || !m.winner || !m.team1 || !m.team2) return;
 
     // Find team environments
     var t1Env = null, t2Env = null;
@@ -2964,7 +2968,19 @@ function renderEPIReport() {
   }
 
   // Draw survival curves on canvas
-  drawEPISurvivalCurves(dailyData, envColors);
+  if(dailyData && dailyData.length > 0) {
+    drawEPISurvivalCurves(dailyData, envColors);
+  } else {
+    var canvas = document.getElementById('epi-canvas');
+    if(canvas) {
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('No match days recorded yet. Survival curves will appear after matches complete.', canvas.width/2, canvas.height/2);
+    }
+  }
 
   // Render analysis narrative
   if(analysisDiv) {
@@ -3015,7 +3031,7 @@ function renderEPIReport() {
 
 function drawEPISurvivalCurves(dailyData, envColors) {
   var canvas = document.getElementById('epi-canvas');
-  if(!canvas || dailyData.length === 0) return;
+  if(!canvas || !dailyData || dailyData.length === 0) return;
 
   var ctx = canvas.getContext('2d');
   var w = canvas.width;
@@ -3505,6 +3521,7 @@ function renderTeamsFromDB(knockoutRows) {
     .forEach(function(g) {
       // Handle standings as array or JSON string
       var standings = g.standings;
+      if(!standings) standings = [];
       if(typeof standings === 'string') {
         try { standings = JSON.parse(standings); } catch(e) { standings = []; }
       }
@@ -3833,6 +3850,7 @@ async function loadGroupsFromDB() {
     groups.forEach(function(g) {
       // Handle standings as array or JSON string
       var standings = g.standings;
+      if(!standings) standings = [];
       if(typeof standings === 'string') {
         try { standings = JSON.parse(standings); } catch(e) { standings = []; }
       }
