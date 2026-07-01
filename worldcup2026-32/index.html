@@ -3294,83 +3294,53 @@ function toggleFSIAccess() {
   var guest = document.getElementById('fsi-guest');
   var user = document.getElementById('fsi-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-    renderFSIReport();
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  renderFSIReport();
 }
 
 function toggleSupportAccess() {
   var guest = document.getElementById('support-guest');
   var user = document.getElementById('support-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
 }
 
 function toggleContAccess() {
   var guest = document.getElementById('cont-guest');
   var user = document.getElementById('cont-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-    renderContinentKPI();
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  renderContinentKPI();
 }
 
 function toggleGoalAccess() {
   var guest = document.getElementById('goal-guest');
   var user = document.getElementById('goal-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-    renderGoalTracker();
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  renderGoalTracker();
 }
 
 function toggleMetricAccess() {
   var guest = document.getElementById('metric-guest');
   var user = document.getElementById('metric-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-    renderGroupMetric();
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  renderGroupMetric();
 }
 
 function toggleKPIAccess() {
   var guest = document.getElementById('kpi-guest');
   var user = document.getElementById('kpi-user');
   if(!guest || !user) return;
-  if(currentUser) {
-    guest.style.display = 'none';
-    user.style.display = 'block';
-    renderKPIReport();
-  } else {
-    guest.style.display = 'block';
-    user.style.display = 'none';
-  }
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  renderKPIReport();
 }
 
 function renderKPIReport() {
