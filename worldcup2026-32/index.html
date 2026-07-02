@@ -2726,7 +2726,6 @@ function toggleEPIAccess() {
 }
 
 function renderEPIReport() {
-  try {
   var cards = document.getElementById('epi-cards');
   var tbody = document.getElementById('epi-body');
   var dailyBody = document.getElementById('epi-daily-body');
@@ -3015,11 +3014,6 @@ function renderEPIReport() {
       ctx.textAlign = 'center';
       ctx.fillText('No match days recorded yet. Survival curves will appear after matches complete.', canvas.width/2, canvas.height/2);
     }
-  }
-  } catch(e) {
-    console.error('renderEPIReport error:', e);
-    var tbody = document.getElementById('epi-body');
-    if(tbody) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#dc2626;padding:1rem">Error rendering EPI data. Check console for details.</td></tr>';
   }
 
   // Render analysis narrative
@@ -3829,7 +3823,6 @@ function importJSONFile(file) {
 }
 
 function renderAllFromCache() {
-  try {
   // Validate and repair cached data
   if(window._dbGroups && window._dbGroups.length > 0) {
     window._dbGroups = window._dbGroups.filter(function(g) {
