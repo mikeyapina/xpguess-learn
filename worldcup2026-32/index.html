@@ -3064,6 +3064,34 @@ function renderEPIReport() {
     });
   }
 
+  // Make sortEPIDaily globally available
+  window.sortEPIDaily = function(col) {
+    var table = document.getElementById('epi-daily-table');
+    if(!table) return;
+    var tbody = table.querySelector('tbody');
+    if(!tbody) return;
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+
+    var key = 'epi-daily-' + col;
+    if(!window._epiSortDirs) window._epiSortDirs = {};
+    window._epiSortDirs[key] = !window._epiSortDirs[key];
+    var asc = window._epiSortDirs[key];
+
+    rows.sort(function(a, b) {
+      var av = a.cells[col] ? a.cells[col].textContent.trim() : '';
+      var bv = b.cells[col] ? b.cells[col].textContent.trim() : '';
+
+      if(col >= 1 && col <= 5) {
+        var an = parseFloat(av.replace(/[^0-9.]/g, '')) || 0;
+        var bn = parseFloat(bv.replace(/[^0-9.]/g, '')) || 0;
+        return asc ? an - bn : bn - an;
+      }
+      return asc ? av.localeCompare(bv) : bv.localeCompare(av);
+    });
+
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  };
+
   // Draw survival curves on canvas
   if(dailyData && dailyData.length > 0) {
     drawEPISurvivalCurves(dailyData, envColors);
