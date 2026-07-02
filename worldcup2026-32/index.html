@@ -2861,22 +2861,26 @@ function renderEPIReport() {
 
   // Populate headline finding
   var headlineText = document.getElementById('epi-headline-text');
-  if(headlineText && activeRows.length > 0) {
+  if(headlineText && activeRows && activeRows.length > 0) {
     var topEnv = activeRows[0];
-    var tied = activeRows.filter(function(d) { return d.epi === topEnv.epi && d.env !== topEnv.env; });
-    var tiedNames = tied.map(function(d) { return d.label; }).join(' and ');
-    var headline = '';
-    if(tied.length > 0) {
-      headline = '<strong>' + topEnv.label + ' and ' + tiedNames + ' environments are tied for highest preservation (' + topEnv.epi + '%).</strong>';
-    } else {
-      headline = '<strong>' + topEnv.label + ' environments lead in preservation at ' + topEnv.epi + '% EPI.</strong>';
+    if(topEnv && topEnv.label && topEnv.epi) {
+      var tied = activeRows.filter(function(d) { return d && d.epi === topEnv.epi && d.env !== topEnv.env; });
+      var tiedNames = tied && tied.length > 0 ? tied.map(function(d) { return d.label; }).join(' and ') : '';
+      var headline = '';
+      if(tied && tied.length > 0) {
+        headline = '<strong>' + topEnv.label + ' and ' + tiedNames + ' environments are tied for highest preservation (' + topEnv.epi + '%).</strong>';
+      } else {
+        headline = '<strong>' + topEnv.label + ' environments lead in preservation at ' + topEnv.epi + '% EPI.</strong>';
+      }
+      if(activeRows.length > 1) {
+        var bottom = activeRows[activeRows.length - 1];
+        if(bottom && bottom.label && bottom.epi) {
+          headline += ' ' + bottom.label + ' environments have fallen to ' + bottom.epi + '%.';
+        }
+      }
+      headline += '<br><span style="color:#94a3b8;font-size:.9rem">Every match adds another observation to the survival curve.</span>';
+      headlineText.innerHTML = headline;
     }
-    if(activeRows.length > 1) {
-      var bottom = activeRows[activeRows.length - 1];
-      headline += ' ' + bottom.label + ' environments have fallen to ' + bottom.epi + '%.';
-    }
-    headline += '<br><span style="color:#94a3b8;font-size:.9rem">Every match adds another observation to the survival curve.</span>';
-    headlineText.innerHTML = headline;
   }
 
   // Render summary cards
