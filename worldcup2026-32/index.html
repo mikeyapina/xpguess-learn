@@ -1684,6 +1684,10 @@ function renderAllTranslatedContent() {
 document.addEventListener('DOMContentLoaded', async function() {
   // Init Supabase
   try {
+    if(typeof supabase === 'undefined' || !supabase || !supabase.createClient) {
+      console.log('Supabase library not loaded, using cache only');
+      throw new Error('Supabase library not available');
+    }
     var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
     var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
     supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
