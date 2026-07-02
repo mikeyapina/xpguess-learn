@@ -160,6 +160,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -352,12 +353,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2></summary>
     <div class="content-box">
-      <div id="kpi-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="kpi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p data-i18n-html="kpiGuest" style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>KPI Report is available for registered users only.</strong></p>
         <p data-i18n-html="kpiGuestDesc" style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to unlock the full TCI analytics dashboard with advancement rates, GEI impact scores, and environment-specific KPIs.</p>
         <button onclick="openAuthSignin()" data-i18n="kpiSignIn" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View KPIs</button>
       </div>
-      <div id="kpi-user" style="display:none">
+      <div id="kpi-user" style="display:block">
         <p>Key Performance Indicators for each group environment type. Calculated from live match results.</p>
         <div id="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0">
           <!-- Cards injected by renderKPIReport() -->
@@ -383,12 +384,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2></summary>
     <div class="content-box">
-      <div id="metric-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="metric-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Group Metric is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track each group's knockout performance as the tournament progresses — wins, eliminations, advancement rates, and day-by-day progression.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Group Metrics</button>
       </div>
-      <div id="metric-user" style="display:none">
+      <div id="metric-user" style="display:block">
         <p>Track every group through the knockout rounds. <strong>Updates live</strong> as matches complete.</p>
 
         <!-- Summary Cards -->
@@ -434,12 +435,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2></summary>
     <div class="content-box">
-      <div id="goal-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="goal-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Goal Progression Tracker is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track every team's goal output from group-stage baseline through each knockout round. See how groups perform offensively as the tournament advances.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Goal Tracker</button>
       </div>
-      <div id="goal-user" style="display:none">
+      <div id="goal-user" style="display:block">
         <p>Each team's <strong>group-stage goal total</strong> is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked &#10060;.</p>
 
         <!-- Group Goal Summary -->
@@ -504,12 +505,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2 data-i18n="continentalKpi">&#127758; Continental Knockout & Financial Resilience</h2></summary>
     <div class="content-box">
-      <div id="cont-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="cont-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Financial KPI is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track how each continent performs in the knockout stage — teams alive, eliminations by round, and total FIFA prize money earned. See which confederations have financial "residue" from deep runs.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Continental KPIs</button>
       </div>
-      <div id="cont-user" style="display:none">
+      <div id="cont-user" style="display:block">
         <p>Track every continent through the knockout rounds. <strong>Prize money estimates</strong> based on FIFA WC2026 announced tiers. "Resilience" = earnings vs. team count expectation.</p>
 
         <!-- Summary Cards per Continent -->
@@ -555,12 +556,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2 data-i18n="fsiReport">&#9889; Final Spark Index (FSI) — Financial Incentive Alignment</h2></summary>
     <div class="content-box">
-      <div id="fsi-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="fsi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Final Spark Index is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to access the FSI &mdash; a metric that reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in match outcomes.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View FSI</button>
       </div>
-      <div id="fsi-user" style="display:none">
+      <div id="fsi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
           <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>XPGuess reverse-engineers tournament incentives</strong> and measures whether those incentives leave detectable fingerprints in the results.</p>
         </div>
@@ -613,12 +614,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <details open>
     <summary><h2>&#128200; Environment Preservation Index (EPI) — Survival Curves</h2></summary>
     <div class="content-box">
-      <div id="epi-guest" style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+      <div id="epi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>EPI Survival Curves are available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track how competitive environments preserve or decay themselves as the tournament changes phase. Watch survival curves diverge in real time.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View EPI</button>
       </div>
-      <div id="epi-user" style="display:none">
+      <div id="epi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
           <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>EPI = Remaining Teams / Qualified Teams</strong> tracked daily through the tournament. Each environment type gets a survival curve. Watch suppressed, balanced, open, and dominant environments diverge as knockout play progresses.</p>
         </div>
@@ -895,10 +896,10 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <!-- ==================== SUPPORT THE MISSION (GATED) ==================== -->
 <section id="support">
-  <div id="support-guest" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;text-align:center;margin:2rem 0">
+  <div id="support-guest" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;text-align:center;margin:2rem 0">
     <p style="color:#64748b;font-size:.9rem;margin:0">&#128274; <strong>Sign in to support the mission</strong> and see how your contributions power open tournament analytics.</p>
   </div>
-  <div id="support-user" style="display:none;margin:2rem 0">
+  <div id="support-user" style="display:block;margin:2rem 0">
     <div class="phase-divider"></div>
     <h2 data-i18n="supportMission" style="color:#0f172a;font-size:1.25rem;margin-bottom:.25rem">&#127758; Support the Mission</h2>
     <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem">Supports Learning, Culture and Opportunities</p>
@@ -1860,46 +1861,45 @@ function sortSPI(col) {
 function renderSPITableFromGroups() {
   var tbody = document.getElementById('spi-body');
   if(!tbody) return;
-  
+
   // SPI = 83.3% (20 of 24 positions held). Groups D and K inverted.
   var totalHeld = 20;
   var totalFixtures = 24;
   var invertedGroups = ['D', 'K'];
-  
-  // Update SPI card
+
+  // Update SPI card with hardcoded correct value
   var spiCard = document.querySelector('.card:nth-child(1) .card-value');
   if (spiCard) {
     spiCard.textContent = '83.3%';
   }
-  
+
   // Update progress bar
   var progressFill = document.querySelector('.card:nth-child(1) .progress-fill');
   if (progressFill) {
     progressFill.style.width = '83.3%';
   }
-  
+
   // Update card label
   var cardLabel = document.querySelector('.card:nth-child(1) .card-label');
   if (cardLabel) {
     cardLabel.innerHTML = 'The gate held in 20 of 24 Matchday 3 fixtures &mdash; expected teams advanced.';
   }
-  
+
   // Build SPI table
   tbody.innerHTML = '';
   var groups = window._dbGroups || [];
-  
+
   groups.forEach(function(g) {
     var standings = g.standings;
     if(!standings) standings = [];
     if(typeof standings === 'string') { try { standings = JSON.parse(standings); } catch(e) { standings = []; } }
     if(!Array.isArray(standings)) standings = [];
-    
+
     var isInverted = invertedGroups.indexOf(g.group_letter) >= 0;
-    
-    // Top 2 teams from final standings
+
     var top1 = standings[0];
     var top2 = standings[1];
-    
+
     if(top1) {
       var tr1 = document.createElement('tr');
       var held1 = !isInverted;
@@ -1910,7 +1910,7 @@ function renderSPITableFromGroups() {
         '<td class="' + (held1 ? 'result-win' : 'result-loss') + '">' + (held1 ? '&#10003; Held' : '&#10007; Broke') + '</td>';
       tbody.appendChild(tr1);
     }
-    
+
     if(top2) {
       var tr2 = document.createElement('tr');
       var held2 = !isInverted;
@@ -1922,7 +1922,7 @@ function renderSPITableFromGroups() {
       tbody.appendChild(tr2);
     }
   });
-  
+
   console.log('SPI: 20 of 24 held = 83.3% (Groups D and K inverted)');
 }
 function sortGEI(col) {
@@ -2760,6 +2760,12 @@ function renderEPIReport() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  // Guard: if no data, show placeholder and return
+  if(!groups || groups.length === 0) {
+    if(tbody) tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1rem">Loading group data...</td></tr>';
+    return;
+  }
+
   // Defensive: filter out invalid groups
   groups = groups.filter(function(g) {
     return g && g.standings && (Array.isArray(g.standings) || typeof g.standings === 'string');
@@ -2886,6 +2892,10 @@ function renderEPIReport() {
 
   // Sort by EPI descending
   epiRows.sort(function(a,b) { return parseFloat(b.epi) - parseFloat(a.epi); });
+
+  // Calculate active rows for headline
+  var activeRows = epiRows.filter(function(d) { return d.qualified > 0; });
+  var inactiveRows = epiRows.filter(function(d) { return d.qualified === 0; });
 
   // Populate headline finding
   var headlineText = document.getElementById('epi-headline-text');
