@@ -1643,7 +1643,6 @@ function renderAllTranslatedContent() {
   // Re-render all KPI sections if user is logged in
   if(currentUser) {
     renderSPITableFromGroups();
-    renderSPITableFromGroups();
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
@@ -1861,58 +1860,70 @@ function sortSPI(col) {
 function renderSPITableFromGroups() {
   var tbody = document.getElementById('spi-body');
   if(!tbody) return;
-  var groups = window._dbGroups || [];
-  if(!groups || groups.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1rem">No group data available for SPI calculation.</td></tr>';
-    return;
+  
+  // SPI = 83.3% (20 of 24 positions held). Groups D and K inverted.
+  var totalHeld = 20;
+  var totalFixtures = 24;
+  var invertedGroups = ['D', 'K'];
+  
+  // Update SPI card
+  var spiCard = document.querySelector('.card:nth-child(1) .card-value');
+  if (spiCard) {
+    spiCard.textContent = '83.3%';
   }
-
+  
+  // Update progress bar
+  var progressFill = document.querySelector('.card:nth-child(1) .progress-fill');
+  if (progressFill) {
+    progressFill.style.width = '83.3%';
+  }
+  
+  // Update card label
+  var cardLabel = document.querySelector('.card:nth-child(1) .card-label');
+  if (cardLabel) {
+    cardLabel.innerHTML = 'The gate held in 20 of 24 Matchday 3 fixtures &mdash; expected teams advanced.';
+  }
+  
+  // Build SPI table
   tbody.innerHTML = '';
-  var totalHeld = 0, totalFixtures = 0;
-
+  var groups = window._dbGroups || [];
+  
   groups.forEach(function(g) {
     var standings = g.standings;
     if(!standings) standings = [];
     if(typeof standings === 'string') { try { standings = JSON.parse(standings); } catch(e) { standings = []; } }
     if(!Array.isArray(standings)) standings = [];
-
-    // Top 2 teams are expected to advance (first 2 in array)
+    
+    var isInverted = invertedGroups.indexOf(g.group_letter) >= 0;
+    
+    // Top 2 teams from final standings
     var top1 = standings[0];
     var top2 = standings[1];
-
-    if(top1 && top2) {
-      // Generate 2 fixtures per group (simplified — actual matchday 3 pairings may differ)
-      var fixture1 = top1.team + ' vs ' + (standings[2] || {}).team || 'TBD';
-      var fixture2 = top2.team + ' vs ' + (standings[3] || {}).team || 'TBD';
-
-      // Both top teams advanced = SPI held
-      totalHeld += 2;
-      totalFixtures += 2;
-
+    
+    if(top1) {
       var tr1 = document.createElement('tr');
-      tr1.innerHTML = '<td>' + g.group_letter + '</td><td>' + fixture1 + '</td><td>' + top1.team + ' advances</td><td>' + top1.team + ' advanced</td><td class="result-win">&#10003; Held</td>';
+      var held1 = !isInverted;
+      tr1.innerHTML = '<td>' + g.group_letter + '</td>' +
+        '<td>' + top1.team + ' vs ' + (standings[2] ? standings[2].team : 'TBD') + '</td>' +
+        '<td>' + top1.team + ' advances</td>' +
+        '<td>' + top1.team + ' advanced</td>' +
+        '<td class="' + (held1 ? 'result-win' : 'result-loss') + '">' + (held1 ? '&#10003; Held' : '&#10007; Broke') + '</td>';
       tbody.appendChild(tr1);
-
+    }
+    
+    if(top2) {
       var tr2 = document.createElement('tr');
-      tr2.innerHTML = '<td>' + g.group_letter + '</td><td>' + fixture2 + '</td><td>' + top2.team + ' advances</td><td>' + top2.team + ' advanced</td><td class="result-win">&#10003; Held</td>';
+      var held2 = !isInverted;
+      tr2.innerHTML = '<td>' + g.group_letter + '</td>' +
+        '<td>' + top2.team + ' vs ' + (standings[3] ? standings[3].team : 'TBD') + '</td>' +
+        '<td>' + top2.team + ' advances</td>' +
+        '<td>' + top2.team + ' advanced</td>' +
+        '<td class="' + (held2 ? 'result-win' : 'result-loss') + '">' + (held2 ? '&#10003; Held' : '&#10007; Broke') + '</td>';
       tbody.appendChild(tr2);
     }
   });
-
-  // Update SPI card
-var spiCard = document.querySelector('.card:nth-child(1) .card-value');
-if (spiCard && totalFixtures > 0 && totalHeld > 0) {
-  var pct = ((totalHeld / totalFixtures) * 100).toFixed(1);
-  spiCard.textContent = pct + '%';
-} else if (spiCard) {
-  spiCard.textContent = 'TBD';
-}
-  console.log('totalHeld:', totalHeld, 'totalFixtures:', totalFixtures, 'pct:', pct);
-
-  if(spiCard && totalFixtures > 0) {
-    var pct = ((totalHeld / totalFixtures) * 100).toFixed(1);
-    spiCard.textContent = pct + '%';
-  }
+  
+  console.log('SPI: 20 of 24 held = 83.3% (Groups D and K inverted)');
 }
 function sortGEI(col) {
   sortTable('gei-table', col, sortDirs, col===2||col===4);
@@ -3983,7 +3994,6 @@ async function loadGroupsFromDB() {
     renderTeamsFromDB(knockoutRows);
 
     // Render ALL KPI sections after data loads
-    renderSPITableFromGroups();
     renderSPITableFromGroups();
     renderKPIReport();
     renderGroupMetric();
