@@ -173,7 +173,6 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -2723,8 +2722,7 @@ function renderFSIReport() {
 
     // Financially Optimal Outcome (FOO) = which team has higher financial value
     var pvoWinner = v1.value >= v2.value ? m.team1 : m.team2;
-    var fooWinner = pvoWinner; // alias for compatibility
-    var aligned = (m.winner === pvoWinner);
+    var aligned = (m.winner === fooWinner);
     if(aligned) alignedCount++;
 
     var delta = m.preservation_delta !== null ? parseFloat(m.preservation_delta) : 0;
@@ -2795,7 +2793,7 @@ function renderFSIReport() {
       '<td>' + f.stage + '</td>' +
       '<td>' + f.team1 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v1score + '</span></td>' +
       '<td>' + f.team2 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v2score + '</span></td>' +
-      '<td style="font-weight:700;color:#0f172a">' + f.projectedValueOptimalWinner + '</td>' +
+      '<td style="font-weight:700;color:#0f172a">' + f.fooWinner + '</td>' +
       '<td>' + f.actualWinner + '</td>' +
       '<td style="color:' + alignColor + ';font-weight:700">' + alignText + '</td>' +
       '<td style="color:' + deltaColor + ';font-weight:700">' + f.delta + '</td>' +
@@ -3313,13 +3311,6 @@ function sortTable(tableId, col, dirs, numeric) {
       var bn = parseFloat(bv.replace(/[^0-9.]/g, '')) || 0;
       return dirs[key] ? an - bn : bn - an;
     }
-
-    return dirs[key] ? av.localeCompare(bv) : bv.localeCompare(av);
-  });
-
-  rows.forEach(function(r) { tbody.appendChild(r); });
-}
-
 function sortEPIDaily(col) {
   console.log('sortEPIDaily called with col:', col);
   var table = document.getElementById('epi-daily-table');
@@ -3356,6 +3347,11 @@ function sortEPIDaily(col) {
   console.log('Sort complete');
 }
 
+    return dirs[key] ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
 
 // ===== EXPORT =====
 var teamExportData = [
@@ -3477,11 +3473,10 @@ function buildFSIData() {
     var v1 = teamValue[m.team1] || { value: 1 };
     var v2 = teamValue[m.team2] || { value: 1 };
     var pvoWinner = v1.value >= v2.value ? m.team1 : m.team2;
-    var fooWinner = pvoWinner; // alias for compatibility
     fsiData.push({
       matchId: m.match_id || '', stage: m.stage || '', team1: m.team1 || '', team2: m.team2 || '',
       projectedValueOptimalWinner: pvoWinner, actualWinner: m.winner,
-      aligned: (m.winner === pvoWinner), delta: m.preservation_delta || 0,
+      aligned: (m.winner === fooWinner), delta: m.preservation_delta || 0,
       incentiveTeam1: m.incentive_team1 || '-', incentiveTeam2: m.incentive_team2 || '-',
       bracketImpact: m.bracket_impact || '', notes: (m.notes || '').replace(/\n/g, ' ')
     });
