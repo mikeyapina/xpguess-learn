@@ -686,13 +686,13 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:.5rem">
           <table id="epi-daily-table">
             <thead><tr>
-              <th>Day</th>
-              <th>Suppressed</th>
-              <th>Balanced</th>
-              <th>Open</th>
-              <th>Dominant</th>
-              <th>Inverted</th>
-              <th>Notes</th>
+              <th onclick="sortEPIDaily(0)" style="cursor:pointer">Day &#8597;</th>
+              <th onclick="sortEPIDaily(1)" style="cursor:pointer">Suppressed &#8597;</th>
+              <th onclick="sortEPIDaily(2)" style="cursor:pointer">Balanced &#8597;</th>
+              <th onclick="sortEPIDaily(3)" style="cursor:pointer">Open &#8597;</th>
+              <th onclick="sortEPIDaily(4)" style="cursor:pointer">Dominant &#8597;</th>
+              <th onclick="sortEPIDaily(5)" style="cursor:pointer">Inverted &#8597;</th>
+              <th onclick="sortEPIDaily(6)" style="cursor:pointer">Notes &#8597;</th>
             </tr></thead>
             <tbody id="epi-daily-body"></tbody>
           </table>
@@ -3215,6 +3215,10 @@ function sortTable(tableId, col, dirs, numeric) {
       var bn = parseFloat(bv.replace(/[^0-9.]/g, '')) || 0;
       return dirs[key] ? an - bn : bn - an;
     }
+function sortEPIDaily(col) {
+  sortTable('epi-daily-table', col, sortDirs, col >= 1 && col <= 5);
+}
+
     return dirs[key] ? av.localeCompare(bv) : bv.localeCompare(av);
   });
 
@@ -3389,7 +3393,6 @@ function buildContinentData() {
 }
 
 function exportCSV() {
-  if(!currentUser){ openAuthSignin(); return; }
 
   // --- Sheet 1: Group Standings ---
   var csv = '# GROUP STANDINGS\n';
@@ -3402,7 +3405,7 @@ function exportCSV() {
 
   // --- Sheet 2: Knockout Matches ---
   csv += '\n# KNOCKOUT MATCHES\n';
-  csv += 'matchId,stage,date,team1,team1Group,team1Pos,score1,score2,team2,team2Group,team2Pos,winner,penaltyScore1,penaltyScore2,spi,preservationDelta,notes\n';
+  csv += 'matchId,stage,date,team1,team1Group,team1Pos,team1Gei,score1,score2,team2,team2Group,team2Pos,team2Gei,winner,penaltyScore1,penaltyScore2,spi,preservationDelta,incentiveTeam1,incentiveTeam2,bracketImpact,notes\n';
   dbMatches.forEach(function(m) {
     var row = [
       m.match_id || '', m.stage || '', m.date || '', m.team1 || '', m.team1_group || '', m.team1_group_pos || '',
@@ -3468,7 +3471,6 @@ function exportCSV() {
 }
 
 function exportJSON() {
-  if(!currentUser){ openAuthSignin(); return; }
 
   var standings = teamExportData.map(function(t) {
     var ko = document.getElementById('ko-' + t.seed.toLowerCase());
@@ -3493,7 +3495,32 @@ function exportJSON() {
     groupStandings: standings,
 
     // Sheet 2: All knockout matches
-    knockoutMatches: dbMatches.map(function(m) { return Object.assign({}, m); }),
+    knockoutMatches: dbMatches.map(function(m) { 
+      return {
+        matchId: m.match_id,
+        stage: m.stage,
+        date: m.date,
+        team1: m.team1,
+        team1Group: m.team1_group,
+        team1GroupPos: m.team1_group_pos,
+        team1Gei: m.team1_gei,
+        score1: m.score1,
+        score2: m.score2,
+        team2: m.team2,
+        team2Group: m.team2_group,
+        team2GroupPos: m.team2_group_pos,
+        team2Gei: m.team2_gei,
+        winner: m.winner,
+        penaltyScore1: m.penalty_score1,
+        penaltyScore2: m.penalty_score2,
+        spi: m.spi,
+        preservationDelta: m.preservation_delta,
+        incentiveTeam1: m.incentive_team1,
+        incentiveTeam2: m.incentive_team2,
+        bracketImpact: m.bracket_impact,
+        notes: m.notes
+      }; 
+    }),
 
     // Sheet 3: TCI KPI Report by Environment
     kpiByEnvironment: Object.keys(envKPI).map(function(e) { return { environment: envKPI[e].label, groups: envKPI[e].groups, teams: envKPI[e].teams, matchesPlayed: envKPI[e].played, advanced: envKPI[e].advanced, eliminated: envKPI[e].eliminated, advancePercentage: parseFloat(envKPI[e].advancePct), averageGeiPercentage: parseFloat(envKPI[e].avgGei), tciVerdict: envKPI[e].verdict }; }),
