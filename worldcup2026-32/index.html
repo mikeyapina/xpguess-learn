@@ -529,7 +529,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Group Goal Summary -->
         <h3 style="margin-top:1rem;font-size:1rem;color:#0f172a">&#128200; Group Goal Trajectory</h3>
         <div class="table-container" style="margin-top:.5rem">
-          <table id="group-goal-table">
+          <div id="group-popup-detail" style="display:none;position:absolute;background:#0f172a;color:#fff;padding:1rem;border-radius:12px;z-index:1000;box-shadow:0 10px 40px rgba(0,0,0,.4);min-width:280px;max-width:350px;font-size:.85rem;line-height:1.6">
+  <div id="group-popup-header" style="font-size:1rem;font-weight:800;color:#d4a843;margin-bottom:.5rem;border-bottom:1px solid #334155;padding-bottom:.3rem"></div>
+  <div id="group-popup-body"></div>
+  <div style="margin-top:.5rem;font-size:.75rem;color:#94a3b8;border-top:1px solid #334155;padding-top:.3rem">Click group letter to toggle</div>
+</div>
+<table id="group-goal-table">
             <thead><tr>
               <th onclick="sortGroupGoal(0)" style="cursor:pointer">Group &#8597;</th>
               <th onclick="sortGroupGoal(1)" style="cursor:pointer">Env &#8597;</th>
@@ -2496,7 +2501,7 @@ function renderGroupMetric() {
 
     var tr = document.createElement('tr');
     tr.innerHTML =
-      '<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:' + (envColors[s.envType]||'#64748b') + ';color:#fff;font-size:13px;font-weight:800;border-radius:6px">' + letter + '</span></td>' +
+      '<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:' + (envColors[s.envType]||'#64748b') + ';color:#fff;font-size:13px;font-weight:800;border-radius:6px;cursor:pointer" onclick="showGroupDetail(event,\'' + letter + '\')" onmouseover="if(window.innerWidth>768)showGroupDetail(event,\'' + letter + '\')">' + letter + '</span></td>' +
       '<td><span class="gei-badge gei-' + s.envType + '">' + s.envLabel + '</span></td>' +
       '<td>' + s.gei + '%</td>' +
       '<td>' + s.teamsQualified + '</td>' +
@@ -2542,6 +2547,83 @@ function renderGroupMetric() {
 }
 
 // ===== GOAL PROGRESSION TRACKER =====
+// ===== GROUP DETAIL POPUP =====
+function showGroupDetail(e, letter) {
+  e.stopPropagation();
+  var popup = document.getElementById('group-popup-detail');
+  var header = document.getElementById('group-popup-header');
+  var body = document.getElementById('group-popup-body');
+  if(!popup || !header || !body) return;
+
+  var groups = window._dbGroups || [];
+  var matches = dbMatches || [];
+  var group = groups.find(function(g) { return g.group_letter === letter; });
+  if(!group) return;
+
+  var standings = Array.isArray(group.standings) ? group.standings : [];
+  if(typeof standings === 'string') { try { standings = JSON.parse(standings); } catch(e) { standings = []; } }
+
+  var teamStatus = {};
+  standings.forEach(function(s) {
+    teamStatus[s.team] = { team: s.team, seed: s.seed, goals: s.gs_goals || 0, status: 'Still Alive', eliminated: false, exitRound: 'Group Stage' };
+  });
+
+  matches.forEach(function(m) {
+    if(!m.winner || !m.team1 || !m.team2) return;
+    var loser = (m.winner === m.team1) ? m.team2 : m.team1;
+    if(teamStatus[loser]) {
+      teamStatus[loser].eliminated = true;
+      teamStatus[loser].status = 'Eliminated ' + (m.stage || 'Round of 32');
+      teamStatus[loser].exitRound = m.stage || 'Round of 32';
+    }
+  });
+
+  var envType = (group.environment_type || 'balanced').toLowerCase();
+  var envLabel = envType.charAt(0).toUpperCase() + envType.slice(1);
+  var gei = Math.round((group.gei || 0) * 100);
+
+  header.innerHTML = 'Group ' + letter + ' <span style="font-size:.8rem;color:#94a3b8">| ' + envLabel + ' | GEI ' + gei + '%</span>';
+
+  var html = '<table style="width:100%;border-collapse:collapse;font-size:.8rem">';
+  html += '<tr style="color:#94a3b8;border-bottom:1px solid #334155"><td style="padding:.3rem 0">Team</td><td style="padding:.3rem 0">Seed</td><td style="padding:.3rem 0">GS Goals</td><td style="padding:.3rem 0">Status</td></tr>';
+
+  standings.forEach(function(s) {
+    var t = teamStatus[s.team];
+    var statusColor = t.eliminated ? '#dc2626' : '#16a34a';
+    var statusText = t.eliminated ? '✗ ' + t.exitRound : '✓ Still Alive';
+    html += '<tr style="border-bottom:1px solid #1e293b">';
+    html += '<td style="padding:.4rem 0;font-weight:700">' + s.team + '</td>';
+    html += '<td style="padding:.4rem 0;color:#94a3b8">' + s.seed + '</td>';
+    html += '<td style="padding:.4rem 0;color:#d4a843">' + (s.gs_goals || 0) + '</td>';
+    html += '<td style="padding:.4rem 0;color:' + statusColor + ';font-size:.75rem">' + statusText + '</td>';
+    html += '</tr>';
+  });
+
+  html += '</table>';
+
+  var totalGoals = group.total_goals || 0;
+  var aliveCount = standings.filter(function(s) { return !teamStatus[s.team].eliminated; }).length;
+  html += '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #334155;font-size:.75rem;color:#94a3b8">';
+  html += 'Total goals: ' + totalGoals + ' | Alive: ' + aliveCount + '/' + standings.length + ' | Eliminated: ' + (standings.length - aliveCount) + '/' + standings.length;
+  html += '</div>';
+
+  body.innerHTML = html;
+
+  var rect = e.target.getBoundingClientRect();
+  popup.style.display = 'block';
+  popup.style.left = (rect.left + window.scrollX + 35) + 'px';
+  popup.style.top = (rect.top + window.scrollY - 10) + 'px';
+
+  setTimeout(function() {
+    document.addEventListener('click', function closePopup(ev) {
+      if(!popup.contains(ev.target)) {
+        popup.style.display = 'none';
+        document.removeEventListener('click', closePopup);
+      }
+    });
+  }, 100);
+}
+
 function renderGoalTracker() {
   var groupBody = document.getElementById('group-goal-body');
   var teamBody = document.getElementById('team-goal-body');
@@ -2646,7 +2728,7 @@ function renderGoalTracker() {
 
     var tr = document.createElement('tr');
     tr.innerHTML =
-      '<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:' + c + ';color:#fff;font-size:13px;font-weight:800;border-radius:6px">' + letter + '</span></td>' +
+      '<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:' + c + ';color:#fff;font-size:13px;font-weight:800;border-radius:6px;cursor:pointer" onclick="showGroupDetail(event,\'' + letter + '\')" onmouseover="if(window.innerWidth>768)showGroupDetail(event,\'' + letter + '\')">' + letter + '</span></td>' +
       '<td><span class="gei-badge gei-' + g.env + '">' + ucFirst(g.env) + '</span></td>' +
       '<td style="font-weight:700;background:#fefce8">' + g.groupGoals + '</td>' +
       '<td>' + (g.koByRound['Round of 32'] || 0) + '</td>' +
@@ -4156,7 +4238,7 @@ function renderKOTableFromTeams(teams) {
   teams.forEach(function(t) {
     var tr = document.createElement('tr');
     tr.innerHTML =
-      '<td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:' + getGroupColor(t.group) + ';color:#fff;font-size:11px;font-weight:700;border-radius:4px">' + t.group + '</span></td>' +
+      '<td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:' + getGroupColor(t.group) + ';color:#fff;font-size:11px;font-weight:700;border-radius:4px;cursor:pointer" onclick="showGroupDetail(event,\'' + t.group + '\')" onmouseover="if(window.innerWidth>768)showGroupDetail(event,\'' + t.group + '\')">' + t.group + '</span></td>' +
       '<td><strong>' + t.team + '</strong></td>' +
       '<td>' + t.seed + '</td>' +
       '<td id="ko-' + t.seed.toLowerCase() + '">' + t.knockout + '</td>' +
