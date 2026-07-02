@@ -253,8 +253,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <table id="spi-table">
           <thead><tr><th onclick="sortSPI(0)">Group &#8597;</th><th onclick="sortSPI(1)">Fixture &#8597;</th><th onclick="sortSPI(2)">Expected &#8597;</th><th onclick="sortSPI(3)">Result &#8597;</th><th onclick="sortSPI(4)">SPI &#8597;</th></tr></thead>
           <tbody id="spi-body">
-            <!-- Populated dynamically from wc2026_groups SPI calculation -->
-            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1rem">SPI data loads from database. Group stage fixtures not stored in current schema.</td></tr>
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1rem">SPI requires matchday 3 fixture data (expected vs actual results).<br>Add <code>wc2026_matchday3</code> table with fields: group, fixture, expected_team, actual_result, spi_held.</td></tr>
           </tbody>
         </table>
       </div>
