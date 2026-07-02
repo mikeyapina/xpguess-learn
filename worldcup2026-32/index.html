@@ -247,28 +247,42 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <li><strong>NTG delta analysis</strong> — by team, group, continent, and environment</li>
   </ol>
   <p style="font-size:.85rem;color:#0f172a;margin-bottom:1rem;font-weight:600">
-    The key metric is not static prize money. The key metric is <strong>stage-to-stage delta</strong>: how value moves after each elimination round.
+    The key metric is not static prize money. The key metric is <strong style="color:#16a34a">stage-to-stage delta</strong>: how value moves after each elimination round. <strong>Stage Delta</strong> = jump from previous round. <strong>Cumulative Delta</strong> = total gain from $9M baseline.
   </p>
   <div class="table-container" style="margin:.5rem 0">
     <table id="prize-ladder-table" style="font-size:.85rem">
       <thead>
-        <tr><th>Exit Stage</th><th>Position</th><th>Prize (USD)</th></tr>
+        <tr>
+          <th onclick="sortPrizeLadder(0)" style="cursor:pointer">Stage &#8597;</th>
+          <th onclick="sortPrizeLadder(1)" style="cursor:pointer">Position &#8597;</th>
+          <th onclick="sortPrizeLadder(2)" style="cursor:pointer">Prize (USD) &#8597;</th>
+          <th onclick="sortPrizeLadder(3)" style="cursor:pointer;background:#0f172a;color:#d4a843">Stage Delta &#8597;</th>
+          <th onclick="sortPrizeLadder(4)" style="cursor:pointer">Teams &#8597;</th>
+          <th onclick="sortPrizeLadder(5)" style="cursor:pointer">Cumulative Delta &#8597;</th>
+        </tr>
       </thead>
       <tbody id="prize-ladder-body">
-        <tr><td>Group Stage</td><td>33rd–48th</td><td>$9M</td></tr>
-        <tr><td>Round of 32</td><td>17th–32nd</td><td>$11M</td></tr>
-        <tr><td>Round of 16</td><td>9th–16th</td><td>$15M</td></tr>
-        <tr><td>Quarterfinals</td><td>5th–8th</td><td>$19M</td></tr>
-        <tr><td>Fourth Place</td><td>4th</td><td>$27M</td></tr>
-        <tr><td>Third Place</td><td>3rd</td><td>$29M</td></tr>
-        <tr><td>Runner-up</td><td>2nd</td><td>$33M</td></tr>
-        <tr><td>Champion</td><td>1st</td><td>$50M</td></tr>
+        <tr><td>Group Stage</td><td>33rd–48th</td><td>$9M</td><td style="color:#64748b;font-weight:700">—</td><td>16</td><td style="color:#64748b">$0M</td></tr>
+        <tr style="background:#fefce8"><td>Round of 32</td><td>17th–32nd</td><td>$11M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$2M</td><td>16</td><td style="color:#16a34a;font-weight:700">+$2M</td></tr>
+        <tr style="background:#fefce8"><td>Round of 16</td><td>9th–16th</td><td>$15M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>8</td><td style="color:#16a34a;font-weight:700">+$6M</td></tr>
+        <tr style="background:#fefce8"><td>Quarterfinals</td><td>5th–8th</td><td>$19M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>4</td><td style="color:#16a34a;font-weight:700">+$10M</td></tr>
+        <tr style="background:#fefce8"><td>Fourth Place</td><td>4th</td><td>$27M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$8M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$18M</td></tr>
+        <tr style="background:#fefce8"><td>Third Place</td><td>3rd</td><td>$29M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$2M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$20M</td></tr>
+        <tr style="background:#fefce8"><td>Runner-up</td><td>2nd</td><td>$33M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$24M</td></tr>
+        <tr style="background:#fefce8"><td>Champion</td><td>1st</td><td>$50M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7;font-size:1.05rem">+$17M</td><td>1</td><td style="color:#16a34a;font-weight:800;font-size:1.05rem">+$41M</td></tr>
       </tbody>
     </table>
   </div>
   <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">
     Source: <a href="https://inside.fifa.com/organisation/fifa-council/media-releases/council-approves-record-breaking-world-cup-2026-financial-contribution" target="_blank">FIFA Council — Record-breaking World Cup 2026 financial contribution</a>
   </p>
+
+  <!-- Prize Delta Graph -->
+  <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128200; Prize Delta by Stage — Visual</h3>
+  <p style="font-size:.85rem;color:#64748b;margin-bottom:.5rem">How much each stage adds to the prize pool. The bars show the <strong>irreversible financial commitment</strong> made at each elimination round.</p>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin-top:.5rem">
+    <canvas id="prize-delta-canvas" width="900" height="400" style="width:100%;height:auto;display:block"></canvas>
+  </div>
 </section>
 
 <section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
@@ -563,6 +577,44 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
         <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">Group Stage = total goals scored in 3 group matches (baseline). Knockout rounds = goals per match. Goal Drop % = (group goals - knockout goals) / group goals. Negative = teams scored MORE in knockouts.</p>
       </div>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== TEAM FINANCIAL DELTA ==================== -->
+<section id="team-financial-delta">
+  <details open>
+    <summary><h2>&#128176; Team Financial Delta — Prize Money by Stage</h2></summary>
+    <div class="content-box">
+      <p>Track every team&#8217;s prize money from the $9M group-stage baseline through each knockout round. <strong>Delta = current prize minus $9M baseline.</strong> Eliminated teams lock their prize at the exit stage.</p>
+
+      <!-- Summary Cards -->
+      <div id="financial-delta-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0"></div>
+
+      <!-- Team-by-Team Financial Table -->
+      <div class="table-container" style="margin-top:1rem">
+        <table id="financial-delta-table">
+          <thead><tr>
+            <th onclick="sortFinancialDelta(0)" style="cursor:pointer">Team &#8597;</th>
+            <th onclick="sortFinancialDelta(1)" style="cursor:pointer">Grp &#8597;</th>
+            <th onclick="sortFinancialDelta(2)" style="cursor:pointer">Seed &#8597;</th>
+            <th onclick="sortFinancialDelta(3)" style="cursor:pointer">Continent &#8597;</th>
+            <th onclick="sortFinancialDelta(4)" style="cursor:pointer">Status &#8597;</th>
+            <th onclick="sortFinancialDelta(5)" style="cursor:pointer">Current Prize &#8597;</th>
+            <th onclick="sortFinancialDelta(6)" style="cursor:pointer">Delta &#8597;</th>
+            <th onclick="sortFinancialDelta(7)" style="cursor:pointer">Exit Stage &#8597;</th>
+            <th onclick="sortFinancialDelta(8)" style="cursor:pointer">Next Matchup &#8597;</th>
+          </tr></thead>
+          <tbody id="financial-delta-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Stage Movement Analysis -->
+      <div id="financial-delta-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
+
+      <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">Baseline = $9M (group stage exit). Each advancement adds the stage delta. Champion = $50M (+$41M delta). Data updates after each match.</p>
     </div>
   </details>
 </section>
@@ -1716,6 +1768,8 @@ function renderAllTranslatedContent() {
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
+    try { drawPrizeDeltaGraph(); } catch(e) { console.error('drawPrizeDeltaGraph error:', e); }
+    try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
     try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
@@ -1931,6 +1985,305 @@ function showGroup(e, g, t1, t2, t3, t4) {
 
 // ===== SORTING =====
 var sortDirs = {};
+
+function sortPrizeLadder(col) {
+  var isNumeric = (col === 2 || col === 3 || col === 4 || col === 5);
+  sortTable('prize-ladder-table', col, sortDirs, isNumeric);
+}
+
+// ===== PRIZE DELTA GRAPH =====
+function drawPrizeDeltaGraph() {
+  var canvas = document.getElementById('prize-delta-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var w = canvas.width, h = canvas.height;
+  var padding = { top: 40, right: 30, bottom: 80, left: 60 };
+  var chartW = w - padding.left - padding.right;
+  var chartH = h - padding.top - padding.bottom;
+
+  // Data: stage, prize, delta, cumulative
+  var data = [
+    { stage: 'Group', prize: 9, delta: 0, cum: 0, teams: 16 },
+    { stage: 'R32', prize: 11, delta: 2, cum: 2, teams: 16 },
+    { stage: 'R16', prize: 15, delta: 4, cum: 6, teams: 8 },
+    { stage: 'QF', prize: 19, delta: 4, cum: 10, teams: 4 },
+    { stage: '4th', prize: 27, delta: 8, cum: 18, teams: 1 },
+    { stage: '3rd', prize: 29, delta: 2, cum: 20, teams: 1 },
+    { stage: '2nd', prize: 33, delta: 4, cum: 24, teams: 1 },
+    { stage: '1st', prize: 50, delta: 17, cum: 41, teams: 1 }
+  ];
+
+  // Clear
+  ctx.clearRect(0, 0, w, h);
+
+  // Background
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid lines
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1;
+  for(var i = 0; i <= 5; i++) {
+    var y = padding.top + (chartH / 5) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(padding.left + chartW, y);
+    ctx.stroke();
+
+    // Y-axis labels (delta in $M)
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText((50 - i * 10) + 'M', padding.left - 8, y + 4);
+  }
+
+  // Bar colors: delta bars in green, prize line in gold
+  var barWidth = chartW / data.length * 0.6;
+  var spacing = chartW / data.length;
+
+  // Draw delta bars
+  data.forEach(function(d, i) {
+    var x = padding.left + spacing * i + (spacing - barWidth) / 2;
+    var barH = (d.delta / 50) * chartH;
+    var y = padding.top + chartH - barH;
+
+    // Gradient for delta bar
+    var grad = ctx.createLinearGradient(0, y, 0, y + barH);
+    grad.addColorStop(0, '#16a34a');
+    grad.addColorStop(1, '#dcfce7');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, barWidth, barH);
+
+    // Border
+    ctx.strokeStyle = '#16a34a';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, y, barWidth, barH);
+
+    // Delta label on top of bar
+    if(d.delta > 0) {
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('+' + d.delta + 'M', x + barWidth / 2, y - 6);
+    }
+
+    // Stage label below
+    ctx.fillStyle = '#64748b';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.stage, x + barWidth / 2, padding.top + chartH + 18);
+
+    // Prize label below stage
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('$' + d.prize + 'M', x + barWidth / 2, padding.top + chartH + 35);
+
+    // Teams label
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '9px sans-serif';
+    ctx.fillText(d.teams + ' teams', x + barWidth / 2, padding.top + chartH + 50);
+  });
+
+  // Draw cumulative line overlay
+  ctx.strokeStyle = '#d4a843';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  data.forEach(function(d, i) {
+    var x = padding.left + spacing * i + spacing / 2;
+    var y = padding.top + chartH - (d.cum / 50) * chartH;
+    if(i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Cumulative points
+  data.forEach(function(d, i) {
+    var x = padding.left + spacing * i + spacing / 2;
+    var y = padding.top + chartH - (d.cum / 50) * chartH;
+    ctx.fillStyle = '#d4a843';
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Title
+  ctx.fillStyle = '#0f172a';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Stage Delta (bars) + Cumulative Delta (gold line)', padding.left, 20);
+
+  // Legend
+  var legendY = h - 15;
+  ctx.fillStyle = '#16a34a';
+  ctx.fillRect(padding.left, legendY - 8, 12, 12);
+  ctx.fillStyle = '#0f172a';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Stage Delta', padding.left + 18, legendY + 2);
+
+  ctx.strokeStyle = '#d4a843';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(padding.left + 120, legendY - 2);
+  ctx.lineTo(padding.left + 140, legendY - 2);
+  ctx.stroke();
+  ctx.fillStyle = '#d4a843';
+  ctx.beginPath();
+  ctx.arc(padding.left + 130, legendY - 2, 4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#0f172a';
+  ctx.fillText('Cumulative Delta', padding.left + 148, legendY + 2);
+}
+
+
+// ===== TEAM FINANCIAL DELTA =====
+function renderTeamFinancialDelta() {
+  var tbody = document.getElementById('financial-delta-body');
+  var cards = document.getElementById('financial-delta-cards');
+  var analysisDiv = document.getElementById('financial-delta-analysis');
+  if(!tbody) return;
+
+  var prizeTiers = { 'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15,
+    'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27,
+    'Third Place': 29, 'Runner-up': 33, 'Winner': 50
+  };
+
+  var groups = window._dbGroups || [];
+  var matches = dbMatches || [];
+
+  var teamData = {};
+  groups.forEach(function(g) {
+    var standings = Array.isArray(g.standings) ? g.standings : [];
+    standings.forEach(function(s) {
+      var seed = s.seed;
+      var cont = getContinent(s.team);
+      teamData[seed] = {
+        seed: seed, team: s.team, group: g.group_letter,
+        continent: continentLabel(cont), continentCode: cont,
+        baseline: 9, currentPrize: 9, delta: 0,
+        exitStage: 'Group Stage', status: 'Still Alive',
+        eliminated: false, nextMatchup: 'TBD'
+      };
+    });
+  });
+
+  matches.forEach(function(m) {
+    if(!m.winner || !m.team1 || !m.team2) return;
+    var loser = (m.winner === m.team1) ? m.team2 : m.team1;
+    var stage = m.stage || 'Round of 32';
+    var t1Seed = null, t2Seed = null;
+    for(var seed in teamData) {
+      if(teamData[seed].team === m.team1) t1Seed = seed;
+      if(teamData[seed].team === m.team2) t2Seed = seed;
+    }
+    var loserSeed = (m.winner === m.team1) ? t2Seed : t1Seed;
+    var winnerSeed = (m.winner === m.team1) ? t1Seed : t2Seed;
+
+    if(loserSeed && teamData[loserSeed]) {
+      teamData[loserSeed].currentPrize = prizeTiers[stage] || 9;
+      teamData[loserSeed].delta = teamData[loserSeed].currentPrize - 9;
+      teamData[loserSeed].exitStage = stage;
+      teamData[loserSeed].status = 'Eliminated ' + stage;
+      teamData[loserSeed].eliminated = true;
+    }
+    if(winnerSeed && teamData[winnerSeed]) {
+      var roundOrder = ['Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
+      var currentIdx = roundOrder.indexOf(stage);
+      if(stage === 'Final') {
+        teamData[winnerSeed].currentPrize = 50; teamData[winnerSeed].delta = 41;
+        teamData[winnerSeed].status = 'Champion';
+      } else if(stage === 'Semi-Finals') {
+        teamData[winnerSeed].currentPrize = 33; teamData[winnerSeed].delta = 24;
+        teamData[winnerSeed].status = 'Final';
+      } else {
+        var nextStage = roundOrder[currentIdx + 1] || stage;
+        teamData[winnerSeed].currentPrize = prizeTiers[nextStage] || prizeTiers[stage];
+        teamData[winnerSeed].delta = teamData[winnerSeed].currentPrize - 9;
+        teamData[winnerSeed].status = 'Advanced to ' + nextStage;
+      }
+    }
+  });
+
+  for(var seed in teamData) {
+    var t = teamData[seed];
+    if(!t.eliminated) {
+      if(t.status === 'Still Alive') t.nextMatchup = 'Round of 16 pending';
+      else if(t.status.indexOf('Advanced') >= 0) t.nextMatchup = 'Round of 16';
+    } else { t.nextMatchup = '—'; }
+  }
+
+  if(cards) {
+    var totalDistributed = 0, aliveCount = 0, eliminatedCount = 0, maxDelta = 0, maxDeltaTeam = '';
+    for(var s in teamData) {
+      var t = teamData[s]; totalDistributed += t.currentPrize;
+      if(t.eliminated) eliminatedCount++; else aliveCount++;
+      if(t.delta > maxDelta) { maxDelta = t.delta; maxDeltaTeam = t.team; }
+    }
+    cards.innerHTML =
+      '<div style="background:#0f172a;border-radius:12px;padding:1.25rem;text-align:center;color:#fff">' +
+      '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#d4a843;font-weight:700;margin-bottom:.5rem">Total Distributed</div>' +
+      '<div style="font-size:2rem;font-weight:800">$' + totalDistributed.toFixed(1) + 'M</div>' +
+      '<div style="font-size:.75rem;color:#94a3b8">of $1.1B pool</div></div>' +
+      '<div style="background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1.25rem;text-align:center">' +
+      '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#16a34a;font-weight:700;margin-bottom:.5rem">Teams Alive</div>' +
+      '<div style="font-size:2rem;font-weight:800;color:#16a34a">' + aliveCount + '</div>' +
+      '<div style="font-size:.75rem;color:#64748b">still competing</div></div>' +
+      '<div style="background:#fff;border:2px solid #dc2626;border-radius:12px;padding:1.25rem;text-align:center">' +
+      '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#dc2626;font-weight:700;margin-bottom:.5rem">Eliminated</div>' +
+      '<div style="font-size:2rem;font-weight:800;color:#dc2626">' + eliminatedCount + '</div>' +
+      '<div style="font-size:.75rem;color:#64748b">locked prizes</div></div>' +
+      '<div style="background:#fff;border:2px solid #d4a843;border-radius:12px;padding:1.25rem;text-align:center">' +
+      '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#d4a843;font-weight:700;margin-bottom:.5rem">Top Delta</div>' +
+      '<div style="font-size:1.5rem;font-weight:800;color:#0f172a">+' + maxDelta + 'M</div>' +
+      '<div style="font-size:.75rem;color:#64748b">' + maxDeltaTeam + '</div></div>';
+  }
+
+  tbody.innerHTML = '';
+  var sortedSeeds = Object.keys(teamData).sort(function(a,b) { return teamData[b].delta - teamData[a].delta; });
+  sortedSeeds.forEach(function(seed) {
+    var t = teamData[seed];
+    var tr = document.createElement('tr');
+    tr.style.opacity = t.eliminated ? '0.6' : '1';
+    tr.innerHTML =
+      '<td><strong>' + t.team + '</strong></td>' +
+      '<td>' + t.group + '</td>' +
+      '<td>' + t.seed + '</td>' +
+      '<td>' + t.continent + '</td>' +
+      '<td style="color:' + (t.eliminated ? '#dc2626' : '#16a34a') + ';font-weight:700;font-size:.8rem">' + t.status + '</td>' +
+      '<td style="font-weight:800;color:#0f172a">$' + t.currentPrize.toFixed(1) + 'M</td>' +
+      '<td style="color:' + (t.delta > 0 ? '#16a34a' : '#64748b') + ';font-weight:700">+' + t.delta.toFixed(1) + 'M</td>' +
+      '<td>' + t.exitStage + '</td>' +
+      '<td style="font-size:.8rem;color:#64748b">' + t.nextMatchup + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  if(analysisDiv) {
+    var stageCounts = {}, totalD = 0;
+    for(var s in teamData) {
+      var t = teamData[s]; totalD += t.currentPrize;
+      if(!stageCounts[t.exitStage]) stageCounts[t.exitStage] = { count: 0, total: 0 };
+      stageCounts[t.exitStage].count++; stageCounts[t.exitStage].total += t.currentPrize;
+    }
+    var html = '<strong>Stage-to-Stage Delta Analysis:</strong><br><ul style="margin:.5rem 0 .5rem 1.2rem">';
+    html += '<li><strong>Total distributed:</strong> $' + totalD.toFixed(1) + 'M</li>';
+    for(var stage in stageCounts) {
+      if(stage !== 'Group Stage' || stageCounts[stage].count < 48) {
+        html += '<li><strong>' + stage + ':</strong> ' + stageCounts[stage].count + ' teams, $' + stageCounts[stage].total.toFixed(1) + 'M</li>';
+      }
+    }
+    html += '</ul><p style="margin-top:.5rem"><strong>Key insight:</strong> Each elimination round locks prize money for the loser and advances the winner. The delta is the <em>irreversible financial commitment</em> made by the tournament structure at each stage.</p>';
+    analysisDiv.innerHTML = html;
+  }
+}
+
+function sortFinancialDelta(col) {
+  var isNumeric = (col >= 5 && col <= 6);
+  sortTable('financial-delta-table', col, sortDirs, isNumeric);
+}
 
 function sortSPI(col) {
   sortTable('spi-table', col, sortDirs, col===3);
@@ -2376,6 +2729,7 @@ function sortTeamGoal(col) {
 function sortKPI(col) {
   sortTable('kpi-table', col, sortDirs, col >= 1 && col <= 8);
 }
+
 
 function sortGroupGoal(col) {
   sortTable('group-goal-table', col, sortDirs, col >= 2 && col <= 10);
@@ -3039,14 +3393,12 @@ function renderEPIReport() {
   // Build daily snapshots
   var dates = Object.keys(matchesByDate).sort();
   var dailyData = [];
-  dates.forEach(function(date) {
-    var dayMatches = matchesByDate[date];
-    var dayEnv = { suppressed: 0, balanced: 0, open: 0, dominant: 0, inverted: 0 };
+    var cumulativeEliminated = { suppressed: 0, balanced: 0, open: 0, dominant: 0, inverted: 0 };
 
-    // Count alive per env AFTER this day's matches
-    // We need to track cumulative eliminations
-    // For simplicity, we'll track which teams are eliminated by this date
-    var eliminatedByDate = {};
+dates.forEach(function(date) {
+    var dayMatches = matchesByDate[date];
+
+    // Count eliminations for this day and add to cumulative
     dayMatches.forEach(function(m) {
       if(!m.winner) return;
       var loser = (m.winner === m.team1) ? m.team2 : m.team1;
@@ -3057,19 +3409,17 @@ function renderEPIReport() {
         st.forEach(function(s) {
           if(s.team === loser) {
             var env = (g.environment_type || 'balanced').toLowerCase();
-            if(!eliminatedByDate[env]) eliminatedByDate[env] = 0;
-            eliminatedByDate[env]++;
+            cumulativeEliminated[env]++;
           }
         });
       });
     });
 
-    // Calculate EPI per env for this day
+    // Calculate EPI per env for this day using cumulative eliminations
     var dayRow = { date: date };
     ['suppressed','balanced','open','dominant','inverted'].forEach(function(e) {
       var d = envData[e];
-      var totalElim = eliminatedByDate[e] || 0;
-      var alive = Math.max(0, d.qualified - totalElim);
+      var alive = Math.max(0, d.qualified - cumulativeEliminated[e]);
       dayRow[e] = d.qualified > 0 ? ((alive / d.qualified) * 100).toFixed(1) : 0;
     });
     dayRow.notes = dayMatches.length + ' match' + (dayMatches.length > 1 ? 'es' : '');
@@ -4202,6 +4552,8 @@ async function loadGroupsFromDB() {
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
+    try { drawPrizeDeltaGraph(); } catch(e) { console.error('drawPrizeDeltaGraph error:', e); }
+    try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
     try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
