@@ -172,6 +172,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -198,7 +199,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
   <div style="margin-top:1rem"><span class="badge">LIVE &mdash; TCI Research in Progress</span></div>
 
-  <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b"><strong>Offline Mode:</strong> Supabase connection unavailable. Sign-in and database saves are disabled.</div>
+  <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b">
+  <strong>⚠️ Database Connection Issue:</strong> Supabase cannot read tournament data.<br>
+  <span style="font-size:.75rem">Common fixes: (1) Check RLS policies allow anonymous SELECT, (2) Verify Supabase URL/key in code, (3) Confirm tables have data.</span>
+</div>
+<div id="data-loading" style="display:none;background:#eff6ff;border:1px solid #93c5fd;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#1e3a5f">
+  <strong>⏳ Loading tournament data from database...</strong>
+</div>
+<div id="data-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#92400e">
+  <strong>⚠️ Data Load Failed:</strong> Check browser console (F12) for error details.
+</div>
   <div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e">
     <strong>&#9888; Database Empty:</strong> The <code>public.teams</code> table has no data.<br><br>
     <strong>To fix:</strong> Run the seed SQL in your Supabase dashboard:<br>
@@ -223,6 +233,41 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <button id="lang-toggle-es" onclick="setLang('es')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:.4">ES</button>
   </div>
 </header>
+<section id="prize-truth-panel" style="background:#f8fafc;border:2px solid #d4a843;border-radius:12px;padding:1.5rem;margin:1.5rem 0">
+  <h2 style="font-size:1.1rem;color:#0f172a;margin-bottom:.75rem">📋 Prize Truth / Data Integrity</h2>
+  <p style="font-size:.85rem;color:#334155;line-height:1.6;margin-bottom:1rem">
+    This dashboard separates three independent layers:
+  </p>
+  <ol style="font-size:.85rem;color:#334155;line-height:1.6;margin-bottom:1rem;padding-left:1.2rem">
+    <li><strong>Official FIFA performance prize tiers</strong> — sourced from inside.fifa.com</li>
+    <li><strong>Tournament-stage survival movement</strong> — who advances, who exits</li>
+    <li><strong>NTG delta analysis</strong> — by team, group, continent, and environment</li>
+  </ol>
+  <p style="font-size:.85rem;color:#0f172a;margin-bottom:1rem;font-weight:600">
+    The key metric is not static prize money. The key metric is <strong>stage-to-stage delta</strong>: how value moves after each elimination round.
+  </p>
+  <div class="table-container" style="margin:.5rem 0">
+    <table id="prize-ladder-table" style="font-size:.85rem">
+      <thead>
+        <tr><th>Exit Stage</th><th>Position</th><th>Prize (USD)</th></tr>
+      </thead>
+      <tbody id="prize-ladder-body">
+        <tr><td>Group Stage</td><td>33rd–48th</td><td>$9M</td></tr>
+        <tr><td>Round of 32</td><td>17th–32nd</td><td>$11M</td></tr>
+        <tr><td>Round of 16</td><td>9th–16th</td><td>$15M</td></tr>
+        <tr><td>Quarterfinals</td><td>5th–8th</td><td>$19M</td></tr>
+        <tr><td>Fourth Place</td><td>4th</td><td>$27M</td></tr>
+        <tr><td>Third Place</td><td>3rd</td><td>$29M</td></tr>
+        <tr><td>Runner-up</td><td>2nd</td><td>$33M</td></tr>
+        <tr><td>Champion</td><td>1st</td><td>$50M</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">
+    Source: <a href="https://inside.fifa.com/organisation/fifa-council/media-releases/council-approves-record-breaking-world-cup-2026-financial-contribution" target="_blank">FIFA Council — Record-breaking World Cup 2026 financial contribution</a>
+  </p>
+</section>
+
 <section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
   <strong id="on-this-page" data-i18n="onThisPage" style="font-size:.9rem">On this page</strong>
   <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
@@ -244,8 +289,9 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <hr>
 
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
-  <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-06-28</span> &mdash; <span id="last-round">Round of 32 - Day 1</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
-  <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span>
+  <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-02</span> &mdash; <span id="last-round">Stage 1 Partial — Round of 32 through 2026-07-02</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
+  <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
+  <strong style="color:#0f172a">Coverage:</strong> 32/32 teams | 24/32 classified by environment | 16 matches completed
 </div>
 
 <section id="summary">
@@ -563,7 +609,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Analysis -->
         <div id="cont-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">WC2026 prize pool: ~$1.1B. Group stage exit = $9.5M/team. R32 = $13M, R16 = $19M, QF = $25M, 4th = $27.5M, 3rd = $28.5M, Runner-up = $35M, Winner = $45M. Resilience Score = actual earnings / expected earnings (equal distribution). >100% = overperforming.</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">WC2026 prize pool: ~$1.1B. Official performance ladder: Group stage exit = $9M, Round of 32 = $11M, Round of 16 = $15M, Quarterfinals = $19M, 4th = $27M, 3rd = $29M, Runner-up = $33M, Champion = $50M. Resilience Score = actual earnings / expected earnings (equal distribution). >100% = overperforming.</p>
       </div>
     </div>
   </details>
@@ -574,7 +620,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== FINAL SPARK INDEX (GATED) ==================== -->
 <section id="fsi-report">
   <details open>
-    <summary><h2 data-i18n="fsiReport">&#9889; Final Spark Index (FSI) — Financial Incentive Alignment</h2></summary>
+    <summary><h2 data-i18n="fsiReport">&#9889; Financial Delta Index (FDI) — Tournament Value Movement</h2></summary>
     <div class="content-box">
       <div id="fsi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Final Spark Index is available for registered users only.</strong></p>
@@ -583,16 +629,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
       <div id="fsi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>XPGuess reverse-engineers tournament incentives</strong> and measures whether those incentives leave detectable fingerprints in the results.</p>
+          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>The NTG framework measures how tournament structure, prize distribution, and advancement paths create measurable financial deltas between stages.</strong> This is a gamified analytical view for educational and research purposes.</p>
         </div>
 
         <!-- Guardrail -->
         <div style="background:#fee2e2;border-left:4px solid #dc2626;padding:.75rem 1rem;margin-bottom:1rem;font-size:.8rem;color:#7f1d1d">
-          <strong>Guardrail:</strong> FSI does not prove manipulation. It measures whether financial incentives leave statistically detectable fingerprints in match outcomes.
+          <strong>Guardrail:</strong> This model does not prove manipulation. It measures whether tournament structure, prize distribution, and advancement paths create measurable financial deltas. This is an educational research framework, not an accusation.
         </div>
 
         <!-- Core Definition -->
-        <h3 style="font-size:.9rem;color:#0f172a;margin:1rem 0 .5rem">Core Question</h3>
+        <h3 style="font-size:.9rem;color:#0f172a;margin:1rem 0 .5rem">Research Question</h3>
         <p style="font-size:.85rem;color:#334155;line-height:1.6;margin-bottom:1rem">Before kickoff, which result would create the strongest projected financial position based on prize distribution, matchup value, and continental resilience &mdash; and did that result happen?</p>
 
         <!-- FSI Summary Cards -->
@@ -606,7 +652,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
               <th onclick="sortFSI(1)">Stage &#8597;</th>
               <th onclick="sortFSI(2)">Team 1 &#8597;</th>
               <th onclick="sortFSI(3)">Team 2 &#8597;</th>
-              <th onclick="sortFSI(4)">Financially Optimal &#8597;</th>
+              <th onclick="sortFSI(4)">Projected Value Optimal &#8597;</th>
               <th onclick="sortFSI(5)">Actual Winner &#8597;</th>
               <th onclick="sortFSI(6)">Aligned &#8597;</th>
               <th onclick="sortFSI(7)">Delta &#8597;</th>
@@ -1206,10 +1252,10 @@ var TRANSLATIONS = {
     fsiGuest: 'Final Spark Index is available for registered users only.',
     fsiGuestDesc: 'Sign in to access the FSI — a metric that reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in match outcomes.',
     fsiSignIn: 'Sign In to View FSI',
-    fsiPitch: 'XPGuess reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in the results.',
-    fsiGuardrail: 'Guardrail: FSI does not prove manipulation. It measures whether financial incentives leave statistically detectable fingerprints in match outcomes.',
+    fsiPitch: 'The NTG framework measures how tournament structure, prize distribution, and advancement paths create measurable financial deltas between stages. This is a gamified analytical view for educational purposes.',
+    fsiGuardrail: 'Guardrail: This model does not prove manipulation. It measures whether tournament structure, prize distribution, and advancement paths create measurable financial deltas. This is an educational research framework.',
     fsiCore: 'Core Question',
-    fsiCoreQ: 'Before kickoff, which result would create the strongest projected financial position based on prize distribution, matchup value, and continental resilience — and did that result happen?',
+    fsiCoreQ: 'Before kickoff, which result would create the strongest projected value position based on prize distribution, matchup value, and continental resilience — and did that result happen? This is a gamified educational model.',
     supportMission: 'Support the Mission',
     supportGuest: 'Sign in to support the mission and see how your contributions power open tournament analytics.',
     ntgMission: 'Name The Game builds open tools so that athletes, artists, and communities can train, preserve their languages, and share their culture with the world.',
@@ -1332,7 +1378,7 @@ var TRANSLATIONS = {
     fsiDelta: 'Delta',
     incentiveT1: 'Incentive T1',
     incentiveT2: 'Incentive T2',
-    fsiNote: 'FSI Note',
+    fsiNote: 'FDI Note',
     continent: 'Continent',
     alive: 'Alive',
     out: 'Out',
@@ -1343,14 +1389,14 @@ var TRANSLATIONS = {
     earningsPerTeam: 'Earnings/Team',
     totalEarnings: 'Total Earnings',
     resilience: 'Resilience Score',
-    fsiAlignmentRate: 'FSI Alignment Rate',
+    fsiAlignmentRate: 'FDI Alignment Rate',
     avgPreservationDelta: 'Avg Preservation Delta',
     misalignedResults: 'Misaligned Results',
-    fsiScorecard: 'FSI Scorecard',
+    fsiScorecard: 'FDI Scorecard',
     fsiInterpretationHigh: 'High alignment detected. Tournament outcomes closely follow projected financial incentives. This does not indicate manipulation — it may simply reflect that higher-value matchups naturally produce predictable results.',
     fsiInterpretationMed: 'Moderate alignment. Some matches follow financial incentives, while others produce upsets. This is typical for knockout tournaments where single-game variance is high.',
     fsiInterpretationLow: 'Low alignment. Tournament outcomes frequently diverge from projected financial optima. This suggests competitive integrity is strong — upsets are occurring despite financial incentives favoring different outcomes.',
-    financiallyOptimal: 'Financially Optimal',
+    projectedValueOptimal: 'Projected Value Optimal',
     actualWinner: 'Actual Winner',
     // Group popup
     groupStage: 'Group stage',
@@ -1667,9 +1713,9 @@ function renderAllTranslatedContent() {
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
-    renderContinentKPI();
-    renderFSIReport();
-    renderEPIReport();
+    try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+    try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
+    try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
   }
   toggleKPIAccess();
   toggleMetricAccess();
@@ -1681,16 +1727,21 @@ function renderAllTranslatedContent() {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async function() {
+  // Show loading status
+  var loadingEl = document.getElementById('data-loading');
+  if(loadingEl) loadingEl.style.display = 'block';
+
   // Init Supabase
   try {
     if(typeof supabase === 'undefined' || !supabase || !supabase.createClient) {
-      console.log('Supabase library not loaded, using cache only');
+      console.log('Supabase library not loaded');
       throw new Error('Supabase library not available');
     }
     var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
     var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
     supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
     window.supabaseClient = supabaseClient;
+    console.log('Supabase client initialized');
 
     var { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
@@ -1703,6 +1754,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (event === 'SIGNED_OUT') { currentUser = null; isAdmin = false; updateAuthUI(); }
     });
   } catch(e) { console.log('Supabase init:', e.message); }
+
+  // Load official prize tiers from database
+  var loadedPrizeTiers = await loadPrizeTiers();
+  if(loadedPrizeTiers) { dbPrizeTiers = loadedPrizeTiers; console.log('Prize tiers loaded from DB'); }
 
   // Set initial timestamp
   var tsEl = document.getElementById('last-timestamp');
@@ -2385,9 +2440,9 @@ function renderContinentKPI() {
 
   // WC2026 Prize Money Tiers (USD millions)
   var prizeTiers = (typeof dbPrizeTiers !== 'undefined' && dbPrizeTiers && Object.keys(dbPrizeTiers).length > 0) ? dbPrizeTiers : {
-    'Group Stage': 9.5, 'Round of 32': 13, 'Round of 16': 19,
-    'Quarter-Finals': 25, 'Semi-Finals': 30, 'Fourth Place': 27.5,
-    'Third Place': 28.5, 'Runner-up': 35, 'Winner': 45
+    'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15,
+    'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27,
+    'Third Place': 29, 'Runner-up': 33, 'Winner': 50
   }; // Uses dbPrizeTiers if loaded, else fallback
 
   var groups = window._dbGroups || [];
@@ -2504,7 +2559,7 @@ function renderContinentKPI() {
   allConts.forEach(function(c) {
     var d = contData[c];
     d.avgEarnings = d.teams > 0 ? (d.totalEarnings / d.teams) : 0;
-    d.resilience = avgPerTeam > 0 ? ((d.avgEarnings / avgPerTeam) * 100).toFixed(1) : 100;
+    d.resilience = avgPerTeam > 0 && d.avgEarnings > 0 ? ((d.avgEarnings / avgPerTeam) * 100).toFixed(1) : '100.0';
   });
 
   // Sort by resilience (highest first)
@@ -2538,8 +2593,8 @@ function renderContinentKPI() {
       '<div><div style="font-size:1.25rem;font-weight:800;color:#dc2626">' + d.eliminated + '</div><div style="color:#64748b;font-size:.7rem">Out</div></div>' +
       '</div>' +
       '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid ' + col.border + ';display:flex;justify-content:space-between;align-items:center">' +
-      '<div style="font-size:.85rem;color:#64748b">$' + (d.totalEarnings).toFixed(1) + 'M total</div>' +
-      '<div style="font-size:1rem;font-weight:700;color:' + resColor + '">' + d.resilience + '%</div>' +
+      '<div style="font-size:.85rem;color:#64748b">$' + (d.totalEarnings || 0).toFixed(1) + 'M total</div>' +
+      '<div style="font-size:1rem;font-weight:700;color:' + resColor + '">' + (d.resilience || '100.0') + '%</div>' +
       '</div>';
     cards.appendChild(card);
   });
@@ -2563,7 +2618,7 @@ function renderContinentKPI() {
       '<td style="font-weight:700">' + d.sfPlus + '</td>' +
       '<td>$' + d.avgEarnings.toFixed(1) + 'M</td>' +
       '<td style="font-weight:700;color:#0f172a">$' + d.totalEarnings.toFixed(1) + 'M</td>' +
-      '<td style="color:' + resColor + ';font-weight:700">' + d.resilience + '% <span style="font-size:.75rem">' + resTrend + '</span></td>';
+      '<td style="color:' + resColor + ';font-weight:700">' + (d.resilience || '100.0') + '% <span style="font-size:.75rem">' + resTrend + '</span></td>';
     tbody.appendChild(tr);
   });
 
@@ -2603,8 +2658,8 @@ function renderContinentKPI() {
     var worst = sortedConts[sortedConts.length - 1];
 
     html += '<ul style="margin:.5rem 0 .5rem 1.2rem">';
-    html += '<li><strong>Best performer:</strong> ' + continentFlag(best) + ' ' + continentLabel(best) + ' (' + contData[best].resilience + '% resilience) — $' + contData[best].avgEarnings.toFixed(1) + 'M per team vs. $' + avgPerTeam.toFixed(1) + 'M average</li>';
-    html += '<li><strong>Underperforming:</strong> ' + continentFlag(worst) + ' ' + continentLabel(worst) + ' (' + contData[worst].resilience + '% resilience) — $' + contData[worst].avgEarnings.toFixed(1) + 'M per team</li>';
+    html += '<li><strong>Best performer:</strong> ' + continentFlag(best) + ' ' + continentLabel(best) + ' (' + (contData[best].resilience || '100.0') + '% resilience) — $' + ((contData[best].avgEarnings || 0)).toFixed(1) + 'M per team vs. $' + avgPerTeam.toFixed(1) + 'M average</li>';
+    html += '<li><strong>Underperforming:</strong> ' + continentFlag(worst) + ' ' + continentLabel(worst) + ' (' + (contData[worst].resilience || '100.0') + '% resilience) — $' + ((contData[worst].avgEarnings || 0)).toFixed(1) + 'M per team</li>';
 
     // Deep run analysis
     var deepRunners = [];
@@ -2666,7 +2721,7 @@ function renderFSIReport() {
     var v2 = teamValue[m.team2] || { value: 1, pos: 4, env: 'balanced', gei: 0.5 };
 
     // Financially Optimal Outcome (FOO) = which team has higher financial value
-    var fooWinner = v1.value >= v2.value ? m.team1 : m.team2;
+    var pvoWinner = v1.value >= v2.value ? m.team1 : m.team2;
     var aligned = (m.winner === fooWinner);
     if(aligned) alignedCount++;
 
@@ -2691,7 +2746,7 @@ function renderFSIReport() {
       stage: m.stage || '',
       team1: m.team1 || '',
       team2: m.team2 || '',
-      fooWinner: fooWinner,
+      projectedValueOptimalWinner: pvoWinner,
       actualWinner: m.winner,
       aligned: aligned,
       delta: delta,
@@ -3417,10 +3472,10 @@ function buildFSIData() {
     if(!m.winner) return;
     var v1 = teamValue[m.team1] || { value: 1 };
     var v2 = teamValue[m.team2] || { value: 1 };
-    var fooWinner = v1.value >= v2.value ? m.team1 : m.team2;
+    var pvoWinner = v1.value >= v2.value ? m.team1 : m.team2;
     fsiData.push({
       matchId: m.match_id || '', stage: m.stage || '', team1: m.team1 || '', team2: m.team2 || '',
-      financiallyOptimalWinner: fooWinner, actualWinner: m.winner,
+      projectedValueOptimalWinner: pvoWinner, actualWinner: m.winner,
       aligned: (m.winner === fooWinner), delta: m.preservation_delta || 0,
       incentiveTeam1: m.incentive_team1 || '-', incentiveTeam2: m.incentive_team2 || '-',
       bracketImpact: m.bracket_impact || '', notes: (m.notes || '').replace(/\n/g, ' ')
@@ -3430,7 +3485,7 @@ function buildFSIData() {
 }
 
 function buildContinentData() {
-  var prizeTiers = { 'Group Stage': 9.5, 'Round of 32': 13, 'Round of 16': 19, 'Quarter-Finals': 25, 'Semi-Finals': 30, 'Fourth Place': 27.5, 'Third Place': 28.5, 'Runner-up': 35, 'Winner': 45 };
+  var prizeTiers = { 'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15, 'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27, 'Third Place': 29, 'Runner-up': 33, 'Winner': 50 };
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
   var roundOrder = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
@@ -3557,7 +3612,7 @@ function exportJSON() {
   var contData = buildContinentData();
 
   // Prize tier reference
-  var prizeTiers = { groupStage: 9.5, roundOf32: 13, roundOf16: 19, quarterFinals: 25, semiFinals: 30, fourthPlace: 27.5, thirdPlace: 28.5, runnerUp: 35, winner: 45 };
+  var prizeTiers = { groupStage: 9, roundOf32: 11, roundOf16: 15, quarterFinals: 19, semiFinals: 27, fourthPlace: 27, thirdPlace: 29, runnerUp: 33, winner: 50 };
 
   var fullData = {
     tournament: 'WC2026',
@@ -3835,6 +3890,25 @@ function showLoadStatus(html, type) {
 // Seed-to-name map built from groups data, used by both loaders
 var dbSeedMap = {};
 var dbPrizeTiers = {};
+
+// Load prize tiers from Supabase prize_tiers table
+async function loadPrizeTiers() {
+  if(!supabaseClient) return null;
+  try {
+    var { data, error } = await supabaseClient
+      .from('prize_tiers')
+      .select('*')
+      .eq('tournament', 'WC2026')
+      .order('stage_order', { ascending: true });
+    if(error || !data) return null;
+    var tiers = {};
+    data.forEach(function(tier) {
+      tiers[tier.stage_label] = tier.prize_usd_m;
+    });
+    return tiers;
+  } catch(e) { console.error('loadPrizeTiers error:', e); return null; }
+}
+
 var dbFSIConfig = {};
 var dbKPIVerdicts = {};
 var dbTeamMetadata = {}; // MUST exist before getContinent() runs
@@ -4060,7 +4134,9 @@ async function loadGroupsFromDB() {
     return;
   }
   try {
+    console.log('Fetching groups from Supabase...');
     var { data: groups, error } = await supabaseClient.from('wc2026_groups').select('*').eq('tournament','WC2026');
+    console.log('Groups query result:', groups ? groups.length : 0, 'rows, error:', error);
 
     console.log('loadGroupsFromDB: query returned', groups ? groups.length : 0, 'groups');
     if(error) {
@@ -4109,6 +4185,8 @@ async function loadGroupsFromDB() {
     });
 
     showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + groups.length + ' groups loaded</strong> &mdash; ' + formatTimestamp() + '</div>','ok');
+    var loadEl2 = document.getElementById('data-loading');
+    if(loadEl2) loadEl2.style.display = 'none';
 
     // Now load matches (after seedMap is built)
     await loadMatchesFromDB();
@@ -4121,9 +4199,9 @@ async function loadGroupsFromDB() {
     renderKPIReport();
     renderGroupMetric();
     renderGoalTracker();
-    renderContinentKPI();
-    renderFSIReport();
-    renderEPIReport();
+    try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+    try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
+    try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
 
     // Save to localStorage for offline use
     saveToLocalCache();
@@ -4131,6 +4209,10 @@ async function loadGroupsFromDB() {
   } catch(e) {
     console.error('loadGroups error:', e);
     showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>Exception:</strong> ' + e.message + '</div>','error');
+    var errEl = document.getElementById('data-error');
+    if(errEl) { errEl.style.display = 'block'; errEl.innerHTML = '<strong>⚠️ Data Load Failed:</strong> ' + e.message + '<br><span style="font-size:.75rem">Check browser console (F12 → Console) for details. Common cause: RLS policies blocking anonymous reads.</span>'; }
+    var loadEl = document.getElementById('data-loading');
+    if(loadEl) loadEl.style.display = 'none';
   }
 }
 function ucFirst(str) { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
