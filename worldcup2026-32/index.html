@@ -123,6 +123,17 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 /* Suppress minor init errors */
 #offline-banner { display: none !important; }
+
+/* Ensure table headers are clickable */
+#epi-daily-table th {
+  cursor: pointer !important;
+  user-select: none;
+  position: relative;
+  z-index: 10;
+}
+#epi-daily-table th:hover {
+  background: #1e293b !important;
+}
 </style>
 <base target="_blank">
 <script type="application/ld+json">
@@ -3216,26 +3227,31 @@ function sortTable(tableId, col, dirs, numeric) {
       return dirs[key] ? an - bn : bn - an;
     }
 function sortEPIDaily(col) {
+  console.log('sortEPIDaily called with col:', col);
   var table = document.getElementById('epi-daily-table');
-  if(!table) return;
+  if(!table) { console.log('ERROR: epi-daily-table not found'); return; }
   var tbody = table.querySelector('tbody');
-  if(!tbody) return;
+  if(!tbody) { console.log('ERROR: tbody not found'); return; }
   var rows = Array.from(tbody.querySelectorAll('tr'));
+  console.log('Found', rows.length, 'rows to sort');
 
   // Use a dedicated key for EPI daily sorting
   var key = 'epi-daily-' + col;
   if(!window._epiSortDirs) window._epiSortDirs = {};
   window._epiSortDirs[key] = !window._epiSortDirs[key];
   var asc = window._epiSortDirs[key];
+  console.log('Sorting column', col, 'ascending:', asc);
 
   rows.sort(function(a, b) {
     var av = a.cells[col] ? a.cells[col].textContent.trim() : '';
     var bv = b.cells[col] ? b.cells[col].textContent.trim() : '';
+    console.log('Comparing:', av, 'vs', bv);
 
     // Numeric sort for columns 1-5 (percentages)
     if(col >= 1 && col <= 5) {
       var an = parseFloat(av.replace(/[^0-9.]/g, '')) || 0;
       var bn = parseFloat(bv.replace(/[^0-9.]/g, '')) || 0;
+      console.log('Numeric:', an, 'vs', bn);
       return asc ? an - bn : bn - an;
     }
     // Text sort for Day (col 0) and Notes (col 6)
@@ -3243,6 +3259,7 @@ function sortEPIDaily(col) {
   });
 
   rows.forEach(function(r) { tbody.appendChild(r); });
+  console.log('Sort complete');
 }
 
     return dirs[key] ? av.localeCompare(bv) : bv.localeCompare(av);
