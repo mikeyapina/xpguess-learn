@@ -3206,7 +3206,9 @@ function drawEPISurvivalCurves(dailyData, envColors) {
 }
 
 function sortEPI(col) {
-  sortTable('epi-table', col, sortDirs, col >= 1 && col <= 8);
+  // Col 8 (Trend) is text, all others 1-7 are numeric, col 0 (Environment) is text
+  var isNumeric = (col >= 1 && col <= 7);
+  sortTable('epi-table', col, sortDirs, isNumeric);
 }
 
 function sortTable(tableId, col, dirs, numeric) {
