@@ -1900,7 +1900,15 @@ function renderSPITableFromGroups() {
   });
 
   // Update SPI card
-  var spiCard = document.querySelector('.card-value');
+var spiCard = document.querySelector('.card:nth-child(1) .card-value');
+if (spiCard && totalFixtures > 0 && totalHeld > 0) {
+  var pct = ((totalHeld / totalFixtures) * 100).toFixed(1);
+  spiCard.textContent = pct + '%';
+} else if (spiCard) {
+  spiCard.textContent = 'TBD';
+}
+  console.log('totalHeld:', totalHeld, 'totalFixtures:', totalFixtures, 'pct:', pct);
+
   if(spiCard && totalFixtures > 0) {
     var pct = ((totalHeld / totalFixtures) * 100).toFixed(1);
     spiCard.textContent = pct + '%';
