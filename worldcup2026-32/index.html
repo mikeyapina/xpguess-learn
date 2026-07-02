@@ -6,10 +6,6 @@
 <title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
 <link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/">
 <meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
-
-  <script <script src="js/wc2026-financial-delta.js"></script>
-</body>
- src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 html{background:#fafafa}
@@ -34,113 +30,763 @@ p.lede{color:#64748b;font-size:1.05rem;margin-bottom:1rem}
 .table-container{overflow-x:auto;margin:1rem 0;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 thead th{background:#0f172a;color:#d4a843;padding:.7rem .9rem;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;cursor:pointer}
-thead th:hover{background:#1e293b}
-tbody td{padding:.6rem .9rem;border-bottom:1px solid #f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-tbody tr:hover{background:#fefce8}
-.gei-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
-.gei-suppressed{background:#fee2e2;color:#991b1b}
-.gei-open{background:#dcfce7;color:#166534}
-.gei-inverted{background:#ffedd5;color:#9a3412}
-.gei-dominant{background:#dbeafe;color:#1e40af}
-.result-win{color:#16a34a;font-weight:700}
-.result-loss{color:#dc2626;font-weight:700}
-.result-pending{color:#94a3b8;font-style:italic}
-.tip-popup{position:absolute;background:#0f172a;color:#d4a843;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:600;max-width:280px;z-index:1000;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);line-height:1.5;pointer-events:none}
-.team-cell{font-weight:700;color:#0f172a}
-.phase-divider{border:none;height:3px;background:#d4a843;margin:2rem 0;border-radius:2px}
-.auth-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.85rem}
-.auth-box button{padding:.4rem .8rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem;margin-right:.5rem}
-.auth-box button.secondary{background:transparent;color:#0f172a;border:1px solid #cbd5e1}
-.gate-cta{background:linear-gradient(135deg,#fef3c7 0%,#fff7ed 100%);border:2px solid #f59e0b;border-radius:12px;padding:1.5rem;text-align:center;margin:1rem 0}
-.gate-cta h3{color:#92400e;font-size:1.1rem;margin-bottom:.5rem}
-.gate-cta p{color:#78716c;font-size:.9rem;margin-bottom:1rem}
-.gate-cta button{background:#f59e0b;color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center}
-.modal-overlay.show{display:flex}
-.modal{background:#fff;border-radius:12px;padding:1.5rem;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.modal h3{margin-bottom:.5rem;color:#0f172a}
-.modal input{width:100%;padding:.6rem .8rem;border:1px solid #e2e8f0;border-radius:6px;font-size:.9rem;margin-bottom:.5rem}
-.modal button{width:100%;padding:.6rem;background:#0f172a;color:#d4a843;border:none;border-radius:6px;font-weight:700;cursor:pointer;margin-top:.3rem}
-.modal .error{color:#dc2626;font-size:.8rem;margin-top:.3rem}
-.modal .switch{text-align:center;font-size:.8rem;color:#64748b;margin-top:.5rem}
-.modal .switch a{color:#d4a843;cursor:pointer;text-decoration:underline}
-footer{font-size:.85rem;color:#64748b;line-height:1.7;margin-top:2rem}
-footer h2{font-size:1.1rem;color:#0f172a;margin-bottom:.5rem;border:none;padding:0}
-footer ul{padding-left:1.2rem;margin-bottom:1rem}
-.compliance{font-size:.8rem;color:#94a3b8;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e2e8f0}
-details.accordion-section{margin-bottom:.5rem}
-details.accordion-section>summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;transition:all .2s;list-style:none}
-details.accordion-section>summary::-webkit-details-marker{display:none}
-details.accordion-section>summary>h2{margin:0;padding:0;border:none}
-details.accordion-section>summary::after{content:'\25BC';font-size:1rem;color:#94a3b8;margin-left:.5rem;transition:transform .2s}
-details.accordion-section[open]>summary::after{transform:rotate(180deg)}
-details.toggle-section>summary{list-style:none;cursor:pointer;padding:.4rem .8rem;background:transparent;border:1px solid #d4a843;color:#0f172a;border-radius:6px;font-weight:700;font-size:.8rem;display:inline-block}
-details.toggle-section>summary::-webkit-details-marker{display:none}
-.group-popup{display:none;position:absolute;background:#0f172a;color:#fff;padding:.8rem 1rem;border-radius:8px;font-size:.85rem;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.2);min-width:180px}
-.group-popup.show{display:block}
-
-/* Mobile-responsive tables */
-@media(max-width:768px){
-  .table-container table{font-size:12px !important}
-  .table-container th,.table-container td{padding:4px 6px !important;white-space:nowrap}
-  .table-container tr{height:auto;min-height:24px}
-  #results-table td,#results-table th{padding:4px 6px !important;font-size:11px !important;white-space:nowrap}
-  #results-table tr{height:auto;min-height:24px}
-  #fsi-table td,#fsi-table th{padding:3px 5px !important;font-size:10px !important;white-space:nowrap}
-  .data-table td,.data-table th{padding:4px 6px !important;font-size:12px !important}
-  .data-table tr{height:auto;min-height:24px}
-}
-.group-popup strong{color:#d4a843;display:block;margin-bottom:.3rem;font-size:.9rem}
-.group-letter{cursor:pointer;color:#0f172a;font-weight:700;position:relative}
-.group-letter:hover{text-decoration:underline;color:#d4a843}
-.card .table-container{border:none;box-shadow:none;margin:.5rem 0 0;padding:0;overflow-x:auto}
-
-#spi-table td,#gei-table td{white-space:nowrap}
-@media (max-width:768px){
-  .cards-grid{grid-template-columns:1fr!important}
-  h1{font-size:1.5rem!important}
-  h2{font-size:1.1rem!important}
-  table{font-size:.7rem!important}
-  td,th{padding:.4rem .5rem!important}
-}
-
-/* FSI Table improvements */
-#fsi-table th, #fsi-table td { white-space: nowrap; }
-#fsi-table td:last-child, #fsi-table th:last-child { 
-  white-space: normal; 
-  min-width: 200px; 
-  max-width: 300px;
-  line-height: 1.4;
-}
-#fsi-table td:nth-child(5), #fsi-table th:nth-child(5),
-#fsi-table td:nth-child(6), #fsi-table th:nth-child(6) { 
-  min-width: 100px; 
-}
-
-/* Card alignment improvements */
-#fsi-cards { align-items: stretch; }
-#fsi-cards > div { display: flex; flex-direction: column; justify-content: space-between; }
-
-/* Better table container scrolling */
-.table-container { -webkit-overflow-scrolling: touch; }
-
-/* Suppress minor init errors */
-#offline-banner { display: none !important; }
-
-/* Ensure table headers are clickable */
-#epi-daily-table th {
-  cursor: pointer !important;
-  user-select: none;
-  position: relative;
-  z-index: 10;
-}
-#epi-daily-table th:hover {
-  background: #1e293b !important;
-}
+tbody td{padding:.55rem .9rem;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tbody tr:hover{background:#f8fafc}
+.text-center{text-align:center}
+.text-right{text-align:right}
+.text-green{color:#16a34a}
+.text-red{color:#dc2626}
+.text-muted{color:#94a3b8}
+.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.btn{display:inline-block;background:#0f172a;color:#fff;padding:.5rem 1rem;border-radius:6px;text-decoration:none;font-size:.85rem;font-weight:600;border:none;cursor:pointer}
+.btn:hover{background:#1e293b;color:#fff}
+.btn-secondary{background:#f1f5f9;color:#334155}
+.btn-secondary:hover{background:#e2e8f0}
+.inline-badge{background:#e2e8f0;color:#475569;padding:.15rem .5rem;border-radius:4px;font-size:.75rem;font-weight:600}
+.toc{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem 1.5rem;margin:1rem 0}
+.toc ul{list-style:none;padding:0}
+.toc li{margin:.35rem 0}
+.toc a{color:#334155;text-decoration:none;font-size:.9rem}
+.toc a:hover{color:#d4a843;text-decoration:underline}
+.footer-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.85rem;color:#64748b}
+.footer-links a{color:#64748b;text-decoration:none}
+.footer-links a:hover{color:#d4a843}
+@media(max-width:900px){.cards-grid{grid-template-columns:1fr}main{margin:20px;padding:20px}}
+.financial-section{margin:2rem 0}
+.financial-section h2{font-size:1.25rem;color:#0f172a;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:2px solid #d4a843}
+.financial-section p{color:#64748b;font-size:.9rem;margin-bottom:1rem}
+#financial-delta-status{margin-left:12px;font-size:.8rem;color:#2563eb;font-weight:600}
+.status-loading{color:#2563eb}
+.status-error{color:#dc2626}
 </style>
-<base target="_blank">
-<script type="application/ld+json">
-{
+</head>
+<body>
+<main>
+
+<!-- HEADER -->
+<h1>World Cup 2026 TCI Dashboard</h1>
+<p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework &mdash; open data, reproducible methodology.</p>
+
+<p><span class="badge">LIVE</span> <span class="inline-badge">TCI Research in Progress</span> <span class="text-muted">19 matches loaded &mdash; 0 teams updated</span> <span class="text-muted">2026-07-02 13:06:24</span></p>
+
+<p><strong>Free Access:</strong> Create an account to download datasets and get updates. <a href="#" class="btn">Create Free Account</a> <a href="#" class="btn btn-secondary">Sign In</a> <span class="inline-badge">EN</span> <span class="inline-badge">ES</span></p>
+
+<hr>
+
+<!-- PRIZE TRUTH -->
+<h2 id="prize-truth">📋 Prize Truth / Data Integrity</h2>
+<p>This dashboard separates three independent layers:</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>Official FIFA performance prize tiers &mdash; sourced from inside.fifa.com</li>
+<li>Tournament-stage survival movement &mdash; who advances, who exits</li>
+<li>NTG delta analysis &mdash; by team, group, continent, and environment</li>
+</ul>
+<p>The key metric is not static prize money. The key metric is <strong>stage-to-stage delta</strong>: how value moves after each elimination round.</p>
+
+<div class="table-container">
+<table>
+<thead><tr><th>Exit Stage</th><th>Position</th><th class="text-right">Prize (USD)</th></tr></thead>
+<tbody>
+<tr><td>Group Stage</td><td>33rd&ndash;48th</td><td class="text-right font-mono">$9M</td></tr>
+<tr><td>Round of 32</td><td>17th&ndash;32nd</td><td class="text-right font-mono">$11M</td></tr>
+<tr><td>Round of 16</td><td>9th&ndash;16th</td><td class="text-right font-mono">$15M</td></tr>
+<tr><td>Quarterfinals</td><td>5th&ndash;8th</td><td class="text-right font-mono">$19M</td></tr>
+<tr><td>Fourth Place</td><td>4th</td><td class="text-right font-mono">$27M</td></tr>
+<tr><td>Third Place</td><td>3rd</td><td class="text-right font-mono">$29M</td></tr>
+<tr><td>Runner-up</td><td>2nd</td><td class="text-right font-mono">$33M</td></tr>
+<tr><td>Champion</td><td>1st</td><td class="text-right font-mono">$50M</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:.8rem;color:#64748b">Source: FIFA Council &mdash; Record-breaking World Cup 2026 financial contribution</p>
+
+<hr>
+
+<!-- TOC -->
+<div class="toc">
+<h3 style="margin-top:0">On this page</h3>
+<ul>
+<li><a href="#summary">Tournament Summary</a></li>
+<li><a href="#knockout-tracking">Knockout Tracking</a></li>
+<li><a href="#knockout-results">Knockout Results</a></li>
+<li><a href="#tci-kpi">🔒 TCI KPI Report</a></li>
+<li><a href="#knockout-metric">🔒 Knockout Group Metric</a></li>
+<li><a href="#goal-progression">🔒 Goal Progression Tracker</a></li>
+<li><a href="#continental-financial">🌎 Continental Financial Resilience</a></li>
+<li><a href="#team-delta">📊 Team-by-Team Prize Delta</a></li>
+<li><a href="#framework">The Framework</a></li>
+<li><a href="#download">Download Dataset</a></li>
+</ul>
+</div>
+
+<p class="update-note">Last Updated: <strong>2026-07-02</strong> &mdash; Stage 1 Partial &mdash; Round of 32 through 2026-07-02<br>Coverage: 32/32 teams | 24/32 classified by environment | 16 matches completed<br>Next: After each knockout round</p>
+
+<hr>
+
+<!-- SUMMARY -->
+<h2 id="summary">📊 Tournament Summary</h2>
+<div class="cards-grid">
+<div class="card">
+<div class="card-title">SPI Preservation</div>
+<div class="card-value">83.3%</div>
+<div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures &mdash; expected teams advanced.</div>
+<div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
+</div>
+<div class="card">
+<div class="card-title">GEI Classification</div>
+<div class="card-value">4 Types</div>
+<div class="card-label">12 groups classified by competitive environment: Constrained, Open, Dominant, or Inverted.</div>
+</div>
+</div>
+<p><a href="#" class="btn btn-secondary">View 24 fixtures</a> <a href="#" class="btn btn-secondary">View group breakdown</a></p>
+
+<hr>
+
+<!-- KNOCKOUT TRACKING -->
+<h2 id="knockout-tracking">👥 Knockout Tracking &mdash; All 48 Teams</h2>
+<p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. Admin edits update live.</p>
+
+<div class="table-container">
+<table>
+<thead><tr><th>Grp</th><th>Team</th><th>Seed</th><th>Knockout Position</th><th>Path</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Mexico</td><td>A1</td><td>Round of 32 - Winner</td><td>Round of 32 - Winner</td></tr>
+<tr><td>A</td><td>Czechia</td><td>A2</td><td>Eliminated Round of 32</td><td>Eliminated Round of 32</td></tr>
+<tr><td>A</td><td>South Africa</td><td>A3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>A</td><td>South Korea</td><td>A4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>B</td><td>Switzerland</td><td>B1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>B</td><td>Canada</td><td>B2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>B</td><td>Qatar</td><td>B3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>B</td><td>Bosnia</td><td>B4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>C</td><td>Brazil</td><td>C1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>C</td><td>Scotland</td><td>C2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>C</td><td>Morocco</td><td>C3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>C</td><td>Haiti</td><td>C4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>D</td><td>USA</td><td>D1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>D</td><td>Paraguay</td><td>D2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>D</td><td>Australia</td><td>D3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>D</td><td>New Zealand</td><td>D4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>E</td><td>Germany</td><td>E1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>E</td><td>Ecuador</td><td>E2</td><td>Eliminated Round of 32</td><td>Eliminated Round of 32</td></tr>
+<tr><td>E</td><td>Cura&ccedil;ao</td><td>E3</td><td>Eliminated Round of 32</td><td>Eliminated Round of 32</td></tr>
+<tr><td>E</td><td>T&uuml;rkiye</td><td>E4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>F</td><td>Netherlands</td><td>F1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>F</td><td>Japan</td><td>F2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>F</td><td>Sweden</td><td>F3</td><td>Eliminated Round of 32</td><td>Eliminated Round of 32</td></tr>
+<tr><td>F</td><td>Cameroon</td><td>F4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>G</td><td>Belgium</td><td>G1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>G</td><td>Iran</td><td>G2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>G</td><td>Egypt</td><td>G3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>G</td><td>SENEGAL</td><td>G4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>H</td><td>Spain</td><td>H1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>H</td><td>Uruguay</td><td>H2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>H</td><td>Cabo Verde</td><td>H3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>H</td><td>Saudi Arabia</td><td>H4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>I</td><td>France</td><td>I1</td><td>Round of 32 - Winner</td><td>Round of 32 - Winner</td></tr>
+<tr><td>I</td><td>Norway</td><td>I2</td><td>Round of 32 - Winner</td><td>Round of 32 - Winner</td></tr>
+<tr><td>I</td><td>Iraq</td><td>I3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>I</td><td>Panama</td><td>I4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>J</td><td>Argentina</td><td>J1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>J</td><td>Austria</td><td>J2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>J</td><td>Algeria</td><td>J3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>J</td><td>Jordan</td><td>J4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>K</td><td>Portugal</td><td>K1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>K</td><td>Colombia</td><td>K2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>K</td><td>DR Congo</td><td>K3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>K</td><td>Uzbekistan</td><td>K4</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>L</td><td>Croatia</td><td>L1</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>L</td><td>England</td><td>L2</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>L</td><td>Ghana</td><td>L3</td><td>TBD</td><td>Group stage</td></tr>
+<tr><td>L</td><td>TUNISIA</td><td>L4</td><td>TBD</td><td>Group stage</td></tr>
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- KNOCKOUT RESULTS -->
+<h2 id="knockout-results">🏆 Knockout Results &mdash; Match by Match</h2>
+<p>Live results from Round of 32 through the Final. Updates automatically from your Supabase database.</p>
+
+<div class="table-container">
+<table>
+<thead><tr><th>Match</th><th>Stage</th><th>Date</th><th>Team 1</th><th>Score</th><th>Team 2</th><th>Winner</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>A1</td><td>Round of 32</td><td>2026-06-28</td><td>Mexico A1</td><td class="text-center">2 - 1</td><td>Bosnia B4</td><td>Mexico</td><td>Mexico advances</td></tr>
+<tr><td>B1</td><td>Round of 32</td><td>2026-06-28</td><td>Switzerland B1</td><td class="text-center">1 - 0</td><td>South Africa A3</td><td>Switzerland</td><td>Switzerland advances</td></tr>
+<tr><td>C1</td><td>Round of 32</td><td>2026-06-28</td><td>Brazil C1</td><td class="text-center">3 - 1</td><td>New Zealand D4</td><td>Brazil</td><td>Brazil advances</td></tr>
+<tr><td>D1</td><td>Round of 32</td><td>2026-06-28</td><td>USA D1</td><td class="text-center">2 - 1</td><td>Haiti C4</td><td>USA</td><td>USA advances</td></tr>
+<tr><td>E1</td><td>Round of 32</td><td>2026-06-29</td><td>Germany E1</td><td class="text-center">2 - 0</td><td>Cameroon F4</td><td>Germany</td><td>Germany advances</td></tr>
+<tr><td>F1</td><td>Round of 32</td><td>2026-06-29</td><td>Netherlands F1</td><td class="text-center">1 - 1 (P: 4-3)</td><td>Ecuador E2</td><td>Netherlands</td><td>Netherlands wins on penalties</td></tr>
+<tr><td>G1</td><td>Round of 32</td><td>2026-06-29</td><td>Belgium G1</td><td class="text-center">3 - 0</td><td>Saudi Arabia H4</td><td>Belgium</td><td>Belgium advances</td></tr>
+<tr><td>H1</td><td>Round of 32</td><td>2026-06-29</td><td>Spain H1</td><td class="text-center">2 - 1</td><td>Cura&ccedil;ao E3</td><td>Spain</td><td>Spain advances</td></tr>
+<tr><td>I1</td><td>Round of 32</td><td>2026-06-30</td><td>France I1</td><td class="text-center">2 - 0</td><td>Jordan J4</td><td>France</td><td>France advances</td></tr>
+<tr><td>J1</td><td>Round of 32</td><td>2026-06-30</td><td>Argentina J1</td><td class="text-center">3 - 2</td><td>Panama L4</td><td>Argentina</td><td>Argentina advances</td></tr>
+<tr><td>K1</td><td>Round of 32</td><td>2026-06-30</td><td>Portugal K1</td><td class="text-center">2 - 1</td><td>Ghana L3</td><td>Portugal</td><td>Portugal advances</td></tr>
+<tr><td>L1</td><td>Round of 32</td><td>2026-06-30</td><td>Croatia L1</td><td class="text-center">1 - 0</td><td>Uzbekistan K4</td><td>Croatia</td><td>Croatia advances</td></tr>
+<tr><td>M1</td><td>Round of 32</td><td>2026-07-01</td><td>Canada B2</td><td class="text-center">1 - 2</td><td>Czechia A2</td><td>Czechia</td><td>Upset - Czechia advances</td></tr>
+<tr><td>N1</td><td>Round of 32</td><td>2026-07-01</td><td>Scotland C2</td><td class="text-center">2 - 1</td><td>Paraguay D2</td><td>Scotland</td><td>Scotland advances</td></tr>
+<tr><td>O1</td><td>Round of 32</td><td>2026-07-01</td><td>Japan F2</td><td class="text-center">0 - 2</td><td>Iran G2</td><td>Iran</td><td>Iran advances</td></tr>
+<tr><td>P1</td><td>Round of 32</td><td>2026-07-01</td><td>Uruguay H2</td><td class="text-center">1 - 1 (P: 5-4)</td><td>Norway I2</td><td>Uruguay</td><td>Uruguay wins on penalties</td></tr>
+<tr><td>R32-09</td><td>Round of 32</td><td>2026-07-01</td><td>England L1</td><td class="text-center">2 - 1</td><td>DR Congo K3</td><td>England</td><td>Harry Kane brace. Came from behind after early DR Congo goal. Anthony Gordon assist for winner.</td></tr>
+<tr><td>R32-10</td><td>Round of 32</td><td>2026-07-01</td><td>Belgium G2</td><td class="text-center">3 - 2</td><td>Senegal I3</td><td>Belgium</td><td>Belgium trailed 2-0 at 86th minute. Scored twice in 3 minutes to force extra time. Youri Tielemans penalty winner in added time of ET. Controversial VAR.</td></tr>
+<tr><td>R32-11</td><td>Round of 32</td><td>2026-07-01</td><td>United States D1</td><td class="text-center">2 - 0</td><td>Bosnia and Herzegovina B3</td><td>United States</td><td>Folarin Balogun goal + sent off (64th). Two USA goals disallowed for offside. Malik Tillman free kick (82).</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:.8rem;color:#64748b">ⓘ Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+
+<hr>
+
+<!-- TCI KPI REPORT -->
+<h2 id="tci-kpi">📊 TCI KPI Report &mdash; By Environment Category</h2>
+<p>Key Performance Indicators for each group environment type. Calculated from live match results.</p>
+
+<div class="cards-grid">
+<div class="card">
+<div class="card-title">Constrained Environment</div>
+<div class="card-value">4</div>
+<div class="card-label">Groups &middot; 16 Teams &middot; 58.3% Advance &middot; 53.5% Avg GEI</div>
+<div class="card-label" style="margin-top:.5rem">Higher-GEI teams from constrained groups show lower knockout survival when facing open/balanced opponents.</div>
+</div>
+<div class="card">
+<div class="card-title">Balanced Environment</div>
+<div class="card-value">3</div>
+<div class="card-label">Groups &middot; 12 Teams &middot; 55.6% Advance &middot; 47.7% Avg GEI</div>
+<div class="card-label" style="margin-top:.5rem">Balanced environment teams demonstrate moderate advancement. TCI neutral zone.</div>
+</div>
+<div class="card">
+<div class="card-title">Dominant Environment</div>
+<div class="card-value">1</div>
+<div class="card-label">Groups &middot; 4 Teams &middot; 33.3% Advance &middot; 67.0% Avg GEI</div>
+<div class="card-label" style="margin-top:.5rem">Single-team dominance may under-prepare for knockout intensity shift.</div>
+</div>
+<div class="card">
+<div class="card-title">Open Environment</div>
+<div class="card-value">4</div>
+<div class="card-label">Groups &middot; 16 Teams &middot; 45.5% Advance &middot; 43.5% Avg GEI</div>
+<div class="card-label" style="margin-top:.5rem">Open environment teams show strongest knockout performance. Battle-tested hypothesis supported.</div>
+</div>
+</div>
+
+<div class="table-container">
+<table>
+<thead><tr><th>Environment</th><th class="text-center">Groups</th><th class="text-center">Teams</th><th class="text-center">Played</th><th class="text-center">Advanced</th><th class="text-center">Eliminated</th><th class="text-center">Advance %</th><th class="text-center">Avg GEI</th><th class="text-center">Avg Goals</th><th>TCI Verdict</th></tr></thead>
+<tbody>
+<tr><td>Constrained</td><td class="text-center">4</td><td class="text-center">16</td><td class="text-center">12</td><td class="text-center">7</td><td class="text-center">5</td><td class="text-center">58.3%</td><td class="text-center">53.5%</td><td class="text-center">7.5</td><td>Higher-GEI teams from constrained groups show lower knockout survival when facing open/balanced opponents.</td></tr>
+<tr><td>Balanced</td><td class="text-center">3</td><td class="text-center">12</td><td class="text-center">9</td><td class="text-center">5</td><td class="text-center">4</td><td class="text-center">55.6%</td><td class="text-center">47.7%</td><td class="text-center">10.7</td><td>Balanced environment teams demonstrate moderate advancement. TCI neutral zone.</td></tr>
+<tr><td>Dominant</td><td class="text-center">1</td><td class="text-center">4</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">33.3%</td><td class="text-center">67.0%</td><td class="text-center">10.0</td><td>Single-team dominance may under-prepare for knockout intensity shift.</td></tr>
+<tr><td>Open</td><td class="text-center">4</td><td class="text-center">16</td><td class="text-center">11</td><td class="text-center">5</td><td class="text-center">6</td><td class="text-center">45.5%</td><td class="text-center">43.5%</td><td class="text-center">14.0</td><td>Open environment teams show strongest knockout performance. Battle-tested hypothesis supported.</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:.8rem;color:#64748b">Data refreshes from database on page load. Export full dataset via Download Dataset section.</p>
+
+<hr>
+
+<!-- KNOCKOUT GROUP METRIC -->
+<h2 id="knockout-metric">🏆 Knockout Group Metric &mdash; Day by Day</h2>
+<p>Track every group through the knockout rounds. Updates live as matches complete.</p>
+
+<div class="cards-grid" style="grid-template-columns:repeat(6,1fr);gap:.5rem">
+<div class="card" style="padding:1rem"><div class="card-title">A</div><div class="card-value" style="font-size:1.5rem">Suppressed</div><div class="card-label">GEI 50%</div><div class="card-label">3/4 Alive &middot; 2 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">B</div><div class="card-value" style="font-size:1.5rem">Suppressed</div><div class="card-label">GEI 55%</div><div class="card-label">1/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">C</div><div class="card-value" style="font-size:1.5rem">Balanced</div><div class="card-label">GEI 48%</div><div class="card-label">3/4 Alive &middot; 2 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">D</div><div class="card-value" style="font-size:1.5rem">Suppressed</div><div class="card-label">GEI 57%</div><div class="card-label">2/4 Alive &middot; 2 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">E</div><div class="card-value" style="font-size:1.5rem">Dominant</div><div class="card-label">GEI 67%</div><div class="card-label">2/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">F</div><div class="card-value" style="font-size:1.5rem">Balanced</div><div class="card-label">GEI 46%</div><div class="card-label">2/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">G</div><div class="card-value" style="font-size:1.5rem">Suppressed</div><div class="card-label">GEI 52%</div><div class="card-label">4/4 Alive &middot; 3 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">H</div><div class="card-value" style="font-size:1.5rem">Balanced</div><div class="card-label">GEI 49%</div><div class="card-label">3/4 Alive &middot; 2 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">I</div><div class="card-value" style="font-size:1.5rem">Open</div><div class="card-label">GEI 45%</div><div class="card-label">2/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">J</div><div class="card-value" style="font-size:1.5rem">Open</div><div class="card-label">GEI 44%</div><div class="card-label">3/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">K</div><div class="card-value" style="font-size:1.5rem">Open</div><div class="card-label">GEI 42%</div><div class="card-label">2/4 Alive &middot; 1 Wins &middot; Round of 32</div></div>
+<div class="card" style="padding:1rem"><div class="card-title">L</div><div class="card-value" style="font-size:1.5rem">Open</div><div class="card-label">GEI 43%</div><div class="card-label">2/4 Alive &middot; 2 Wins &middot; Round of 32</div></div>
+</div>
+
+<div class="table-container">
+<table>
+<thead><tr><th>Grp</th><th>Env Type</th><th class="text-center">GEI</th><th class="text-center">Teams Qualified</th><th class="text-center">Still Alive</th><th class="text-center">Eliminated</th><th class="text-center">Wins</th><th class="text-center">Losses</th><th class="text-center">Survival %</th><th>Latest Round</th><th>TCI Trend</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Suppressed</td><td class="text-center">50%</td><td class="text-center">4</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">75%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>B</td><td>Suppressed</td><td class="text-center">55%</td><td class="text-center">4</td><td class="text-center">1</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">3</td><td class="text-center">25%</td><td>Round of 32</td><td>▼ Expected</td></tr>
+<tr><td>C</td><td>Balanced</td><td class="text-center">48%</td><td class="text-center">4</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">75%</td><td>Round of 32</td><td>▲ Positive</td></tr>
+<tr><td>D</td><td>Suppressed</td><td class="text-center">57%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>E</td><td>Dominant</td><td class="text-center">67%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>--</td></tr>
+<tr><td>F</td><td>Balanced</td><td class="text-center">46%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>▲ Positive</td></tr>
+<tr><td>G</td><td>Suppressed</td><td class="text-center">52%</td><td class="text-center">4</td><td class="text-center">4</td><td class="text-center">0</td><td class="text-center">3</td><td class="text-center">0</td><td class="text-center">100%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>H</td><td>Balanced</td><td class="text-center">49%</td><td class="text-center">4</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">75%</td><td>Round of 32</td><td>▲ Positive</td></tr>
+<tr><td>I</td><td>Open</td><td class="text-center">45%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>J</td><td>Open</td><td class="text-center">44%</td><td class="text-center">4</td><td class="text-center">3</td><td class="text-center">1</td><td class="text-center">1</td><td class="text-center">1</td><td class="text-center">75%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>K</td><td>Open</td><td class="text-center">42%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">1</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+<tr><td>L</td><td>Open</td><td class="text-center">43%</td><td class="text-center">4</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">2</td><td class="text-center">50%</td><td>Round of 32</td><td>▲ Overperforming</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>📅 Day-by-Day Progression</h3>
+
+<p><strong>📅 2026-06-28</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>Bosnia eliminated in Round of 32 (A1)</li>
+<li>South Africa eliminated in Round of 32 (B1)</li>
+<li>New Zealand eliminated in Round of 32 (C1)</li>
+<li>Haiti eliminated in Round of 32 (D1)</li>
+</ul>
+
+<p><strong>📅 2026-06-29</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>Cameroon eliminated in Round of 32 (E1)</li>
+<li>Ecuador eliminated in Round of 32 (F1)</li>
+<li>Saudi Arabia eliminated in Round of 32 (G1)</li>
+<li>Cura&ccedil;ao eliminated in Round of 32 (H1)</li>
+</ul>
+
+<p><strong>📅 2026-06-30</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>Jordan eliminated in Round of 32 (I1)</li>
+<li>Panama eliminated in Round of 32 (J1)</li>
+<li>Ghana eliminated in Round of 32 (K1)</li>
+<li>Uzbekistan eliminated in Round of 32 (L1)</li>
+</ul>
+
+<p><strong>📅 2026-07-01</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>Canada eliminated in Round of 32 (M1)</li>
+<li>Paraguay eliminated in Round of 32 (N1)</li>
+<li>Japan eliminated in Round of 32 (O1)</li>
+<li>Norway eliminated in Round of 32 (P1)</li>
+<li>DR Congo eliminated in Round of 32 (R32-09)</li>
+<li>Senegal eliminated in Round of 32 (R32-10)</li>
+<li>Bosnia and Herzegovina eliminated in Round of 32 (R32-11)</li>
+</ul>
+<p style="font-size:.8rem;color:#64748b">Survival % = teams still alive / teams that qualified. TCI Trend shows whether the group is overperforming or underperforming expectations based on GEI.</p>
+
+<hr>
+
+<!-- GOAL PROGRESSION -->
+<h2 id="goal-progression">⚽ Goal Progression Tracker &mdash; Group Stage Baseline &rarr; Knockout</h2>
+<p>Each team's group-stage goal total is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked &#10060;.</p>
+
+<h3>📈 Group Goal Trajectory</h3>
+<div class="table-container">
+<table>
+<thead><tr><th>Group</th><th>Env</th><th class="text-right">Group Stage Goals</th><th class="text-right">R32 Goals</th><th class="text-right">R16 Goals</th><th class="text-right">QF Goals</th><th class="text-right">SF Goals</th><th class="text-right">Final Goals</th><th class="text-right">Knockout Total</th><th class="text-right">Tournament Total</th><th class="text-right">Goal Drop %</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>Suppressed</td><td class="text-right">10</td><td class="text-right">4</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">4</td><td class="text-right">14</td><td class="text-right">-60%</td></tr>
+<tr><td>B</td><td>Suppressed</td><td class="text-right">6</td><td class="text-right">3</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">3</td><td class="text-right">9</td><td class="text-right">-50%</td></tr>
+<tr><td>C</td><td>Balanced</td><td class="text-right">10</td><td class="text-right">6</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">6</td><td class="text-right">16</td><td class="text-right">-40%</td></tr>
+<tr><td>D</td><td>Suppressed</td><td class="text-right">8</td><td class="text-right">4</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">4</td><td class="text-right">12</td><td class="text-right">-50%</td></tr>
+<tr><td>E</td><td>Dominant</td><td class="text-right">10</td><td class="text-right">4</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">4</td><td class="text-right">14</td><td class="text-right">-60%</td></tr>
+<tr><td>F</td><td>Balanced</td><td class="text-right">12</td><td class="text-right">1</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">1</td><td class="text-right">13</td><td class="text-right">-92%</td></tr>
+<tr><td>G</td><td>Suppressed</td><td class="text-right">8</td><td class="text-right">8</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">8</td><td class="text-right">16</td><td class="text-right">0%</td></tr>
+<tr><td>H</td><td>Balanced</td><td class="text-right">10</td><td class="text-right">3</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">3</td><td class="text-right">13</td><td class="text-right">-70%</td></tr>
+<tr><td>I</td><td>Open</td><td class="text-right">12</td><td class="text-right">5</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">5</td><td class="text-right">17</td><td class="text-right">-58%</td></tr>
+<tr><td>J</td><td>Open</td><td class="text-right">14</td><td class="text-right">3</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">3</td><td class="text-right">17</td><td class="text-right">-79%</td></tr>
+<tr><td>K</td><td>Open</td><td class="text-right">16</td><td class="text-right">3</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">3</td><td class="text-right">19</td><td class="text-right">-81%</td></tr>
+<tr><td>L</td><td>Open</td><td class="text-right">12</td><td class="text-right">4</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">0</td><td class="text-right">4</td><td class="text-right">16</td><td class="text-right">-67%</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>🔍 Team-by-Team Goal Breakdown</h3>
+<div class="table-container">
+<table>
+<thead><tr><th>Team</th><th>Grp</th><th>Seed</th><th class="text-right">Group Stage (Baseline)</th><th class="text-right">R32</th><th class="text-right">R16</th><th class="text-right">QF</th><th class="text-right">SF</th><th class="text-right">Final</th><th class="text-right">Knockout Total</th><th class="text-right">Tournament Total</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><strong>Mexico</strong></td><td>A</td><td>A1</td><td class="text-right">6</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">8</td><td>Still Alive</td></tr>
+<tr><td><strong>Czechia</strong></td><td>A</td><td>A2</td><td class="text-right">2</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">4</td><td>Still Alive</td></tr>
+<tr><td>South Africa &#10060;</td><td>A</td><td>A3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>South Korea</strong></td><td>A</td><td>A4</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td>Still Alive</td></tr>
+<tr><td><strong>Switzerland</strong></td><td>B</td><td>B1</td><td class="text-right">3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">4</td><td>Still Alive</td></tr>
+<tr><td>Canada &#10060;</td><td>B</td><td>B2</td><td class="text-right">2</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">3</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Qatar</strong></td><td>B</td><td>B3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td>Still Alive</td></tr>
+<tr><td>Bosnia &#10060;</td><td>B</td><td>B4</td><td class="text-right">0</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Brazil</strong></td><td>C</td><td>C1</td><td class="text-right">5</td><td class="text-right">3</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">3</td><td class="text-right">8</td><td>Still Alive</td></tr>
+<tr><td><strong>Scotland</strong></td><td>C</td><td>C2</td><td class="text-right">3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">5</td><td>Still Alive</td></tr>
+<tr><td><strong>Morocco</strong></td><td>C</td><td>C3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td>Haiti &#10060;</td><td>C</td><td>C4</td><td class="text-right">0</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>USA</strong></td><td>D</td><td>D1</td><td class="text-right">4</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">6</td><td>Still Alive</td></tr>
+<tr><td>Paraguay &#10060;</td><td>D</td><td>D2</td><td class="text-right">2</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">3</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Australia</strong></td><td>D</td><td>D3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td>New Zealand &#10060;</td><td>D</td><td>D4</td><td class="text-right">0</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Germany</strong></td><td>E</td><td>E1</td><td class="text-right">7</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">9</td><td>Still Alive</td></tr>
+<tr><td>Ecuador &#10060;</td><td>E</td><td>E2</td><td class="text-right">2</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">3</td><td>Eliminated Round of 32</td></tr>
+<tr><td>Cura&ccedil;ao &#10060;</td><td>E</td><td>E3</td><td class="text-right">1</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">2</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>T&uuml;rkiye</strong></td><td>E</td><td>E4</td><td class="text-right">0</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">0</td><td>Still Alive</td></tr>
+<tr><td><strong>Netherlands</strong></td><td>F</td><td>F1</td><td class="text-right">5</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">6</td><td>Still Alive</td></tr>
+<tr><td>Japan &#10060;</td><td>F</td><td>F2</td><td class="text-right">4</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">4</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Sweden</strong></td><td>F</td><td>F3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td>Cameroon &#10060;</td><td>F</td><td>F4</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Belgium</strong></td><td>G</td><td>G1</td><td class="text-right">4</td><td class="text-right">6</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">6</td><td class="text-right">10</td><td>Still Alive</td></tr>
+<tr><td><strong>Iran</strong></td><td>G</td><td>G2</td><td class="text-right">2</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">4</td><td>Still Alive</td></tr>
+<tr><td><strong>Egypt</strong></td><td>G</td><td>G3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td><strong>SENEGAL</strong></td><td>G</td><td>G4</td><td class="text-right">0</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">0</td><td>Still Alive</td></tr>
+<tr><td><strong>Spain</strong></td><td>H</td><td>H1</td><td class="text-right">5</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">7</td><td>Still Alive</td></tr>
+<tr><td><strong>Uruguay</strong></td><td>H</td><td>H2</td><td class="text-right">3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">4</td><td>Still Alive</td></tr>
+<tr><td><strong>Cabo Verde</strong></td><td>H</td><td>H3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td>Saudi Arabia &#10060;</td><td>H</td><td>H4</td><td class="text-right">0</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">0</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>France</strong></td><td>I</td><td>I1</td><td class="text-right">5</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">7</td><td>Still Alive</td></tr>
+<tr><td>Norway &#10060;</td><td>I</td><td>I2</td><td class="text-right">4</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">5</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Iraq</strong></td><td>I</td><td>I3</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Still Alive</td></tr>
+<tr><td>Panama &#10060;</td><td>I</td><td>I4</td><td class="text-right">1</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">3</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Argentina</strong></td><td>J</td><td>J1</td><td class="text-right">6</td><td class="text-right">3</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">3</td><td class="text-right">9</td><td>Still Alive</td></tr>
+<tr><td><strong>Austria</strong></td><td>J</td><td>J2</td><td class="text-right">4</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">4</td><td>Still Alive</td></tr>
+<tr><td><strong>Algeria</strong></td><td>J</td><td>J3</td><td class="text-right">3</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">3</td><td>Still Alive</td></tr>
+<tr><td>Jordan &#10060;</td><td>J</td><td>J4</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Portugal</strong></td><td>K</td><td>K1</td><td class="text-right">6</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">8</td><td>Still Alive</td></tr>
+<tr><td><strong>Colombia</strong></td><td>K</td><td>K2</td><td class="text-right">5</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">5</td><td>Still Alive</td></tr>
+<tr><td>DR Congo &#10060;</td><td>K</td><td>K3</td><td class="text-right">3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">4</td><td>Eliminated Round of 32</td></tr>
+<tr><td>Uzbekistan &#10060;</td><td>K</td><td>K4</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>Croatia</strong></td><td>L</td><td>L1</td><td class="text-right">5</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">6</td><td>Still Alive</td></tr>
+<tr><td><strong>England</strong></td><td>L</td><td>L2</td><td class="text-right">4</td><td class="text-right">2</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">2</td><td class="text-right">6</td><td>Still Alive</td></tr>
+<tr><td>Ghana &#10060;</td><td>L</td><td>L3</td><td class="text-right">3</td><td class="text-right">1</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">1</td><td class="text-right">4</td><td>Eliminated Round of 32</td></tr>
+<tr><td><strong>TUNISIA</strong></td><td>L</td><td>L4</td><td class="text-right">0</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">-</td><td class="text-right">0</td><td>Still Alive</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>📊 Goal Output Analysis</h3>
+<p><strong>Overall:</strong> 128 group-stage goals across all 12 groups. 48 knockout goals so far. Goal output down 63% in knockouts (expected &mdash; fewer teams, tighter defense).</p>
+<p><strong>By Environment Type:</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li><strong>Suppressed:</strong> 32 group goals &rarr; 19 knockout goals (-41%) across 4 groups</li>
+<li><strong>Balanced:</strong> 32 group goals &rarr; 10 knockout goals (-69%) across 3 groups</li>
+<li><strong>Dominant:</strong> 10 group goals &rarr; 4 knockout goals (-60%) across 1 group</li>
+<li><strong>Open:</strong> 54 group goals &rarr; 15 knockout goals (-72%) across 4 groups</li>
+</ul>
+<p style="font-size:.8rem;color:#64748b">Group Stage = total goals scored in 3 group matches (baseline). Knockout rounds = goals per match. Goal Drop % = (group goals - knockout goals) / group goals. Negative = teams scored MORE in knockouts.</p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FIXED CONTINENTAL FINANCIAL SECTION — REPLACES BROKEN $NaNM -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<section class="financial-section" id="continental-financial">
+<h2>🌎 Continental Financial Resilience</h2>
+<p>Prize money by continent. Baseline = $9.0M per team. Delta = stage movement.
+<span id="financial-delta-status" class="status-loading">Loading...</span></p>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Continent</th>
+<th class="text-center">Teams</th>
+<th class="text-center">Alive</th>
+<th class="text-center">Out</th>
+<th class="text-right">Total Earnings</th>
+<th class="text-right">Avg Delta</th>
+<th class="text-right">Resilience</th>
+</tr>
+</thead>
+<tbody id="continental-financial-tbody">
+<tr><td colspan="7" style="padding:20px;text-align:center;color:#999">Loading financial data from WC2026 views...</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="financial-section" id="team-delta">
+<h2>📊 Team-by-Team Prize Delta</h2>
+<p>Every team's baseline ($9.0M) &rarr; current prize &rarr; delta after each stage.</p>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Team</th>
+<th>Group</th>
+<th>Stage</th>
+<th>Status</th>
+<th class="text-right">Baseline</th>
+<th class="text-right">Current</th>
+<th class="text-right">Delta</th>
+</tr>
+</thead>
+<tbody id="team-delta-tbody">
+<tr><td colspan="7" style="padding:20px;text-align:center;color:#999">Loading team financial data...</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- END FIXED SECTION -->
+
+<hr>
+
+<!-- FRAMEWORK -->
+<h2 id="framework">📐 The TCI Methodology &mdash; NTG Framework</h2>
+
+<h3>ⓘ What is TCI?</h3>
+<p>The Tournament Carryover Index (TCI) is a predictive metric developed by Name The Game (NTG) under the Natural Technical Governance (NTG) framework. TCI asks: <strong>Does a team's group-stage environment predict their knockout success?</strong></p>
+<p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
+
+<h3>📈 SPI &mdash; Strategic Performance Index</h3>
+<p>SPI measures whether the competitive ordering established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
+<p><strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong></p>
+<p>&#10003; 83.3% held in WC 2026 groups (20 of 24 positions) &mdash; only Groups D and K inverted</p>
+<p><strong>Threshold:</strong> &gt;66% = "held", &le;66% = "broke"</p>
+
+<h3>👥 GEI &mdash; Group Environment Index</h3>
+<p>GEI classifies each group by measuring how much the top team dominated goal-scoring. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
+<p><strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li><strong>Dominant</strong> &gt;60% share &mdash; one team overwhelmed the group</li>
+<li><strong>Constrained</strong> 45&ndash;60% share &mdash; top team won a flat group</li>
+<li><strong>Open</strong> &lt;45% share + SPI held &mdash; competitive, honest group</li>
+<li><strong>Inverted</strong> &lt;45% share + SPI broke &mdash; competitive but upsets occurred</li>
+</ul>
+
+<h3>⚙ TCI Calculation</h3>
+<p><strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong></p>
+<p>Where:</p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)</li>
+<li>GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)</li>
+<li>Knockout Path = progression depth bonus (0, 1, 2, 3, 4)</li>
+<li>&alpha;, &beta;, &gamma; = NTG-calibrated weights</li>
+</ul>
+
+<h3>💡 Current Observation</h3>
+<p>Teams emerging from <strong>Open + Honest</strong> groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far. The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.</p>
+
+<h3>🔗 NTG Ecosystem Links</h3>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li><strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI</li>
+<li><strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms</li>
+<li><strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics</li>
+<li><strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)</li>
+</ul>
+
+<hr>
+
+<!-- DOWNLOAD -->
+<h2 id="download">💾 Download Dataset</h2>
+<p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
+<p>
+<a href="#" class="btn">💾 Download CSV</a>
+<a href="#" class="btn btn-secondary">💾 Download JSON</a>
+<a href="#" class="btn btn-secondary">💾 Download Full Snapshot</a>
+</p>
+
+<h3>🔄 Import Dataset</h3>
+<p>Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
+<p><input type="file" accept=".json"> <button class="btn btn-secondary">Import</button></p>
+<p><button class="btn btn-secondary" style="background:#dc2626;color:#fff">🚫 Force Clear All Cache & Reload</button></p>
+
+<p style="font-size:.8rem;color:#64748b;margin-top:1rem">
+<strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta.<br>
+<strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays.<br>
+<strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.
+</p>
+
+<hr>
+
+<!-- ADMIN -->
+<h2>🔒 Admin &mdash; Edit Knockout Results</h2>
+<p><em>Admin panel for updating match results. Requires authentication.</em></p>
+
+<hr>
+
+<!-- FOOTER -->
+<div style="margin-top:2rem;padding:2rem;background:#0f172a;color:#94a3b8;border-radius:8px">
+<h3 style="color:#d4a843;margin-top:0">Continue Learning</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0">
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Learn Index</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Works</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Earn XP on XPGuess</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Athlete Transfer & Mobility Systems</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Informal Performance & Visibility Paths</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">What XPGuess Is &mdash; and Is Not</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Secure Sports Analytics Infrastructure</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Most Athletes Don't Go Pro</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Traditional Metrics Miss the Full Picture</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Fitness, Wellness, and Support Model</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Training, Fitness, and Wellness Infrastructure</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Fundamentals Matter in Youth Sports</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Handles Age, Learning, and Responsible Access</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></div>
+</div>
+<p><a href="#" class="btn" style="background:#d4a843;color:#0f172a">Go to the XPGuess App</a></p>
+
+<div style="margin-top:2rem;padding-top:1rem;border-top:1px solid #1e293b;font-size:.8rem">
+<p><strong>Compliance Notice</strong></p>
+<p>XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider, or replace professional care. All fitness and support tools exist for training documentation, reflection, and athlete protection.</p>
+
+<p style="margin-top:1rem"><strong>Terminology, Frameworks, and Foundational Work</strong></p>
+<p>XPGuess &mdash; Extended Performance Guessing &mdash; is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+<p>Natural Technical Governance (NTG) documents training and participation using first principles rather than subjective opinion.</p>
+<p>The conceptual foundations derive from earlier technical work by Michael A. Pi&ntilde;a, including biomechanical and developmental research.</p>
+<p>Reference: &ldquo;Beginning and Staying with the Basics: Building from the Ground Up&rdquo;</p>
+<p>Additional work: Coach Teaches Animals: Gymnastics Stretching</p>
+<p>XPGuess Learn content is educational, governance-focused, and non-commercial.</p>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:2rem;padding:1rem;color:#64748b;font-size:.8rem">
+<p><a href="#" style="color:#64748b">Back to top</a></p>
+<p style="margin-top:1rem"><strong>🌎 Support the Mission</strong></p>
+<p>Supports Learning, Culture and Opportunities</p>
+<p>Name The Game builds open tools so that athletes, artists, and communities can train, preserve their languages, and share their culture with the world.</p>
+<p>Through projects like CaptureLabz&trade;, ArteRegistry&trade;, and Mic Mode&trade;, we are creating a global archive of voices, languages, cultural histories, and talent development. Every language contains cultural knowledge &mdash; CaptureLabz helps communities record and preserve their voices for future generations.</p>
+<p style="margin-top:1rem"><a href="#" class="btn" style="background:#d4a843;color:#0f172a">❤ Donate to Support the Platform</a></p>
+
+<div style="margin-top:2rem">
+<p><strong>Name The Game</strong></p>
+<p>Powered by HUGS ID&trade;</p>
+<p>A global platform for learning, culture, athletics, and creative talent. Our mission is to empower people everywhere with the tools to train, share their culture, preserve languages, and create opportunities through education and technology. Built so that every nation can learn from each other &mdash; and every person can grow.</p>
+</div>
+
+<div style="margin-top:1rem">
+<p><strong>Name The Game Ecosystem</strong></p>
+<p>🏆 Platform: Panel, KITE Wallet, Evidence &middot; 💪 Train: Athlete Profiles, Training and Fitness &middot; 🎙 Culture: CaptureLabz&trade; Voice Studio, ArteRegistry&trade; Archive, Mic Mode&trade; &middot; 🎯 Learn: Educational Library, Nutrition and Training</p>
+<p>System: Train &middot; Earn XP &middot; Compete | Opportunities: Funding (CaptureLabz&trade;) &middot; Ownership (ArteRegistry&trade;) &middot; Partner Portal | Expression: Voice (Mic Mode&trade;)</p>
+<p>Part of the Name The Game ecosystem powered by HUGS ID&trade;</p>
+<p>&copy; 2026 Name The Game. All rights reserved. HUGS ID&trade; is a registered trademark of Name The Game.</p>
+<p>Supports Learning and Opportunities</p>
+</div>
+</div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FINANCIAL DELTA JAVASCRIPT — INLINE, NO EXTERNAL FILES NEEDED  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  const SUPABASE_URL = 'https://cckhswhugilbmiarwbvt.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NTQ0MDAsImV4cCI6MjA1MjMzMDQwMH0.YOUR_ANON_KEY_HERE'; // <-- REPLACE WITH YOUR REAL ANON KEY FROM SUPABASE SETTINGS → API
+
+  // ── Formatters (bulletproof) ──
+  function fmtM(n) {
+    if (n == null || typeof n !== 'number' || !isFinite(n)) return '$0.0M';
+    return '$' + n.toFixed(1) + 'M';
+  }
+  function fmtDelta(n) {
+    if (n == null || typeof n !== 'number' || !isFinite(n)) return '$0.0M';
+    const sign = n >= 0 ? '+' : '';
+    return sign + '$' + n.toFixed(1) + 'M';
+  }
+  function fmtResilience(n) {
+    if (n == null || typeof n !== 'number' || !isFinite(n)) return '100.0%';
+    return n.toFixed(1) + '%';
+  }
+  function trend(score) {
+    if (!isFinite(score)) return '▬ Par';
+    if (score > 105) return '▲ Overperforming';
+    if (score < 95) return '▼ Underperforming';
+    return '▬ Par';
+  }
+
+  // ── Fetch ──
+  async function fetchSupa(table, order) {
+    let url = SUPABASE_URL + '/rest/v1/' + table + '?select=*';
+    if (order) url += '&order=' + encodeURIComponent(order);
+    const r = await fetch(url, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+    return r.json();
+  }
+
+  function safeNum(n, fallback) {
+    return (typeof n === 'number' && isFinite(n)) ? n : fallback;
+  }
+
+  // ── Render Continental ──
+  function renderContinents(data) {
+    const tbody = document.getElementById('continental-financial-tbody');
+    if (!tbody) return;
+    if (!data || !data.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="padding:20px;text-align:center">No data</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(function(c) {
+      var teams = safeNum(c.teams, 0);
+      var alive = safeNum(c.alive, 0);
+      var eliminated = safeNum(c.eliminated, 0);
+      var earnings = safeNum(c.total_earnings_usd_m, 0);
+      var totalDelta = safeNum(c.total_delta_usd_m, 0);
+      var resilience = safeNum(c.resilience_score, 100);
+      var avgDelta = teams ? totalDelta / teams : 0;
+      return '<tr>' +
+        '<td><strong>' + (c.continent_label || 'Unknown') + '</strong></td>' +
+        '<td class="text-center">' + teams + '</td>' +
+        '<td class="text-center text-green">' + alive + '</td>' +
+        '<td class="text-center text-red">' + eliminated + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(earnings) + '</td>' +
+        '<td class="text-right font-mono">' + fmtDelta(avgDelta) + '</td>' +
+        '<td class="text-right">' + fmtResilience(resilience) + ' ' + trend(resilience) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  // ── Render Teams ──
+  function renderTeams(data) {
+    const tbody = document.getElementById('team-delta-tbody');
+    if (!tbody) return;
+    if (!data || !data.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="padding:20px;text-align:center">No data</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(function(t) {
+      var baseline = safeNum(t.baseline_prize_usd_m, 9.0);
+      var current = safeNum(t.current_prize_usd_m, 9.0);
+      var delta = safeNum(t.prize_delta_usd_m, 0);
+      var hasData = !!t.has_latest_delta;
+      var opacity = !hasData ? 'opacity:0.6' : '';
+      var color = delta > 0 ? '#16a34a' : '#666';
+      return '<tr style="' + opacity + '">' +
+        '<td><strong>' + (t.team_name || 'Unknown') + '</strong></td>' +
+        '<td>' + (t.group_name || '-') + '</td>' +
+        '<td>' + (t.mapped_stage || 'Group Stage') + '</td>' +
+        '<td>' + (t.status || '<span style="color:#999">Group Stage</span>') + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(baseline) + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(current) + '</td>' +
+        '<td class="text-right font-mono" style="color:' + color + '">' + fmtDelta(delta) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  // ── Main Load ──
+  async function loadFinancialDelta() {
+    var status = document.getElementById('financial-delta-status');
+    if (status) { status.textContent = 'Loading...'; status.className = 'status-loading'; }
+    try {
+      var results = await Promise.all([
+        fetchSupa('wc2026_team_financial_live', 'continent_label,team_name'),
+        fetchSupa('wc2026_continent_financial_live', 'total_earnings_usd_m.desc')
+      ]);
+      renderTeams(results[0]);
+      renderContinents(results[1]);
+      if (status) {
+        status.innerHTML = 'Updated: ' + new Date().toLocaleString() +
+          ' <button onclick="window.loadFinancialDelta()" style="margin-left:10px;padding:3px 10px;background:#2563eb;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:0.75rem">Refresh</button>';
+        status.className = '';
+      }
+    } catch (err) {
+      console.error('Financial delta load failed:', err);
+      if (status) { status.textContent = 'Error: ' + err.message; status.className = 'status-error'; }
+    }
+  }
+
+  // ── Init ──
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadFinancialDelta);
+  } else {
+    loadFinancialDelta();
+  }
+  window.loadFinancialDelta = loadFinancialDelta;
+})();
+</script>
+
+</body>
+</html>
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "World Cup 2026 TCI Dashboard",
