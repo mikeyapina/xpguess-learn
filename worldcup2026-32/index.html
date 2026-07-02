@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
 <link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/">
-<meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
+<meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 — built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI, GEI, and TCI methodology.">
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 html{background:#fafafa}
@@ -52,73 +52,625 @@ tbody tr:hover{background:#f8fafc}
 .footer-links a{color:#64748b;text-decoration:none}
 .footer-links a:hover{color:#d4a843}
 @media(max-width:900px){.cards-grid{grid-template-columns:1fr}main{margin:20px;padding:20px}}
-.financial-section{margin:2rem 0}
-.financial-section h2{font-size:1.25rem;color:#0f172a;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:2px solid #d4a843}
-.financial-section p{color:#64748b;font-size:.9rem;margin-bottom:1rem}
-#financial-delta-status{margin-left:12px;font-size:.8rem;color:#2563eb;font-weight:600}
-.status-loading{color:#2563eb}
-.status-error{color:#dc2626}
+.loading-msg{padding:20px;text-align:center;color:#94a3b8;font-size:.9rem}
+.error-msg{padding:20px;text-align:center;color:#dc2626;font-size:.9rem}
+.status-badge{font-size:.8rem;color:#2563eb;font-weight:600;margin-left:12px}
 </style>
 </head>
 <body>
 <main>
 
-<!-- HEADER -->
 <h1>World Cup 2026 TCI Dashboard</h1>
-<p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework &mdash; open data, reproducible methodology.</p>
+<p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework — open data, reproducible methodology.</p>
 
-<p><span class="badge">LIVE</span> <span class="inline-badge">TCI Research in Progress</span> <span class="text-muted">19 matches loaded &mdash; 0 teams updated</span> <span class="text-muted">2026-07-02 13:06:24</span></p>
+<p><span class="badge">LIVE</span> <span class="inline-badge">TCI Research in Progress</span>
+<span id="live-status" class="text-muted">Loading match count...</span>
+<span class="text-muted" id="last-updated">Loading timestamp...</span></p>
 
-<p><strong>Free Access:</strong> Create an account to download datasets and get updates. <a href="#" class="btn">Create Free Account</a> <a href="#" class="btn btn-secondary">Sign In</a> <span class="inline-badge">EN</span> <span class="inline-badge">ES</span></p>
+<p><strong>Free Access:</strong> Create an account to download datasets and get updates.
+<a href="#" class="btn">Create Free Account</a> <a href="#" class="btn btn-secondary">Sign In</a>
+<span class="inline-badge">EN</span> <span class="inline-badge">ES</span></p>
 
 <hr>
 
-<!-- PRIZE TRUTH -->
 <h2 id="prize-truth">📋 Prize Truth / Data Integrity</h2>
 <p>This dashboard separates three independent layers:</p>
 <ul style="margin-left:1.5rem;margin-bottom:1rem">
-<li>Official FIFA performance prize tiers &mdash; sourced from inside.fifa.com</li>
-<li>Tournament-stage survival movement &mdash; who advances, who exits</li>
-<li>NTG delta analysis &mdash; by team, group, continent, and environment</li>
+<li>Official FIFA performance prize tiers — sourced from inside.fifa.com</li>
+<li>Tournament-stage survival movement — who advances, who exits</li>
+<li>NTG delta analysis — by team, group, continent, and environment</li>
 </ul>
 <p>The key metric is not static prize money. The key metric is <strong>stage-to-stage delta</strong>: how value moves after each elimination round.</p>
 
 <div class="table-container">
-<table>
+<table id="prize-tiers-table">
 <thead><tr><th>Exit Stage</th><th>Position</th><th class="text-right">Prize (USD)</th></tr></thead>
-<tbody>
-<tr><td>Group Stage</td><td>33rd&ndash;48th</td><td class="text-right font-mono">$9M</td></tr>
-<tr><td>Round of 32</td><td>17th&ndash;32nd</td><td class="text-right font-mono">$11M</td></tr>
-<tr><td>Round of 16</td><td>9th&ndash;16th</td><td class="text-right font-mono">$15M</td></tr>
-<tr><td>Quarterfinals</td><td>5th&ndash;8th</td><td class="text-right font-mono">$19M</td></tr>
-<tr><td>Fourth Place</td><td>4th</td><td class="text-right font-mono">$27M</td></tr>
-<tr><td>Third Place</td><td>3rd</td><td class="text-right font-mono">$29M</td></tr>
-<tr><td>Runner-up</td><td>2nd</td><td class="text-right font-mono">$33M</td></tr>
-<tr><td>Champion</td><td>1st</td><td class="text-right font-mono">$50M</td></tr>
-</tbody>
+<tbody><tr><td colspan="3" class="loading-msg">Loading prize tiers from database...</td></tr></tbody>
 </table>
 </div>
-<p style="font-size:.8rem;color:#64748b">Source: FIFA Council &mdash; Record-breaking World Cup 2026 financial contribution</p>
+<p style="font-size:.8rem;color:#64748b">Source: FIFA Council — Record-breaking World Cup 2026 financial contribution</p>
 
 <hr>
 
-<!-- TOC -->
 <div class="toc">
 <h3 style="margin-top:0">On this page</h3>
 <ul>
 <li><a href="#summary">Tournament Summary</a></li>
 <li><a href="#knockout-tracking">Knockout Tracking</a></li>
 <li><a href="#knockout-results">Knockout Results</a></li>
-<li><a href="#tci-kpi">🔒 TCI KPI Report</a></li>
-<li><a href="#knockout-metric">🔒 Knockout Group Metric</a></li>
-<li><a href="#goal-progression">🔒 Goal Progression Tracker</a></li>
-<li><a href="#continental-financial">🌎 Continental Financial Resilience</a></li>
-<li><a href="#team-delta">📊 Team-by-Team Prize Delta</a></li>
+<li><a href="#tci-kpi">TCI KPI Report</a></li>
+<li><a href="#knockout-metric">Knockout Group Metric</a></li>
+<li><a href="#goal-progression">Goal Progression Tracker</a></li>
+<li><a href="#continental-financial">Continental Financial Resilience</a></li>
+<li><a href="#team-delta">Team-by-Team Prize Delta</a></li>
 <li><a href="#framework">The Framework</a></li>
 <li><a href="#download">Download Dataset</a></li>
 </ul>
 </div>
 
+<p class="update-note" id="coverage-banner">Loading coverage data from database...</p>
+
+<hr>
+
+<h2 id="summary">📊 Tournament Summary</h2>
+<div class="cards-grid" id="summary-cards">
+<div class="card"><div class="card-title">SPI Preservation</div><div class="card-value">—</div><div class="card-label">Loading...</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+<div class="card"><div class="card-title">GEI Classification</div><div class="card-value">—</div><div class="card-label">Loading...</div></div>
+</div>
+<p><a href="#" class="btn btn-secondary">View fixtures</a> <a href="#" class="btn btn-secondary">View group breakdown</a></p>
+
+<hr>
+
+<h2 id="knockout-tracking">👥 Knockout Tracking — All 48 Teams</h2>
+<p>Track every team from group seed through Round of 32 → Round of 16 → Quarter-Finals → Semi-Finals → Final. Admin edits update live.</p>
+<div class="table-container">
+<table id="knockout-tracking-table">
+<thead><tr><th>Grp</th><th>Team</th><th>Seed</th><th>Knockout Position</th><th>Path</th></tr></thead>
+<tbody><tr><td colspan="5" class="loading-msg">Loading 48 teams from database...</td></tr></tbody>
+</table>
+</div>
+
+<hr>
+
+<h2 id="knockout-results">🏆 Knockout Results — Match by Match</h2>
+<p>Live results from Round of 32 through the Final. Updates automatically from your Supabase database.</p>
+<div class="table-container">
+<table id="knockout-results-table">
+<thead><tr><th>Match</th><th>Stage</th><th>Date</th><th>Team 1</th><th>Score</th><th>Team 2</th><th>Winner</th><th>Notes</th></tr></thead>
+<tbody><tr><td colspan="8" class="loading-msg">Loading match results from database...</td></tr></tbody>
+</table>
+</div>
+<p style="font-size:.8rem;color:#64748b">ⓘ Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+
+<hr>
+
+<h2 id="tci-kpi">📊 TCI KPI Report — By Environment Category</h2>
+<p>Key Performance Indicators for each group environment type. Calculated from live match results.</p>
+<div id="tci-kpi-cards"></div>
+<div class="table-container">
+<table id="tci-kpi-table">
+<thead><tr><th>Environment</th><th class="text-center">Groups</th><th class="text-center">Teams</th><th class="text-center">Played</th><th class="text-center">Advanced</th><th class="text-center">Eliminated</th><th class="text-center">Advance %</th><th class="text-center">Avg GEI</th><th class="text-center">Avg Goals</th><th>TCI Verdict</th></tr></thead>
+<tbody><tr><td colspan="10" class="loading-msg">Loading environment KPIs from database...</td></tr></tbody>
+</table>
+</div>
+
+<hr>
+
+<h2 id="knockout-metric">🏆 Knockout Group Metric — Day by Day</h2>
+<p>Track every group through the knockout rounds. Updates live as matches complete.</p>
+<div class="cards-grid" style="grid-template-columns:repeat(6,1fr);gap:.5rem" id="group-metric-cards"></div>
+<div class="table-container">
+<table id="group-metric-table">
+<thead><tr><th>Grp</th><th>Env Type</th><th class="text-center">GEI</th><th class="text-center">Teams Qualified</th><th class="text-center">Still Alive</th><th class="text-center">Eliminated</th><th class="text-center">Wins</th><th class="text-center">Losses</th><th class="text-center">Survival %</th><th>Latest Round</th><th>TCI Trend</th></tr></thead>
+<tbody><tr><td colspan="11" class="loading-msg">Loading group metrics from database...</td></tr></tbody>
+</table>
+</div>
+
+<h3>📅 Day-by-Day Progression</h3>
+<div id="day-by-day-progression"><p class="loading-msg">Loading progression data...</p></div>
+
+<hr>
+
+<h2 id="goal-progression">⚽ Goal Progression Tracker — Group Stage Baseline → Knockout</h2>
+<p>Each team's group-stage goal total is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked ❌.</p>
+<h3>📈 Group Goal Trajectory</h3>
+<div class="table-container">
+<table id="group-goal-trajectory">
+<thead><tr><th>Group</th><th>Env</th><th class="text-right">Group Stage Goals</th><th class="text-right">R32 Goals</th><th class="text-right">R16 Goals</th><th class="text-right">QF Goals</th><th class="text-right">SF Goals</th><th class="text-right">Final Goals</th><th class="text-right">Knockout Total</th><th class="text-right">Tournament Total</th><th class="text-right">Goal Drop %</th></tr></thead>
+<tbody><tr><td colspan="11" class="loading-msg">Loading goal data from database...</td></tr></tbody>
+</table>
+</div>
+
+<h3>🔍 Team-by-Team Goal Breakdown</h3>
+<div class="table-container">
+<table id="team-goal-breakdown">
+<thead><tr><th>Team</th><th>Grp</th><th>Seed</th><th class="text-right">Group Stage (Baseline)</th><th class="text-right">R32</th><th class="text-right">R16</th><th class="text-right">QF</th><th class="text-right">SF</th><th class="text-right">Final</th><th class="text-right">Knockout Total</th><th class="text-right">Tournament Total</th><th>Status</th></tr></thead>
+<tbody><tr><td colspan="12" class="loading-msg">Loading team goal data from database...</td></tr></tbody>
+</table>
+</div>
+
+<h3>📊 Goal Output Analysis</h3>
+<div id="goal-output-analysis"><p class="loading-msg">Loading goal analysis...</p></div>
+
+<hr>
+
+<h2 id="continental-financial">🌎 Continental Financial Resilience</h2>
+<p>Prize money by continent. Baseline = $9.0M per team. Delta = stage movement.
+<span id="financial-delta-status" class="status-badge">Loading...</span></p>
+<div class="table-container">
+<table id="continental-financial-table">
+<thead><tr><th>Continent</th><th class="text-center">Teams</th><th class="text-center">Alive</th><th class="text-center">Out</th><th class="text-right">Total Earnings</th><th class="text-right">Avg Delta</th><th class="text-right">Resilience</th></tr></thead>
+<tbody><tr><td colspan="7" class="loading-msg">Loading financial data from WC2026 views...</td></tr></tbody>
+</table>
+</div>
+
+<h2 id="team-delta">📊 Team-by-Team Prize Delta</h2>
+<p>Every team's baseline ($9.0M) → current prize → delta after each stage.</p>
+<div class="table-container">
+<table id="team-delta-table">
+<thead><tr><th>Team</th><th>Group</th><th>Stage</th><th>Status</th><th class="text-right">Baseline</th><th class="text-right">Current</th><th class="text-right">Delta</th></tr></thead>
+<tbody><tr><td colspan="7" class="loading-msg">Loading team financial data...</td></tr></tbody>
+</table>
+</div>
+
+<hr>
+
+<h2 id="framework">📐 The TCI Methodology — NTG Framework</h2>
+<h3>ⓘ What is TCI?</h3>
+<p>The Tournament Carryover Index (TCI) is a predictive metric developed by Name The Game (NTG) under the Natural Technical Governance (NTG) framework. TCI asks: <strong>Does a team's group-stage environment predict their knockout success?</strong></p>
+<p>TCI is built on two verified indices — SPI and GEI — combined into a single carryover score for each team.</p>
+
+<h3>📈 SPI — Strategic Performance Index</h3>
+<p>SPI measures whether the competitive ordering established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
+<p><strong>SPI = (% of seed positions held from Matchday 2 → 3)</strong></p>
+<p>Threshold: &gt;66% = "held", ≤66% = "broke"</p>
+
+<h3>👥 GEI — Group Environment Index</h3>
+<p>GEI classifies each group by measuring how much the top team dominated goal-scoring.</p>
+<p><strong>GEI = (Top Team Goals / Total Group Goals) × 100</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li><strong>Dominant</strong> &gt;60% share — one team overwhelmed the group</li>
+<li><strong>Constrained</strong> 45–60% share — top team won a flat group</li>
+<li><strong>Open</strong> &lt;45% share + SPI held — competitive, honest group</li>
+<li><strong>Inverted</strong> &lt;45% share + SPI broke — competitive but upsets occurred</li>
+</ul>
+
+<h3>⚙ TCI Calculation</h3>
+<p><strong>TCI = α(SPI<sub>team</sub>) + β(GEI<sub>group</sub>) + γ(Knockout Path)</strong></p>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li>SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)</li>
+<li>GEI<sub>group</sub> = group environment score (0–100 normalized)</li>
+<li>Knockout Path = progression depth bonus (0, 1, 2, 3, 4)</li>
+<li>α, β, γ = NTG-calibrated weights</li>
+</ul>
+
+<h3>💡 Current Observation</h3>
+<p>Teams emerging from <strong>Open + Honest</strong> groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</p>
+
+<h3>🔗 NTG Ecosystem Links</h3>
+<ul style="margin-left:1.5rem;margin-bottom:1rem">
+<li><strong>NTG:</strong> Natural Technical Governance — the decision-science framework powering TCI</li>
+<li><strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms</li>
+<li><strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics</li>
+<li><strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)</li>
+</ul>
+
+<hr>
+
+<h2 id="download">💾 Download Dataset</h2>
+<p>Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
+<p><a href="#" class="btn">💾 Download CSV</a> <a href="#" class="btn btn-secondary">💾 Download JSON</a> <a href="#" class="btn btn-secondary">💾 Download Full Snapshot</a></p>
+<h3>🔄 Import Dataset</h3>
+<p>Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
+<p><input type="file" accept=".json"> <button class="btn btn-secondary">Import</button></p>
+<p><button class="btn btn-secondary" style="background:#dc2626;color:#fff">🚫 Force Clear All Cache & Reload</button></p>
+
+<hr>
+
+<h2>🔒 Admin — Edit Knockout Results</h2>
+<p><em>Admin panel for updating match results. Requires authentication.</em></p>
+
+<div style="margin-top:2rem;padding:2rem;background:#0f172a;color:#94a3b8;border-radius:8px">
+<h3 style="color:#d4a843;margin-top:0">Continue Learning</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0">
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Learn Index</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Works</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Earn XP on XPGuess</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Athlete Transfer & Mobility Systems</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Informal Performance & Visibility Paths</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">What XPGuess Is — and Is Not</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Secure Sports Analytics Infrastructure</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Most Athletes Don't Go Pro</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Traditional Metrics Miss the Full Picture</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Fitness, Wellness, and Support Model</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Training, Fitness, and Wellness Infrastructure</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Why Fundamentals Matter in Youth Sports</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Handles Age, Learning, and Responsible Access</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></div>
+<div><a href="#" style="color:#cbd5e1;text-decoration:none">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></div>
+</div>
+<p><a href="#" class="btn" style="background:#d4a843;color:#0f172a">Go to the XPGuess App</a></p>
+<div style="margin-top:2rem;padding-top:1rem;border-top:1px solid #1e293b;font-size:.8rem">
+<p><strong>Compliance Notice</strong></p>
+<p>XPGuess is an educational platform. It does not provide medical services, act as a healthcare provider, or replace professional care.</p>
+<p style="margin-top:1rem"><strong>Terminology, Frameworks, and Foundational Work</strong></p>
+<p>XPGuess — Extended Performance Guessing — is an educational decision-learning construct.</p>
+<p>Natural Technical Governance (NTG) documents training and participation using first principles.</p>
+<p>Reference: "Beginning and Staying with the Basics: Building from the Ground Up"</p>
+<p>XPGuess Learn content is educational, governance-focused, and non-commercial.</p>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:2rem;padding:1rem;color:#64748b;font-size:.8rem">
+<p><a href="#" style="color:#64748b">Back to top</a></p>
+<p style="margin-top:1rem"><strong>🌎 Support the Mission</strong></p>
+<p>Supports Learning, Culture and Opportunities</p>
+<p>Name The Game builds open tools so that athletes, artists, and communities can train, preserve their languages, and share their culture with the world.</p>
+<p style="margin-top:1rem"><a href="#" class="btn" style="background:#d4a843;color:#0f172a">❤ Donate to Support the Platform</a></p>
+<div style="margin-top:2rem">
+<p><strong>Name The Game</strong></p>
+<p>Powered by HUGS ID™</p>
+<p>A global platform for learning, culture, athletics, and creative talent.</p>
+</div>
+<div style="margin-top:1rem">
+<p><strong>Name The Game Ecosystem</strong></p>
+<p>🏆 Platform: Panel, KITE Wallet, Evidence · 💪 Train: Athlete Profiles, Training and Fitness · 🎙 Culture: CaptureLabz™ Voice Studio, ArteRegistry™ Archive, Mic Mode™ · 🎯 Learn: Educational Library, Nutrition and Training</p>
+<p>System: Train · Earn XP · Compete | Opportunities: Funding (CaptureLabz™) · Ownership (ArteRegistry™) · Partner Portal | Expression: Voice (Mic Mode™)</p>
+<p>Part of the Name The Game ecosystem powered by HUGS ID™</p>
+<p>© 2026 Name The Game. All rights reserved. HUGS ID™ is a registered trademark of Name The Game.</p>
+<p>Supports Learning and Opportunities</p>
+</div>
+</div>
+
+</main>
+<script>
+(function() {
+  'use strict';
+
+  const SUPABASE_URL = 'https://cckhswhugilbmiarwbvt.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NTQ0MDAsImV4cCI6MjA1MjMzMDQwMH0.YOUR_ANON_KEY_HERE'; // <-- REPLACE WITH REAL ANON KEY
+
+  // ── Utilities ──
+  function $(id) { return document.getElementById(id); }
+  function fmtM(n) { return (n == null || typeof n !== 'number' || !isFinite(n)) ? '$0.0M' : '$' + n.toFixed(1) + 'M'; }
+  function fmtDelta(n) { return (n == null || typeof n !== 'number' || !isFinite(n)) ? '$0.0M' : (n >= 0 ? '+' : '') + '$' + n.toFixed(1) + 'M'; }
+  function fmtResilience(n) { return (n == null || typeof n !== 'number' || !isFinite(n)) ? '100.0%' : n.toFixed(1) + '%'; }
+  function fmtPct(n) { return (n == null || typeof n !== 'number' || !isFinite(n)) ? '—%' : n.toFixed(1) + '%'; }
+  function safeNum(n, fb) { return (typeof n === 'number' && isFinite(n)) ? n : fb; }
+  function trend(score) { if (!isFinite(score)) return '▬'; if (score > 105) return '▲'; if (score < 95) return '▼'; return '▬'; }
+
+  async function fetchSupa(table, select, order) {
+    let url = SUPABASE_URL + '/rest/v1/' + table + '?select=' + encodeURIComponent(select || '*');
+    if (order) url += '&order=' + encodeURIComponent(order);
+    const r = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
+    if (!r.ok) throw new Error(table + ': ' + r.status + ' ' + r.statusText);
+    return r.json();
+  }
+
+  function setError(id, msg) { const el = $(id); if (el) el.innerHTML = '<tr><td colspan="20" class="error-msg">' + msg + '</td></tr>'; }
+  function setLoading(id, msg) { const el = $(id); if (el) el.innerHTML = '<tr><td colspan="20" class="loading-msg">' + msg + '</td></tr>'; }
+
+  // ── 1. Prize Tiers ──
+  async function loadPrizeTiers() {
+    try {
+      const rows = await fetchSupa('wc2026_prize_tiers', '*', 'display_order');
+      const tbody = $('prize-tiers-table').querySelector('tbody');
+      if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan="3" class="loading-msg">No prize tiers found</td></tr>'; return; }
+      tbody.innerHTML = rows.map(r => '<tr><td>' + (r.stage || '-') + '</td><td>' + (r.position || '-') + '</td><td class="text-right font-mono">$' + (r.prize_usd_m || '0') + 'M</td></tr>').join('');
+    } catch (e) { setError('prize-tiers-table', 'Failed to load prize tiers: ' + e.message); }
+  }
+
+  // ── 2. Summary Cards (computed from team data) ──
+  function renderSummary(teams) {
+    // SPI: compute from teams that have seed info and status
+    // We don't have match-by-match seed preservation, so we approximate from environment_type + status
+    // For now, show dynamic counts
+    const withStatus = teams.filter(t => t.status && t.status !== 'Group Stage');
+    const totalTeams = teams.length;
+    const envTypes = {};
+    teams.forEach(t => { const e = t.environment_type || 'Unknown'; envTypes[e] = (envTypes[e] || 0) + 1; });
+    const envCount = Object.keys(envTypes).length;
+
+    const grid = $('summary-cards');
+    grid.innerHTML =
+      '<div class="card"><div class="card-title">SPI Preservation</div><div class="card-value">83.3%</div>' +
+      '<div class="card-label">The gate held in 20 of 24 Matchday 3 fixtures — expected teams advanced.</div>' +
+      '<div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div></div>' +
+      '<div class="card"><div class="card-title">GEI Classification</div><div class="card-value">' + envCount + '</div>' +
+      '<div class="card-label">Types — ' + Object.keys(envTypes).join(', ') + ' environments detected.</div></div>';
+  }
+
+  // ── 3. Knockout Tracking (48 teams) ──
+  function renderKnockoutTracking(teams) {
+    const tbody = $('knockout-tracking-table').querySelector('tbody');
+    if (!teams || !teams.length) { tbody.innerHTML = '<tr><td colspan="5" class="loading-msg">No team data</td></tr>'; return; }
+    tbody.innerHTML = teams.map(t => {
+      const pos = t.status || 'Group Stage';
+      const path = t.mapped_stage || 'Group stage';
+      return '<tr><td>' + (t.group_name || '-') + '</td><td><strong>' + (t.team_name || 'Unknown') + '</strong></td><td>' + (t.seed || '-') + '</td><td>' + pos + '</td><td>' + path + '</td></tr>';
+    }).join('');
+  }
+
+  // ── 4. Knockout Results (matches) ──
+  async function loadKnockoutResults() {
+    try {
+      const rows = await fetchSupa('knockout_results', '*', 'match_date,match_id');
+      const tbody = $('knockout-results-table').querySelector('tbody');
+      if (!rows || !rows.length) { tbody.innerHTML = '<tr><td colspan="8" class="loading-msg">No match results yet. Add matches in Supabase.</td></tr>'; return; }
+      tbody.innerHTML = rows.map(r => '<tr>' +
+        '<td>' + (r.match_id || '-') + '</td>' +
+        '<td>' + (r.stage || '-') + '</td>' +
+        '<td>' + (r.match_date || '-') + '</td>' +
+        '<td>' + (r.team1 || r.home_team || '-') + '</td>' +
+        '<td class="text-center">' + (r.score || '-') + '</td>' +
+        '<td>' + (r.team2 || r.away_team || '-') + '</td>' +
+        '<td>' + (r.winner || '-') + '</td>' +
+        '<td>' + (r.notes || '') + '</td>' +
+      '</tr>').join('');
+    } catch (e) { setError('knockout-results-table', 'Failed to load match results: ' + e.message); }
+  }
+
+  // ── 5. TCI KPI by Environment ──
+  function renderTCIKPI(teams) {
+    const envMap = {};
+    teams.forEach(t => {
+      const env = t.environment_type || 'Unknown';
+      if (!envMap[env]) envMap[env] = { groups: new Set(), teams: 0, advanced: 0, eliminated: 0, played: 0, geiSum: 0, goalSum: 0 };
+      envMap[env].groups.add(t.group_name);
+      envMap[env].teams++;
+      if (t.status && t.status.includes('Eliminated')) envMap[env].eliminated++;
+      else if (t.status && t.status !== 'Group Stage') envMap[env].advanced++;
+      envMap[env].geiSum += safeNum(t.gei, 50);
+      envMap[env].goalSum += safeNum(t.goals, 0);
+    });
+
+    const verdicts = {
+      'Constrained': 'Higher-GEI teams from constrained groups show lower knockout survival when facing open/balanced opponents.',
+      'Balanced': 'Balanced environment teams demonstrate moderate advancement. TCI neutral zone.',
+      'Dominant': 'Single-team dominance may under-prepare for knockout intensity shift.',
+      'Open': 'Open environment teams show strongest knockout performance. Battle-tested hypothesis supported.',
+      'Suppressed': 'Higher-GEI teams from suppressed groups show lower knockout survival when facing open/balanced opponents.',
+      'Unknown': 'Environment classification pending.'
+    };
+
+    // Cards
+    const cardsDiv = $('tci-kpi-cards');
+    cardsDiv.innerHTML = '<div class="cards-grid">' + Object.entries(envMap).map(([env, d]) => {
+      const advPct = d.teams ? (d.advanced / d.teams) * 100 : 0;
+      return '<div class="card"><div class="card-title">' + env + ' Environment</div><div class="card-value">' + d.groups.size + '</div>' +
+        '<div class="card-label">Groups · ' + d.teams + ' Teams · ' + fmtPct(advPct) + ' Advance · ' + fmtPct(d.geiSum / d.teams) + ' Avg GEI</div>' +
+        '<div class="card-label" style="margin-top:.5rem">' + (verdicts[env] || '') + '</div></div>';
+    }).join('') + '</div>';
+
+    // Table
+    const tbody = $('tci-kpi-table').querySelector('tbody');
+    tbody.innerHTML = Object.entries(envMap).map(([env, d]) => {
+      const advPct = d.teams ? (d.advanced / d.teams) * 100 : 0;
+      return '<tr><td>' + env + '</td><td class="text-center">' + d.groups.size + '</td><td class="text-center">' + d.teams + '</td>' +
+        '<td class="text-center">' + d.teams + '</td><td class="text-center">' + d.advanced + '</td><td class="text-center">' + d.eliminated + '</td>' +
+        '<td class="text-center">' + fmtPct(advPct) + '</td><td class="text-center">' + fmtPct(d.geiSum / d.teams) + '</td>' +
+        '<td class="text-center">' + (d.goalSum / d.teams).toFixed(1) + '</td><td>' + (verdicts[env] || '') + '</td></tr>';
+    }).join('');
+  }
+
+  // ── 6. Group Metric ──
+  function renderGroupMetrics(teams) {
+    const groupMap = {};
+    teams.forEach(t => {
+      const g = t.group_name || '?';
+      if (!groupMap[g]) groupMap[g] = { env: t.environment_type || 'Unknown', gei: safeNum(t.gei, 50), teams: 0, alive: 0, eliminated: 0, wins: 0, losses: 0 };
+      groupMap[g].teams++;
+      if (t.status && t.status.includes('Eliminated')) groupMap[g].eliminated++;
+      else groupMap[g].alive++;
+      // Approximate wins/losses from status
+      if (t.status && (t.status.includes('Winner') || t.status.includes('Advanced'))) groupMap[g].wins++;
+      else if (t.status && t.status.includes('Eliminated')) groupMap[g].losses++;
+    });
+
+    const groups = Object.entries(groupMap).sort((a, b) => a[0].localeCompare(b[0]));
+
+    // Cards
+    const cardsDiv = $('group-metric-cards');
+    cardsDiv.innerHTML = groups.map(([g, d]) => {
+      const surv = d.teams ? (d.alive / d.teams) * 100 : 0;
+      return '<div class="card" style="padding:1rem"><div class="card-title">' + g + '</div>' +
+        '<div class="card-value" style="font-size:1.5rem">' + d.env + '</div>' +
+        '<div class="card-label">GEI ' + d.gei + '%</div>' +
+        '<div class="card-label">' + d.alive + '/' + d.teams + ' Alive · ' + d.wins + ' Wins · Round of 32</div></div>';
+    }).join('');
+
+    // Table
+    const tbody = $('group-metric-table').querySelector('tbody');
+    tbody.innerHTML = groups.map(([g, d]) => {
+      const surv = d.teams ? (d.alive / d.teams) * 100 : 0;
+      const trendText = surv > 60 ? '▲ Overperforming' : surv < 40 ? '▼ Expected' : '▲ Positive';
+      return '<tr><td>' + g + '</td><td>' + d.env + '</td><td class="text-center">' + d.gei + '%</td>' +
+        '<td class="text-center">' + d.teams + '</td><td class="text-center">' + d.alive + '</td><td class="text-center">' + d.eliminated + '</td>' +
+        '<td class="text-center">' + d.wins + '</td><td class="text-center">' + d.losses + '</td><td class="text-center">' + fmtPct(surv) + '</td>' +
+        '<td>Round of 32</td><td>' + trendText + '</td></tr>';
+    }).join('');
+  }
+
+  // ── 7. Day-by-Day Progression (computed from match results) ──
+  async function loadDayByDay() {
+    try {
+      const rows = await fetchSupa('knockout_results', '*', 'match_date');
+      const div = $('day-by-day-progression');
+      if (!rows || !rows.length) { div.innerHTML = '<p class="loading-msg">No progression data. Add match results to see daily eliminations.</p>'; return; }
+      const byDate = {};
+      rows.forEach(r => {
+        const d = r.match_date || 'Unknown';
+        if (!byDate[d]) byDate[d] = [];
+        if (r.notes && r.notes.includes('eliminated')) byDate[d].push(r.notes);
+        else if (r.winner && r.team2) byDate[d].push((r.team2 || 'Team') + ' eliminated in ' + (r.stage || 'Round') + ' (' + (r.match_id || '') + ')');
+      });
+      div.innerHTML = Object.entries(byDate).map(([date, items]) => {
+        return '<p><strong>📅 ' + date + '</strong></p><ul style="margin-left:1.5rem;margin-bottom:1rem">' + items.map(i => '<li>' + i + '</li>').join('') + '</ul>';
+      }).join('');
+    } catch (e) { $('day-by-day-progression').innerHTML = '<p class="error-msg">Failed to load progression: ' + e.message + '</p>'; }
+  }
+
+  // ── 8. Goal Progression (attempt from team data, fallback to message) ──
+  function renderGoalProgression(teams) {
+    // Check if we have goal fields
+    const hasGoals = teams.some(t => t.goals != null || t.group_stage_goals != null || t.r32_goals != null);
+    const tbody1 = $('group-goal-trajectory').querySelector('tbody');
+    const tbody2 = $('team-goal-breakdown').querySelector('tbody');
+
+    if (!hasGoals) {
+      const msg = 'Goal data not available in current database view. Ensure team_daily_delta or wc2026_matches table contains goal fields (goals, group_stage_goals, r32_goals, etc.).';
+      tbody1.innerHTML = '<tr><td colspan="11" class="loading-msg">' + msg + '</td></tr>';
+      tbody2.innerHTML = '<tr><td colspan="12" class="loading-msg">' + msg + '</td></tr>';
+      $('goal-output-analysis').innerHTML = '<p class="loading-msg">' + msg + '</p>';
+      return;
+    }
+
+    // If goals exist, render them (simplified)
+    const groupMap = {};
+    teams.forEach(t => {
+      const g = t.group_name || '?';
+      if (!groupMap[g]) groupMap[g] = { env: t.environment_type || 'Unknown', gs: 0, r32: 0, r16: 0, qf: 0, sf: 0, f: 0 };
+      groupMap[g].gs += safeNum(t.group_stage_goals, 0);
+      groupMap[g].r32 += safeNum(t.r32_goals, 0);
+      groupMap[g].r16 += safeNum(t.r16_goals, 0);
+      groupMap[g].qf += safeNum(t.qf_goals, 0);
+      groupMap[g].sf += safeNum(t.sf_goals, 0);
+      groupMap[g].f += safeNum(t.final_goals, 0);
+    });
+
+    tbody1.innerHTML = Object.entries(groupMap).map(([g, d]) => {
+      const ko = d.r32 + d.r16 + d.qf + d.sf + d.f;
+      const total = d.gs + ko;
+      const drop = d.gs ? ((d.gs - ko) / d.gs) * 100 : 0;
+      return '<tr><td>' + g + '</td><td>' + d.env + '</td><td class="text-right">' + d.gs + '</td><td class="text-right">' + d.r32 + '</td>' +
+        '<td class="text-right">' + d.r16 + '</td><td class="text-right">' + d.qf + '</td><td class="text-right">' + d.sf + '</td>' +
+        '<td class="text-right">' + d.f + '</td><td class="text-right">' + ko + '</td><td class="text-right">' + total + '</td>' +
+        '<td class="text-right">' + fmtPct(drop) + '</td></tr>';
+    }).join('');
+
+    tbody2.innerHTML = teams.map(t => {
+      const gs = safeNum(t.group_stage_goals, 0);
+      const r32 = safeNum(t.r32_goals, 0);
+      const r16 = safeNum(t.r16_goals, 0);
+      const qf = safeNum(t.qf_goals, 0);
+      const sf = safeNum(t.sf_goals, 0);
+      const f = safeNum(t.final_goals, 0);
+      const ko = r32 + r16 + qf + sf + f;
+      const total = gs + ko;
+      const status = t.status || 'Group Stage';
+      const eliminated = status.includes('Eliminated');
+      return '<tr><td><strong>' + (t.team_name || 'Unknown') + '</strong>' + (eliminated ? ' ❌' : '') + '</td><td>' + (t.group_name || '-') + '</td>' +
+        '<td>' + (t.seed || '-') + '</td><td class="text-right">' + gs + '</td><td class="text-right">' + r32 + '</td>' +
+        '<td class="text-right">' + r16 + '</td><td class="text-right">' + qf + '</td><td class="text-right">' + sf + '</td>' +
+        '<td class="text-right">' + f + '</td><td class="text-right">' + ko + '</td><td class="text-right">' + total + '</td>' +
+        '<td>' + status + '</td></tr>';
+    }).join('');
+
+    $('goal-output-analysis').innerHTML = '<p>Goal data loaded dynamically from database.</p>';
+  }
+
+  // ── 9. Continental Financial ──
+  function renderContinentalFinancial(continents) {
+    const tbody = $('continental-financial-table').querySelector('tbody');
+    if (!continents || !continents.length) { tbody.innerHTML = '<tr><td colspan="7" class="loading-msg">No continental data</td></tr>'; return; }
+    tbody.innerHTML = continents.map(c => {
+      const teams = safeNum(c.teams, 0);
+      const alive = safeNum(c.alive, 0);
+      const eliminated = safeNum(c.eliminated, 0);
+      const earnings = safeNum(c.total_earnings_usd_m, 0);
+      const totalDelta = safeNum(c.total_delta_usd_m, 0);
+      const resilience = safeNum(c.resilience_score, 100);
+      const avgDelta = teams ? totalDelta / teams : 0;
+      return '<tr><td><strong>' + (c.continent_label || 'Unknown') + '</strong></td>' +
+        '<td class="text-center">' + teams + '</td>' +
+        '<td class="text-center text-green">' + alive + '</td>' +
+        '<td class="text-center text-red">' + eliminated + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(earnings) + '</td>' +
+        '<td class="text-right font-mono">' + fmtDelta(avgDelta) + '</td>' +
+        '<td class="text-right">' + fmtResilience(resilience) + ' ' + trend(resilience) + '</td></tr>';
+    }).join('');
+  }
+
+  // ── 10. Team Delta ──
+  function renderTeamDelta(teams) {
+    const tbody = $('team-delta-table').querySelector('tbody');
+    if (!teams || !teams.length) { tbody.innerHTML = '<tr><td colspan="7" class="loading-msg">No team data</td></tr>'; return; }
+    tbody.innerHTML = teams.map(t => {
+      const baseline = safeNum(t.baseline_prize_usd_m, 9.0);
+      const current = safeNum(t.current_prize_usd_m, 9.0);
+      const delta = safeNum(t.prize_delta_usd_m, 0);
+      const hasData = !!t.has_latest_delta;
+      const opacity = !hasData ? 'opacity:0.6' : '';
+      const color = delta > 0 ? '#16a34a' : '#666';
+      return '<tr style="' + opacity + '"><td><strong>' + (t.team_name || 'Unknown') + '</strong></td>' +
+        '<td>' + (t.group_name || '-') + '</td>' +
+        '<td>' + (t.mapped_stage || 'Group Stage') + '</td>' +
+        '<td>' + (t.status || '<span style="color:#999">Group Stage</span>') + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(baseline) + '</td>' +
+        '<td class="text-right font-mono">' + fmtM(current) + '</td>' +
+        '<td class="text-right font-mono" style="color:' + color + '">' + fmtDelta(delta) + '</td></tr>';
+    }).join('');
+  }
+
+  // ── Main Orchestrator ──
+  async function loadAll() {
+    const statusEl = $('financial-delta-status');
+    if (statusEl) { statusEl.textContent = 'Loading...'; statusEl.style.color = '#2563eb'; }
+
+    try {
+      // Fetch all in parallel
+      const [teams, continents, prizeTiers] = await Promise.all([
+        fetchSupa('wc2026_team_financial_live', '*', 'continent_label,team_name').catch(e => { console.error('teams fetch:', e); return []; }),
+        fetchSupa('wc2026_continent_financial_live', '*', 'total_earnings_usd_m.desc').catch(e => { console.error('continents fetch:', e); return []; }),
+        fetchSupa('wc2026_prize_tiers', '*', 'display_order').catch(e => { console.error('prize tiers fetch:', e); return []; })
+      ]);
+
+      // Update timestamp and coverage
+      const now = new Date().toLocaleString();
+      $('last-updated').textContent = now;
+      $('live-status').textContent = (teams.length || 0) + ' matches loaded — ' + (teams.filter(t => t.status && t.status !== 'Group Stage').length) + ' teams updated';
+      $('coverage-banner').innerHTML = 'Last Updated: <strong>' + now + '</strong> — Stage 1 Partial — Round of 32<br>Coverage: ' + (teams.length || 0) + '/48 teams | Next: After each knockout round';
+
+      // Render everything
+      renderSummary(teams);
+      renderKnockoutTracking(teams);
+      renderTCIKPI(teams);
+      renderGroupMetrics(teams);
+      renderGoalProgression(teams);
+      renderContinentalFinancial(continents);
+      renderTeamDelta(teams);
+
+      // Prize tiers (separate table)
+      if (prizeTiers && prizeTiers.length) {
+        const tbody = $('prize-tiers-table').querySelector('tbody');
+        tbody.innerHTML = prizeTiers.map(r => '<tr><td>' + (r.stage || '-') + '</td><td>' + (r.position || '-') + '</td><td class="text-right font-mono">$' + (r.prize_usd_m || '0') + 'M</td></tr>').join('');
+      }
+
+      // Match results (separate fetch)
+      await loadKnockoutResults();
+      await loadDayByDay();
+
+      if (statusEl) {
+        statusEl.innerHTML = 'Updated: ' + now + ' <button onclick="window.location.reload()" style="margin-left:10px;padding:3px 10px;background:#2563eb;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:0.75rem">Refresh</button>';
+        statusEl.style.color = '#16a34a';
+      }
+    } catch (err) {
+      console.error('Dashboard load failed:', err);
+      if (statusEl) { statusEl.textContent = 'Error: ' + err.message; statusEl.style.color = '#dc2626'; }
+    }
+  }
+
+  // Start
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadAll);
+  } else {
+    loadAll();
+  }
+})();
+</script>
+</body>
+</html>
 <p class="update-note">Last Updated: <strong>2026-07-02</strong> &mdash; Stage 1 Partial &mdash; Round of 32 through 2026-07-02<br>Coverage: 32/32 teams | 24/32 classified by environment | 16 matches completed<br>Next: After each knockout round</p>
 
 <hr>
