@@ -366,7 +366,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="kpi-table">
             <thead><tr>
-              <th>Environment</th><th>Groups</th><th>Teams</th><th>Played</th><th>Advanced</th><th>Eliminated</th><th>Advance %</th><th>Avg GEI</th><th>Avg Goals</th><th>TCI Verdict</th>
+              <th onclick="sortKPI(0)" style="cursor:pointer">Environment &#8597;</th>
+              <th onclick="sortKPI(1)" style="cursor:pointer">Groups &#8597;</th>
+              <th onclick="sortKPI(2)" style="cursor:pointer">Teams &#8597;</th>
+              <th onclick="sortKPI(3)" style="cursor:pointer">Played &#8597;</th>
+              <th onclick="sortKPI(4)" style="cursor:pointer">Advanced &#8597;</th>
+              <th onclick="sortKPI(5)" style="cursor:pointer">Eliminated &#8597;</th>
+              <th onclick="sortKPI(6)" style="cursor:pointer">Advance % &#8597;</th>
+              <th onclick="sortKPI(7)" style="cursor:pointer">Avg GEI &#8597;</th>
+              <th onclick="sortKPI(8)" style="cursor:pointer">Avg Goals &#8597;</th>
+              <th onclick="sortKPI(9)" style="cursor:pointer">TCI Verdict &#8597;</th>
             </tr></thead>
             <tbody id="kpi-body"></tbody>
           </table>
@@ -2295,6 +2304,10 @@ function sortFSI(col) {
 function sortTeamGoal(col) {
   sortTable('team-goal-table', col, sortDirs, col >= 3 && col <= 10);
 }
+function sortKPI(col) {
+  sortTable('kpi-table', col, sortDirs, col >= 1 && col <= 8);
+}
+
 function sortGroupGoal(col) {
   sortTable('group-goal-table', col, sortDirs, col >= 2 && col <= 10);
 }
