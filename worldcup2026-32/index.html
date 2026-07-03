@@ -3232,7 +3232,7 @@ function renderFSIReport() {
       '<td>' + f.stage + '</td>' +
       '<td>' + f.team1 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v1score + '</span></td>' +
       '<td>' + f.team2 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v2score + '</span></td>' +
-      '<td style="font-weight:700;color:#0f172a">' + f.pvoWinner + '</td>' +
+      '<td style="font-weight:700;color:#0f172a">' + (f.projectedValueOptimalWinner || 'TBD') + '</td>' +
       '<td>' + f.actualWinner + '</td>' +
       '<td style="color:' + alignColor + ';font-weight:700">' + alignText + '</td>' +
       '<td style="color:' + deltaColor + ';font-weight:700">' + f.delta + '</td>' +
