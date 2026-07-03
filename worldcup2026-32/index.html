@@ -2919,27 +2919,164 @@ function sortGroupGoal(col) {
 
 
 // ===== CONTINENT DETECTION =====
+// ===== CONTINENT MAP: FIFA codes + full names + common variants =====
+var CONTINENT_MAP = {
+  // NORTH AMERICA (CONCACAF)
+  'mex': 'north_america', 'mexico': 'north_america', 'méxico': 'north_america',
+  'usa': 'north_america', 'united states': 'north_america', 'united states of america': 'north_america', 'us': 'north_america',
+  'can': 'north_america', 'canada': 'north_america',
+  'crc': 'north_america', 'costa rica': 'north_america',
+  'hon': 'north_america', 'honduras': 'north_america',
+  'jam': 'north_america', 'jamaica': 'north_america',
+  'hai': 'north_america', 'haiti': 'north_america', 'haïti': 'north_america',
+  'pan': 'north_america', 'panama': 'north_america', 'panamá': 'north_america',
+  'cuw': 'north_america', 'curaçao': 'north_america', 'curacao': 'north_america',
+  'cub': 'north_america', 'cuba': 'north_america',
+  'gua': 'north_america', 'guatemala': 'north_america',
+  'slv': 'north_america', 'el salvador': 'north_america',
+  'tri': 'north_america', 'trinidad': 'north_america', 'trinidad and tobago': 'north_america',
+
+  // SOUTH AMERICA (CONMEBOL)
+  'bra': 'south_america', 'brazil': 'south_america', 'brasil': 'south_america',
+  'arg': 'south_america', 'argentina': 'south_america',
+  'uru': 'south_america', 'uruguay': 'south_america',
+  'col': 'south_america', 'colombia': 'south_america',
+  'par': 'south_america', 'paraguay': 'south_america',
+  'ecu': 'south_america', 'ecuador': 'south_america',
+  'chi': 'south_america', 'chile': 'south_america',
+  'per': 'south_america', 'peru': 'south_america', 'perú': 'south_america',
+  'bol': 'south_america', 'bolivia': 'south_america',
+  'ven': 'south_america', 'venezuela': 'south_america',
+
+  // EUROPE (UEFA)
+  'ger': 'europe', 'germany': 'europe', 'deutschland': 'europe',
+  'fra': 'europe', 'france': 'europe',
+  'esp': 'europe', 'spain': 'europe', 'españa': 'europe',
+  'eng': 'europe', 'england': 'europe',
+  'ned': 'europe', 'netherlands': 'europe', 'nederland': 'europe', 'holland': 'europe',
+  'por': 'europe', 'portugal': 'europe',
+  'bel': 'europe', 'belgium': 'europe', 'belgië': 'europe',
+  'ita': 'europe', 'italy': 'europe', 'italia': 'europe',
+  'cro': 'europe', 'croatia': 'europe', 'hrvatska': 'europe',
+  'sui': 'europe', 'switzerland': 'europe', 'schweiz': 'europe',
+  'cze': 'europe', 'czechia': 'europe', 'czech republic': 'europe', 'česká republika': 'europe',
+  'bih': 'europe', 'bosnia': 'europe', 'bosnia and herzegovina': 'europe', 'bosna i hercegovina': 'europe',
+  'sco': 'europe', 'scotland': 'europe', 'alba': 'europe',
+  'swe': 'europe', 'sweden': 'europe', 'sverige': 'europe',
+  'nor': 'europe', 'norway': 'europe', 'norge': 'europe',
+  'aut': 'europe', 'austria': 'europe', 'österreich': 'europe',
+  'tur': 'europe', 'turkey': 'europe', 'türkiye': 'europe',
+  'wal': 'europe', 'wales': 'europe', 'cymru': 'europe',
+  'pol': 'europe', 'poland': 'europe', 'polska': 'europe',
+  'srb': 'europe', 'serbia': 'europe', 'srbija': 'europe',
+  'den': 'europe', 'denmark': 'europe', 'danmark': 'europe',
+  'ukr': 'europe', 'ukraine': 'europe', 'україна': 'europe',
+  'hun': 'europe', 'hungary': 'europe', 'magyarország': 'europe',
+  'rou': 'europe', 'romania': 'europe', 'românia': 'europe',
+  'svk': 'europe', 'slovakia': 'europe', 'slovensko': 'europe',
+  'svn': 'europe', 'slovenia': 'europe', 'slovenija': 'europe',
+  'gre': 'europe', 'greece': 'europe', 'Ελλάδα': 'europe',
+  'fin': 'europe', 'finland': 'europe', 'suomi': 'europe',
+  'irl': 'europe', 'ireland': 'europe', 'éire': 'europe', 'republic of ireland': 'europe',
+  'nir': 'europe', 'northern ireland': 'europe',
+  'isl': 'europe', 'iceland': 'europe', 'ísland': 'europe',
+  'alb': 'europe', 'albania': 'europe', 'shqipëria': 'europe',
+  'mkd': 'europe', 'north macedonia': 'europe',
+  'bul': 'europe', 'bulgaria': 'europe', 'България': 'europe',
+  'blr': 'europe', 'belarus': 'europe', 'Беларусь': 'europe',
+  'rus': 'europe', 'russia': 'europe', 'Россия': 'europe',
+  'ltu': 'europe', 'lithuania': 'europe', 'lietuva': 'europe',
+  'lva': 'europe', 'latvia': 'europe', 'latvija': 'europe',
+  'est': 'europe', 'estonia': 'europe', 'eesti': 'europe',
+  'mda': 'europe', 'moldova': 'europe',
+  'cyp': 'europe', 'cyprus': 'europe', 'Κύπρος': 'europe',
+  'mlt': 'europe', 'malta': 'europe',
+  'lux': 'europe', 'luxembourg': 'europe', 'luxemburg': 'europe',
+  'lie': 'europe', 'liechtenstein': 'europe',
+  'and': 'europe', 'andorra': 'europe',
+  'smr': 'europe', 'san marino': 'europe',
+  'gib': 'europe', 'gibraltar': 'europe',
+  'kos': 'europe', 'kosovo': 'europe', 'kosovë': 'europe',
+  'mne': 'europe', 'montenegro': 'europe', 'crna gora': 'europe',
+  'arm': 'europe', 'armenia': 'europe', 'Հայաստան': 'europe',
+  'aze': 'europe', 'azerbaijan': 'europe',
+  'geo': 'europe', 'georgia': 'europe', 'საქართველო': 'europe',
+  'isr': 'europe', 'israel': 'europe', 'ישראל': 'europe',
+  'kaz': 'europe', 'kazakhstan': 'europe', 'Қазақстан': 'europe',
+
+  // AFRICA (CAF)
+  'mar': 'africa', 'morocco': 'africa', 'المغرب': 'africa',
+  'egy': 'africa', 'egypt': 'africa', 'مصر': 'africa',
+  'sen': 'africa', 'senegal': 'africa',
+  'nga': 'africa', 'nigeria': 'africa',
+  'gha': 'africa', 'ghana': 'africa',
+  'cmr': 'africa', 'cameroon': 'africa',
+  'civ': 'africa', 'ivory coast': 'africa', "côte d'ivoire": 'africa', 'cote d\'ivoire': 'africa',
+  'alg': 'africa', 'algeria': 'africa',
+  'tun': 'africa', 'tunisia': 'africa', 'تونس': 'africa',
+  'rsa': 'africa', 'south africa': 'africa',
+  'cpv': 'africa', 'cape verde': 'africa', 'cabo verde': 'africa',
+  'cod': 'africa', 'dr congo': 'africa', 'democratic republic of congo': 'africa', 'congo dr': 'africa',
+  'cgo': 'africa', 'congo': 'africa', 'republic of the congo': 'africa', 'congo brazzaville': 'africa',
+  'mli': 'africa', 'mali': 'africa',
+  'bfa': 'africa', 'burkina faso': 'africa',
+  'gui': 'africa', 'guinea': 'africa',
+  'zam': 'africa', 'zambia': 'africa',
+  'zim': 'africa', 'zimbabwe': 'africa',
+  'moz': 'africa', 'mozambique': 'africa', 'moçambique': 'africa',
+  'ang': 'africa', 'angola': 'africa',
+  'gab': 'africa', 'gabon': 'africa',
+  'eqg': 'africa', 'equatorial guinea': 'africa', 'guinea ecuatorial': 'africa',
+  'lby': 'africa', 'libya': 'africa', 'ليبيا': 'africa',
+  'sdn': 'africa', 'sudan': 'africa', 'السودان': 'africa',
+
+  // ASIA (AFC)
+  'jpn': 'asia', 'japan': 'asia', '日本': 'asia',
+  'kor': 'asia', 'south korea': 'asia', 'korea republic': 'asia', 'republic of korea': 'asia', '대한민국': 'asia',
+  'irn': 'asia', 'iran': 'asia', 'ایران': 'asia',
+  'ksa': 'asia', 'saudi arabia': 'asia', 'السعودية': 'asia',
+  'qat': 'asia', 'qatar': 'asia', 'قطر': 'asia',
+  'irq': 'asia', 'iraq': 'asia', 'العراق': 'asia',
+  'uzb': 'asia', 'uzbekistan': 'asia', 'o\'zbekiston': 'asia',
+  'jor': 'asia', 'jordan': 'asia', 'الأردن': 'asia',
+  'aus': 'asia', 'australia': 'australia', // Australia is OFC but plays in AFC
+  'chn': 'asia', 'china': 'asia', '中国': 'asia',
+  'uae': 'asia', 'united arab emirates': 'asia', 'الإمارات': 'asia',
+  'bhr': 'asia', 'bahrain': 'asia', 'البحرين': 'asia',
+  'oma': 'asia', 'oman': 'asia', 'عمان': 'asia',
+  'syria': 'asia', 'سوريا': 'asia',
+  'liban': 'asia', 'lebanon': 'asia', 'لبنان': 'asia',
+  'ple': 'asia', 'palestine': 'asia', 'فلسطين': 'asia',
+  'kuw': 'asia', 'kuwait': 'asia', 'الكويت': 'asia',
+  'tjk': 'asia', 'tajikistan': 'asia',
+  'tha': 'asia', 'thailand': 'asia', 'ประเทศไทย': 'asia',
+  'vie': 'asia', 'vietnam': 'asia', 'việt nam': 'asia',
+  'mas': 'asia', 'malaysia': 'asia',
+  'idn': 'asia', 'indonesia': 'asia',
+  'sgp': 'asia', 'singapore': 'asia',
+  'phi': 'asia', 'philippines': 'asia',
+  'ind': 'asia', 'india': 'asia', 'भारत': 'asia',
+
+  // OCEANIA (OFC)
+  'nzl': 'oceania', 'new zealand': 'oceania', 'aotearoa': 'oceania',
+  'fiji': 'oceania',
+  'png': 'oceania', 'papua new guinea': 'oceania'
+};
+
 function getContinent(teamName) {
-  // First check DB metadata
-  var n = (teamName || '').toLowerCase().trim();
-  for(var seed in (typeof dbTeamMetadata !== 'undefined' ? dbTeamMetadata : {})) {
-    if(dbTeamMetadata[seed] && dbTeamMetadata[seed].team_name && 
-       dbTeamMetadata[seed].team_name.toLowerCase() === n) {
-      return dbTeamMetadata[seed].continent_code || 'unknown';
-    }
+  if(!teamName) return 'unknown';
+  // Normalize: lowercase, remove accents, trim
+  var n = teamName.toLowerCase().trim()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // Direct lookup in map (handles FIFA codes, full names, variants)
+  if(CONTINENT_MAP[n]) return CONTINENT_MAP[n];
+
+  // Try substring match for composite names
+  for(var key in CONTINENT_MAP) {
+    if(n.indexOf(key) >= 0 || key.indexOf(n) >= 0) return CONTINENT_MAP[key];
   }
-  // Fallback to hardcoded mapping
-  var continents = {
-    'north_america': ['mexico','usa','united states','canada','panama','costa rica','honduras','jamaica','haiti','curacao','curaçao','cuba','guatemala','el salvador','trinidad'],
-    'south_america': ['brazil','argentina','uruguay','colombia','paraguay','ecuador','chile','peru','bolivia','venezuela'],
-    'europe': ['germany','france','spain','england','netherlands','portugal','belgium','italy','croatia','switzerland','czechia','czech republic','bosnia','bosnia and herzegovina','scotland','sweden','norway','austria','turkey','türkiye','wales','poland','serbia','denmark','ukraine','hungary','romania','slovakia','slovenia','greece','finland','ireland','northern ireland','iceland','albania','north macedonia','bulgaria','belarus','russia','lithuania','latvia','estonia','moldova','cyprus','malta','luxembourg','liechtenstein','andorra','san marino','gibraltar','kosovo','montenegro','armenia','azerbaijan','georgia','israel','kazakhstan'],
-    'africa': ['morocco','egypt','senegal','nigeria','ghana','cameroon','ivory coast','côte d\'ivoire','cote d\'ivoire','algeria','tunisia','south africa','cape verde','cabo verde','dr congo','democratic republic of congo','congo','mali','burkina faso','guinea','zambia','zimbabwe','mozambique','angola','gabon','equatorial guinea','libya','sudan','ethiopia','madagascar','mauritania','benin','uganda','kenya','tanzania','malawi','namibia','botswana','rwanda','burundi','djibouti','eritrea','somalia','central african republic','chad','comoros','lesotho','eswatini','gambia','liberia','sierra leone','togo','sao tome','seychelles','mauritius','south sudan'],
-    'asia': ['japan','south korea','korea republic','iran','saudi arabia','qatar','iraq','uzbekistan','jordan','australia','china','uae','united arab emirates','bahrain','oman','syria','lebanon','palestine','kuwait','tajikistan','thailand','vietnam','malaysia','indonesia','singapore','philippines','india','bangladesh','pakistan','afghanistan','mongolia','myanmar','cambodia','laos','brunei','timor leste','nepal','bhutan','sri lanka','maldives','kyrgyzstan','turkmenistan','north korea','korea dpr','chinese taipei','hong kong','guam'],
-    'oceania': ['new zealand','fiji','new caledonia','tahiti','papua new guinea','solomon islands','vanuatu','samoa','tonga','cook islands','american samoa']
-  };
-  for(var cont in continents) {
-    if(continents[cont].some(function(c) { return n.indexOf(c) >= 0; })) return cont;
-  }
+
   return 'unknown';
 };
 
@@ -3057,7 +3194,7 @@ function renderContinentKPI() {
 
   // Aggregate by continent
   var contData = {};
-  var allConts = ['north_america','south_america','europe','africa','asia','oceania'];
+  var allConts = ['north_america','south_america','europe','africa','asia','oceania','unknown'];
   allConts.forEach(function(c) {
     contData[c] = {
       code: c,
@@ -3075,10 +3212,12 @@ function renderContinentKPI() {
     };
   });
 
+  var unmatchedTeams = [];
   for(var seed in teamData) {
     var t = teamData[seed];
     var c = t.continent;
     if(!contData[c]) continue;
+    if(c === 'unknown') unmatchedTeams.push(t.team);
     contData[c].teams++;
     contData[c].totalEarnings += t.prizeMoney;
     contData[c].teamEarnings.push({ team: t.team, round: t.knockoutRound, prize: t.prizeMoney, eliminated: t.eliminated });
@@ -3094,6 +3233,9 @@ function renderContinentKPI() {
         contData[c].sfPlus++;
       }
     }
+  }
+  if(unmatchedTeams.length > 0) {
+    console.warn('Continent KPI: ' + unmatchedTeams.length + ' teams not matched to any continent:', unmatchedTeams.join(', '));
   }
 
   // Calculate resilience score = actual earnings / expected earnings
@@ -3122,7 +3264,8 @@ function renderContinentKPI() {
     europe: { bg: '#fef3c7', border: '#f59e0b', text: '#92400e' },
     africa: { bg: '#fee2e2', border: '#dc2626', text: '#7f1d1d' },
     asia: { bg: '#f3e8ff', border: '#9333ea', text: '#581c87' },
-    oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' }
+    oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' },
+    unknown: { bg: '#f1f5f9', border: '#94a3b8', text: '#475569' }
   };
 
   cards.innerHTML = '';
