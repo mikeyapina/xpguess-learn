@@ -3107,63 +3107,83 @@ function continentFlag(code) {
   return flags[code] || '';
 }
 
-// ===== SHARED: Derive eliminated teams from match data =====
-// Replaces all hardcoded groupStageEliminated arrays
-// Returns { eliminated: Set<teamName>, participated: Set<teamName>, matchLosers: {} }
-function getEliminatedTeamsFromMatches(matches) {
+// ===== SHARED: Derive team status from match data =====
+// Returns 4 categories:
+//   completedWinners  — teams that won a completed match (Alive/Advanced)
+//   completedLosers   — teams that lost a completed match (Eliminated)
+//   pendingTeams      — teams in scheduled/pending matches (Pending)
+//   unknownTeams      — teams with no match record yet (Unknown)
+function getTeamStatusFromMatches(matches) {
   var result = {
-    eliminated: new Set(),     // Teams that lost a match (eliminated)
-    participated: new Set(),   // Teams that appeared in any match
-    matchLosers: {}            // match_id -> loser team name
+    completedWinners: new Set(),  // Won a match → Alive/Advanced
+    completedLosers:  new Set(),  // Lost a match → Eliminated
+    pendingTeams:     new Set(),  // In a match with no winner yet → Pending
+    unknownTeams:     new Set(),  // No match record at all → Unknown
+    matchLosers: {},             // match_id → loser team name
+    participated:     new Set()   // All teams that appear in any match
   };
 
   if(!matches || matches.length === 0) return result;
 
+  // Apply known aliases for name normalization
+  var aliases = {
+    'united states': 'USA',
+    'bosnia and herzegovina': 'Bosnia',
+    'senegal': 'SENEGAL',
+    'ivory coast': 'Ivory Coast',
+    'cape verde': 'Cabo Verde'
+  };
+  function normalize(name) {
+    if(!name) return '';
+    return aliases[name.toLowerCase().trim()] || name;
+  }
+
+  var allMatchTeams = new Set();
+
   matches.forEach(function(m) {
-    // Only process matches with a winner (completed matches)
-    if(!m.winner || !m.team1 || !m.team2) return;
+    if(!m.team1 || !m.team2) return;
 
-    // Normalize team names using aliases
-    var t1 = m.team1;
-    var t2 = m.team2;
-    var w = m.winner;
+    var t1Norm = normalize(m.team1);
+    var t2Norm = normalize(m.team2);
+    var wNorm = m.winner ? normalize(m.winner) : null;
 
-    // Apply known aliases for name normalization
-    var aliases = {
-      'united states': 'USA',
-      'bosnia and herzegovina': 'Bosnia',
-      'senegal': 'SENEGAL',
-      'ivory coast': 'Ivory Coast',
-      'cape verde': 'Cabo Verde'
-    };
-    var t1Norm = aliases[t1.toLowerCase().trim()] || t1;
-    var t2Norm = aliases[t2.toLowerCase().trim()] || t2;
-    var wNorm = aliases[w.toLowerCase().trim()] || w;
+    allMatchTeams.add(t1Norm);
+    allMatchTeams.add(t2Norm);
 
-    // Track participation
-    result.participated.add(t1Norm);
-    result.participated.add(t2Norm);
-
-    // Identify loser (the team that is NOT the winner)
-    var loser = (wNorm === t1Norm) ? t2Norm : t1Norm;
-    result.eliminated.add(loser);
-    result.matchLosers[m.match_id || 'unknown'] = loser;
+    if(wNorm) {
+      // Completed match
+      result.completedWinners.add(wNorm);
+      var loser = (wNorm === t1Norm) ? t2Norm : t1Norm;
+      result.completedLosers.add(loser);
+      result.matchLosers[m.match_id || 'unknown'] = loser;
+    } else {
+      // Pending match (no winner yet)
+      result.pendingTeams.add(t1Norm);
+      result.pendingTeams.add(t2Norm);
+    }
   });
+
+  // Build participated = all teams that appear in any match
+  result.participated = allMatchTeams;
 
   return result;
 }
 
-// Convenience: just get the Set of eliminated team names
-function getEliminatedSet(matches) {
-  return getEliminatedTeamsFromMatches(matches).eliminated;
+// Backward-compatible function — all existing call sites use this name
+// Delegates to getTeamStatusFromMatches for consistent behavior
+function getEliminatedTeamsFromMatches(matches) {
+  return getTeamStatusFromMatches(matches);
 }
 
-// Convenience: check if a specific team is eliminated
+// Legacy convenience: get eliminated Set
+function getEliminatedSet(matches) {
+  return getTeamStatusFromMatches(matches).completedLosers;
+}
+
+// Check if a team is eliminated (only if they lost a completed match)
 function isTeamEliminated(teamName, matches) {
   if(!teamName || !matches) return false;
-  var eliminated = getEliminatedTeamsFromMatches(matches).eliminated;
-  // Check exact match first, then case-insensitive
-  if(eliminated.has(teamName)) return true;
+  var losers = getTeamStatusFromMatches(matches).completedLosers;
   var aliases = {
     'united states': 'USA',
     'bosnia and herzegovina': 'Bosnia',
@@ -3172,7 +3192,7 @@ function isTeamEliminated(teamName, matches) {
     'cape verde': 'Cabo Verde'
   };
   var normalized = aliases[teamName.toLowerCase().trim()] || teamName;
-  return eliminated.has(normalized);
+  return losers.has(normalized);
 }
 
 // ===== CONTINENT FINANCIAL KPI =====
@@ -3273,12 +3293,40 @@ function renderContinentKPI() {
     }
   });
 
-  // Mark teams that NEVER appear in any match as group-stage eliminated
+  // Apply correct status based on match participation
+  // Rule:
+  //   Completed match + winner  → Alive/Advanced
+  //   Completed match + loser   → Eliminated
+  //   Match exists, no winner   → Pending
+  //   No match record at all    → Unknown / Awaiting fixture
+  var statusData = getTeamStatusFromMatches(matches);
+  // Name aliases (must match getTeamStatusFromMatches)
+  var _aliases = {
+    'united states': 'USA',
+    'bosnia and herzegovina': 'Bosnia',
+    'senegal': 'SENEGAL',
+    'ivory coast': 'Ivory Coast',
+    'cape verde': 'Cabo Verde'
+  };
+  function _normalize(n) { return _aliases[n.toLowerCase().trim()] || n; }
+
   for(var seed in teamData) {
-    if(!teamsInMatchesNormalized[seed]) {
+    var rawName = teamData[seed].team;
+    var normName = _normalize(rawName);
+
+    if(statusData.completedWinners.has(normName)) {
+      teamData[seed].status = 'Alive';
+      teamData[seed].eliminated = false;
+    } else if(statusData.completedLosers.has(normName)) {
       teamData[seed].eliminated = true;
-      teamData[seed].knockoutRound = 'Group Stage';
-      teamData[seed].prizeMoney = prizeTiers['Group Stage'];
+      // knockoutRound set below in match processing
+    } else if(statusData.pendingTeams.has(normName)) {
+      teamData[seed].status = 'Pending';
+      teamData[seed].eliminated = false;
+    } else {
+      teamData[seed].status = 'Unknown';
+      teamData[seed].eliminated = false;
+      teamData[seed].knockoutRound = 'Awaiting Fixture';
     }
   }
 
@@ -3363,8 +3411,10 @@ function renderContinentKPI() {
       label: continentLabel(c),
       flag: continentFlag(c),
       teams: 0,
-      alive: 0,
-      eliminated: 0,
+      alive: 0,        // Won a completed match
+      pending: 0,      // In a scheduled/pending match
+      eliminated: 0,   // Lost a completed match
+      unknown: 0,      // No match record yet
       r32Out: 0,
       r16Out: 0,
       qfOut: 0,
@@ -3382,18 +3432,23 @@ function renderContinentKPI() {
     if(c === 'unknown') unmatchedTeams.push(t.team);
     contData[c].teams++;
     contData[c].totalEarnings += t.prizeMoney;
-    contData[c].teamEarnings.push({ team: t.team, round: t.knockoutRound, prize: t.prizeMoney, eliminated: t.eliminated });
+    contData[c].teamEarnings.push({ team: t.team, round: t.knockoutRound, prize: t.prizeMoney, eliminated: t.eliminated, status: t.status });
 
-    if(t.eliminated) {
-      contData[c].eliminated++;
-      if(t.knockoutRound === 'Round of 32') contData[c].r32Out++;
-      else if(t.knockoutRound === 'Round of 16') contData[c].r16Out++;
-      else if(t.knockoutRound === 'Quarter-Finals') contData[c].qfOut++;
-    } else {
+    // Classify by status (NOT by elimination flag alone)
+    if(t.status === 'Alive') {
       contData[c].alive++;
       if(['Semi-Finals','Final','Winner','Runner-up','Third Place','Fourth Place'].indexOf(t.knockoutRound) >= 0) {
         contData[c].sfPlus++;
       }
+    } else if(t.status === 'Pending') {
+      contData[c].pending++;
+    } else if(t.status === 'Unknown' || t.status === 'Awaiting Fixture') {
+      contData[c].unknown++;
+    } else if(t.eliminated) {
+      contData[c].eliminated++;
+      if(t.knockoutRound === 'Round of 32') contData[c].r32Out++;
+      else if(t.knockoutRound === 'Round of 16') contData[c].r16Out++;
+      else if(t.knockoutRound === 'Quarter-Finals') contData[c].qfOut++;
     }
   }
   if(unmatchedTeams.length > 0) {
@@ -3441,10 +3496,11 @@ function renderContinentKPI() {
     card.innerHTML =
       '<div style="font-size:1.5rem;margin-bottom:.25rem">' + d.flag + '</div>' +
       '<div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:' + col.text + ';font-weight:700;margin-bottom:.5rem">' + d.label + '</div>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.85rem;text-align:center">' +
-      '<div><div style="font-size:1.25rem;font-weight:800;color:' + col.text + '">' + d.teams + '</div><div style="color:#64748b;font-size:.7rem">Teams</div></div>' +
-      '<div><div style="font-size:1.25rem;font-weight:800;color:#16a34a">' + d.alive + '</div><div style="color:#64748b;font-size:.7rem">Alive</div></div>' +
-      '<div><div style="font-size:1.25rem;font-weight:800;color:#dc2626">' + d.eliminated + '</div><div style="color:#64748b;font-size:.7rem">Out</div></div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.3rem;font-size:.85rem;text-align:center">' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#dc2626">' + d.eliminated + '</div><div style="color:#64748b;font-size:.65rem">Out</div></div>' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
       '</div>' +
       '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid ' + col.border + ';display:flex;justify-content:space-between;align-items:center">' +
       '<div style="font-size:.85rem;color:#64748b">$' + (d.totalEarnings || 0).toFixed(1) + 'M total</div>' +
@@ -5454,15 +5510,45 @@ function updateCoverageStats() {
 async function loadMatchesFromDB() {
   if(!supabaseClient) return;
   try {
+    // Try primary query with tournament filter
     var { data: matches, error } = await supabaseClient.from('wc2026_matches').select('*').eq('tournament','WC2026').order('match_id',{ascending:true});
-    console.log('loadMatchesFromDB: query returned', matches ? matches.length : 0, 'matches');
-    if(error) { showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (matches):</strong> ' + error.message + '</div>','error'); return; }
+    console.log('loadMatchesFromDB: primary query returned', matches ? matches.length : 0, 'matches');
+    
+    // Fallback 1: try without tournament filter if empty
+    if((!matches || matches.length === 0) && !error) {
+      console.log('loadMatchesFromDB: trying fallback query without tournament filter...');
+      var fb1 = await supabaseClient.from('wc2026_matches').select('*').order('match_id',{ascending:true});
+      if(fb1.data && fb1.data.length > 0) {
+        matches = fb1.data;
+        console.log('loadMatchesFromDB: fallback returned', matches.length, 'matches');
+      }
+    }
+    
+    // Fallback 2: try with limit if still empty
+    if((!matches || matches.length === 0) && !error) {
+      console.log('loadMatchesFromDB: trying fallback query with limit...');
+      var fb2 = await supabaseClient.from('wc2026_matches').select('*').limit(50);
+      if(fb2.data && fb2.data.length > 0) {
+        matches = fb2.data;
+        console.log('loadMatchesFromDB: limit fallback returned', matches.length, 'matches');
+      }
+    }
+
+    if(error) { 
+      console.error('loadMatchesFromDB: DB error:', error);
+      showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DB Error (matches):</strong> ' + error.message + '</div>','error'); 
+      dbMatches = []; 
+      return; 
+    }
+    
     if(!matches || matches.length === 0) {
-      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data.</div>','warn');
+      console.warn('loadMatchesFromDB: wc2026_matches is empty after all query attempts');
+      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data. Check Supabase RLS policies.</div>','warn');
       dbMatches = [];
     } else {
       // Store for exports
       dbMatches = matches;
+      console.log('loadMatchesFromDB: stored', dbMatches.length, 'matches in dbMatches');
       // Validate keyspace — warn about contamination
       validateMatchKeyspace(matches);
     }
@@ -5545,7 +5631,7 @@ function toggleFSIAccess() {
   if(!guest || !user) return;
   guest.style.display = 'none';
   user.style.display = 'block';
-  renderFSIReport();
+  if(window._dbGroups && window._dbGroups.length > 0) renderFSIReport();
 }
 
 function toggleSupportAccess() {
@@ -5562,7 +5648,11 @@ function toggleContAccess() {
   if(!guest || !user) return;
   guest.style.display = 'none';
   user.style.display = 'block';
-  renderContinentKPI();
+  // Only render if data has loaded (dbMatches is populated)
+  // If not loaded yet, loadGroupsFromDB() will call renderContinentKPI after loading
+  if((dbMatches && dbMatches.length > 0) || (window._dbGroups && window._dbGroups.length > 0)) {
+    renderContinentKPI();
+  }
 }
 
 function toggleGoalAccess() {
@@ -5571,7 +5661,7 @@ function toggleGoalAccess() {
   if(!guest || !user) return;
   guest.style.display = 'none';
   user.style.display = 'block';
-  renderGoalTracker();
+  if(window._dbGroups && window._dbGroups.length > 0) renderGoalTracker();
 }
 
 function toggleMetricAccess() {
@@ -5580,7 +5670,7 @@ function toggleMetricAccess() {
   if(!guest || !user) return;
   guest.style.display = 'none';
   user.style.display = 'block';
-  renderGroupMetric();
+  if(window._dbGroups && window._dbGroups.length > 0) renderGroupMetric();
 }
 
 function toggleKPIAccess() {
@@ -5589,7 +5679,7 @@ function toggleKPIAccess() {
   if(!guest || !user) return;
   guest.style.display = 'none';
   user.style.display = 'block';
-  renderKPIReport();
+  if(window._dbGroups && window._dbGroups.length > 0) renderKPIReport();
 }
 
 function renderKPIReport() {
