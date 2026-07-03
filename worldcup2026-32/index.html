@@ -2227,12 +2227,11 @@ function renderTeamFinancialDelta() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
-  // Derive group-stage eliminations from match data
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(matches);
+  var eliminatedTeams = elimData.eliminated;
   var teamsInMatches = {};
-  matches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   var teamData = {};
   groups.forEach(function(g) {
@@ -2466,12 +2465,10 @@ function renderGroupMetric() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
-  // Derive group-stage eliminations from match data
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(matches);
   var teamsInMatches = {};
-  matches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   // Init from DB groups
   groups.forEach(function(g) {
@@ -2649,11 +2646,10 @@ function showGroupDetail(e, letter) {
 
   // Derive group-stage eliminations from match data
   var allMatches = dbMatches || [];
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(allMatches);
   var teamsInMatches = {};
-  allMatches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   var teamStatus = {};
   standings.forEach(function(s) {
@@ -2737,11 +2733,10 @@ function renderGoalTracker() {
 
   // Step 1: Get group stage goals from standings
   // Derive group-stage eliminations from match data
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(matches);
   var teamsInMatches = {};
-  matches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   groups.forEach(function(g) {
     var standings = Array.isArray(g.standings) ? g.standings : [];
@@ -3112,6 +3107,74 @@ function continentFlag(code) {
   return flags[code] || '';
 }
 
+// ===== SHARED: Derive eliminated teams from match data =====
+// Replaces all hardcoded groupStageEliminated arrays
+// Returns { eliminated: Set<teamName>, participated: Set<teamName>, matchLosers: {} }
+function getEliminatedTeamsFromMatches(matches) {
+  var result = {
+    eliminated: new Set(),     // Teams that lost a match (eliminated)
+    participated: new Set(),   // Teams that appeared in any match
+    matchLosers: {}            // match_id -> loser team name
+  };
+
+  if(!matches || matches.length === 0) return result;
+
+  matches.forEach(function(m) {
+    // Only process matches with a winner (completed matches)
+    if(!m.winner || !m.team1 || !m.team2) return;
+
+    // Normalize team names using aliases
+    var t1 = m.team1;
+    var t2 = m.team2;
+    var w = m.winner;
+
+    // Apply known aliases for name normalization
+    var aliases = {
+      'united states': 'USA',
+      'bosnia and herzegovina': 'Bosnia',
+      'senegal': 'SENEGAL',
+      'ivory coast': 'Ivory Coast',
+      'cape verde': 'Cabo Verde'
+    };
+    var t1Norm = aliases[t1.toLowerCase().trim()] || t1;
+    var t2Norm = aliases[t2.toLowerCase().trim()] || t2;
+    var wNorm = aliases[w.toLowerCase().trim()] || w;
+
+    // Track participation
+    result.participated.add(t1Norm);
+    result.participated.add(t2Norm);
+
+    // Identify loser (the team that is NOT the winner)
+    var loser = (wNorm === t1Norm) ? t2Norm : t1Norm;
+    result.eliminated.add(loser);
+    result.matchLosers[m.match_id || 'unknown'] = loser;
+  });
+
+  return result;
+}
+
+// Convenience: just get the Set of eliminated team names
+function getEliminatedSet(matches) {
+  return getEliminatedTeamsFromMatches(matches).eliminated;
+}
+
+// Convenience: check if a specific team is eliminated
+function isTeamEliminated(teamName, matches) {
+  if(!teamName || !matches) return false;
+  var eliminated = getEliminatedTeamsFromMatches(matches).eliminated;
+  // Check exact match first, then case-insensitive
+  if(eliminated.has(teamName)) return true;
+  var aliases = {
+    'united states': 'USA',
+    'bosnia and herzegovina': 'Bosnia',
+    'senegal': 'SENEGAL',
+    'ivory coast': 'Ivory Coast',
+    'cape verde': 'Cabo Verde'
+  };
+  var normalized = aliases[teamName.toLowerCase().trim()] || teamName;
+  return eliminated.has(normalized);
+}
+
 // ===== CONTINENT FINANCIAL KPI =====
 function renderContinentKPI() {
   var cards = document.getElementById('cont-cards');
@@ -3132,11 +3195,10 @@ function renderContinentKPI() {
 
   // Derive group-stage eliminations from match data:
   // Any team that NEVER appears in wc2026_matches is a group-stage exit
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(matches);
   var teamsInMatches = {};
-  matches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   // Build per-team data with continent (first pass - no elimination yet)
   var teamData = {};
@@ -3678,11 +3740,10 @@ function renderEPIReport() {
   });
 
   // Derive group-stage eliminations from match data for EPI calculation
+  // Derive eliminations from match data using shared function
+  var elimData = getEliminatedTeamsFromMatches(matches);
   var teamsInMatches = {};
-  matches.forEach(function(m) {
-    if(m.team1) teamsInMatches[m.team1] = true;
-    if(m.team2) teamsInMatches[m.team2] = true;
-  });
+  elimData.participated.forEach(function(t) { teamsInMatches[t] = true; });
 
   // Process groups
   groups.forEach(function(g) {
