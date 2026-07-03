@@ -309,7 +309,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
   <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-02</span> &mdash; <span id="last-round">Stage 1 Partial — Round of 32 through 2026-07-02</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
   <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
-  <strong style="color:#0f172a">Coverage:</strong> 32/32 teams | 24/32 classified by environment | 16 matches completed
+  <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">32/32 teams | 24/32 classified by environment | Loading matches...</span>
 </div>
 
 <section id="summary">
@@ -3452,20 +3452,30 @@ function renderEPIReport() {
   // Populate headline finding
   var headlineText = document.getElementById('epi-headline-text');
   if(headlineText && activeRows && activeRows.length > 0) {
-    var topEnv = activeRows[0];
+    // Find Open environment specifically; fall back to highest EPI
+    var openEnv = activeRows.find(function(d) { return d.env === 'open'; });
+    var topEnv = openEnv || activeRows[0];
+
     if(topEnv && topEnv.label && topEnv.epi) {
-      var tied = activeRows.filter(function(d) { return d && d.epi === topEnv.epi && d.env !== topEnv.env; });
-      var tiedNames = tied && tied.length > 0 ? tied.map(function(d) { return d.label; }).join(' and ') : '';
       var headline = '';
-      if(tied && tied.length > 0) {
-        headline = '<strong>' + topEnv.label + ' and ' + tiedNames + ' environments are tied for highest preservation (' + topEnv.epi + '%).</strong>';
+      if(openEnv) {
+        // Specifically highlight Open environment
+        headline = '<strong>Open environments preserve at ' + openEnv.epi + '% EPI (' + openEnv.alive + '/' + openEnv.qualified + ' teams alive).</strong>';
+        // Compare to other environments
+        var others = activeRows.filter(function(d) { return d.env !== 'open' && d.qualified > 0; });
+        if(others.length > 0) {
+          var bestOther = others[0]; // already sorted by EPI
+          headline += ' This is ' + (parseFloat(openEnv.epi) >= parseFloat(bestOther.epi) ? 'at or above' : 'below') + ' the ' + bestOther.label + ' baseline of ' + bestOther.epi + '%.';
+        }
       } else {
+        // Fallback: show highest EPI environment
         headline = '<strong>' + topEnv.label + ' environments lead in preservation at ' + topEnv.epi + '% EPI.</strong>';
       }
+
       if(activeRows.length > 1) {
         var bottom = activeRows[activeRows.length - 1];
-        if(bottom && bottom.label && bottom.epi) {
-          headline += ' ' + bottom.label + ' environments have fallen to ' + bottom.epi + '%.';
+        if(bottom && bottom.label && bottom.epi && bottom.env !== topEnv.env) {
+          headline += ' ' + bottom.label + ' environments trail at ' + bottom.epi + '%.';
         }
       }
       headline += '<br><span style="color:#94a3b8;font-size:.9rem">Every match adds another observation to the survival curve.</span>';
@@ -4279,6 +4289,38 @@ function renderKOTableFromTeams(teams) {
       '<td id="path-' + t.seed.toLowerCase() + '">' + t.path + '</td>';
     body.appendChild(tr);
   });
+
+  // After rendering the KO table, apply match results to update positions
+  applyMatchResultsToKOTable();
+}
+
+function applyMatchResultsToKOTable() {
+  // Apply match winner/loser data to the KO table after it's rendered
+  if(!dbMatches || dbMatches.length === 0) return;
+
+  var nameToSeed = {};
+  for(var seed in dbSeedMap) { if(dbSeedMap[seed]) nameToSeed[dbSeedMap[seed]] = seed; }
+
+  dbMatches.forEach(function(m) {
+    if(!m.winner) return;
+
+    var winnerSeed = nameToSeed[m.winner];
+    var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
+    var loserSeed = nameToSeed[loserName];
+
+    if(winnerSeed) {
+      var koCell = document.getElementById('ko-' + winnerSeed.toLowerCase());
+      var pathCell = document.getElementById('path-' + winnerSeed.toLowerCase());
+      if(koCell) koCell.innerHTML = '<span class="result-win">' + (m.stage || 'Advanced') + ' - Winner</span>';
+      if(pathCell) pathCell.textContent = (m.stage || 'Advanced') + ' - Winner';
+    }
+    if(loserSeed) {
+      var koCell2 = document.getElementById('ko-' + loserSeed.toLowerCase());
+      var pathCell2 = document.getElementById('path-' + loserSeed.toLowerCase());
+      if(koCell2) koCell2.innerHTML = '<span class="result-loss">Eliminated ' + (m.stage || '') + '</span>';
+      if(pathCell2) pathCell2.textContent = 'Eliminated ' + (m.stage || '');
+    }
+  });
 }
 
 function getGroupColor(letter) {
@@ -4378,7 +4420,20 @@ async function loadPrizeTiers() {
   } catch(e) { console.error('loadPrizeTiers error:', e); return null; }
 }
 
-var dbFSIConfig = {};
+var dbFSIConfig = {
+  pos_weight_1: 4,
+  pos_weight_2: 3,
+  pos_weight_3: 2,
+  pos_weight_4: 1,
+  env_mult_open: 1.2,
+  env_mult_balanced: 1.0,
+  env_mult_suppressed: 0.8,
+  env_mult_dominant: 0.9,
+  env_mult_inverted: 1.1,
+  env_mult_default: 1.0,
+  gei_base: 1.0,
+  gei_factor: 0.5
+};
 var dbKPIVerdicts = {};
 var dbTeamMetadata = {}; // MUST exist before getContinent() runs
 
@@ -4674,6 +4729,9 @@ async function loadGroupsFromDB() {
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
 
+    // Update coverage stats with dynamic counts
+    updateCoverageStats();
+
     // Save to localStorage for offline use
     saveToLocalCache();
 
@@ -4687,6 +4745,20 @@ async function loadGroupsFromDB() {
   }
 }
 function ucFirst(str) { return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
+
+function updateCoverageStats() {
+  var groups = window._dbGroups || [];
+  var matches = dbMatches || [];
+  var teamsWithEnv = 0;
+  groups.forEach(function(g) {
+    if(g.environment_type) teamsWithEnv += (Array.isArray(g.standings) ? g.standings.length : 0);
+  });
+  var completedMatches = matches.filter(function(m) { return m.winner; }).length;
+  var el = document.getElementById('coverage-stats');
+  if(el) {
+    el.textContent = '32/32 teams | ' + teamsWithEnv + '/32 classified by environment | ' + completedMatches + ' matches completed';
+  }
+}
 
 async function loadMatchesFromDB() {
   if(!supabaseClient) return;
@@ -4730,39 +4802,28 @@ async function loadMatchesFromDB() {
       });
     }
 
-    // Update KO table by seed
+    // Update teamExportData from match results (DOM updates handled by applyMatchResultsToKOTable after render)
     var updated = 0;
+    var completedCount = 0;
     matches.forEach(function(m) {
       if(!m.winner) return;
+      completedCount++;
 
       var winnerSeed = nameToSeed[m.winner];
       var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
       var loserSeed = nameToSeed[loserName];
 
-      if(winnerSeed) {
-        var koCell = document.getElementById('ko-' + winnerSeed.toLowerCase());
-        var pathCell = document.getElementById('path-' + winnerSeed.toLowerCase());
-        if(koCell) { koCell.innerHTML = '<span class="result-win">' + (m.stage || 'Advanced') + '</span>'; updated++; }
-        if(pathCell) pathCell.textContent = (m.stage || t('advanced')) + ' - Winner';
-      }
-      if(loserSeed) {
-        var koCell2 = document.getElementById('ko-' + loserSeed.toLowerCase());
-        var pathCell2 = document.getElementById('path-' + loserSeed.toLowerCase());
-        if(koCell2 && koCell2.textContent === 'TBD') { koCell2.innerHTML = '<span class="result-loss">Eliminated ' + (m.stage || '') + '</span>'; }
-        if(pathCell2) pathCell2.textContent = t('eliminated') + ' ' + (m.stage || '');
-      }
-
+      // Update teamExportData for exports and data consistency
       if(winnerSeed) {
         var idx = teamExportData.findIndex(function(x) { return x.seed === winnerSeed; });
-        if(idx >= 0) teamExportData[idx].knockout = (m.stage || 'Advanced') + ' - Winner';
+        if(idx >= 0) { teamExportData[idx].knockout = (m.stage || 'Advanced') + ' - Winner'; updated++; }
       }
       if(loserSeed) {
         var idx2 = teamExportData.findIndex(function(x) { return x.seed === loserSeed; });
         if(idx2 >= 0) teamExportData[idx2].knockout = 'Eliminated ' + (m.stage || '');
       }
 
-      // GEI row updated
-      // Update TEAM PROFILES R16+ column by seed
+      // Update profile table R16+ column if it exists
       if(winnerSeed) {
         var profRow = document.querySelector('#profile-table tbody tr[data-seed="' + winnerSeed + '"]');
         if(profRow && profRow.cells[7]) profRow.cells[7].innerHTML = '<span class="result-win">' + (m.stage || 'Advanced') + '</span>';
@@ -4773,7 +4834,7 @@ async function loadMatchesFromDB() {
       }
     });
 
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + matches.length + ' matches loaded &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
 
   } catch(e) { console.error('loadMatches error:', e); }
 }
