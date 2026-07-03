@@ -176,6 +176,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -2160,18 +2161,22 @@ function renderTeamFinancialDelta() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
   var teamData = {};
   groups.forEach(function(g) {
     var standings = Array.isArray(g.standings) ? g.standings : [];
     standings.forEach(function(s) {
       var seed = s.seed;
       var cont = getContinent(s.team);
+      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
       teamData[seed] = {
         seed: seed, team: s.team, group: g.group_letter,
         continent: continentLabel(cont), continentCode: cont,
         baseline: 9, currentPrize: 9, delta: 0,
-        exitStage: 'Group Stage', status: 'Still Alive',
-        eliminated: false, nextMatchup: 'TBD'
+        exitStage: isEliminated ? 'Group Stage' : 'Group Stage',
+        status: isEliminated ? 'Eliminated Group Stage' : 'Still Alive',
+        eliminated: isEliminated, nextMatchup: isEliminated ? '—' : 'TBD'
       };
     });
   });
@@ -2390,29 +2395,33 @@ function renderGroupMetric() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  // Mark group-stage eliminated teams
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
   // Init from DB groups
   groups.forEach(function(g) {
     var env = (g.environment_type || 'balanced').toLowerCase();
+    var standings = Array.isArray(g.standings) ? g.standings : [];
+    var aliveCount = 0;
+    standings.forEach(function(s) {
+      if(groupStageEliminated.indexOf(s.team) < 0) aliveCount++;
+    });
+
     groupStats[g.group_letter] = {
       letter: g.group_letter,
       envType: env,
       envLabel: ucFirst(env),
       gei: Math.round((g.gei || 0) * 100),
       totalGoals: g.total_goals || 0,
-      teamsQualified: 0, // will count from standings
-      teamsAlive: 0,
-      teamsEliminated: 0,
+      teamsQualified: standings.length,
+      teamsAlive: aliveCount,
+      teamsEliminated: standings.length - aliveCount,
       wins: 0,
       losses: 0,
       latestRound: 'Group Stage',
       survivalPct: 0,
       tciTrend: '--'
     };
-
-    // Count how many teams qualified (all 4 in WC2026)
-    var standings = Array.isArray(g.standings) ? g.standings : [];
-    groupStats[g.group_letter].teamsQualified = standings.length;
-    groupStats[g.group_letter].teamsAlive = standings.length; // start with all alive
   });
 
   // Process matches to find wins/losses by group
@@ -2568,6 +2577,16 @@ function showGroupDetail(e, letter) {
     teamStatus[s.team] = { team: s.team, seed: s.seed, goals: s.gs_goals || 0, status: 'Still Alive', eliminated: false, exitRound: 'Group Stage' };
   });
 
+  // Mark group-stage eliminated teams (16 teams did not advance to R32)
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  groupStageEliminated.forEach(function(teamName) {
+    if(teamStatus[teamName]) {
+      teamStatus[teamName].eliminated = true;
+      teamStatus[teamName].status = 'Eliminated Group Stage';
+      teamStatus[teamName].exitRound = 'Group Stage';
+    }
+  });
+
   matches.forEach(function(m) {
     if(!m.winner || !m.team1 || !m.team2) return;
     var loser = (m.winner === m.team1) ? m.team2 : m.team1;
@@ -2638,10 +2657,13 @@ function renderGoalTracker() {
   var teamGoals = {};
 
   // Step 1: Get group stage goals from standings
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
   groups.forEach(function(g) {
     var standings = Array.isArray(g.standings) ? g.standings : [];
     standings.forEach(function(s) {
       var seed = s.seed;
+      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
       teamGoals[seed] = {
         seed: seed,
         team: s.team,
@@ -2650,7 +2672,7 @@ function renderGoalTracker() {
         groupGoals: s.gs_goals || 0,
         koGoalsByRound: {},
         koTotal: 0,
-        status: 'Still Alive'
+        status: isEliminated ? 'Eliminated Group Stage' : 'Still Alive'
       };
       rounds.forEach(function(r) { teamGoals[seed].koGoalsByRound[r] = 0; });
     });
@@ -2887,6 +2909,9 @@ function renderContinentKPI() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
+  // Mark group-stage eliminated teams
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
   // Build per-team data with continent
   var teamData = {};
   groups.forEach(function(g) {
@@ -2894,6 +2919,7 @@ function renderContinentKPI() {
     standings.forEach(function(s) {
       var seed = g.group_letter + s.pos;
       var cont = getContinent(s.team);
+      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
       teamData[seed] = {
         seed: seed,
         team: s.team,
@@ -2903,7 +2929,7 @@ function renderContinentKPI() {
         groupGoals: s.gf || 0,
         knockoutRound: 'Group Stage',
         prizeMoney: prizeTiers['Group Stage'],
-        eliminated: false
+        eliminated: isEliminated
       };
     });
   });
@@ -3322,6 +3348,9 @@ function renderEPIReport() {
     };
   });
 
+  // Mark group-stage eliminated teams for EPI calculation
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
   // Process groups
   groups.forEach(function(g) {
     if(!g) return;
@@ -3334,9 +3363,14 @@ function renderEPIReport() {
     }
     if(!Array.isArray(standings)) standings = [];
 
+    var aliveCount = 0;
+    standings.forEach(function(s) {
+      if(groupStageEliminated.indexOf(s.team) < 0) aliveCount++;
+    });
+
     envData[env].groups.add(g.group_letter);
     envData[env].qualified += standings.length;
-    envData[env].alive += standings.length; // start with all alive
+    envData[env].alive += aliveCount;
     envData[env].groupGoals += (g.total_goals || 0);
   });
 
