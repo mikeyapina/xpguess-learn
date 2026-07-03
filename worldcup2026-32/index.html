@@ -2899,12 +2899,20 @@ function renderContinentKPI() {
   var analysisDiv = document.getElementById('cont-analysis');
   if(!cards || !tbody) return;
 
-  // WC2026 Prize Money Tiers (USD millions)
-  var prizeTiers = (typeof dbPrizeTiers !== 'undefined' && dbPrizeTiers && Object.keys(dbPrizeTiers).length > 0) ? dbPrizeTiers : {
+  // WC2026 Prize Money Tiers (USD millions) — hardcoded, reliable
+  var prizeTiers = {
     'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15,
     'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27,
     'Third Place': 29, 'Runner-up': 33, 'Winner': 50
-  }; // Uses dbPrizeTiers if loaded, else fallback
+  };
+  // Merge valid DB values on top (ignore null/undefined)
+  if(typeof dbPrizeTiers !== 'undefined' && dbPrizeTiers) {
+    for(var key in dbPrizeTiers) {
+      if(typeof dbPrizeTiers[key] === 'number' && dbPrizeTiers[key] > 0) {
+        prizeTiers[key] = dbPrizeTiers[key];
+      }
+    }
+  }
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
