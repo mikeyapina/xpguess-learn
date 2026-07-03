@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
 <link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/">
 <meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
@@ -302,7 +305,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
   <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-02</span> &mdash; <span id="last-round">Stage 1 Partial — Round of 32 through 2026-07-02</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
   <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
-  <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">32/32 teams | 24/32 classified by environment | Loading matches...</span>
+  <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">Loading from database...</span>
 </div>
 
 <section id="summary">
@@ -1809,6 +1812,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   var loadedPrizeTiers = await loadPrizeTiers();
   if(loadedPrizeTiers) { dbPrizeTiers = loadedPrizeTiers; console.log('Prize tiers loaded from DB'); }
 
+  // Load FSI config from database
+  await loadFSIConfig();
+
   // Set initial timestamp
   var tsEl = document.getElementById('last-timestamp');
   if(tsEl) tsEl.textContent = '(' + formatTimestamp() + ')';
@@ -3039,7 +3045,7 @@ var CONTINENT_MAP = {
   'irq': 'asia', 'iraq': 'asia', 'العراق': 'asia',
   'uzb': 'asia', 'uzbekistan': 'asia', 'o\'zbekiston': 'asia',
   'jor': 'asia', 'jordan': 'asia', 'الأردن': 'asia',
-  'aus': 'asia', 'australia': 'australia', // Australia is OFC but plays in AFC
+  'aus': 'asia', 'australia': 'asia', // Australia is OFC but plays in AFC
   'chn': 'asia', 'china': 'asia', '中国': 'asia',
   'uae': 'asia', 'united arab emirates': 'asia', 'الإمارات': 'asia',
   'bhr': 'asia', 'bahrain': 'asia', 'البحرين': 'asia',
@@ -3132,15 +3138,14 @@ function renderContinentKPI() {
     if(m.team2) teamsInMatches[m.team2] = true;
   });
 
-  // Build per-team data with continent
+  // Build per-team data with continent (first pass - no elimination yet)
   var teamData = {};
   groups.forEach(function(g) {
     var standings = Array.isArray(g.standings) ? g.standings : [];
-    standings.forEach(function(s) {
-      var seed = g.group_letter + s.pos;
+    standings.forEach(function(s, idx) {
+      var pos = s.position || s.pos || (s.seed ? s.seed.slice(1) : null) || (idx + 1);
+      var seed = g.group_letter + pos;
       var cont = getContinent(s.team);
-      // Team is group-stage eliminated if they never appear in any match
-      var isEliminated = !teamsInMatches[s.team];
       teamData[seed] = {
         seed: seed,
         team: s.team,
@@ -3150,21 +3155,116 @@ function renderContinentKPI() {
         groupGoals: s.gf || 0,
         knockoutRound: 'Group Stage',
         prizeMoney: prizeTiers['Group Stage'],
-        eliminated: isEliminated
+        eliminated: false  // Will be set after match processing
       };
     });
   });
+
+  // Known name aliases: match_name -> group_name
+  // AUDITED: All 22 matches checked against group standings
+  var TEAM_NAME_ALIASES = {
+    'united states': 'USA',
+    'bosnia and herzegovina': 'Bosnia',
+    'senegal': 'SENEGAL'
+  };
+
+  // Build normalized name -> seed lookup for robust matching
+  var nameToSeed = {};
+  for(var seed in teamData) {
+    var tName = teamData[seed].team;
+    nameToSeed[tName] = seed;
+    nameToSeed[tName.toLowerCase().trim()] = seed;
+    nameToSeed[tName.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'')] = seed;
+  }
+  function findSeedByName(matchName) {
+    if(!matchName) return null;
+    var n = matchName.trim();
+    if(nameToSeed[n]) return nameToSeed[n];
+    n = n.toLowerCase().trim();
+    // Check aliases first
+    if(TEAM_NAME_ALIASES[n]) {
+      var aliasedSeed = nameToSeed[TEAM_NAME_ALIASES[n]] || nameToSeed[TEAM_NAME_ALIASES[n].toLowerCase()];
+      if(aliasedSeed) return aliasedSeed;
+    }
+    if(nameToSeed[n]) return nameToSeed[n];
+    n = n.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(nameToSeed[n]) return nameToSeed[n];
+    for(var key in nameToSeed) {
+      if(key.length > 3 && (n.indexOf(key) >= 0 || key.indexOf(n) >= 0)) return nameToSeed[key];
+    }
+    return null;
+  }
+
+  // Build normalized teamsInMatches (handles name differences)
+  var teamsInMatchesNormalized = {};
+  var unmatchedMatchTeams = [];
+  matches.forEach(function(m) {
+    if(m.team1) {
+      var s1 = findSeedByName(m.team1);
+      if(s1 && teamData[s1]) { teamsInMatchesNormalized[s1] = true; }
+      else if(m.team1) { unmatchedMatchTeams.push(m.team1); }
+    }
+    if(m.team2) {
+      var s2 = findSeedByName(m.team2);
+      if(s2 && teamData[s2]) { teamsInMatchesNormalized[s2] = true; }
+      else if(m.team2) { unmatchedMatchTeams.push(m.team2); }
+    }
+  });
+
+  // Mark teams that NEVER appear in any match as group-stage eliminated
+  for(var seed in teamData) {
+    if(!teamsInMatchesNormalized[seed]) {
+      teamData[seed].eliminated = true;
+      teamData[seed].knockoutRound = 'Group Stage';
+      teamData[seed].prizeMoney = prizeTiers['Group Stage'];
+    }
+  }
+
+  // ---- VISIBLE DEBUG: Show name matching results ----
+  (function showNameDebug() {
+    var groupTeamNames = [];
+    for(var s in teamData) groupTeamNames.push(teamData[s].team);
+    var matchTeamNames = [];
+    matches.forEach(function(m) { if(m.team1) matchTeamNames.push(m.team1); if(m.team2) matchTeamNames.push(m.team2); });
+    var uniqueMatchNames = [...new Set(matchTeamNames)];
+    var uniqueUnmatched = [...new Set(unmatchedMatchTeams)];
+
+    var debugEl = document.getElementById('cont-debug');
+    if(!debugEl) {
+      debugEl = document.createElement('div');
+      debugEl.id = 'cont-debug';
+      var cards = document.getElementById('cont-cards');
+      if(cards && cards.parentNode) cards.parentNode.insertBefore(debugEl, cards.nextSibling);
+    }
+    if(debugEl) {
+      debugEl.style.cssText = 'margin:1rem 0;padding:1rem;background:#fefce8;border:2px solid #f59e0b;border-radius:8px;font-size:.75rem;';
+      var html = '<h4 style="color:#92400e;margin-bottom:.5rem">Name Matching Debug</h4>';
+      html += '<div style="margin-bottom:.5rem"><strong>Group standings teams (' + groupTeamNames.length + '):</strong> ' + groupTeamNames.join(', ') + '</div>';
+      html += '<div style="margin-bottom:.5rem"><strong>Match data teams (' + uniqueMatchNames.length + '):</strong> ' + uniqueMatchNames.join(', ') + '</div>';
+      if(uniqueUnmatched.length > 0) {
+        html += '<div style="color:#dc2626;margin-bottom:.5rem"><strong>UNMATCHED match teams (' + uniqueUnmatched.length + '):</strong> ' + uniqueUnmatched.join(', ') + '</div>';
+      }
+      html += '<div style="color:#16a34a;margin-bottom:.5rem"><strong>Successfully matched:</strong> ' + Object.keys(teamsInMatchesNormalized).length + ' teams</div>';
+      html += '<div style="color:#dc2626"><strong>NOT in matches (group-stage exits):</strong> ';
+      var notInMatches = [];
+      for(var sd in teamData) { if(!teamsInMatchesNormalized[sd]) notInMatches.push(teamData[sd].team); }
+      html += notInMatches.join(', ') + '</div>';
+      debugEl.innerHTML = html;
+      debugEl.style.display = 'block';
+    }
+  })();
 
   // Process matches to find elimination round
   var roundOrder = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
   matches.forEach(function(m) {
     if(!m.winner || !m.team1 || !m.team2) return;
 
-    // Find seeds
-    var t1Seed = null, t2Seed = null;
-    for(var seed in teamData) {
-      if(teamData[seed].team === m.team1) t1Seed = seed;
-      if(teamData[seed].team === m.team2) t2Seed = seed;
+    var t1Seed = findSeedByName(m.team1);
+    var t2Seed = findSeedByName(m.team2);
+
+    if(!t1Seed || !t2Seed) {
+      console.warn('Continent KPI: Cannot find seeds for match:', m.team1, 'vs', m.team2, 'winner:', m.winner);
+      return;
     }
 
     // Winner advances to next round level
@@ -3389,14 +3489,16 @@ function renderFSIReport() {
   var teamValue = {};
   groups.forEach(function(g) {
     var st = Array.isArray(g.standings) ? g.standings : [];
-    st.forEach(function(s) {
+    st.forEach(function(s, idx) {
+      var pos = s.position || s.pos || (s.seed ? parseInt(s.seed.slice(1)) : null) || (idx + 1);
       // Financial value = group position weight * GEI environment multiplier
       // Higher position (1st) = more valuable
       // Open environment = more marketable
-      var posWeight = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['pos_weight_' + s.pos]) || {1:4,2:3,3:2,4:1}[s.pos] || 1;
-      var envMult = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_' + (g.environment_type || 'default')]) || (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_default']) || 0.8;
-      var geiScore = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
-      teamValue[s.team] = { team: s.team, group: g.group_letter, pos: s.pos, env: g.environment_type || 'balanced', gei: g.gei || 0, value: posWeight * envMult * geiScore, goals: s.gf || 0, pts: s.pts || 0 };
+      var cfg = getFSIConfig();
+      var posWeight = cfg['pos_weight_' + pos] || {1:4,2:3,3:2,4:1}[pos] || 1;
+      var envMult = cfg['env_mult_' + (g.environment_type || 'default')] || cfg['env_mult_default'] || 0.8;
+      var geiScore = (cfg['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (cfg['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
+      teamValue[s.team] = { team: s.team, group: g.group_letter, pos: pos, env: g.environment_type || 'balanced', gei: g.gei || 0, value: posWeight * envMult * geiScore, goals: s.gf || 0, pts: s.pts || 0 };
     });
   });
 
@@ -4209,10 +4311,12 @@ function buildFSIData() {
   var teamValue = {};
   groups.forEach(function(g) {
     var st = Array.isArray(g.standings) ? g.standings : [];
-    st.forEach(function(s) {
-      var posWeight = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['pos_weight_' + s.pos]) || {1:4,2:3,3:2,4:1}[s.pos] || 1;
-      var envMult = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_' + (g.environment_type || 'default')]) || (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['env_mult_default']) || 0.8;
-      var geiScore = (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (typeof dbFSIConfig !== 'undefined' && dbFSIConfig && dbFSIConfig['gei_factor'] || 0.4));
+    st.forEach(function(s, idx) {
+      var pos = s.position || s.pos || (s.seed ? parseInt(s.seed.slice(1)) : null) || (idx + 1);
+      var cfg = getFSIConfig();
+      var posWeight = cfg['pos_weight_' + pos] || {1:4,2:3,3:2,4:1}[pos] || 1;
+      var envMult = cfg['env_mult_' + (g.environment_type || 'default')] || cfg['env_mult_default'] || 0.8;
+      var geiScore = (cfg['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (cfg['gei_factor'] || 0.4));
       teamValue[s.team] = { value: posWeight * envMult * geiScore };
     });
   });
@@ -4590,8 +4694,26 @@ async function saveKnockout() {
 function renderTeamsFromDB(knockoutRows) {
   var groups = window._dbGroups || [];
   var koMap = {};
+
+  // PRIMARY: Derive knockout status from wc2026_matches (dbMatches)
+  // This is the ground truth for who advanced vs was eliminated
+  var matches = dbMatches || [];
+  var nameToSeed = {};
+  for(var seed in dbSeedMap) { if(dbSeedMap[seed]) nameToSeed[dbSeedMap[seed]] = seed; }
+
+  matches.forEach(function(m) {
+    if(!m.winner || !m.team1 || !m.team2) return;
+    var winnerSeed = nameToSeed[m.winner];
+    var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
+    var loserSeed = nameToSeed[loserName];
+    if(winnerSeed) koMap[winnerSeed.toUpperCase()] = (m.stage || 'Advanced') + ' - Winner';
+    if(loserSeed) koMap[loserSeed.toUpperCase()] = 'Eliminated ' + (m.stage || '');
+  });
+
+  // FALLBACK: Use knockout_results table only for teams NOT in dbMatches
   (knockoutRows || []).forEach(function(r) {
-    koMap[String(r.seed).toUpperCase()] = r.position || 'TBD';
+    var seed = String(r.seed).toUpperCase();
+    if(!koMap[seed]) koMap[seed] = r.position || 'TBD';
   });
 
   var teams = [];
@@ -4834,7 +4956,11 @@ function showPrizeTierError(context) {
   return msg;
 }
 
-var dbFSIConfig = {
+// FSI config — loaded from Supabase at init, fallback only if DB fails
+var dbFSIConfig = null; // Will be populated by loadFSIConfig()
+
+// Hardcoded fallback values — ONLY used if Supabase load fails
+var FSI_CONFIG_FALLBACK = {
   pos_weight_1: 4,
   pos_weight_2: 3,
   pos_weight_3: 2,
@@ -4848,6 +4974,56 @@ var dbFSIConfig = {
   gei_base: 1.0,
   gei_factor: 0.5
 };
+
+async function loadFSIConfig() {
+  if(!supabaseClient) {
+    console.warn('loadFSIConfig: no supabaseClient, using fallback');
+    dbFSIConfig = FSI_CONFIG_FALLBACK;
+    return;
+  }
+  try {
+    var { data, error } = await supabaseClient
+      .from('wc2026_fsi_config')
+      .select('*')
+      .eq('tournament', 'WC2026');
+    if(error || !data || data.length === 0) {
+      console.warn('loadFSIConfig: DB load failed, using fallback:', error);
+      dbFSIConfig = FSI_CONFIG_FALLBACK;
+      return;
+    }
+    // Build config from DB rows
+    var config = {};
+    data.forEach(function(row) {
+      if(row.config_key && row.config_value !== null && row.config_value !== undefined) {
+        var val = parseFloat(row.config_value);
+        if(!isNaN(val)) config[row.config_key] = val;
+      }
+    });
+    // Validate required keys
+    var required = ['pos_weight_1','pos_weight_2','pos_weight_3','pos_weight_4',
+                    'env_mult_open','env_mult_balanced','env_mult_suppressed',
+                    'env_mult_dominant','env_mult_inverted','env_mult_default',
+                    'gei_base','gei_factor'];
+    var missing = required.filter(function(k) { return config[k] === undefined; });
+    if(missing.length > 0) {
+      console.warn('loadFSIConfig: missing keys in DB:', missing.join(', '), '- merging with fallback');
+      // Merge: DB values take priority, fallback fills gaps
+      required.forEach(function(k) {
+        if(config[k] === undefined) config[k] = FSI_CONFIG_FALLBACK[k];
+      });
+    }
+    dbFSIConfig = config;
+    console.log('loadFSIConfig: loaded from DB', Object.keys(config).length, 'keys');
+  } catch(e) {
+    console.error('loadFSIConfig: exception, using fallback:', e);
+    dbFSIConfig = FSI_CONFIG_FALLBACK;
+  }
+}
+
+// Accessor that guarantees config is available (uses fallback if null)
+function getFSIConfig() {
+  return dbFSIConfig || FSI_CONFIG_FALLBACK;
+}
 var dbKPIVerdicts = {};
 var dbTeamMetadata = {}; // MUST exist before getContinent() runs
 
@@ -5068,6 +5244,35 @@ function renderAllFromCache() {
 }
 
 
+// ===== KEYSPACE VALIDATION =====
+// Warns when match table has contaminated keys (both A1-P1 and R32-XX styles)
+function validateMatchKeyspace(matches) {
+  if(!matches || matches.length === 0) return;
+  var oldKeys = matches.filter(function(m) { return m.match_id && /^[A-P]1$/.test(m.match_id); });
+  var newKeys = matches.filter(function(m) { return m.match_id && /^R32-\d{2}$/.test(m.match_id); });
+  var expectedNew = ['R32-01','R32-02','R32-03','R32-04','R32-05','R32-06','R32-07','R32-08',
+                     'R32-09','R32-10','R32-11','R32-12','R32-13','R32-14','R32-15','R32-16'];
+  var missing = expectedNew.filter(function(k) { return !matches.some(function(m) { return m.match_id === k; }); });
+
+  if(oldKeys.length > 0 && newKeys.length > 0) {
+    console.error('KEYSPACE CONTAMINATION DETECTED:', oldKeys.length, 'old-style keys (A1-P1) +', newKeys.length, 'new-style keys (R32-XX) in same table');
+    console.error('Old keys:', oldKeys.map(function(m) { return m.match_id; }).join(', '));
+    console.error('New keys:', newKeys.map(function(m) { return m.match_id; }).join(', '));
+    console.error('Missing R32 keys:', missing.join(', '));
+    showLoadStatus('<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b"><strong>DATA ERROR:</strong> Match table has contaminated keys (' + oldKeys.length + ' old + ' + newKeys.length + ' new). Missing: ' + missing.join(', ') + '. Run the rebuild SQL in Supabase.</div>','error');
+    return false;
+  }
+  if(oldKeys.length > 0) {
+    console.warn('WARNING: Using old-style match keys (A1-P1). Expected R32-01..R32-16.');
+    showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>WARNING:</strong> Match table uses old A1-P1 keys. Consider migrating to R32-01..R32-16 format.</div>','warn');
+    return true; // still processable
+  }
+  if(newKeys.length > 0 && missing.length > 0) {
+    console.warn('Incomplete R32 keyspace. Have:', newKeys.map(function(m) { return m.match_id; }).join(', '), 'Missing:', missing.join(', '));
+  }
+  return true;
+}
+
 // ===== LOAD GROUPS + MATCHES FROM SUPABASE =====
 // Uses ACTUAL schema: wc2026_groups(group_letter,gei,environment_type,total_goals,standings jsonb)
 //                     wc2026_matches(match_id,team1,team2,winner,stage)
@@ -5197,6 +5402,8 @@ async function loadMatchesFromDB() {
     } else {
       // Store for exports
       dbMatches = matches;
+      // Validate keyspace — warn about contamination
+      validateMatchKeyspace(matches);
     }
 
     // Build reverse map: name -> seed from dbSeedMap
