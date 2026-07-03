@@ -263,14 +263,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         </tr>
       </thead>
       <tbody id="prize-ladder-body">
-        <tr><td>Group Stage</td><td>33rd–48th</td><td>$9M</td><td style="color:#64748b;font-weight:700">—</td><td>16</td><td style="color:#64748b">$0M</td></tr>
-        <tr style="background:#fefce8"><td>Round of 32</td><td>17th–32nd</td><td>$11M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$2M</td><td>16</td><td style="color:#16a34a;font-weight:700">+$2M</td></tr>
-        <tr style="background:#fefce8"><td>Round of 16</td><td>9th–16th</td><td>$15M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>8</td><td style="color:#16a34a;font-weight:700">+$6M</td></tr>
-        <tr style="background:#fefce8"><td>Quarterfinals</td><td>5th–8th</td><td>$19M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>4</td><td style="color:#16a34a;font-weight:700">+$10M</td></tr>
-        <tr style="background:#fefce8"><td>Fourth Place</td><td>4th</td><td>$27M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$8M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$18M</td></tr>
-        <tr style="background:#fefce8"><td>Third Place</td><td>3rd</td><td>$29M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$2M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$20M</td></tr>
-        <tr style="background:#fefce8"><td>Runner-up</td><td>2nd</td><td>$33M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7">+$4M</td><td>1</td><td style="color:#16a34a;font-weight:700">+$24M</td></tr>
-        <tr style="background:#fefce8"><td>Champion</td><td>1st</td><td>$50M</td><td style="color:#16a34a;font-weight:800;background:#dcfce7;font-size:1.05rem">+$17M</td><td>1</td><td style="color:#16a34a;font-weight:800;font-size:1.05rem">+$41M</td></tr>
+        <!-- Populated by renderPrizeLadderTable() from dbPrizeTiers -->
       </tbody>
     </table>
   </div>
@@ -772,13 +765,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin:1rem 0">
           <h3 style="font-size:1rem;color:#0f172a;margin:0 0 1rem;font-weight:700">&#128200; Environment Survival Curves</h3>
           <canvas id="epi-canvas" width="1000" height="500" style="width:100%;height:auto;display:block;margin:0 auto"></canvas>
-          <div style="display:flex;justify-content:center;gap:1rem;margin-top:.5rem;font-size:.75rem;color:#64748b">
-            <span><span style="display:inline-block;width:12px;height:12px;background:#f59e0b;border-radius:2px;margin-right:.3rem"></span>Suppressed</span>
-            <span><span style="display:inline-block;width:12px;height:12px;background:#3b82f6;border-radius:2px;margin-right:.3rem"></span>Balanced</span>
-            <span><span style="display:inline-block;width:12px;height:12px;background:#16a34a;border-radius:2px;margin-right:.3rem"></span>Open</span>
-            <span><span style="display:inline-block;width:12px;height:12px;background:#dc2626;border-radius:2px;margin-right:.3rem"></span>Dominant</span>
-            <span><span style="display:inline-block;width:12px;height:12px;background:#f97316;border-radius:2px;margin-right:.3rem"></span>Inverted</span>
-          </div>
+          <!-- Legend is drawn on canvas — no duplicate HTML legend needed -->
         </div>
 
         <!-- EPI Data Table -->
@@ -1997,7 +1984,59 @@ function sortPrizeLadder(col) {
   sortTable('prize-ladder-table', col, sortDirs, isNumeric);
 }
 
-// ===== PRIZE DELTA GRAPH =====
+// ===== PRIZE LADDER TABLE — populated from dbPrizeTiers =====
+function renderPrizeLadderTable() {
+  var tbody = document.getElementById('prize-ladder-body');
+  if(!tbody) return;
+  var tiers = getPrizeTiers();
+  if(!tiers) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#dc2626;padding:1rem">' + showPrizeTierError('prize ladder table') + '</td></tr>';
+    return;
+  }
+
+  // Ordered stages with display info: [internal_label, display_name, position_range, teams_count]
+  // Matches your DB: Group Exit, R32 Exit, R16 Exit, QF Exit, 4th, 3rd, Runner-up, Champion
+  var stageInfo = [
+    ['Group Stage',     'Group Stage',       '33rd–48th',  16],
+    ['Round of 32',     'Round of 32',       '17th–32nd',  16],
+    ['Round of 16',     'Round of 16',       '9th–16th',    8],
+    ['Quarter-Finals',  'Quarter-Finals',    '5th–8th',     4],
+    ['Fourth Place',    'Fourth Place',      '4th',         1],
+    ['Third Place',     'Third Place',       '3rd',         1],
+    ['Runner-up',       'Runner-up',         '2nd',         1],
+    ['Winner',          'Champion',          '1st',         1]
+  ];
+
+  var baseline = tiers['Group Stage'] || 9;
+  var prevPrize = baseline;
+  var cumDelta = 0;
+  var html = '';
+
+  stageInfo.forEach(function(s, i) {
+    var internalLabel = s[0];
+    var displayName = s[1];
+    var position = s[2];
+    var teams = s[3];
+    var prize = tiers[internalLabel];
+    if(typeof prize !== 'number') return; // skip if DB missing this stage
+
+    var delta = prize - prevPrize;
+    cumDelta += delta;
+    var isFirst = (i === 0);
+    var isChampion = (internalLabel === 'Winner');
+    var bgStyle = isFirst ? '' : ' style="background:#fefce8"';
+    var deltaDisplay = isFirst ? '<span style="color:#64748b;font-weight:700">—</span>' : '<span style="color:#16a34a;font-weight:800;background:#dcfce7' + (isChampion ? ';font-size:1.05rem' : '') + '">+' + delta + 'M</span>';
+    var prizeDisplay = '$' + prize + 'M';
+    var cumDisplay = isFirst ? '<span style="color:#64748b">$0M</span>' : '<span style="color:#16a34a;font-weight:700' + (isChampion ? ';font-size:1.05rem' : '') + '">+' + cumDelta + 'M</span>';
+
+    html += '<tr' + bgStyle + '><td>' + displayName + '</td><td>' + position + '</td><td>' + prizeDisplay + '</td><td>' + deltaDisplay + '</td><td>' + teams + '</td><td>' + cumDisplay + '</td></tr>';
+    prevPrize = prize;
+  });
+
+  tbody.innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:#dc2626;padding:1rem">No valid prize tier data found in database.</td></tr>';
+}
+
+// ===== PRIZE DELTA GRAPH — populated from dbPrizeTiers =====
 function drawPrizeDeltaGraph() {
   var canvas = document.getElementById('prize-delta-canvas');
   if(!canvas) return;
@@ -2007,17 +2046,36 @@ function drawPrizeDeltaGraph() {
   var chartW = w - padding.left - padding.right;
   var chartH = h - padding.top - padding.bottom;
 
-  // Data: stage, prize, delta, cumulative
-  var data = [
-    { stage: 'Group', prize: 9, delta: 0, cum: 0, teams: 16 },
-    { stage: 'R32', prize: 11, delta: 2, cum: 2, teams: 16 },
-    { stage: 'R16', prize: 15, delta: 4, cum: 6, teams: 8 },
-    { stage: 'QF', prize: 19, delta: 4, cum: 10, teams: 4 },
-    { stage: '4th', prize: 27, delta: 8, cum: 18, teams: 1 },
-    { stage: '3rd', prize: 29, delta: 2, cum: 20, teams: 1 },
-    { stage: '2nd', prize: 33, delta: 4, cum: 24, teams: 1 },
-    { stage: '1st', prize: 50, delta: 17, cum: 41, teams: 1 }
+  // Build data from dbPrizeTiers
+  var tiers = getPrizeTiers();
+  if(!tiers) {
+    showPrizeTierError('prize delta graph');
+    return;
+  }
+
+  var stageOrder = [
+    { label: 'Group Stage',     display: 'Group Stage',  teams: 16 },
+    { label: 'Round of 32',     display: 'R32',          teams: 16 },
+    { label: 'Round of 16',     display: 'R16',          teams: 8 },
+    { label: 'Quarter-Finals',  display: 'QF',           teams: 4 },
+    { label: 'Fourth Place',    display: '4th',          teams: 1 },
+    { label: 'Third Place',     display: '3rd',          teams: 1 },
+    { label: 'Runner-up',       display: 'Runner-up',    teams: 1 },
+    { label: 'Winner',          display: 'Champion',     teams: 1 }
   ];
+
+  var baseline = tiers['Group Stage'] || 9;
+  var prevPrize = baseline;
+  var cumDelta = 0;
+  var data = [];
+  stageOrder.forEach(function(s) {
+    var prize = tiers[s.label];
+    if(typeof prize !== 'number') return;
+    var delta = prize - prevPrize;
+    cumDelta += delta;
+    data.push({ stage: s.display, prize: prize, delta: delta, cum: cumDelta, teams: s.teams });
+    prevPrize = prize;
+  });
 
   // Clear
   ctx.clearRect(0, 0, w, h);
@@ -2153,10 +2211,12 @@ function renderTeamFinancialDelta() {
   var analysisDiv = document.getElementById('financial-delta-analysis');
   if(!tbody) return;
 
-  var prizeTiers = { 'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15,
-    'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27,
-    'Third Place': 29, 'Runner-up': 33, 'Winner': 50
-  };
+  var prizeTiers = getPrizeTiers();
+  if(!prizeTiers) {
+    var container = document.getElementById('financial-delta-body');
+    if(container) container.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#dc2626;padding:1rem">' + showPrizeTierError('team financial delta') + '</td></tr>';
+    return;
+  }
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
@@ -2899,19 +2959,11 @@ function renderContinentKPI() {
   var analysisDiv = document.getElementById('cont-analysis');
   if(!cards || !tbody) return;
 
-  // WC2026 Prize Money Tiers (USD millions) — hardcoded, reliable
-  var prizeTiers = {
-    'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15,
-    'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27,
-    'Third Place': 29, 'Runner-up': 33, 'Winner': 50
-  };
-  // Merge valid DB values on top (ignore null/undefined)
-  if(typeof dbPrizeTiers !== 'undefined' && dbPrizeTiers) {
-    for(var key in dbPrizeTiers) {
-      if(typeof dbPrizeTiers[key] === 'number' && dbPrizeTiers[key] > 0) {
-        prizeTiers[key] = dbPrizeTiers[key];
-      }
-    }
+  var prizeTiers = getPrizeTiers();
+  if(!prizeTiers) {
+    var container = document.getElementById('cont-body');
+    if(container) container.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#dc2626;padding:1rem">' + showPrizeTierError('continental KPI') + '</td></tr>';
+    return;
   }
 
   var groups = window._dbGroups || [];
@@ -3703,9 +3755,19 @@ function drawEPISurvivalCurves(dailyData, envColors) {
   var ctx = canvas.getContext('2d');
   var w = canvas.width;
   var h = canvas.height;
-  var padding = { top: 30, right: 30, bottom: 50, left: 60 };
+  var padding = { top: 30, right: 30, bottom: 60, left: 60 };
   var chartW = w - padding.left - padding.right;
   var chartH = h - padding.top - padding.bottom;
+
+  // Determine which environments have data (>0 qualified teams)
+  // Check the last day's data — if an env has 0% EPI and never had data, skip it
+  var lastDay = dailyData[dailyData.length - 1];
+  var activeEnvs = [];
+  ['suppressed','balanced','open','dominant','inverted'].forEach(function(env) {
+    // Check if this env ever has a non-zero value across all days
+    var hasData = dailyData.some(function(d) { return parseFloat(d[env]) > 0; });
+    if(hasData) activeEnvs.push(env);
+  });
 
   // Clear canvas
   ctx.clearRect(0, 0, w, h);
@@ -3727,17 +3789,17 @@ function drawEPISurvivalCurves(dailyData, envColors) {
     ctx.fillText((100 - i * 20) + '%', padding.left - 8, y + 4);
   }
 
-  // X-axis labels
+  // X-axis labels (dates)
   dailyData.forEach(function(d, i) {
     var x = padding.left + (chartW / (dailyData.length - 1 || 1)) * i;
     ctx.fillStyle = '#64748b';
     ctx.font = '10px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(d.date.slice(5), x, h - 15);
+    ctx.fillText(d.date.slice(5), x, h - 40);
   });
 
-  // Draw survival curves for each environment
-  ['suppressed','balanced','open','dominant','inverted'].forEach(function(env) {
+  // Draw survival curves for ACTIVE environments only (skip 0-team envs like Inverted)
+  activeEnvs.forEach(function(env) {
     var color = envColors[env].color;
     ctx.strokeStyle = color;
     ctx.lineWidth = 2.5;
@@ -3751,15 +3813,44 @@ function drawEPISurvivalCurves(dailyData, envColors) {
     });
     ctx.stroke();
 
-    // Draw points
-    ctx.fillStyle = color;
+    // Draw points with date+value labels on hover-reveal (small text above point)
     dailyData.forEach(function(d, i) {
       var x = padding.left + (chartW / (dailyData.length - 1 || 1)) * i;
       var y = padding.top + chartH - (parseFloat(d[env]) / 100) * chartH;
+
+      // Draw point
+      ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
       ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw value label above point (small, only if not overlapping)
+      var val = parseFloat(d[env]).toFixed(1) + '%';
+      ctx.fillStyle = color;
+      ctx.font = 'bold 9px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(val, x, y - 10);
     });
+  });
+
+  // Legend (bottom) — only active environments
+  var legendY = h - 18;
+  var legendItems = activeEnvs.map(function(e) {
+    return { color: envColors[e].color, label: envColors[e].label };
+  });
+  var totalWidth = legendItems.length * 90;
+  var startX = padding.left + (chartW - totalWidth) / 2;
+  legendItems.forEach(function(item, i) {
+    var x = startX + i * 90;
+    ctx.fillStyle = item.color;
+    ctx.fillRect(x, legendY - 8, 12, 12);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '11px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(item.label, x + 16, legendY + 2);
   });
 
   // Axis labels
@@ -3972,7 +4063,8 @@ function buildFSIData() {
 }
 
 function buildContinentData() {
-  var prizeTiers = { 'Group Stage': 9, 'Round of 32': 11, 'Round of 16': 15, 'Quarter-Finals': 19, 'Semi-Finals': 27, 'Fourth Place': 27, 'Third Place': 29, 'Runner-up': 33, 'Winner': 50 };
+  var prizeTiers = getPrizeTiers();
+  if(!prizeTiers) { console.error('buildContinentData: prize tiers not available'); return []; }
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
   var roundOrder = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
@@ -3980,7 +4072,7 @@ function buildContinentData() {
   groups.forEach(function(g) {
     var st = Array.isArray(g.standings) ? g.standings : [];
     st.forEach(function(s) {
-      teamPrizes[s.team] = { team: s.team, continent: getContinent(s.team), round: 'Group Stage', prize: 9.5, eliminated: false };
+      teamPrizes[s.team] = { team: s.team, continent: getContinent(s.team), round: 'Group Stage', prize: prizeTiers['Group Stage'] || 9, eliminated: false };
     });
   });
   matches.forEach(function(m) {
@@ -4007,10 +4099,88 @@ function buildContinentData() {
   return out.sort(function(a,b) { return b.resilience - a.resilience; });
 }
 
+// ===== BUILD EPI DAILY DATA FOR EXPORT =====
+function buildEPIData() {
+  var groups = window._dbGroups || [];
+  var matches = dbMatches || [];
+  if(!groups.length || !matches.length) return [];
+
+  var envData = {};
+  ['suppressed','balanced','open','dominant','inverted'].forEach(function(e) {
+    envData[e] = { qualified: 0 };
+  });
+
+  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+
+  groups.forEach(function(g) {
+    var env = (g.environment_type || 'balanced').toLowerCase();
+    if(!envData[env]) env = 'balanced';
+    var st = Array.isArray(g.standings) ? g.standings : [];
+    envData[env].qualified += st.length;
+  });
+
+  var cumulativeEliminated = { suppressed: 0, balanced: 0, open: 0, dominant: 0, inverted: 0 };
+  var matchesByDate = {};
+  matches.forEach(function(m) {
+    if(m.date) {
+      if(!matchesByDate[m.date]) matchesByDate[m.date] = [];
+      matchesByDate[m.date].push(m);
+    }
+  });
+
+  var dailyData = [];
+  Object.keys(matchesByDate).sort().forEach(function(date) {
+    var dayMatches = matchesByDate[date];
+    dayMatches.forEach(function(m) {
+      if(!m.winner) return;
+      var loser = (m.winner === m.team1) ? m.team2 : m.team1;
+      groups.forEach(function(g) {
+        var st = Array.isArray(g.standings) ? g.standings : [];
+        st.forEach(function(s) {
+          if(s.team === loser) {
+            var env = (g.environment_type || 'balanced').toLowerCase();
+            cumulativeEliminated[env]++;
+          }
+        });
+      });
+    });
+
+    var dayRow = { date: date };
+    ['suppressed','balanced','open','dominant','inverted'].forEach(function(e) {
+      var d = envData[e];
+      var alive = Math.max(0, d.qualified - cumulativeEliminated[e]);
+      dayRow[e] = d.qualified > 0 ? ((alive / d.qualified) * 100).toFixed(1) : '0.0';
+    });
+    dayRow.notes = dayMatches.length + ' match' + (dayMatches.length > 1 ? 'es' : '');
+    dailyData.push(dayRow);
+  });
+
+  return dailyData;
+}
+
 function exportCSV() {
 
-  // --- Sheet 1: Group Standings ---
-  var csv = '# GROUP STANDINGS\n';
+  var exportedAt = new Date().toISOString();
+  // --- Sheet 0: Export Metadata ---
+  var csv = '# WORLD CUP 2026 TCI DATASET\n';
+  csv += '# Exported: ' + exportedAt + '\n';
+  csv += '# Tournament: WC2026\n';
+  csv += '# Source: https://learn.xpguess.com/worldcup2026-32/\n\n';
+
+  // --- Sheet 1: Prize Tiers (from DB) ---
+  var tiers = getPrizeTiers();
+  csv += '# PRIZE TIERS (from database)\n';
+  csv += 'stage,prizeUsdM\n';
+  if(tiers) {
+    for(var stage in tiers) {
+      csv += '"' + stage + '",' + tiers[stage] + '\n';
+    }
+  }
+  csv += '\n';
+
+  // --- Sheet 2: Group Standings ---
+  csv += '# GROUP STANDINGS\n';
+  csv += 'team,group,seed,geiType,geiSharePct,spiHeld,tci,knockoutPosition\n';
   csv += 'team,group,seed,geiType,geiSharePct,spiHeld,tci,knockoutPosition\n';
   teamExportData.forEach(function(t) {
     var ko = document.getElementById('ko-' + t.seed.toLowerCase());
@@ -4078,10 +4248,18 @@ function exportCSV() {
     csv += row.map(function(x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(',') + '\n';
   });
 
+  // --- Sheet 8: EPI Daily Snapshots ---
+  csv += '\n# EPI DAILY SNAPSHOTS\n';
+  csv += 'date,suppressedEPI,balancedEPI,openEPI,dominantEPI,invertedEPI,notes\n';
+  var epiDaily = buildEPIData();
+  epiDaily.forEach(function(d) {
+    csv += '"' + d.date + '",' + d.suppressed + ',' + d.balanced + ',' + d.open + ',' + d.dominant + ',' + d.inverted + ',"' + d.notes + '"\n';
+  });
+
   var blob = new Blob([csv], {type: 'text/csv'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'worldcup2026-full-dataset.csv';
+  a.download = 'worldcup2026-full-dataset-' + exportedAt.slice(0,10) + '.csv';
   a.click();
 }
 
@@ -4098,13 +4276,15 @@ function exportJSON() {
   var goalData = buildGoalData();
   var contData = buildContinentData();
 
-  // Prize tier reference
-  var prizeTiers = { groupStage: 9, roundOf32: 11, roundOf16: 15, quarterFinals: 19, semiFinals: 27, fourthPlace: 27, thirdPlace: 29, runnerUp: 33, winner: 50 };
+  // Prize tier reference from DB (not hardcoded)
+  var prizeTiers = getPrizeTiers() || {};
+  var epiDaily = buildEPIData();
 
   var fullData = {
     tournament: 'WC2026',
     exportedAt: new Date().toISOString(),
     prizeTiers: prizeTiers,
+    prizeTierSource: 'database',
 
     // Sheet 1: All 48 teams
     groupStandings: standings,
@@ -4151,6 +4331,9 @@ function exportJSON() {
 
     // Sheet 7: Final Spark Index (FSI)
     finalSparkIndex: (function() { var fd = buildFSIData(); return { summary: { totalMatches: fd.length, alignedMatches: fd.filter(function(x){return x.aligned}).length, alignmentRate: fd.length > 0 ? ((fd.filter(function(x){return x.aligned}).length / fd.length) * 100).toFixed(1) : 0, averageDelta: fd.length > 0 ? (fd.reduce(function(s,x){return s+x.delta},0) / fd.length).toFixed(3) : 0 }, matchDetails: fd.map(function(f) { return { matchId: f.matchId, stage: f.stage, team1: f.team1, team2: f.team2, financiallyOptimalWinner: f.financiallyOptimalWinner, actualWinner: f.actualWinner, aligned: f.aligned, delta: f.delta, incentiveTeam1: f.incentiveTeam1, incentiveTeam2: f.incentiveTeam2, bracketImpact: f.bracketImpact, fsiNote: f.notes }; }) }; })(),
+
+    // Sheet 8: EPI Daily Snapshots (Survival Curves)
+    epiDailySnapshots: epiDaily.map(function(d) { return { date: d.date, suppressed: parseFloat(d.suppressed), balanced: parseFloat(d.balanced), open: parseFloat(d.open), dominant: parseFloat(d.dominant), inverted: parseFloat(d.inverted), notes: d.notes }; }),
 
     metadata: {
       groupCount: standings.length / 4,
@@ -4410,7 +4593,7 @@ function showLoadStatus(html, type) {
 var dbSeedMap = {};
 var dbPrizeTiers = {};
 
-// Load prize tiers from Supabase prize_tiers table
+// Load prize tiers from Supabase prize_tiers table — skip entries with null/undefined prize values
 async function loadPrizeTiers() {
   if(!supabaseClient) return null;
   try {
@@ -4422,10 +4605,64 @@ async function loadPrizeTiers() {
     if(error || !data) return null;
     var tiers = {};
     data.forEach(function(tier) {
-      tiers[tier.stage_label] = tier.prize_usd_m;
+      // Parse prize value (DB stores as string "9" not number 9)
+      var prize = parseFloat(tier.prize_usd_m);
+      if(!isNaN(prize) && prize > 0) {
+        tiers[tier.stage_label] = prize;
+      }
     });
     return tiers;
   } catch(e) { console.error('loadPrizeTiers error:', e); return null; }
+}
+
+// Stage label map: DB names → code names
+var PRIZE_STAGE_MAP = {
+  'Group Stage Exit':   'Group Stage',
+  'Round of 32 Exit':   'Round of 32',
+  'Round of 16 Exit':   'Round of 16',
+  'Quarterfinal Exit':  'Quarter-Finals',
+  'Fourth Place':       'Fourth Place',
+  'Third Place':        'Third Place',
+  'Runner-up':          'Runner-up',
+  'Champion':           'Winner'
+};
+
+// Get prize tiers from DB with validation. Maps DB stage_label names to internal names.
+function getPrizeTiers() {
+  if(!dbPrizeTiers || Object.keys(dbPrizeTiers).length === 0) return null;
+
+  var mapped = {};
+  for(var dbLabel in dbPrizeTiers) {
+    var codeLabel = PRIZE_STAGE_MAP[dbLabel];
+    if(codeLabel) {
+      mapped[codeLabel] = dbPrizeTiers[dbLabel];
+    }
+  }
+
+  // Match stage → prize stage lookup for knockout rounds
+  mapped['Semi-Finals'] = mapped['Fourth Place']; // semi losers get 4th place prize
+
+  // Validate: must have all 8 core stages (your DB has these exactly)
+  var requiredStages = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Fourth Place','Third Place','Runner-up','Winner'];
+  var missing = [];
+  requiredStages.forEach(function(stage) {
+    if(typeof mapped[stage] !== 'number' || mapped[stage] <= 0) missing.push(stage);
+  });
+  if(missing.length > 0) {
+    console.warn('getPrizeTiers: missing/invalid values for:', missing.join(', '));
+    return null;
+  }
+  console.log('getPrizeTiers: loaded', Object.keys(mapped).length, 'stages');
+  return mapped;
+}
+
+// Show a clear error when prize tier data is missing
+function showPrizeTierError(context) {
+  var msg = '<div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#991b1b;margin:.5rem 0">' +
+    '<strong>⚠ Prize tier data missing from database' + (context ? ' (' + context + ')' : '') + '.</strong><br>' +
+    '<span style="font-size:.75rem">Run the prize_tiers seed SQL in your Supabase dashboard. Check that prize_usd_m column has numeric values (not NULL).</span></div>';
+  console.error('Prize tier data missing' + (context ? ' for ' + context : ''));
+  return msg;
 }
 
 var dbFSIConfig = {
@@ -4527,6 +4764,7 @@ function hasLocalCache() {
 
 // ===== IMPORT / EXPORT FULL JSON =====
 function downloadFullJSON() {
+  var epiDaily = buildEPIData();
   var fullData = {
     _exportMeta: {
       version: CACHE_VERSION,
@@ -4534,10 +4772,12 @@ function downloadFullJSON() {
       source: 'wc2026_tci_dashboard',
       format: 'full_snapshot'
     },
+    prizeTiers: getPrizeTiers() || {},
     groups: window._dbGroups || [],
     matches: dbMatches || [],
     seedMap: dbSeedMap || {},
-    teamExportData: teamExportData || []
+    teamExportData: teamExportData || [],
+    epiDailySnapshots: epiDaily.map(function(d) { return { date: d.date, suppressed: parseFloat(d.suppressed), balanced: parseFloat(d.balanced), open: parseFloat(d.open), dominant: parseFloat(d.dominant), inverted: parseFloat(d.inverted), notes: d.notes }; })
   };
 
   var blob = new Blob([JSON.stringify(fullData, null, 2)], {type: 'application/json'});
@@ -4546,7 +4786,7 @@ function downloadFullJSON() {
   a.download = 'wc2026-full-snapshot-' + new Date().toISOString().split('T')[0] + '.json';
   a.click();
 
-  showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Full snapshot downloaded</strong></div>','ok');
+  showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>Full snapshot downloaded</strong> (' + epiDaily.length + ' EPI daily records, ' + (dbMatches || []).length + ' matches)</div>','ok');
 }
 
 function importJSONFile(file) {
@@ -4652,6 +4892,10 @@ function renderAllFromCache() {
   renderContinentKPI();
   renderFSIReport();
   renderEPIReport();
+
+  // Render prize ladder and graph from dbPrizeTiers
+  renderPrizeLadderTable();
+  drawPrizeDeltaGraph();
 }
 
 
@@ -4739,6 +4983,10 @@ async function loadGroupsFromDB() {
 
     // Update coverage stats with dynamic counts
     updateCoverageStats();
+
+    // Render prize ladder table and graph from dbPrizeTiers
+    renderPrizeLadderTable();
+    drawPrizeDeltaGraph();
 
     // Save to localStorage for offline use
     saveToLocalCache();
