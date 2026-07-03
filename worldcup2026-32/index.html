@@ -2221,7 +2221,12 @@ function renderTeamFinancialDelta() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  // Derive group-stage eliminations from match data
+  var teamsInMatches = {};
+  matches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
+  });
 
   var teamData = {};
   groups.forEach(function(g) {
@@ -2229,12 +2234,12 @@ function renderTeamFinancialDelta() {
     standings.forEach(function(s) {
       var seed = s.seed;
       var cont = getContinent(s.team);
-      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
+      var isEliminated = !teamsInMatches[s.team];
       teamData[seed] = {
         seed: seed, team: s.team, group: g.group_letter,
         continent: continentLabel(cont), continentCode: cont,
         baseline: 9, currentPrize: 9, delta: 0,
-        exitStage: isEliminated ? 'Group Stage' : 'Group Stage',
+        exitStage: 'Group Stage',
         status: isEliminated ? 'Eliminated Group Stage' : 'Still Alive',
         eliminated: isEliminated, nextMatchup: isEliminated ? '—' : 'TBD'
       };
@@ -2455,8 +2460,12 @@ function renderGroupMetric() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
-  // Mark group-stage eliminated teams
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  // Derive group-stage eliminations from match data
+  var teamsInMatches = {};
+  matches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
+  });
 
   // Init from DB groups
   groups.forEach(function(g) {
@@ -2464,7 +2473,7 @@ function renderGroupMetric() {
     var standings = Array.isArray(g.standings) ? g.standings : [];
     var aliveCount = 0;
     standings.forEach(function(s) {
-      if(groupStageEliminated.indexOf(s.team) < 0) aliveCount++;
+      if(teamsInMatches[s.team]) aliveCount++;
     });
 
     groupStats[g.group_letter] = {
@@ -2632,19 +2641,23 @@ function showGroupDetail(e, letter) {
   var standings = Array.isArray(group.standings) ? group.standings : [];
   if(typeof standings === 'string') { try { standings = JSON.parse(standings); } catch(e) { standings = []; } }
 
-  var teamStatus = {};
-  standings.forEach(function(s) {
-    teamStatus[s.team] = { team: s.team, seed: s.seed, goals: s.gs_goals || 0, status: 'Still Alive', eliminated: false, exitRound: 'Group Stage' };
+  // Derive group-stage eliminations from match data
+  var allMatches = dbMatches || [];
+  var teamsInMatches = {};
+  allMatches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
   });
 
-  // Mark group-stage eliminated teams (16 teams did not advance to R32)
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
-  groupStageEliminated.forEach(function(teamName) {
-    if(teamStatus[teamName]) {
-      teamStatus[teamName].eliminated = true;
-      teamStatus[teamName].status = 'Eliminated Group Stage';
-      teamStatus[teamName].exitRound = 'Group Stage';
-    }
+  var teamStatus = {};
+  standings.forEach(function(s) {
+    var isEliminated = !teamsInMatches[s.team];
+    teamStatus[s.team] = {
+      team: s.team, seed: s.seed, goals: s.gs_goals || 0,
+      status: isEliminated ? 'Eliminated Group Stage' : 'Still Alive',
+      eliminated: isEliminated,
+      exitRound: 'Group Stage'
+    };
   });
 
   matches.forEach(function(m) {
@@ -2717,13 +2730,18 @@ function renderGoalTracker() {
   var teamGoals = {};
 
   // Step 1: Get group stage goals from standings
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  // Derive group-stage eliminations from match data
+  var teamsInMatches = {};
+  matches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
+  });
 
   groups.forEach(function(g) {
     var standings = Array.isArray(g.standings) ? g.standings : [];
     standings.forEach(function(s) {
       var seed = s.seed;
-      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
+      var isEliminated = !teamsInMatches[s.team];
       teamGoals[seed] = {
         seed: seed,
         team: s.team,
@@ -2969,8 +2987,13 @@ function renderContinentKPI() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
 
-  // Mark group-stage eliminated teams
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  // Derive group-stage eliminations from match data:
+  // Any team that NEVER appears in wc2026_matches is a group-stage exit
+  var teamsInMatches = {};
+  matches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
+  });
 
   // Build per-team data with continent
   var teamData = {};
@@ -2979,7 +3002,8 @@ function renderContinentKPI() {
     standings.forEach(function(s) {
       var seed = g.group_letter + s.pos;
       var cont = getContinent(s.team);
-      var isEliminated = groupStageEliminated.indexOf(s.team) >= 0;
+      // Team is group-stage eliminated if they never appear in any match
+      var isEliminated = !teamsInMatches[s.team];
       teamData[seed] = {
         seed: seed,
         team: s.team,
@@ -3408,8 +3432,12 @@ function renderEPIReport() {
     };
   });
 
-  // Mark group-stage eliminated teams for EPI calculation
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
+  // Derive group-stage eliminations from match data for EPI calculation
+  var teamsInMatches = {};
+  matches.forEach(function(m) {
+    if(m.team1) teamsInMatches[m.team1] = true;
+    if(m.team2) teamsInMatches[m.team2] = true;
+  });
 
   // Process groups
   groups.forEach(function(g) {
@@ -3425,7 +3453,7 @@ function renderEPIReport() {
 
     var aliveCount = 0;
     standings.forEach(function(s) {
-      if(groupStageEliminated.indexOf(s.team) < 0) aliveCount++;
+      if(teamsInMatches[s.team]) aliveCount++;
     });
 
     envData[env].groups.add(g.group_letter);
@@ -4109,8 +4137,6 @@ function buildEPIData() {
   ['suppressed','balanced','open','dominant','inverted'].forEach(function(e) {
     envData[e] = { qualified: 0 };
   });
-
-  var groupStageEliminated = ['Haiti','Turkey','Turkiye','Tunisia','Jordan','Panama','Qatar','Czechia','Curacao','Iraq','Uruguay','Saudi Arabia','New Zealand','Scotland','Iran','South Korea','Uzbekistan'];
 
   groups.forEach(function(g) {
     var env = (g.environment_type || 'balanced').toLowerCase();
