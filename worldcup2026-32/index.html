@@ -2324,8 +2324,11 @@ function renderTeamFinancialDelta() {
         teamData[winnerSeed].currentPrize = 50; teamData[winnerSeed].delta = 41;
         teamData[winnerSeed].status = 'Champion';
       } else if(stage === 'Semi-Finals') {
-        teamData[winnerSeed].currentPrize = 33; teamData[winnerSeed].delta = 24;
-        teamData[winnerSeed].status = 'Final';
+        // Semi-Finals = transition, NOT a locked prize stage.
+        // Prize only locks at final placement. Keep QF prize ($19M) as guaranteed floor.
+        teamData[winnerSeed].currentPrize = prizeTiers['Quarter-Finals'] || 19;
+        teamData[winnerSeed].delta = teamData[winnerSeed].currentPrize - 9;
+        teamData[winnerSeed].status = 'Advanced to Final';
       } else {
         var nextStage = roundOrder[currentIdx + 1] || stage;
         teamData[winnerSeed].currentPrize = prizeTiers[nextStage] || prizeTiers[stage];
@@ -2544,20 +2547,22 @@ function renderGroupMetric() {
   });
 
   // Process matches to find wins/losses by group
+  // Derive team groups from standings (team1_group/team2_group are often NULL in DB)
   var roundOrder = ['Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
   var eliminations = []; // for timeline
 
   matches.forEach(function(m) {
-    if(!m.winner) return;
+    if(!m.winner || !m.team1 || !m.team2) return;
 
-    var t1Group = m.team1_group || '';
-    var t2Group = m.team2_group || '';
+    // Derive groups from standings data, not DB fields (which are often NULL)
+    var t1Group = getTeamGroup(m.team1);
+    var t2Group = getTeamGroup(m.team2);
     var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
     var loserGroup = (m.winner === m.team1) ? t2Group : t1Group;
     var winnerGroup = (m.winner === m.team1) ? t1Group : t2Group;
 
     // Winner's group gets a win
-    if(groupStats[winnerGroup]) {
+    if(winnerGroup && groupStats[winnerGroup]) {
       groupStats[winnerGroup].wins++;
       // Update latest round if this is further
       var currentIdx = roundOrder.indexOf(groupStats[winnerGroup].latestRound);
@@ -2566,7 +2571,7 @@ function renderGroupMetric() {
     }
 
     // Loser's group gets a loss + elimination
-    if(groupStats[loserGroup]) {
+    if(loserGroup && groupStats[loserGroup]) {
       groupStats[loserGroup].losses++;
       groupStats[loserGroup].teamsAlive--;
       groupStats[loserGroup].teamsEliminated++;
@@ -3181,6 +3186,25 @@ function getTeamContinent(teamName) {
   return getContinent(teamName);
 }
 
+// Get group letter for a team name (uses group standings as source of truth)
+function getTeamGroup(teamName) {
+  if(!teamName) return '';
+  var norm = normalizeTeamName(teamName);
+  var groups = window._dbGroups || [];
+  for(var i = 0; i < groups.length; i++) {
+    var g = groups[i];
+    var st = g.standings;
+    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { continue; } }
+    if(!Array.isArray(st)) continue;
+    for(var j = 0; j < st.length; j++) {
+      if(normalizeTeamName(st[j].team) === norm) {
+        return g.group_letter;
+      }
+    }
+  }
+  return '';
+}
+
 // Get prize amount for a given stage name
 function getPrizeForStage(stageName, prizeTiers) {
   if(!stageName || !prizeTiers) return 9; // baseline group stage
@@ -3191,7 +3215,7 @@ function getPrizeForStage(stageName, prizeTiers) {
   if(s.indexOf('round of 32') >= 0 || s.indexOf('r32') >= 0) return pt['Round of 32'] || 11;
   if(s.indexOf('round of 16') >= 0 || s.indexOf('r16') >= 0) return pt['Round of 16'] || 15;
   if(s.indexOf('quarter') >= 0 || s.indexOf('qf') >= 0) return pt['Quarter-Finals'] || 19;
-  if(s.indexOf('semi') >= 0 || s.indexOf('sf') >= 0) return pt['Semi-Finals'] || 27;
+  if(s.indexOf('semi') >= 0 || s.indexOf('sf') >= 0) return 0; // Semi-Finals = transition, NOT a locked prize stage
   if(s.indexOf('champion') >= 0 || s.indexOf('winner') >= 0) return pt['Winner'] || 50;
   if(s.indexOf('runner') >= 0 || s.indexOf('second') >= 0) return pt['Runner-up'] || 33;
   if(s.indexOf('third') >= 0 || s.indexOf('3rd') >= 0) return pt['Third Place'] || 29;
@@ -3242,13 +3266,24 @@ function getTeamTournamentStatus(teamName, matches) {
         // This team won
         result.status = 'Alive';
         result.currentStage = tm.stage || 'Round of 32';
-        result.prizeMoney = getPrizeForStage(result.currentStage, dbPrizeTiers);
+        // Semi-Finals is a transition — do NOT lock prize here.
+        // Prize is only locked at final placement stages (4th, 3rd, Runner-up, Winner).
+        if(result.currentStage === 'Semi-Finals') {
+          result.prizeMoney = getPrizeForStage('Quarter-Finals', dbPrizeTiers); // QF prize = guaranteed minimum
+        } else {
+          result.prizeMoney = getPrizeForStage(result.currentStage, dbPrizeTiers);
+        }
       } else {
         // This team lost
         result.status = 'Eliminated';
         result.eliminatedAtStage = tm.stage || 'Round of 32';
         result.currentStage = result.eliminatedAtStage;
-        result.prizeMoney = getPrizeForStage(result.eliminatedAtStage, dbPrizeTiers);
+        // Semi-Finals loser = Fourth Place placement (locked $27M)
+        if(result.eliminatedAtStage === 'Semi-Finals') {
+          result.prizeMoney = dbPrizeTiers['Fourth Place'] || 27;
+        } else {
+          result.prizeMoney = getPrizeForStage(result.eliminatedAtStage, dbPrizeTiers);
+        }
       }
     } else if(!hasCompletedMatch) {
       // No completed match yet, but has a scheduled match
@@ -3549,13 +3584,21 @@ function renderContinentKPI() {
     var stage = m.stage || 'Round of 32';
 
     // Loser gets prize for the round they reached
+    // Semi-Finals loser = Fourth Place placement (locked $27M), not a "semi" prize
     if(loserSeed && teamData[loserSeed]) {
-      teamData[loserSeed].knockoutRound = stage;
-      teamData[loserSeed].prizeMoney = prizeTiers[stage] || prizeTiers['Group Stage'];
+      if(stage === 'Semi-Finals') {
+        teamData[loserSeed].knockoutRound = 'Fourth Place';
+        teamData[loserSeed].prizeMoney = prizeTiers['Fourth Place'] || 27;
+      } else {
+        teamData[loserSeed].knockoutRound = stage;
+        teamData[loserSeed].prizeMoney = prizeTiers[stage] || prizeTiers['Group Stage'];
+      }
       teamData[loserSeed].eliminated = true;
     }
 
     // Winner gets at least this round's prize (will be updated if they lose later)
+    // Semi-Finals is a TRANSITION — do NOT lock prize here.
+    // Prize only locks at final placement: 4th($27), 3rd($29), Runner-up($33), Winner($50).
     if(winnerSeed && teamData[winnerSeed]) {
       var currentIdx = roundOrder.indexOf(teamData[winnerSeed].knockoutRound);
       var matchIdx = roundOrder.indexOf(stage);
@@ -3563,7 +3606,12 @@ function renderContinentKPI() {
         // Advance to next round
         var nextRound = roundOrder[matchIdx + 1] || stage;
         teamData[winnerSeed].knockoutRound = nextRound;
-        teamData[winnerSeed].prizeMoney = prizeTiers[nextRound] || prizeTiers[stage];
+        // For Semi-Finals winners: don't lock prize — advance to Final but keep QF prize as floor
+        if(stage === 'Semi-Finals') {
+          teamData[winnerSeed].prizeMoney = prizeTiers['Quarter-Finals'] || 19; // QF = guaranteed minimum
+        } else {
+          teamData[winnerSeed].prizeMoney = prizeTiers[nextRound] || prizeTiers[stage];
+        }
       }
     }
   });
@@ -4752,11 +4800,14 @@ function buildGroupMetricData() {
     groupStats[g.group_letter].teamsAlive = st.length;
   });
   matches.forEach(function(m) {
-    if(!m.winner) return;
-    var wg = (m.winner === m.team1) ? m.team1_group : m.team2_group;
-    var lg = (m.winner === m.team1) ? m.team2_group : m.team1_group;
-    if(groupStats[wg]) { groupStats[wg].wins++; if((m.stage||'').indexOf('Round')>=0) groupStats[wg].latestRound = m.stage; }
-    if(groupStats[lg]) { groupStats[lg].losses++; groupStats[lg].teamsAlive--; groupStats[lg].eliminated++; if((m.stage||'').indexOf('Round')>=0) groupStats[lg].latestRound = m.stage; }
+    if(!m.winner || !m.team1 || !m.team2) return;
+    // Derive groups from standings (team1_group/team2_group often NULL in DB)
+    var g1 = getTeamGroup(m.team1);
+    var g2 = getTeamGroup(m.team2);
+    var wg = (m.winner === m.team1) ? g1 : g2;
+    var lg = (m.winner === m.team1) ? g2 : g1;
+    if(wg && groupStats[wg]) { groupStats[wg].wins++; if((m.stage||'').indexOf('Round')>=0) groupStats[wg].latestRound = m.stage; }
+    if(lg && groupStats[lg]) { groupStats[lg].losses++; groupStats[lg].teamsAlive--; groupStats[lg].eliminated++; if((m.stage||'').indexOf('Round')>=0) groupStats[lg].latestRound = m.stage; }
   });
   var out = [];
   for(var l in groupStats) {
@@ -4846,10 +4897,31 @@ function buildContinentData() {
   });
   matches.forEach(function(m) {
     if(!m.winner || !m.team1 || !m.team2) return;
+    var stage = m.stage || 'Round of 32';
     var loser = (m.winner === m.team1) ? m.team2 : m.team1;
-    if(teamPrizes[loser]) { teamPrizes[loser].round = m.stage || 'Round of 32'; teamPrizes[loser].prize = prizeTiers[m.stage]||9.5; teamPrizes[loser].eliminated = true; }
+    // Semi-Finals loser = Fourth Place placement ($27M)
+    if(teamPrizes[loser]) {
+      if(stage === 'Semi-Finals') {
+        teamPrizes[loser].round = 'Fourth Place';
+        teamPrizes[loser].prize = prizeTiers['Fourth Place'] || 27;
+      } else {
+        teamPrizes[loser].round = stage;
+        teamPrizes[loser].prize = prizeTiers[stage] || 9.5;
+      }
+      teamPrizes[loser].eliminated = true;
+    }
     var winner = (m.winner === m.team1) ? m.team1 : m.team2;
-    if(teamPrizes[winner]) { var mi = roundOrder.indexOf(m.stage||'Round of 32'); var nr = roundOrder[mi+1]||m.stage; teamPrizes[winner].round = nr; teamPrizes[winner].prize = prizeTiers[nr]||prizeTiers[m.stage]||9.5; }
+    // Semi-Finals winner → advance to Final, but prize NOT locked (QF = guaranteed floor)
+    if(teamPrizes[winner]) {
+      var mi = roundOrder.indexOf(stage);
+      var nr = roundOrder[mi+1] || stage;
+      teamPrizes[winner].round = nr;
+      if(stage === 'Semi-Finals') {
+        teamPrizes[winner].prize = prizeTiers['Quarter-Finals'] || 19; // QF = guaranteed minimum
+      } else {
+        teamPrizes[winner].prize = prizeTiers[nr] || prizeTiers[stage] || 9.5;
+      }
+    }
   });
   var allConts = ['north_america','south_america','europe','africa','asia','oceania'];
   var conts = {}; allConts.forEach(function(c) { conts[c] = { code: c, label: continentLabel(c), teams: 0, alive: 0, eliminated: 0, r32Out: 0, r16Out: 0, qfOut: 0, sfPlus: 0, totalEarnings: 0, avgEarnings: 0, resilience: 100 }; });
@@ -5424,10 +5496,12 @@ function getPrizeTiers() {
     }
   }
 
-  // Match stage → prize stage lookup for knockout rounds
-  mapped['Semi-Finals'] = mapped['Fourth Place']; // semi losers get 4th place prize
+  // Semi-Finals is a TRANSITION stage, not a locked prize stage.
+  // Locked prizes are only at final placements: Fourth Place (27), Third Place (29), Runner-up (33), Winner (50).
+  // Do NOT create a mapped['Semi-Finals'] entry — callers must handle semi explicitly.
+  // Semi losers → Fourth Place prize. Semi winners → not placed yet.
 
-  // Validate: must have all 8 core stages (your DB has these exactly)
+  // Validate: must have all 8 core placement stages (your DB has these exactly)
   var requiredStages = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Fourth Place','Third Place','Runner-up','Winner'];
   var missing = [];
   requiredStages.forEach(function(stage) {
