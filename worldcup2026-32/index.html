@@ -3879,18 +3879,14 @@ function renderContinentalAdvancementYield() {
   var container = document.getElementById('cay-cards');
   var tbody = document.getElementById('cay-body');
   var analysisDiv = document.getElementById('cay-analysis');
-  console.log('renderContinentalAdvancementYield: container=' + !!container + ', tbody=' + !!tbody);
-  if(!container || !tbody) { console.warn('renderCAY: missing DOM'); return; }
+  if(!container || !tbody) return;
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
-  console.log('renderCAY: groups=' + groups.length + ', matches=' + matches.length + ', prizeTiers=' + Object.keys(dbPrizeTiers).length);
-
   var results = computeContinentalAdvancementYield(groups, matches, dbPrizeTiers);
-  console.log('renderCAY: compute returned', results.length, 'continents');
 
   if(results.length === 0) {
-    container.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">No data: check that groups have standings and prize tiers are loaded.</div>';
+    container.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">Loading data...</div>';
     return;
   }
 
@@ -3903,41 +3899,38 @@ function renderContinentalAdvancementYield() {
     oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' }
   };
 
-  // Render cards
-  container.innerHTML = '';
+  // Build cards HTML
+  var cardsHtml = '';
   results.forEach(function(d) {
     var col = cardColors[d.continent] || cardColors.europe;
     var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
-
-    var card = document.createElement('div');
-    card.style.cssText = 'background:' + col.bg + ';border:2px solid ' + col.border + ';border-radius:12px;padding:1.25rem';
-    card.innerHTML =
+    cardsHtml += '<div style="background:' + col.bg + ';border:2px solid ' + col.border + ';border-radius:12px;padding:1.25rem">' +
       '<div style="font-size:1.5rem;margin-bottom:.25rem">' + d.continentFlag + '</div>' +
       '<div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:' + col.text + ';font-weight:700;margin-bottom:.5rem">' + d.continentLabel + '</div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.85rem;text-align:center;margin-bottom:.5rem">' +
-      '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.teams_alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
-      '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.teams_pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
-      '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.teams_unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.teams_alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.teams_pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.teams_unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
       '</div>' +
       '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + col.border + '">' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CAE</span><span style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</span></div>' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>R16+ Teams</span><span style="font-weight:700">' + d.teams_reached_r16_or_deeper + '/' + d.original_teams + '</span></div>' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Adv. Value</span><span style="font-weight:700">$' + d.incremental_advancement_value.toFixed(1) + 'M</span></div>' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Yield/Team</span><span style="font-weight:700">$' + d.advancement_yield_per_team.toFixed(1) + 'M</span></div>' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CER</span><span style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</span></div>' +
-      '<div style="display:flex;justify-content:space-between;font-size:.8rem"><span>FSR</span><span style="font-weight:700">' + d.fsr + '%</span></div>' +
-      '</div>';
-    container.appendChild(card);
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CAE</span><span style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>R16+ Teams</span><span style="font-weight:700">' + d.teams_reached_r16_or_deeper + '/' + d.original_teams + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Adv. Value</span><span style="font-weight:700">$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Yield/Team</span><span style="font-weight:700">$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CER</span><span style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem"><span>FSR</span><span style="font-weight:700">' + d.fsr + '%</span></div>' +
+      '</div>' +
+    '</div>';
   });
+  container.innerHTML = cardsHtml;
 
-  // Render table
-  tbody.innerHTML = '';
+  // Build table rows HTML
+  var rowsHtml = '';
   results.forEach(function(d) {
     var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
-    var tr = document.createElement('tr');
-    tr.innerHTML =
+    rowsHtml += '<tr>' +
       '<td><strong>' + d.continentFlag + ' ' + d.continentLabel + '</strong></td>' +
       '<td>' + d.original_teams + '</td>' +
       '<td style="color:#16a34a;font-weight:700">' + d.teams_alive + '</td>' +
@@ -3945,22 +3938,22 @@ function renderContinentalAdvancementYield() {
       '<td style="color:#dc2626">' + d.teams_eliminated + '</td>' +
       '<td style="color:#0f172a;font-weight:700">' + d.teams_reached_r16_or_deeper + '</td>' +
       '<td style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</td>' +
-      '<td>$' + d.incremental_advancement_value.toFixed(1) + 'M</td>' +
-      '<td>$' + d.advancement_yield_per_team.toFixed(1) + 'M</td>' +
-      '<td>$' + d.current_total_prize.toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.current_total_prize).toFixed(1) + 'M</td>' +
       '<td style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</td>' +
-      '<td style="font-weight:700">' + d.fsr + '%</td>';
-    tbody.appendChild(tr);
+      '<td style="font-weight:700">' + d.fsr + '%</td>' +
+    '</tr>';
   });
+  tbody.innerHTML = rowsHtml;
 
   // Render analysis
   if(analysisDiv) {
     var totalTeams = results.reduce(function(s, d) { return s + d.original_teams; }, 0);
     var totalAlive = results.reduce(function(s, d) { return s + d.teams_alive; }, 0);
     var totalR16 = results.reduce(function(s, d) { return s + d.teams_reached_r16_or_deeper; }, 0);
-    var html = '<p style="margin:0 0 .5rem 0"><strong>Continental Advancement Efficiency (CAE)</strong> measures how efficiently each continent converts tournament entries into Round of 16 or deeper survival. <strong>Advancement Value</strong> measures the incremental FIFA prize delta created by survival from one stage to the next. Missing fixtures are treated as pending/unknown, not eliminated.</p>';
-    html += '<p style="margin:0 0 .5rem 0;font-size:.8rem;color:#64748b">Of ' + totalTeams + ' teams entered, ' + totalAlive + ' are confirmed alive and ' + totalR16 + ' have reached R16 or deeper across all continents.</p>';
-    analysisDiv.innerHTML = html;
+    analysisDiv.innerHTML = '<p style="margin:0 0 .5rem 0"><strong>Continental Advancement Efficiency (CAE)</strong> measures how efficiently each continent converts tournament entries into Round of 16 or deeper survival. <strong>Advancement Value</strong> measures the incremental FIFA prize delta created by survival from one stage to the next. Missing fixtures are treated as pending/unknown, not eliminated.</p>' +
+      '<p style="margin:0 0 .5rem 0;font-size:.8rem;color:#64748b">Of ' + totalTeams + ' teams entered, ' + totalAlive + ' are confirmed alive and ' + totalR16 + ' have reached R16 or deeper across all continents.</p>';
   }
 }
 
@@ -4011,7 +4004,17 @@ function renderFSIReport() {
     var aligned = (m.winner === pvoWinner);
     if(aligned) alignedCount++;
 
-    var delta = m.preservation_delta !== null ? parseFloat(m.preservation_delta) : 0;
+    // Compute preservation delta from financial values (db column is null)
+    // delta = actual winner's value - projected optimal winner's value
+    // When aligned: delta >= 0 (positive = strong alignment)
+    // When misaligned: delta < 0 (negative = upset)
+    var winnerValue = (m.winner === m.team1) ? v1.value : v2.value;
+    var projectedValue = v1.value >= v2.value ? v1.value : v2.value;
+    var delta = winnerValue - projectedValue;
+    // If preservation_delta exists in DB, use it as override
+    if(m.preservation_delta !== null && m.preservation_delta !== undefined) {
+      delta = parseFloat(m.preservation_delta);
+    }
     totalDelta += delta;
 
     // FSI Note (concise)
