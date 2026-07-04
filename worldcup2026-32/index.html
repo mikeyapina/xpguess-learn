@@ -2307,8 +2307,10 @@ function renderTeamFinancialDelta() {
     var stage = m.stage || 'Round of 32';
     var t1Seed = null, t2Seed = null;
     for(var seed in teamData) {
-      if(teamData[seed].team === m.team1) t1Seed = seed;
-      if(teamData[seed].team === m.team2) t2Seed = seed;
+      // Use normalizeTeamName for alias-aware matching
+      // Handles: United States→USA, Bosnia and Herzegovina→Bosnia, Cape Verde→Cabo Verde
+      if(normalizeTeamName(teamData[seed].team) === normalizeTeamName(m.team1)) t1Seed = seed;
+      if(normalizeTeamName(teamData[seed].team) === normalizeTeamName(m.team2)) t2Seed = seed;
     }
     var loserSeed = (m.winner === m.team1) ? t2Seed : t1Seed;
     var winnerSeed = (m.winner === m.team1) ? t1Seed : t2Seed;
@@ -2848,8 +2850,8 @@ function renderGoalTracker() {
     // Find seeds for team1 and team2
     var t1Seed = null, t2Seed = null;
     for(var seed in teamGoals) {
-      if(teamGoals[seed].team === m.team1) t1Seed = seed;
-      if(teamGoals[seed].team === m.team2) t2Seed = seed;
+      if(normalizeTeamName(teamGoals[seed].team) === normalizeTeamName(m.team1)) t1Seed = seed;
+      if(normalizeTeamName(teamGoals[seed].team) === normalizeTeamName(m.team2)) t2Seed = seed;
     }
 
     // Add goals for each team in this round
@@ -4296,8 +4298,8 @@ function renderEPIReport() {
       if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
       if(!Array.isArray(st)) st = [];
       st.forEach(function(s) {
-        if(s.team === m.team1) t1Env = (g.environment_type || 'balanced').toLowerCase();
-        if(s.team === m.team2) t2Env = (g.environment_type || 'balanced').toLowerCase();
+        if(normalizeTeamName(s.team) === normalizeTeamName(m.team1)) t1Env = (g.environment_type || 'balanced').toLowerCase();
+        if(normalizeTeamName(s.team) === normalizeTeamName(m.team2)) t2Env = (g.environment_type || 'balanced').toLowerCase();
       });
     });
 
@@ -4784,11 +4786,11 @@ function buildKPIData() {
   });
   dbMatches.forEach(function(m) {
     if(!m.winner) return;
-    var t1 = teamExportData.find(function(x) { return x.team === m.team1; });
-    var t2 = teamExportData.find(function(x) { return x.team === m.team2; });
+    var t1 = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.team1); });
+    var t2 = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.team2); });
     if(t1) { var e1 = (t1.geiType||'').toLowerCase(); if(envs[e1]) envs[e1].played++; }
     if(t2) { var e2 = (t2.geiType||'').toLowerCase(); if(envs[e2]) envs[e2].played++; }
-    var w = teamExportData.find(function(x) { return x.team === m.winner; });
+    var w = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.winner); });
     if(w) { var ew = (w.geiType||'').toLowerCase(); if(envs[ew]) envs[ew].advanced++; }
     var loser = (m.winner === m.team1) ? m.team2 : m.team1;
     var l = teamExportData.find(function(x) { return x.team === loser; });
@@ -4860,7 +4862,7 @@ function buildGoalData() {
   matches.forEach(function(m) {
     if(!m.team1 || !m.team2) return;
     var t1s = null, t2s = null;
-    for(var se in teams) { if(teams[se].team === m.team1) t1s = se; if(teams[se].team === m.team2) t2s = se; }
+    for(var se in teams) { if(normalizeTeamName(teams[se].team) === normalizeTeamName(m.team1)) t1s = se; if(normalizeTeamName(teams[se].team) === normalizeTeamName(m.team2)) t2s = se; }
     var rk = roundKeys[m.stage || 'Round of 32'];
     if(t1s && m.score1!=null) { teams[t1s][rk] = (teams[t1s][rk]||0)+m.score1; teams[t1s].koTotal += m.score1; teams[t1s].total += m.score1; }
     if(t2s && m.score2!=null) { teams[t2s][rk] = (teams[t2s][rk]||0)+m.score2; teams[t2s].koTotal += m.score2; teams[t2s].total += m.score2; }
@@ -6289,8 +6291,8 @@ function renderKPIReport() {
     if(!m.winner) return; // only count completed matches
 
     // Find environment types for both teams
-    var t1 = teamExportData.find(function(x) { return x.team === m.team1; });
-    var t2 = teamExportData.find(function(x) { return x.team === m.team2; });
+    var t1 = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.team1); });
+    var t2 = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.team2); });
 
     if(t1) {
       var env1 = (t1.geiType || 'Unknown').toLowerCase();
@@ -6302,7 +6304,7 @@ function renderKPIReport() {
     }
 
     // Winner advanced
-    var winner = teamExportData.find(function(x) { return x.team === m.winner; });
+    var winner = teamExportData.find(function(x) { return normalizeTeamName(x.team) === normalizeTeamName(m.winner); });
     if(winner) {
       var wEnv = (winner.geiType || 'Unknown').toLowerCase();
       if(envs[wEnv]) envs[wEnv].advanced++;
