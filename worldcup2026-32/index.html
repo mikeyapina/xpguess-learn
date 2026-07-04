@@ -722,57 +722,52 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <div class="phase-divider"></div>
 
-<!-- ==================== FINAL SPARK INDEX (GATED) ==================== -->
+<!-- ==================== TOURNAMENT VALUE REDISTRIBUTION (GATED) ==================== -->
 <section id="fsi-report">
   <details open>
-    <summary><h2 data-i18n="fsiReport">&#9889; Financial Delta Index (FDI) — Tournament Value Movement</h2></summary>
+    <summary><h2 data-i18n="fsiReport">&#9889; Tournament Value Redistribution — Economic Impact Dashboard</h2></summary>
     <div class="content-box">
       <div id="fsi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Final Spark Index is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to access the FSI &mdash; a metric that reverse-engineers tournament incentives and measures whether those incentives leave detectable fingerprints in match outcomes.</p>
-        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View FSI</button>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Economic Impact Dashboard is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to view how each match result redistributes competitive and financial value across the tournament.</p>
+        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View</button>
       </div>
       <div id="fsi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>The NTG framework measures how tournament structure, prize distribution, and advancement paths create measurable financial deltas between stages.</strong> This is a gamified analytical view for educational and research purposes.</p>
+          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>This framework measures how tournament results redistribute competitive and financial value.</strong> For every match, it tracks the economic movement created by the outcome — not which team "should" have won, but how the result changed the tournament's competitive and economic landscape.</p>
         </div>
 
-        <!-- Guardrail -->
-        <div style="background:#fee2e2;border-left:4px solid #dc2626;padding:.75rem 1rem;margin-bottom:1rem;font-size:.8rem;color:#7f1d1d">
-          <strong>Guardrail:</strong> This model does not prove manipulation. It measures whether tournament structure, prize distribution, and advancement paths create measurable financial deltas. This is an educational research framework, not an accusation.
+        <!-- What the numbers mean -->
+        <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:.75rem 1rem;margin-bottom:1rem;font-size:.8rem;color:#1e3a5f">
+          <strong>Projected Value Score (0–10):</strong> A composite score derived from group performance, environment type, advancement opportunity, and prize exposure. Higher = the team entered the match representing more accumulated tournament value. This is not a prediction — it describes each team's competitive-economic position.
         </div>
 
-        <!-- Core Definition -->
-        <h3 style="font-size:.9rem;color:#0f172a;margin:1rem 0 .5rem">Research Question</h3>
-        <p style="font-size:.85rem;color:#334155;line-height:1.6;margin-bottom:1rem">Before kickoff, which result would create the strongest projected financial position based on prize distribution, matchup value, and continental resilience &mdash; and did that result happen?</p>
-
-        <!-- FSI Summary Cards -->
+        <!-- Summary Cards -->
         <div id="fsi-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0"></div>
 
-        <!-- Match-by-Match FSI Table -->
+        <!-- Match-by-Match Economic Impact Table -->
         <div class="table-container" style="margin-top:1rem">
           <table id="fsi-table">
             <thead><tr>
               <th onclick="sortFSI(0)">Match &#8597;</th>
               <th onclick="sortFSI(1)">Stage &#8597;</th>
-              <th onclick="sortFSI(2)">Team 1 &#8597;</th>
-              <th onclick="sortFSI(3)">Team 2 &#8597;</th>
-              <th onclick="sortFSI(4)">Projected Value Optimal &#8597;</th>
-              <th onclick="sortFSI(5)">Actual Winner &#8597;</th>
-              <th onclick="sortFSI(6)">Aligned &#8597;</th>
-              <th onclick="sortFSI(7)">Delta &#8597;</th>
-              <th onclick="sortFSI(8)">Incentive T1 &#8597;</th>
-              <th onclick="sortFSI(9)">Incentive T2 &#8597;</th>
-              <th onclick="sortFSI(10)">FSI Note &#8597;</th>
+              <th onclick="sortFSI(2)">Team 1 (Score) &#8597;</th>
+              <th onclick="sortFSI(3)">Team 2 (Score) &#8597;</th>
+              <th onclick="sortFSI(4)">Result &#8597;</th>
+              <th onclick="sortFSI(5)">Prize Before &#8597;</th>
+              <th onclick="sortFSI(6)">Prize After &#8597;</th>
+              <th onclick="sortFSI(7)">Value Preserved? &#8597;</th>
+              <th onclick="sortFSI(8)">Score Gap &#8597;</th>
+              <th onclick="sortFSI(9)">Continent Impact &#8597;</th>
             </tr></thead>
             <tbody id="fsi-body"></tbody>
           </table>
         </div>
 
-        <!-- FSI Scorecard -->
+        <!-- Scorecard -->
         <div id="fsi-scorecard" style="margin-top:1.5rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">FSI measures alignment between the financially optimal result (FOO) and the actual result. FOO is derived from group position value, GEI environment value, and continental prize distribution. Delta = preservation_delta from match data. Aligned = FOO winner matches actual winner.</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Projected Value Score (0–10) = composite of group position weight, GEI environment multiplier, and prize exposure. Prize Before = combined prize value both teams represented entering the match. Prize After = prize value of the advancing team at the next stage. Value Preserved = did the team with the higher Projected Value Score advance? This measures structural value retention, not prediction accuracy.</p>
       </div>
     </div>
   </details>
@@ -3876,10 +3871,12 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
 }
 
 function renderContinentalAdvancementYield() {
+  console.log('>>> renderContinentalAdvancementYield CALLED');
   var container = document.getElementById('cay-cards');
   var tbody = document.getElementById('cay-body');
   var analysisDiv = document.getElementById('cay-analysis');
-  if(!container || !tbody) return;
+  console.log('>>> renderCAY: container=' + !!container + ', tbody=' + !!tbody + ', analysis=' + !!analysisDiv);
+  if(!container || !tbody) { console.warn('>>> renderCAY: ABORT - missing DOM elements'); return; }
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
@@ -3901,7 +3898,9 @@ function renderContinentalAdvancementYield() {
 
   // Build cards HTML
   var cardsHtml = '';
+  console.log('renderCAY: building cards for', results.length, 'continents');
   results.forEach(function(d) {
+    console.log('  card:', d.continent, d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'pending=' + d.teams_pending, 'elim=' + d.teams_eliminated, 'unk=' + d.teams_unknown, 'r16=' + d.teams_reached_r16_or_deeper);
     var col = cardColors[d.continent] || cardColors.europe;
     var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
@@ -3924,10 +3923,13 @@ function renderContinentalAdvancementYield() {
     '</div>';
   });
   container.innerHTML = cardsHtml;
+  console.log('renderCAY: cards HTML length=' + cardsHtml.length + ', assigned to container');
 
   // Build table rows HTML
   var rowsHtml = '';
+  console.log('renderCAY: building', results.length, 'table rows');
   results.forEach(function(d) {
+    console.log('  row:', d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'r16=' + d.teams_reached_r16_or_deeper, 'cae=' + d.cae);
     var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
     rowsHtml += '<tr>' +
@@ -3946,6 +3948,7 @@ function renderContinentalAdvancementYield() {
     '</tr>';
   });
   tbody.innerHTML = rowsHtml;
+  console.log('renderCAY: table rows HTML length=' + rowsHtml.length + ', assigned to tbody');
 
   // Render analysis
   if(analysisDiv) {
@@ -3962,149 +3965,145 @@ function renderFSIReport() {
   var cards = document.getElementById('fsi-cards');
   var tbody = document.getElementById('fsi-body');
   var scorecard = document.getElementById('fsi-scorecard');
-  if(!cards || !tbody) { console.warn('renderFSIReport: missing DOM elements'); return; }
+  if(!cards || !tbody) return;
 
   var matches = dbMatches || [];
   var groups = window._dbGroups || [];
-  console.log('renderFSIReport: matches=' + matches.length + ', groups=' + groups.length + ', dbMatches=' + (dbMatches ? dbMatches.length : 'null'));
 
-  // Build per-team financial value score from group data
+  // Build team Projected Value Score (0-10) from group standings
   var teamValue = {};
   groups.forEach(function(g) {
-    var st = Array.isArray(g.standings) ? g.standings : [];
-    st.forEach(function(s, idx) {
-      var pos = s.position || s.pos || (s.seed ? parseInt(s.seed.slice(1)) : null) || (idx + 1);
-      // Financial value = group position weight * GEI environment multiplier
-      // Higher position (1st) = more valuable
-      // Open environment = more marketable
+    var st = g.standings;
+    if(!st) st = [];
+    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
+    if(!Array.isArray(st)) return;
+    st.forEach(function(s) {
       var cfg = getFSIConfig();
+      var pos = s.position || s.pos || (s.seed ? parseInt(s.seed.slice(1)) : null) || 1;
       var posWeight = cfg['pos_weight_' + pos] || {1:4,2:3,3:2,4:1}[pos] || 1;
       var envMult = cfg['env_mult_' + (g.environment_type || 'default')] || cfg['env_mult_default'] || 0.8;
-      var geiScore = (cfg['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (cfg['gei_factor'] || 0.4)); // lower GEI = more competitive = more valuable
-      teamValue[s.team] = { team: s.team, group: g.group_letter, pos: pos, env: g.environment_type || 'balanced', gei: g.gei || 0, value: posWeight * envMult * geiScore, goals: s.gf || 0, pts: s.pts || 0 };
+      var geiScore = (cfg['gei_base'] || 1) + ((1 - (g.gei || 0.5)) * (cfg['gei_factor'] || 0.4));
+      var rawValue = posWeight * envMult * geiScore;
+      var maxPossible = 4 * 1.2 * 1.5;
+      var score10 = Math.min(10, Math.max(0, (rawValue / maxPossible) * 10));
+      teamValue[s.team] = { value: score10, raw: rawValue };
     });
   });
 
-  // Calculate FSI per match
-  var fsiData = [];
-  var alignedCount = 0, totalPlayed = 0;
-  var totalDelta = 0;
+  var totalPlayed = 0;
+  var preservedCount = 0;
+  var totalPrizeBefore = 0;
+  var totalPrizeAfter = 0;
+  var tableRows = [];
+  var continentImpact = {};
 
-  console.log('renderFSIReport: iterating ' + matches.length + ' matches');
   matches.forEach(function(m) {
-    if(!m.winner) { console.log('  skip no-winner:', m.match_id); return; }
+    if(!m.winner || !m.team1 || !m.team2) return;
     totalPlayed++;
-    console.log('  process:', m.match_id, m.team1, 'vs', m.team2, 'winner:', m.winner);
 
-    var v1 = teamValue[m.team1] || { value: 1, pos: 4, env: 'balanced', gei: 0.5 };
-    var v2 = teamValue[m.team2] || { value: 1, pos: 4, env: 'balanced', gei: 0.5 };
+    var v1 = teamValue[m.team1] || { value: 5 };
+    var v2 = teamValue[m.team2] || { value: 5 };
+    var cont1 = getContinent(m.team1);
+    var cont2 = getContinent(m.team2);
 
-    // Financially Optimal Outcome (FOO) = which team has higher financial value
-    var pvoWinner = v1.value >= v2.value ? m.team1 : m.team2;
-    var aligned = (m.winner === pvoWinner);
-    if(aligned) alignedCount++;
+    var higherValueTeam = v1.value >= v2.value ? m.team1 : m.team2;
+    var valuePreserved = (m.winner === higherValueTeam);
+    if(valuePreserved) preservedCount++;
 
-    // Compute preservation delta from financial values (db column is null)
-    // delta = actual winner's value - projected optimal winner's value
-    // When aligned: delta >= 0 (positive = strong alignment)
-    // When misaligned: delta < 0 (negative = upset)
-    var winnerValue = (m.winner === m.team1) ? v1.value : v2.value;
-    var projectedValue = v1.value >= v2.value ? v1.value : v2.value;
-    var delta = winnerValue - projectedValue;
-    // If preservation_delta exists in DB, use it as override
-    if(m.preservation_delta !== null && m.preservation_delta !== undefined) {
-      delta = parseFloat(m.preservation_delta);
-    }
-    totalDelta += delta;
+    var prizeBefore = 9 + 9;
+    var nextStagePrize = getPrizeForStage(m.stage || 'Round of 32', dbPrizeTiers);
+    if(m.stage === 'Round of 32') nextStagePrize = 15;
+    else if(m.stage === 'Round of 16') nextStagePrize = 19;
+    else if(m.stage === 'Quarter-Finals') nextStagePrize = 29;
+    else if(m.stage === 'Semi-Finals') nextStagePrize = 33;
+    var prizeAfter = nextStagePrize;
 
-    // FSI Note (concise)
-    var note = '';
-    if(aligned && delta > 0.5) note = 'Strong alignment — financial incentives match outcome';
-    else if(aligned && delta <= 0.5) note = 'Aligned — moderate incentive match';
-    else if(!aligned && delta > 0.5) note = 'Misaligned — outcome diverges from financial optimal';
-    else if(!aligned && delta <= 0) note = 'Upset — result defies financial pressure';
-    else note = 'Mixed signals';
+    totalPrizeBefore += prizeBefore;
+    totalPrizeAfter += prizeAfter;
 
-    // Add incentive context (shortened)
-    if(m.incentive_team1 === 'MUST_WIN' && m.incentive_team2 === 'MUST_WIN') {
-      note += ' Both teams under max pressure.';
-    }
+    var winnerCont = (m.winner === m.team1) ? cont1 : cont2;
+    var loserCont = (m.winner === m.team1) ? cont2 : cont1;
+    if(!continentImpact[winnerCont]) continentImpact[winnerCont] = { gained: 0, lost: 0 };
+    if(!continentImpact[loserCont]) continentImpact[loserCont] = { gained: 0, lost: 0 };
+    continentImpact[winnerCont].gained++;
+    continentImpact[loserCont].lost++;
 
-    fsiData.push({
-      matchId: m.match_id || '',
+    var scoreGap = Math.abs(v1.value - v2.value);
+
+    tableRows.push({
+      match: m.match_id || 'N/A',
       stage: m.stage || '',
-      team1: m.team1 || '',
-      team2: m.team2 || '',
-      projectedValueOptimalWinner: pvoWinner,
-      actualWinner: m.winner,
-      aligned: aligned,
-      delta: delta,
-      incentiveT1: m.incentive_team1 || '-',
-      incentiveT2: m.incentive_team2 || '-',
-      note: note,
-      v1score: v1.value.toFixed(2),
-      v2score: v2.value.toFixed(2)
+      team1: m.team1,
+      team2: m.team2,
+      score1: v1.value,
+      score2: v2.value,
+      winner: m.winner,
+      prizeBefore: prizeBefore,
+      prizeAfter: prizeAfter,
+      valuePreserved: valuePreserved,
+      scoreGap: scoreGap,
+      winnerCont: winnerCont,
+      loserCont: loserCont
     });
   });
 
-  // Render summary cards
-  var fsiPct = totalPlayed > 0 ? ((alignedCount / totalPlayed) * 100).toFixed(1) : 0;
-  var avgDelta = totalPlayed > 0 ? (totalDelta / totalPlayed).toFixed(3) : 0;
+  tableRows.sort(function(a,b) { return b.scoreGap - a.scoreGap; });
 
-  cards.innerHTML = '';
+  // Cards
+  var cardsHtml = '';
+  cardsHtml += '<div style="background:#ffffff;border:2px solid #3b82f6;border-radius:12px;padding:1.25rem;text-align:center">' +
+    '<div style="font-size:2rem;font-weight:800;color:#3b82f6">' + (totalPlayed > 0 ? ((preservedCount/totalPlayed)*100).toFixed(1) : 0) + '%</div>' +
+    '<div style="color:#64748b;font-size:.8rem">Value Preservation Rate</div>' +
+    '<div style="font-size:.75rem;color:#94a3b8;margin-top:.25rem">' + preservedCount + ' of ' + totalPlayed + ' matches preserved higher-value position</div></div>';
+  cardsHtml += '<div style="background:#ffffff;border:2px solid #f59e0b;border-radius:12px;padding:1.25rem;text-align:center">' +
+    '<div style="font-size:2rem;font-weight:800;color:#f59e0b">$' + totalPrizeAfter.toFixed(0) + 'M</div>' +
+    '<div style="color:#64748b;font-size:.8rem">Total Prize Value Advanced</div>' +
+    '<div style="font-size:.75rem;color:#94a3b8;margin-top:.25rem">Combined next-stage prize for all winners</div></div>';
+  cardsHtml += '<div style="background:#ffffff;border:2px solid #16a34a;border-radius:12px;padding:1.25rem;text-align:center">' +
+    '<div style="font-size:2rem;font-weight:800;color:#16a34a">' + (totalPlayed > 0 ? (totalPrizeAfter / totalPlayed).toFixed(1) : 0) + 'M</div>' +
+    '<div style="color:#64748b;font-size:.8rem">Avg Prize Per Match</div>' +
+    '<div style="font-size:.75rem;color:#94a3b8;margin-top:.25rem">Mean next-stage prize across all results</div></div>';
+  cards.innerHTML = cardsHtml;
 
-  var card1 = document.createElement('div');
-  card1.style.cssText = 'background:#fff;border:2px solid #d4a843;border-radius:12px;padding:1.25rem;text-align:center';
-  card1.innerHTML = '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700;margin-bottom:.5rem">FSI Alignment Rate</div><div style="font-size:2.5rem;font-weight:800;color:#0f172a">' + fsiPct + '%</div><div style="font-size:.8rem;color:#64748b;margin-top:.25rem">' + alignedCount + ' of ' + totalPlayed + ' matches</div>';
-  cards.appendChild(card1);
-
-  var card2 = document.createElement('div');
-  card2.style.cssText = 'background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:1.25rem;text-align:center';
-  card2.innerHTML = '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700;margin-bottom:.5rem">Avg Preservation Delta</div><div style="font-size:2.5rem;font-weight:800;color:#0f172a">' + avgDelta + '</div><div style="font-size:.8rem;color:#64748b;margin-top:.25rem">Higher = more predictable</div>';
-  cards.appendChild(card2);
-
-  var card3 = document.createElement('div');
-  var misaligned = totalPlayed - alignedCount;
-  card3.style.cssText = 'background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:1.25rem;text-align:center';
-  card3.innerHTML = '<div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700;margin-bottom:.5rem">Misaligned Results</div><div style="font-size:2.5rem;font-weight:800;color:#dc2626">' + misaligned + '</div><div style="font-size:.8rem;color:#64748b;margin-top:.25rem">Upsets vs. financial optimal</div>';
-  cards.appendChild(card3);
-
-  // Render table
-  tbody.innerHTML = '';
-  fsiData.forEach(function(f) {
-    var alignColor = f.aligned ? '#16a34a' : '#dc2626';
-    var alignText = f.aligned ? '✓ Yes' : '✗ No';
-    var deltaColor = f.delta > 0.5 ? '#16a34a' : (f.delta < 0 ? '#dc2626' : '#64748b');
-
-    var tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td><strong>' + f.matchId + '</strong></td>' +
-      '<td>' + f.stage + '</td>' +
-      '<td>' + f.team1 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v1score + '</span></td>' +
-      '<td>' + f.team2 + ' <span style="color:#94a3b8;font-size:11px">v=' + f.v2score + '</span></td>' +
-      '<td style="font-weight:700;color:#0f172a">' + (f.projectedValueOptimalWinner || 'TBD') + '</td>' +
-      '<td>' + f.actualWinner + '</td>' +
-      '<td style="color:' + alignColor + ';font-weight:700">' + alignText + '</td>' +
-      '<td style="color:' + deltaColor + ';font-weight:700">' + f.delta + '</td>' +
-      '<td><span style="font-size:.75rem;padding:.1rem .3rem;border-radius:3px;background:' + (f.incentiveT1==='MUST_WIN'?'#fee2e2':'#f1f5f9') + '">' + f.incentiveT1 + '</span></td>' +
-      '<td><span style="font-size:.75rem;padding:.1rem .3rem;border-radius:3px;background:' + (f.incentiveT2==='MUST_WIN'?'#fee2e2':'#f1f5f9') + '">' + f.incentiveT2 + '</span></td>' +
-      '<td style="font-size:.75rem;color:#64748b;max-width:200px;white-space:normal">' + f.note + '</td>';
-    tbody.appendChild(tr);
+  // Table
+  var rowsHtml = '';
+  tableRows.forEach(function(r) {
+    var presColor = r.valuePreserved ? '#16a34a' : '#dc2626';
+    var presText = r.valuePreserved ? 'Preserved' : 'Redistributed';
+    rowsHtml += '<tr>' +
+      '<td><strong>' + r.match + '</strong></td>' +
+      '<td>' + r.stage + '</td>' +
+      '<td>' + r.team1 + '<br><span style="font-size:.75rem;color:#64748b">Score: ' + r.score1.toFixed(1) + '/10</span></td>' +
+      '<td>' + r.team2 + '<br><span style="font-size:.75rem;color:#64748b">Score: ' + r.score2.toFixed(1) + '/10</span></td>' +
+      '<td><strong>' + r.winner + '</strong></td>' +
+      '<td>$' + r.prizeBefore + 'M</td>' +
+      '<td>$' + r.prizeAfter + 'M</td>' +
+      '<td style="color:' + presColor + ';font-weight:700">' + presText + '</td>' +
+      '<td>' + r.scoreGap.toFixed(2) + '</td>' +
+      '<td style="font-size:.8rem">' + continentLabel(r.winnerCont) + ' &#9650; &middot; ' + continentLabel(r.loserCont) + ' &#9660;</td>' +
+    '</tr>';
   });
+  tbody.innerHTML = rowsHtml;
 
-  // Render scorecard
-  if(scorecard) {
-    var interpret = '';
-    if(parseFloat(fsiPct) >= 75) interpret = t('fsiInterpretationHigh');
-    else if(parseFloat(fsiPct) >= 50) interpret = t('fsiInterpretationMed');
-    else interpret = t('fsiInterpretationLow');
-
-    scorecard.innerHTML =
-      '<h4 style="font-size:.9rem;color:#0f172a;margin:0 0 .5rem">&#9889; '+t('fsiScorecard')+'</h4>' +
-      '<p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0 0 .5rem"><strong>Alignment Rate:</strong> ' + fsiPct + '% (' + alignedCount + '/' + totalPlayed + ' matches)</p>' +
-      '<p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0 0 .5rem"><strong>Interpretation:</strong> ' + interpret + '</p>' +
-      '<p style="font-size:.8rem;color:#94a3b8;margin:.5rem 0 0;padding-top:.5rem;border-top:1px solid #e2e8f0">FOO (Financially Optimal Outcome) is derived from: group position weight x environment marketability x competitive balance score. This is a projection model, not an accusation.</p>';
+  // Scorecard
+  var scorecardHtml = '<h3 style="font-size:1rem;color:#0f172a;margin-bottom:.5rem">&#9889; Tournament Value Redistribution Summary</h3>';
+  if(totalPlayed > 0) {
+    var pct = ((preservedCount/totalPlayed)*100).toFixed(1);
+    scorecardHtml += '<p style="margin:0 0 .5rem 0"><strong>Value Preservation Rate:</strong> ' + pct + '% (' + preservedCount + '/' + totalPlayed + ' matches preserved the higher projected-value position)</p>';
+    scorecardHtml += '<p style="margin:0 0 .5rem 0;font-size:.85rem;color:#334155">Most matches were won by the team with the higher Projected Value Score. This measures structural value retention, not prediction accuracy.</p>';
+    scorecardHtml += '<h4 style="font-size:.85rem;color:#0f172a;margin:.75rem 0 .3rem">Continental Impact</h4>';
+    for(var c in continentImpact) {
+      var ci = continentImpact[c];
+      if(ci.gained > 0 || ci.lost > 0) {
+        var net = ci.gained - ci.lost;
+        var netColor = net > 0 ? '#16a34a' : (net < 0 ? '#dc2626' : '#64748b');
+        scorecardHtml += '<div style="font-size:.8rem;margin-bottom:.2rem"><strong>' + continentLabel(c) + ':</strong> +' + ci.gained + ' advanced, -' + ci.lost + ' eliminated <span style="color:' + netColor + ';font-weight:700">(net: ' + (net > 0 ? '+' : '') + net + ')</span></div>';
+      }
+    }
+  } else {
+    scorecardHtml += '<p style="margin:0;color:#94a3b8">No completed matches yet.</p>';
   }
+  if(scorecard) scorecard.innerHTML = scorecardHtml;
 }
 
 
@@ -5725,13 +5724,13 @@ function renderAllFromCache() {
   }
 
   // Render KPI sections
-  renderKPIReport();
-  renderGroupMetric();
-  renderGoalTracker();
-  renderContinentKPI();
-  renderContinentalAdvancementYield();
-  renderFSIReport();
-  renderEPIReport();
+  try { renderKPIReport(); } catch(e) { console.error('renderKPIReport error:', e); }
+  try { renderGroupMetric(); } catch(e) { console.error('renderGroupMetric error:', e); }
+  try { renderGoalTracker(); } catch(e) { console.error('renderGoalTracker error:', e); }
+  try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+  try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
+  try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
+  try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
 
   // Render prize ladder and graph from dbPrizeTiers
   renderPrizeLadderTable();
