@@ -2461,9 +2461,15 @@ function renderSPITableFromGroups() {
     var top1 = standings[0];
     var top2 = standings[1];
 
-    // Check if position 1 team looks like a clear #1 (highest points)
-    var p1Held = top1 && (top1.pts > standings[1].pts || top1.gd >= standings[1].gd);
-    var p2Held = top2 && (top2.pts > standings[2].pts || top2.gd >= standings[2].gd);
+    // Check if position 1 and 2 teams earned their advancement spots
+    // A position "held" if the advancing team has strictly MORE group-stage
+    // goals than the first non-advancer (position 3). Equal/fewer = inversion.
+    function gsGoals(s) { return s.gs_goals || 0; }
+    
+    // Position 1: held if P1 goals > P3 goals (clear gap over non-advancer)
+    var p1Held = top1 && gsGoals(top1) > gsGoals(standings[2]);
+    // Position 2: held if P2 goals > P3 goals (earned spot over non-advancer)
+    var p2Held = top2 && gsGoals(top2) > gsGoals(standings[2]);
 
     totalPositions += 2;
     if(p1Held) heldPositions++;
