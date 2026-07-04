@@ -1810,6 +1810,7 @@ function renderAllTranslatedContent() {
     try { drawPrizeDeltaGraph(); } catch(e) { console.error('drawPrizeDeltaGraph error:', e); }
     try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
     try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+    try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
   }
@@ -5846,6 +5847,7 @@ async function loadGroupsFromDB() {
     try { drawPrizeDeltaGraph(); } catch(e) { console.error('drawPrizeDeltaGraph error:', e); }
     try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
     try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+    try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
 
@@ -6022,6 +6024,15 @@ async function loadMatchesFromDB() {
     });
 
     showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
+
+    // Trigger all dependent renders now that match data is loaded
+    console.log('loadMatchesFromDB: triggering renders...');
+    try { renderKPIReport(); } catch(e) { console.error('renderKPIReport error:', e); }
+    try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI error:', e); }
+    try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
+    try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
+    try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
+    console.log('loadMatchesFromDB: all renders triggered');
 
   } catch(e) { console.error('loadMatches error:', e); }
 }
