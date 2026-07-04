@@ -674,6 +674,54 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <div class="phase-divider"></div>
 
+<!-- ==================== CONTINENTAL ADVANCEMENT & FINANCIAL YIELD (GATED) ==================== -->
+<section id="continental-advancement-yield">
+  <details open>
+    <summary><h2>&#127942; Continental Advancement & Financial Yield</h2></summary>
+    <div class="content-box">
+      <div id="cay-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Advancement & Financial Yield is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to view formula-driven advancement metrics including CAE, Incremental Advancement Value, CER, and FSR — all computed live from match data.</p>
+        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View</button>
+      </div>
+      <div id="cay-user" style="display:block">
+        <p>Formula-driven continental advancement metrics. <strong>All values computed from live data</strong> — group standings, match results, and FIFA prize tiers. Numbers change automatically after every match result.</p>
+
+        <!-- Summary Cards per Continent -->
+        <div id="cay-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0"></div>
+
+        <!-- Detailed Table -->
+        <div class="table-container" style="margin-top:1rem">
+          <table id="cay-table">
+            <thead><tr>
+              <th>Continent</th>
+              <th>Original Teams</th>
+              <th>Alive</th>
+              <th>Pending</th>
+              <th>Eliminated</th>
+              <th>R16+ Reached</th>
+              <th>CAE %</th>
+              <th>Adv. Value</th>
+              <th>Yield/Team</th>
+              <th>Current Prize</th>
+              <th>CER %</th>
+              <th>FSR %</th>
+            </tr></thead>
+            <tbody id="cay-body"></tbody>
+          </table>
+        </div>
+
+        <!-- Analysis -->
+        <div id="cay-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
+
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> CAE = teams_reached_current_stage / original_continent_teams. Incremental Advancement Value = teams_reached_r16_or_deeper × stage_delta (R16 prize - R32 prize). CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. Status rules: lost completed match = Eliminated; won completed match = Alive; scheduled/pending match = Pending; no match record = Unknown/Awaiting. Never treat missing data as eliminated.</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+
 <!-- ==================== FINAL SPARK INDEX (GATED) ==================== -->
 <section id="fsi-report">
   <details open>
@@ -1774,6 +1822,7 @@ function renderAllTranslatedContent() {
   toggleMetricAccess();
   toggleGoalAccess();
   toggleContAccess();
+  toggleCAYAccess();
   toggleSupportAccess();
   toggleFSIAccess();
 }
@@ -1841,6 +1890,7 @@ function updateAuthUI() {
     toggleMetricAccess();
     toggleGoalAccess();
     toggleContAccess();
+    toggleCAYAccess();
     toggleSupportAccess();
     toggleFSIAccess();
     toggleEPIAccess();
@@ -1851,6 +1901,7 @@ function updateAuthUI() {
     toggleMetricAccess();
     toggleGoalAccess();
     toggleContAccess();
+    toggleCAYAccess();
     toggleSupportAccess();
     toggleFSIAccess();
     toggleEPIAccess();
@@ -3094,6 +3145,125 @@ function continentLabel(code) {
   return labels[code] || code;
 }
 
+// ===== SHARED UTILITIES FOR CONTINENTAL ADVANCEMENT & FINANCIAL YIELD =====
+
+// Normalize team names for consistent matching across group standings and match data
+var _NAME_ALIASES = {
+  'united states': 'USA',
+  'bosnia and herzegovina': 'Bosnia',
+  'bosnia & herzegovina': 'Bosnia',
+  'senegal': 'SENEGAL',
+  'ivory coast': 'Ivory Coast',
+  'cote d\'ivoire': 'Ivory Coast',
+  'côte d\'ivoire': 'Ivory Coast',
+  'cape verde': 'Cabo Verde',
+  'cabo verde': 'Cabo Verde'
+};
+function normalizeTeamName(name) {
+  if(!name) return '';
+  var key = name.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  return _NAME_ALIASES[key] || name;
+}
+
+// Get continent code for a team name (uses group standings as source of truth)
+function getTeamContinent(teamName) {
+  if(!teamName) return 'unknown';
+  var norm = normalizeTeamName(teamName);
+  var groups = window._dbGroups || [];
+  for(var i = 0; i < groups.length; i++) {
+    var g = groups[i];
+    var st = g.standings;
+    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { continue; } }
+    if(!Array.isArray(st)) continue;
+    for(var j = 0; j < st.length; j++) {
+      if(normalizeTeamName(st[j].team) === norm) {
+        return getContinent(st[j].team);
+      }
+    }
+  }
+  // Fallback: try direct CONTINENT_MAP lookup
+  return getContinent(teamName);
+}
+
+// Get prize amount for a given stage name
+function getPrizeForStage(stageName, prizeTiers) {
+  if(!stageName || !prizeTiers) return 9; // baseline group stage
+  var pt = prizeTiers;
+  var s = String(stageName).toLowerCase().trim();
+  // Map to internal keys (from getPrizeTiers() / PRIZE_STAGE_MAP)
+  if(s.indexOf('group') >= 0) return pt['Group Stage'] || 9;
+  if(s.indexOf('round of 32') >= 0 || s.indexOf('r32') >= 0) return pt['Round of 32'] || 11;
+  if(s.indexOf('round of 16') >= 0 || s.indexOf('r16') >= 0) return pt['Round of 16'] || 15;
+  if(s.indexOf('quarter') >= 0 || s.indexOf('qf') >= 0) return pt['Quarter-Finals'] || 19;
+  if(s.indexOf('semi') >= 0 || s.indexOf('sf') >= 0) return pt['Semi-Finals'] || 27;
+  if(s.indexOf('champion') >= 0 || s.indexOf('winner') >= 0) return pt['Winner'] || 50;
+  if(s.indexOf('runner') >= 0 || s.indexOf('second') >= 0) return pt['Runner-up'] || 33;
+  if(s.indexOf('third') >= 0 || s.indexOf('3rd') >= 0) return pt['Third Place'] || 29;
+  if(s.indexOf('fourth') >= 0 || s.indexOf('4th') >= 0) return pt['Fourth Place'] || 27;
+  if(s.indexOf('final') >= 0) return pt['Winner'] || 50; // generic "final" = winner prize
+  return pt['Group Stage'] || 9;
+}
+
+// Get a team's tournament status from match data
+// Returns: { status, currentStage, eliminatedAtStage, prizeMoney }
+function getTeamTournamentStatus(teamName, matches) {
+  var norm = normalizeTeamName(teamName);
+  var result = {
+    status: 'Unknown',       // 'Alive' | 'Eliminated' | 'Pending' | 'Unknown'
+    currentStage: null,      // current/furthest stage reached
+    eliminatedAtStage: null, // stage where eliminated (if eliminated)
+    prizeMoney: 9            // default group stage baseline
+  };
+  if(!matches || matches.length === 0) return result;
+
+  // Find all matches this team participates in
+  var teamMatches = [];
+  for(var i = 0; i < matches.length; i++) {
+    var m = matches[i];
+    if(!m.team1 || !m.team2) continue;
+    var t1n = normalizeTeamName(m.team1);
+    var t2n = normalizeTeamName(m.team2);
+    if(t1n === norm || t2n === norm) {
+      teamMatches.push(m);
+    }
+  }
+
+  if(teamMatches.length === 0) {
+    result.status = 'Unknown';
+    return result;
+  }
+
+  // Check the most recent match (or any completed match)
+  var latestMatch = null;
+  var hasCompletedMatch = false;
+  for(var j = 0; j < teamMatches.length; j++) {
+    var tm = teamMatches[j];
+    if(tm.winner) {
+      hasCompletedMatch = true;
+      latestMatch = tm;
+      var wn = normalizeTeamName(tm.winner);
+      if(wn === norm) {
+        // This team won
+        result.status = 'Alive';
+        result.currentStage = tm.stage || 'Round of 32';
+        result.prizeMoney = getPrizeForStage(result.currentStage, dbPrizeTiers);
+      } else {
+        // This team lost
+        result.status = 'Eliminated';
+        result.eliminatedAtStage = tm.stage || 'Round of 32';
+        result.currentStage = result.eliminatedAtStage;
+        result.prizeMoney = getPrizeForStage(result.eliminatedAtStage, dbPrizeTiers);
+      }
+    } else if(!hasCompletedMatch) {
+      // No completed match yet, but has a scheduled match
+      result.status = 'Pending';
+      result.currentStage = tm.stage || 'Round of 32';
+    }
+  }
+
+  return result;
+}
+
 function continentFlag(code) {
   var flags = {
     'north_america': '&#127958;',
@@ -3593,15 +3763,217 @@ function renderContinentKPI() {
   }
 }
 
+// ===== CONTINENTAL ADVANCEMENT & FINANCIAL YIELD =====
+// Computes: CAE, Incremental Advancement Value, Yield Per Team, CER, FSR
+// All values derived from wc2026_groups + wc2026_matches + prize tiers
+// No hardcoded counts — everything is formula-driven
+function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
+  if(!groups || groups.length === 0) return [];
+
+  // Stage order for progression tracking
+  var stageOrder = ['Group Stage', 'Round of 32', 'Round of 16', 'Quarter-Finals', 'Semi-Finals', 'Final', 'Champion'];
+  var stagePrizes = {};
+  stageOrder.forEach(function(s) { stagePrizes[s] = getPrizeForStage(s, prizeTiers); });
+
+  // R16 stage delta: $15M - $11M = $4M (or whatever the prize tiers say)
+  var r16Delta = stagePrizes['Round of 16'] - stagePrizes['Round of 32'];
+  var groupStagePrize = stagePrizes['Group Stage'];
+  var championPrize = stagePrizes['Champion'];
+
+  // Build per-continent aggregates
+  var continents = ['north_america','south_america','europe','africa','asia','oceania'];
+  var data = {};
+  continents.forEach(function(c) {
+    data[c] = {
+      continent: c,
+      continentLabel: continentLabel(c),
+      continentFlag: continentFlag(c),
+      original_teams: 0,
+      teams_alive: 0,
+      teams_pending: 0,
+      teams_eliminated: 0,
+      teams_unknown: 0,
+      teams_reached_r16_or_deeper: 0,
+      current_total_prize: 0,
+      max_possible_remaining: 0
+    };
+  });
+
+  // Count original teams per continent from group standings
+  console.log('computeCAY: processing', groups.length, 'groups');
+  groups.forEach(function(g) {
+    var st = g.standings;
+    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
+    if(!Array.isArray(st)) { console.log('  group', g.group_letter, 'no standings array'); return; }
+    console.log('  group', g.group_letter, 'has', st.length, 'standings');
+    st.forEach(function(s) {
+      var cont = getTeamContinent(s.team);
+      console.log('    team', s.team, '→ continent', cont);
+      if(data[cont]) data[cont].original_teams++;
+    });
+  });
+  console.log('computeCAY: original_teams per continent:', Object.keys(data).map(function(c) { return c + '=' + data[c].original_teams; }).join(', '));
+
+  // For each team, determine status from match data
+  groups.forEach(function(g) {
+    var st = g.standings;
+    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
+    if(!Array.isArray(st)) return;
+    st.forEach(function(s) {
+      var teamName = s.team;
+      var cont = getTeamContinent(teamName);
+      if(!data[cont]) return;
+
+      var status = getTeamTournamentStatus(teamName, matches);
+
+      // Count by status
+      if(status.status === 'Alive') {
+        data[cont].teams_alive++;
+        // Alive team has reached at least R16 (won an R32 match)
+        data[cont].teams_reached_r16_or_deeper++;
+        data[cont].max_possible_remaining += championPrize;
+      } else if(status.status === 'Pending') {
+        data[cont].teams_pending++;
+        data[cont].max_possible_remaining += championPrize;
+      } else if(status.status === 'Eliminated') {
+        data[cont].teams_eliminated++;
+      } else {
+        data[cont].teams_unknown++;
+        data[cont].max_possible_remaining += championPrize; // still possible
+      }
+
+      data[cont].current_total_prize += status.prizeMoney;
+    });
+  });
+
+  // Compute derived metrics per continent
+  var results = [];
+  continents.forEach(function(c) {
+    var d = data[c];
+    if(d.original_teams === 0) return; // skip empty continents
+
+    // CAE = teams that reached R16 or deeper / original continent teams
+    d.cae = d.original_teams > 0 ? ((d.teams_reached_r16_or_deeper / d.original_teams) * 100).toFixed(1) : '0.0';
+
+    // Incremental Advancement Value = teams_reached_r16_or_deeper × stage_delta
+    d.incremental_advancement_value = d.teams_reached_r16_or_deeper * r16Delta;
+
+    // Advancement Yield Per Team = incremental_value / original_teams
+    d.advancement_yield_per_team = d.original_teams > 0 ? (d.incremental_advancement_value / d.original_teams) : 0;
+
+    // CER = current_total_prize / baseline_total_prize
+    var baselinePrize = d.original_teams * groupStagePrize;
+    d.cer = baselinePrize > 0 ? ((d.current_total_prize / baselinePrize) * 100).toFixed(1) : '100.0';
+
+    // FSR = remaining_possible_prize / max_possible_prize
+    var maxPossible = d.original_teams * championPrize;
+    d.fsr = maxPossible > 0 ? ((d.max_possible_remaining / maxPossible) * 100).toFixed(1) : '100.0';
+
+    results.push(d);
+  });
+
+  return results;
+}
+
+function renderContinentalAdvancementYield() {
+  var container = document.getElementById('cay-cards');
+  var tbody = document.getElementById('cay-body');
+  var analysisDiv = document.getElementById('cay-analysis');
+  console.log('renderContinentalAdvancementYield: container=' + !!container + ', tbody=' + !!tbody);
+  if(!container || !tbody) { console.warn('renderCAY: missing DOM'); return; }
+
+  var groups = window._dbGroups || [];
+  var matches = dbMatches || [];
+  console.log('renderCAY: groups=' + groups.length + ', matches=' + matches.length + ', prizeTiers=' + Object.keys(dbPrizeTiers).length);
+
+  var results = computeContinentalAdvancementYield(groups, matches, dbPrizeTiers);
+  console.log('renderCAY: compute returned', results.length, 'continents');
+
+  if(results.length === 0) {
+    container.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">No data: check that groups have standings and prize tiers are loaded.</div>';
+    return;
+  }
+
+  var cardColors = {
+    north_america: { bg: '#dbeafe', border: '#3b82f6', text: '#1e3a5f' },
+    south_america: { bg: '#dcfce7', border: '#16a34a', text: '#14532d' },
+    europe: { bg: '#fef3c7', border: '#f59e0b', text: '#92400e' },
+    africa: { bg: '#fee2e2', border: '#dc2626', text: '#7f1d1d' },
+    asia: { bg: '#f3e8ff', border: '#9333ea', text: '#581c87' },
+    oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' }
+  };
+
+  // Render cards
+  container.innerHTML = '';
+  results.forEach(function(d) {
+    var col = cardColors[d.continent] || cardColors.europe;
+    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
+    var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'background:' + col.bg + ';border:2px solid ' + col.border + ';border-radius:12px;padding:1.25rem';
+    card.innerHTML =
+      '<div style="font-size:1.5rem;margin-bottom:.25rem">' + d.continentFlag + '</div>' +
+      '<div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:' + col.text + ';font-weight:700;margin-bottom:.5rem">' + d.continentLabel + '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.85rem;text-align:center;margin-bottom:.5rem">' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.teams_alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.teams_pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
+      '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.teams_unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
+      '</div>' +
+      '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + col.border + '">' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CAE</span><span style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</span></div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>R16+ Teams</span><span style="font-weight:700">' + d.teams_reached_r16_or_deeper + '/' + d.original_teams + '</span></div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Adv. Value</span><span style="font-weight:700">$' + d.incremental_advancement_value.toFixed(1) + 'M</span></div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Yield/Team</span><span style="font-weight:700">$' + d.advancement_yield_per_team.toFixed(1) + 'M</span></div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CER</span><span style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</span></div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:.8rem"><span>FSR</span><span style="font-weight:700">' + d.fsr + '%</span></div>' +
+      '</div>';
+    container.appendChild(card);
+  });
+
+  // Render table
+  tbody.innerHTML = '';
+  results.forEach(function(d) {
+    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
+    var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><strong>' + d.continentFlag + ' ' + d.continentLabel + '</strong></td>' +
+      '<td>' + d.original_teams + '</td>' +
+      '<td style="color:#16a34a;font-weight:700">' + d.teams_alive + '</td>' +
+      '<td style="color:#f59e0b">' + d.teams_pending + '</td>' +
+      '<td style="color:#dc2626">' + d.teams_eliminated + '</td>' +
+      '<td style="color:#0f172a;font-weight:700">' + d.teams_reached_r16_or_deeper + '</td>' +
+      '<td style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</td>' +
+      '<td>$' + d.incremental_advancement_value.toFixed(1) + 'M</td>' +
+      '<td>$' + d.advancement_yield_per_team.toFixed(1) + 'M</td>' +
+      '<td>$' + d.current_total_prize.toFixed(1) + 'M</td>' +
+      '<td style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</td>' +
+      '<td style="font-weight:700">' + d.fsr + '%</td>';
+    tbody.appendChild(tr);
+  });
+
+  // Render analysis
+  if(analysisDiv) {
+    var totalTeams = results.reduce(function(s, d) { return s + d.original_teams; }, 0);
+    var totalAlive = results.reduce(function(s, d) { return s + d.teams_alive; }, 0);
+    var totalR16 = results.reduce(function(s, d) { return s + d.teams_reached_r16_or_deeper; }, 0);
+    var html = '<p style="margin:0 0 .5rem 0"><strong>Continental Advancement Efficiency (CAE)</strong> measures how efficiently each continent converts tournament entries into Round of 16 or deeper survival. <strong>Advancement Value</strong> measures the incremental FIFA prize delta created by survival from one stage to the next. Missing fixtures are treated as pending/unknown, not eliminated.</p>';
+    html += '<p style="margin:0 0 .5rem 0;font-size:.8rem;color:#64748b">Of ' + totalTeams + ' teams entered, ' + totalAlive + ' are confirmed alive and ' + totalR16 + ' have reached R16 or deeper across all continents.</p>';
+    analysisDiv.innerHTML = html;
+  }
+}
+
 // ===== FINAL SPARK INDEX (FSI) =====
 function renderFSIReport() {
   var cards = document.getElementById('fsi-cards');
   var tbody = document.getElementById('fsi-body');
   var scorecard = document.getElementById('fsi-scorecard');
-  if(!cards || !tbody) return;
+  if(!cards || !tbody) { console.warn('renderFSIReport: missing DOM elements'); return; }
 
   var matches = dbMatches || [];
   var groups = window._dbGroups || [];
+  console.log('renderFSIReport: matches=' + matches.length + ', groups=' + groups.length + ', dbMatches=' + (dbMatches ? dbMatches.length : 'null'));
 
   // Build per-team financial value score from group data
   var teamValue = {};
@@ -3625,9 +3997,11 @@ function renderFSIReport() {
   var alignedCount = 0, totalPlayed = 0;
   var totalDelta = 0;
 
+  console.log('renderFSIReport: iterating ' + matches.length + ' matches');
   matches.forEach(function(m) {
-    if(!m.winner) return; // skip unplayed
+    if(!m.winner) { console.log('  skip no-winner:', m.match_id); return; }
     totalPlayed++;
+    console.log('  process:', m.match_id, m.team1, 'vs', m.team2, 'winner:', m.winner);
 
     var v1 = teamValue[m.team1] || { value: 1, pos: 4, env: 'balanced', gei: 0.5 };
     var v2 = teamValue[m.team2] || { value: 1, pos: 4, env: 'balanced', gei: 0.5 };
@@ -5352,6 +5726,7 @@ function renderAllFromCache() {
   renderGroupMetric();
   renderGoalTracker();
   renderContinentKPI();
+  renderContinentalAdvancementYield();
   renderFSIReport();
   renderEPIReport();
 
@@ -5508,29 +5883,58 @@ function updateCoverageStats() {
 }
 
 async function loadMatchesFromDB() {
-  if(!supabaseClient) return;
+  console.log('loadMatchesFromDB: starting... supabaseClient=', !!supabaseClient);
+  if(!supabaseClient) {
+    console.error('loadMatchesFromDB: NO supabaseClient');
+    return;
+  }
+  
+  var matches = null;
+  var error = null;
+  
   try {
     // Try primary query with tournament filter
-    var { data: matches, error } = await supabaseClient.from('wc2026_matches').select('*').eq('tournament','WC2026').order('match_id',{ascending:true});
-    console.log('loadMatchesFromDB: primary query returned', matches ? matches.length : 0, 'matches');
+    console.log('loadMatchesFromDB: trying primary query .from(wc2026_matches).select(*).eq(tournament,WC2026)...');
+    var result = await supabaseClient.from('wc2026_matches').select('*').eq('tournament','WC2026').order('match_id',{ascending:true});
+    matches = result.data;
+    error = result.error;
+    console.log('loadMatchesFromDB: primary query result:', { dataLength: matches ? matches.length : null, error: error ? error.message : null, errorCode: error ? error.code : null });
     
     // Fallback 1: try without tournament filter if empty
     if((!matches || matches.length === 0) && !error) {
-      console.log('loadMatchesFromDB: trying fallback query without tournament filter...');
+      console.log('loadMatchesFromDB: trying fallback without tournament filter...');
       var fb1 = await supabaseClient.from('wc2026_matches').select('*').order('match_id',{ascending:true});
+      console.log('loadMatchesFromDB: fallback1 result:', { dataLength: fb1.data ? fb1.data.length : null, error: fb1.error ? fb1.error.message : null });
       if(fb1.data && fb1.data.length > 0) {
         matches = fb1.data;
-        console.log('loadMatchesFromDB: fallback returned', matches.length, 'matches');
       }
     }
     
-    // Fallback 2: try with limit if still empty
-    if((!matches || matches.length === 0) && !error) {
-      console.log('loadMatchesFromDB: trying fallback query with limit...');
-      var fb2 = await supabaseClient.from('wc2026_matches').select('*').limit(50);
-      if(fb2.data && fb2.data.length > 0) {
-        matches = fb2.data;
-        console.log('loadMatchesFromDB: limit fallback returned', matches.length, 'matches');
+    // Fallback 2: direct REST API fetch (bypasses Supabase client library issues)
+    if(!matches || matches.length === 0) {
+      console.log('loadMatchesFromDB: trying direct REST API fetch...');
+      try {
+        var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
+        var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
+        var resp = await fetch(supabaseUrl + '/rest/v1/wc2026_matches?tournament=eq.WC2026&order=match_id.asc', {
+          method: 'GET',
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': 'Bearer ' + supabaseKey,
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log('loadMatchesFromDB: direct fetch status:', resp.status, resp.statusText);
+        if(resp.ok) {
+          var directData = await resp.json();
+          console.log('loadMatchesFromDB: direct fetch returned', directData.length, 'matches');
+          if(directData.length > 0) matches = directData;
+        } else {
+          var errText = await resp.text();
+          console.error('loadMatchesFromDB: direct fetch failed:', resp.status, errText);
+        }
+      } catch(fetchErr) {
+        console.error('loadMatchesFromDB: direct fetch exception:', fetchErr.message);
       }
     }
 
@@ -5542,13 +5946,15 @@ async function loadMatchesFromDB() {
     }
     
     if(!matches || matches.length === 0) {
-      console.warn('loadMatchesFromDB: wc2026_matches is empty after all query attempts');
-      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data. Check Supabase RLS policies.</div>','warn');
+      console.warn('loadMatchesFromDB: wc2026_matches is EMPTY after all query attempts');
+      console.warn('This means either: (1) table is empty, (2) RLS policy blocks anon access, (3) CORS error, or (4) network issue');
+      showLoadStatus('<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#92400e"><strong>Database Empty:</strong> wc2026_matches has no data. Check Supabase RLS policies for anon role.</div>','warn');
       dbMatches = [];
     } else {
       // Store for exports
       dbMatches = matches;
-      console.log('loadMatchesFromDB: stored', dbMatches.length, 'matches in dbMatches');
+      console.log('loadMatchesFromDB: SUCCESS - stored', dbMatches.length, 'matches in dbMatches');
+      console.log('loadMatchesFromDB: first match:', JSON.stringify(dbMatches[0]));
       // Validate keyspace — warn about contamination
       validateMatchKeyspace(matches);
     }
@@ -5653,6 +6059,15 @@ function toggleContAccess() {
   if((dbMatches && dbMatches.length > 0) || (window._dbGroups && window._dbGroups.length > 0)) {
     renderContinentKPI();
   }
+}
+
+function toggleCAYAccess() {
+  var guest = document.getElementById('cay-guest');
+  var user = document.getElementById('cay-user');
+  if(!guest || !user) return;
+  guest.style.display = 'none';
+  user.style.display = 'block';
+  if(window._dbGroups && window._dbGroups.length > 0) renderContinentalAdvancementYield();
 }
 
 function toggleGoalAccess() {
