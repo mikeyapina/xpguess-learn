@@ -3326,27 +3326,17 @@ function getTeamStatusFromMatches(matches) {
 
   if(!matches || matches.length === 0) return result;
 
-  // Apply known aliases for name normalization
-  var aliases = {
-    'united states': 'USA',
-    'bosnia and herzegovina': 'Bosnia',
-    'senegal': 'SENEGAL',
-    'ivory coast': 'Ivory Coast',
-    'cape verde': 'Cabo Verde'
-  };
-  function normalize(name) {
-    if(!name) return '';
-    return aliases[name.toLowerCase().trim()] || name;
-  }
-
+  // Use shared normalizeTeamName() for consistent alias resolution
+  // _NAME_ALIASES handles: United States→USA, Bosnia and Herzegovina→Bosnia,
+  // Senegal→SENEGAL, Ivory Coast→Cabo Verde, Cape Verde→Cabo Verde, etc.
   var allMatchTeams = new Set();
 
   matches.forEach(function(m) {
     if(!m.team1 || !m.team2) return;
 
-    var t1Norm = normalize(m.team1);
-    var t2Norm = normalize(m.team2);
-    var wNorm = m.winner ? normalize(m.winner) : null;
+    var t1Norm = normalizeTeamName(m.team1);
+    var t2Norm = normalizeTeamName(m.team2);
+    var wNorm = m.winner ? normalizeTeamName(m.winner) : null;
 
     allMatchTeams.add(t1Norm);
     allMatchTeams.add(t2Norm);
@@ -3385,15 +3375,7 @@ function getEliminatedSet(matches) {
 function isTeamEliminated(teamName, matches) {
   if(!teamName || !matches) return false;
   var losers = getTeamStatusFromMatches(matches).completedLosers;
-  var aliases = {
-    'united states': 'USA',
-    'bosnia and herzegovina': 'Bosnia',
-    'senegal': 'SENEGAL',
-    'ivory coast': 'Ivory Coast',
-    'cape verde': 'Cabo Verde'
-  };
-  var normalized = aliases[teamName.toLowerCase().trim()] || teamName;
-  return losers.has(normalized);
+  return losers.has(normalizeTeamName(teamName));
 }
 
 // ===== CONTINENT FINANCIAL KPI =====
@@ -3443,13 +3425,8 @@ function renderContinentKPI() {
     });
   });
 
-  // Known name aliases: match_name -> group_name
-  // AUDITED: All 22 matches checked against group standings
-  var TEAM_NAME_ALIASES = {
-    'united states': 'USA',
-    'bosnia and herzegovina': 'Bosnia',
-    'senegal': 'SENEGAL'
-  };
+  // Use shared normalizeTeamName() for all name matching
+  // _NAME_ALIASES handles: USA, Bosnia, SENEGAL, Cabo Verde, Ivory Coast, etc.
 
   // Build normalized name -> seed lookup for robust matching
   var nameToSeed = {};
@@ -3458,17 +3435,17 @@ function renderContinentKPI() {
     nameToSeed[tName] = seed;
     nameToSeed[tName.toLowerCase().trim()] = seed;
     nameToSeed[tName.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'')] = seed;
+    // Also register normalized alias
+    var normName = normalizeTeamName(tName);
+    if(normName !== tName) nameToSeed[normName] = seed;
   }
   function findSeedByName(matchName) {
     if(!matchName) return null;
-    var n = matchName.trim();
-    if(nameToSeed[n]) return nameToSeed[n];
-    n = n.toLowerCase().trim();
-    // Check aliases first
-    if(TEAM_NAME_ALIASES[n]) {
-      var aliasedSeed = nameToSeed[TEAM_NAME_ALIASES[n]] || nameToSeed[TEAM_NAME_ALIASES[n].toLowerCase()];
-      if(aliasedSeed) return aliasedSeed;
-    }
+    // Use shared normalizeTeamName for consistent alias resolution
+    var norm = normalizeTeamName(matchName);
+    if(nameToSeed[norm]) return nameToSeed[norm];
+    if(nameToSeed[matchName.trim()]) return nameToSeed[matchName.trim()];
+    var n = matchName.toLowerCase().trim();
     if(nameToSeed[n]) return nameToSeed[n];
     n = n.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     if(nameToSeed[n]) return nameToSeed[n];
@@ -3501,19 +3478,10 @@ function renderContinentKPI() {
   //   Match exists, no winner   → Pending
   //   No match record at all    → Unknown / Awaiting fixture
   var statusData = getTeamStatusFromMatches(matches);
-  // Name aliases (must match getTeamStatusFromMatches)
-  var _aliases = {
-    'united states': 'USA',
-    'bosnia and herzegovina': 'Bosnia',
-    'senegal': 'SENEGAL',
-    'ivory coast': 'Ivory Coast',
-    'cape verde': 'Cabo Verde'
-  };
-  function _normalize(n) { return _aliases[n.toLowerCase().trim()] || n; }
-
+  // Use shared normalizeTeamName() — must match getTeamStatusFromMatches() normalization
   for(var seed in teamData) {
     var rawName = teamData[seed].team;
-    var normName = _normalize(rawName);
+    var normName = normalizeTeamName(rawName);
 
     if(statusData.completedWinners.has(normName)) {
       teamData[seed].status = 'Alive';
