@@ -472,29 +472,9 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#64748b">
         <strong style="color:#0f172a">Prize redistribution phase.</strong> 16 matches completed. $176M distributed. 83.3% value preservation rate — higher-value teams generally advanced. Stage deltas locked in: +$2M per team for R32 exits. Continental financial resilience tracked. Open environments showed strongest knockout performance (58.3% advance rate vs. 50% baseline).
       </div>
-<section id="knockout">
-  <details>
-    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Tracks every team's path from group seed through each knockout round. 32 teams eliminated, 16 still competing. Shows current position and progression path.</span></summary>
-
-    <div class="content-box" style="overflow-x:auto">
-      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
-      <table class="data-table" id="ko-table">
-        <thead><tr>
-          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
-          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
-          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
-          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
-          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
-        </tr></thead>
-        <tbody id="ko-body">
-            <!-- Populated by renderKOTableFromTeams() -->
-        </tbody>
-      </table>
-    </div>
-  </details>
-</section><section id="results">
+<section id="results">
   <details open>
-    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Stage 3 (Round of 16): 2 of 8 matches completed. R32 complete (16/16). Live results with scores, winners, and upcoming fixtures.</span></summary>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9989; Complete &mdash; Round of 32: all 16 matches finished. Stage deltas locked at +$2M. Winners advanced to Round of 16.</span></summary>
     <div class="content-box">
       <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
       <div class="table-container">
@@ -515,6 +495,28 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         </table>
       </div>
       <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+    </div>
+  </details>
+</section>
+
+<section id="knockout">
+  <details>
+    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Tracks every team's path from group seed through each knockout round. 32 teams eliminated, 16 still competing. Shows current position and progression path.</span></summary>
+
+    <div class="content-box" style="overflow-x:auto">
+      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
+      <table class="data-table" id="ko-table">
+        <thead><tr>
+          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
+          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
+          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
+          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
+          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
+        </tr></thead>
+        <tbody id="ko-body">
+            <!-- Populated by renderKOTableFromTeams() -->
+        </tbody>
+      </table>
     </div>
   </details>
 </section><section id="group-metric">
@@ -896,6 +898,33 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         The Round of 16 marks a shift in the research question. Instead of asking "Which country won?" we now ask: <strong>"Which development ecosystems produced the players that generated those wins?"</strong>
         For every remaining national team, we track: players developed domestically vs. in foreign academies, emigration pathways, sporting nationality changes, and the percentage of offensive production coming from external development systems. This is a governance question — not simply a competitive one.
       </div>
+
+        <!-- Round of 16 Results — Stage 3 Only -->
+        <h3 style="margin-top:1.5rem;font-size:1.1rem;color:#0f172a;display:flex;align-items:center;gap:.5rem">
+          &#127942; Round of 16 — Match by Match
+        </h3>
+        <p style="font-size:.85rem;color:#64748b;margin:.3rem 0 .75rem">Live results from the Round of 16. Winners advance to Quarterfinals. Losers are eliminated at this stage.</p>
+        <div style="overflow-x:auto">
+          <table id="r16-results-table" style="width:100%;border-collapse:collapse;font-size:.9rem">
+            <thead style="background:#0f172a;color:#d4a843;position:sticky;top:0;z-index:1">
+              <tr>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Match &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Stage &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Date &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Team 1 &#8597;</th>
+                <th style="padding:.6rem;text-align:center;white-space:nowrap">Score &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Team 2 &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Winner &#8597;</th>
+                <th style="padding:.6rem;text-align:left;white-space:nowrap">Notes &#8597;</th>
+              </tr>
+            </thead>
+            <tbody id="r16-results-body"></tbody>
+          </table>
+        </div>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. Winners advance to Quarterfinals ($19M prize). Losers lock at $15M.</p>
+
+
+
     </div>
   </details>
 </section>
@@ -5396,6 +5425,36 @@ function applyMatchResultsToKOTable() {
       if(pathCell2) pathCell2.textContent = 'Eliminated ' + (m.stage || '');
     }
   });
+
+  // Also apply to Team Profiles table (R16+ column)
+  applyMatchResultsToProfileTable();
+}
+
+function applyMatchResultsToProfileTable() {
+  // Apply match winner/loser data to the Profile table R16+ column
+  if(!dbMatches || dbMatches.length === 0) return;
+  if(!dbSeedMap || Object.keys(dbSeedMap).length === 0) return;
+
+  var nameToSeed = {};
+  for(var seed in dbSeedMap) { if(dbSeedMap[seed]) nameToSeed[dbSeedMap[seed]] = seed; }
+
+  dbMatches.forEach(function(m) {
+    if(!m.winner || !m.team1 || !m.team2) return;
+
+    var winnerSeed = nameToSeed[m.winner];
+    var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
+    var loserSeed = nameToSeed[loserName];
+    var stage = m.stage || '';
+
+    if(winnerSeed) {
+      var r16Cell = document.getElementById('r16-' + winnerSeed.toLowerCase());
+      if(r16Cell) r16Cell.innerHTML = '<span style="color:#16a34a;font-weight:700">' + stage + ' - Winner</span>';
+    }
+    if(loserSeed) {
+      var r16Cell2 = document.getElementById('r16-' + loserSeed.toLowerCase());
+      if(r16Cell2) r16Cell2.innerHTML = '<span style="color:#dc2626;font-weight:700">Eliminated ' + stage + '</span>';
+    }
+  });
 }
 
 function getGroupColor(letter) {
@@ -5810,45 +5869,49 @@ function renderAllFromCache() {
     });
   }
 
-  // Rebuild results table — stage-separated: active first, completed below
+  // Rebuild results table — STAGE 2: R32 only, STAGE 3: R16 only
+  // Helper
+  function _renderRow(m) {
+    var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
+    var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
+    var winnerClass = m.winner ? 'result-win' : 'result-pending';
+    var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
+      '<td>' + (m.stage || 'TBD') + '</td>' +
+      '<td>' + (m.date || 'TBD') + '</td>' +
+      '<td><strong>' + (m.team1 || '') + '</strong></td>' +
+      '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
+      '<td><strong>' + (m.team2 || '') + '</strong></td>' +
+      '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
+      '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
+    return tr;
+  }
+
+  // STAGE 2: R32 results only
   var rBody = document.getElementById('results-body');
   if(rBody && dbMatches.length > 0) {
     rBody.innerHTML = '';
-
-    // Helper
-    function _renderRow(m) {
-      var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
-      var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
-      var winnerClass = m.winner ? 'result-win' : 'result-pending';
-      var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
-      var tr = document.createElement('tr');
-      tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
-        '<td>' + (m.stage || 'TBD') + '</td>' +
-        '<td>' + (m.date || 'TBD') + '</td>' +
-        '<td><strong>' + (m.team1 || '') + '</strong></td>' +
-        '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
-        '<td><strong>' + (m.team2 || '') + '</strong></td>' +
-        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
-        '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
-      return tr;
-    }
-
-    // Separate by stage
-    var r16m = dbMatches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
     var r32m = dbMatches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
+    if(r32m.length > 0) {
+      var h2 = document.createElement('tr');
+      h2.innerHTML = '<td colspan="8" style="background:#dcfce7;padding:.6rem .9rem;font-weight:700;color:#166534;font-size:.9rem;border-top:2px solid #86efac;border-bottom:1px solid #bbf7d0;">&#9989; ROUND OF 32 — COMPLETED (' + r32m.length + '/' + r32m.length + ')</td>';
+      rBody.appendChild(h2);
+      r32m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
+    }
+  }
 
+  // STAGE 3: R16 results only
+  var r16Body = document.getElementById('r16-results-body');
+  if(r16Body && dbMatches.length > 0) {
+    r16Body.innerHTML = '';
+    var r16m = dbMatches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
     if(r16m.length > 0) {
       var h1 = document.createElement('tr');
       var c1 = r16m.filter(function(m) { return m.winner; }).length;
       h1.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + c1 + '/' + r16m.length + ' completed)</td>';
-      rBody.appendChild(h1);
-      r16m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
-    }
-    if(r32m.length > 0) {
-      var h2 = document.createElement('tr');
-      h2.innerHTML = '<td colspan="8" style="background:#f1f5f9;padding:.6rem .9rem;font-weight:700;color:#64748b;font-size:.9rem;border-top:2px solid #e2e8f0;border-bottom:1px solid #cbd5e1;">&#9989; ROUND OF 32 — COMPLETED (' + r32m.length + '/' + r32m.length + ')</td>';
-      rBody.appendChild(h2);
-      r32m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
+      r16Body.appendChild(h1);
+      r16m.forEach(function(m) { r16Body.appendChild(_renderRow(m)); });
     }
   }
 
@@ -6119,34 +6182,31 @@ async function loadMatchesFromDB() {
       return tr;
     }
 
+    // STAGE 2: Render only R32 matches in results-body
     var rBody = document.getElementById('results-body');
     if(rBody) {
       rBody.innerHTML = '';
-
-      // Sort matches: active stage first, then completed stages
-      var r16Matches = matches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
       var r32Matches = matches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
-      var otherMatches = matches.filter(function(m) { return m.stage !== 'Round of 16' && m.stage !== 'Round of 32'; });
+      if(r32Matches.length > 0) {
+        var completedHeader = document.createElement('tr');
+        completedHeader.innerHTML = '<td colspan="8" style="background:#dcfce7;padding:.6rem .9rem;font-weight:700;color:#166534;font-size:.9rem;border-top:2px solid #86efac;border-bottom:1px solid #bbf7d0;">&#9989; ROUND OF 32 — COMPLETED (' + r32Matches.length + '/' + r32Matches.length + ')</td>';
+        rBody.appendChild(completedHeader);
+        r32Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
+      }
+    }
 
-      // --- ACTIVE STAGE: Round of 16 ---
+    // STAGE 3: Render only R16 matches in r16-results-body
+    var r16Body = document.getElementById('r16-results-body');
+    if(r16Body) {
+      r16Body.innerHTML = '';
+      var r16Matches = matches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
       if(r16Matches.length > 0) {
         var activeHeader = document.createElement('tr');
         var completedCount = r16Matches.filter(function(m) { return m.winner; }).length;
         activeHeader.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + completedCount + '/' + r16Matches.length + ' completed)</td>';
-        rBody.appendChild(activeHeader);
-        r16Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
+        r16Body.appendChild(activeHeader);
+        r16Matches.forEach(function(m) { r16Body.appendChild(renderMatchRow(m)); });
       }
-
-      // --- COMPLETED STAGE: Round of 32 ---
-      if(r32Matches.length > 0) {
-        var completedHeader = document.createElement('tr');
-        completedHeader.innerHTML = '<td colspan="8" style="background:#f1f5f9;padding:.6rem .9rem;font-weight:700;color:#64748b;font-size:.9rem;border-top:2px solid #e2e8f0;border-bottom:1px solid #cbd5e1;">&#9989; ROUND OF 32 — COMPLETED (' + r32Matches.length + '/' + r32Matches.length + ')</td>';
-        rBody.appendChild(completedHeader);
-        r32Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
-      }
-
-      // --- OTHER STAGES ---
-      otherMatches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
     }
 
     // Update teamExportData from match results (DOM updates handled by applyMatchResultsToKOTable after render)
@@ -6196,6 +6256,7 @@ async function loadMatchesFromDB() {
     try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
+    try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
     console.log('loadMatchesFromDB: all renders triggered');
 
   } catch(e) { console.error('loadMatches error:', e); }
@@ -6441,6 +6502,11 @@ function renderKPIReport() {
   }
 }
 </script>
-<script src="js/wc2026-null-fix.js"></script>   <!-- ADD THIS LINE -->
+<script src="js/wc2026-null-fix.js"></script
+
+
+
+>
+</script>
 </body>
 </html>
