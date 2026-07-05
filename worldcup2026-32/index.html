@@ -4178,6 +4178,31 @@ function renderContinentalAdvancementYield() {
   var matches = dbMatches || [];
   var results = computeContinentalAdvancementYield(groups, matches, dbPrizeTiers);
 
+  // DEBUG: Show raw team-to-status mapping
+  var matchStatus = getTeamStatusFromMatches(matches);
+  var debugHtml = '<div style="margin:1rem 0;background:#fefce8;border:2px solid #f59e0b;border-radius:8px;padding:1rem;font-size:.8rem;max-height:300px;overflow-y:auto">';
+  debugHtml += '<h4 style="color:#92400e;margin:0 0 .5rem">DEBUG: Team Status Mapping (check console for full data)</h4>';
+  debugHtml += '<table style="width:100%;font-size:.75rem;border-collapse:collapse"><thead><tr style="background:#f59e0b;color:#fff"><th>Team</th><th>Norm</th><th>Continent</th><th>Losers?</th><th>Winners?</th><th>Pending?</th><th>Result</th></tr></thead><tbody>';
+  var naTeams = ['Mexico','Canada','Haiti','United States','Curacao','Panama'];
+  naTeams.forEach(function(t) {
+    var n = normalizeTeamName(t);
+    var c = getTeamContinent(t);
+    var inL = matchStatus.completedLosers.has(n) ? 'YES' : 'no';
+    var inW = matchStatus.completedWinners.has(n) ? 'YES' : 'no';
+    var inP = matchStatus.pendingTeams.has(n) ? 'YES' : 'no';
+    var res = matchStatus.completedLosers.has(n) ? 'OUT' : (matchStatus.completedWinners.has(n) ? 'ALIVE' : (matchStatus.pendingTeams.has(n) ? 'PENDING' : 'GROUP EXIT'));
+    var rColor = res === 'OUT' || res === 'GROUP EXIT' ? '#dc2626' : '#16a34a';
+    debugHtml += '<tr style="border-bottom:1px solid #e2e8f0"><td><strong>' + t + '</strong></td><td>' + n + '</td><td>' + c + '</td><td>' + inL + '</td><td>' + inW + '</td><td>' + inP + '</td><td style="color:' + rColor + ';font-weight:700">' + res + '</td></tr>';
+  });
+  debugHtml += '</tbody></table></div>';
+  var existingDebug = document.getElementById('cay-debug');
+  if(!existingDebug) {
+    existingDebug = document.createElement('div');
+    existingDebug.id = 'cay-debug';
+    container.parentNode.insertBefore(existingDebug, container);
+  }
+  existingDebug.innerHTML = debugHtml;
+
   if(results.length === 0) {
     container.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">Loading data...</div>';
     return;
@@ -6705,6 +6730,6 @@ function renderKPIReport() {
   }
 }
 </script>
-<script src="js/wc2026-null-fix.js"></script>   <!-- ADD THIS LINE -->
+<!-- External scripts removed - all logic is now inline -->
 </body>
 </html>
