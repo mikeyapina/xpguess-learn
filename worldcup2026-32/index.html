@@ -731,10 +731,8 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
               <th>Continent &#8597;</th>
               <th>Original Teams &#8597;</th>
               <th>Total Prize Earned &#8597;</th>
-              <th>Stage Delta Earned &#8597;</th>
+              <th>Stage Delta &#8597;</th>
               <th>Avg Prize / Team &#8597;</th>
-              <th>Yield / Original Team &#8597;</th>
-              <th>Yield / Surviving Team &#8597;</th>
               <th>Financial Share &#8597;</th>
               <th>CER % &#8597;</th>
               <th>FSR % &#8597;</th>
@@ -746,7 +744,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Analysis -->
         <div id="cay-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Total Prize = sum of all teams' current prize by continent. Stage Delta = prize earned above $9M baseline. Avg Prize / Team = total prize ÷ original teams. Yield / Original Team = total prize ÷ original teams (full tournament view). Yield / Surviving Team = total prize ÷ teams still alive (forward-looking). Financial Share = continent's prize ÷ total tournament prize pool. CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. This is the primary economic model — the "Dog Bone."</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Total Prize = sum of all teams\' current prize by continent. Stage Delta = total prize minus ($9M × original teams). Avg Prize / Team = total prize ÷ original teams. Financial Share = continent's prize ÷ total tournament prize pool. CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. Pure financial metrics — no survival data. Source: wc2026_matches.</p>
       </div>
     </div>
   </details>
@@ -3972,12 +3970,10 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
 }
 
 function renderContinentalAdvancementYield() {
-  console.log('>>> renderContinentalAdvancementYield CALLED');
   var container = document.getElementById('cay-cards');
   var tbody = document.getElementById('cay-body');
   var analysisDiv = document.getElementById('cay-analysis');
-  console.log('>>> renderCAY: container=' + !!container + ', tbody=' + !!tbody + ', analysis=' + !!analysisDiv);
-  if(!container || !tbody) { console.warn('>>> renderCAY: ABORT - missing DOM elements'); return; }
+  if(!container || !tbody) return;
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
@@ -3997,67 +3993,61 @@ function renderContinentalAdvancementYield() {
     oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' }
   };
 
-  // Build cards HTML
+  // Compute total prize for financial share %
+  var totalTournamentPrize = results.reduce(function(s, d) { return s + d.current_total_prize; }, 0);
+
+  // Build cards HTML — FINANCIAL METRICS ONLY
   var cardsHtml = '';
-  console.log('renderCAY: building cards for', results.length, 'continents');
   results.forEach(function(d) {
-    console.log('  card:', d.continent, d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'pending=' + d.teams_pending, 'elim=' + d.teams_eliminated, 'unk=' + d.teams_unknown, 'r16=' + d.teams_reached_r16_or_deeper);
     var col = cardColors[d.continent] || cardColors.europe;
-    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
+    var sharePct = totalTournamentPrize > 0 ? ((d.current_total_prize / totalTournamentPrize) * 100).toFixed(1) : '0.0';
+    var avgPrize = d.original_teams > 0 ? (d.current_total_prize / d.original_teams) : 0;
     cardsHtml += '<div style="background:' + col.bg + ';border:2px solid ' + col.border + ';border-radius:12px;padding:1.25rem">' +
       '<div style="font-size:1.5rem;margin-bottom:.25rem">' + d.continentFlag + '</div>' +
       '<div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:' + col.text + ';font-weight:700;margin-bottom:.5rem">' + d.continentLabel + '</div>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.85rem;text-align:center;margin-bottom:.5rem">' +
-        '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.teams_alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
-        '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.teams_pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
-        '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.teams_unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
+      '<div style="text-align:center;margin-bottom:.5rem">' +
+        '<div style="font-size:1.8rem;font-weight:800;color:#0f172a">$' + d.current_total_prize.toFixed(1) + 'M</div>' +
+        '<div style="color:#64748b;font-size:.7rem">Total Prize Earned</div>' +
       '</div>' +
       '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + col.border + '">' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CAE</span><span style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>R16+ Teams</span><span style="font-weight:700">' + d.teams_reached_r16_or_deeper + '/' + d.original_teams + '</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Adv. Value</span><span style="font-weight:700">$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Yield/Team</span><span style="font-weight:700">$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Original Teams</span><span style="font-weight:700">' + d.original_teams + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Avg Prize/Team</span><span style="font-weight:700">$' + avgPrize.toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Financial Share</span><span style="font-weight:700">' + sharePct + '%</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Stage Delta</span><span style="font-weight:700">$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</span></div>' +
         '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CER</span><span style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</span></div>' +
         '<div style="display:flex;justify-content:space-between;font-size:.8rem"><span>FSR</span><span style="font-weight:700">' + d.fsr + '%</span></div>' +
       '</div>' +
     '</div>';
   });
   container.innerHTML = cardsHtml;
-  console.log('renderCAY: cards HTML length=' + cardsHtml.length + ', assigned to container');
 
-  // Build table rows HTML
+  // Build table rows HTML — FINANCIAL COLUMNS ONLY
   var rowsHtml = '';
-  console.log('renderCAY: building', results.length, 'table rows');
   results.forEach(function(d) {
-    console.log('  row:', d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'r16=' + d.teams_reached_r16_or_deeper, 'cae=' + d.cae);
-    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
+    var sharePct = totalTournamentPrize > 0 ? ((d.current_total_prize / totalTournamentPrize) * 100).toFixed(1) : '0.0';
+    var avgPrize = d.original_teams > 0 ? (d.current_total_prize / d.original_teams) : 0;
+    var totalDelta = d.current_total_prize - (d.original_teams * 9); // above $9M baseline
     rowsHtml += '<tr>' +
       '<td><strong>' + d.continentFlag + ' ' + d.continentLabel + '</strong></td>' +
       '<td>' + d.original_teams + '</td>' +
-      '<td style="color:#16a34a;font-weight:700">' + d.teams_alive + '</td>' +
-      '<td style="color:#f59e0b">' + d.teams_pending + '</td>' +
-      '<td style="color:#dc2626">' + d.teams_eliminated + '</td>' +
-      '<td style="color:#0f172a;font-weight:700">' + d.teams_reached_r16_or_deeper + '</td>' +
-      '<td style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</td>' +
-      '<td>$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</td>' +
-      '<td>$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</td>' +
-      '<td>$' + Number(d.current_total_prize).toFixed(1) + 'M</td>' +
+      '<td style="font-weight:800;color:#0f172a">$' + d.current_total_prize.toFixed(1) + 'M</td>' +
+      '<td style="color:#16a34a;font-weight:700">+$' + totalDelta.toFixed(1) + 'M</td>' +
+      '<td>$' + avgPrize.toFixed(1) + 'M</td>' +
+      '<td>' + sharePct + '%</td>' +
       '<td style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</td>' +
       '<td style="font-weight:700">' + d.fsr + '%</td>' +
     '</tr>';
   });
   tbody.innerHTML = rowsHtml;
-  console.log('renderCAY: table rows HTML length=' + rowsHtml.length + ', assigned to tbody');
 
-  // Render analysis
+  // Render analysis — FINANCIAL FOCUS
   if(analysisDiv) {
+    var totalPrize = results.reduce(function(s, d) { return s + d.current_total_prize; }, 0);
     var totalTeams = results.reduce(function(s, d) { return s + d.original_teams; }, 0);
-    var totalAlive = results.reduce(function(s, d) { return s + d.teams_alive; }, 0);
-    var totalR16 = results.reduce(function(s, d) { return s + d.teams_reached_r16_or_deeper; }, 0);
-    analysisDiv.innerHTML = '<p style="margin:0 0 .5rem 0"><strong>Continental Advancement Efficiency (CAE)</strong> measures how efficiently each continent converts tournament entries into Round of 16 or deeper survival. <strong>Advancement Value</strong> measures the incremental FIFA prize delta created by survival from one stage to the next. Missing fixtures are treated as pending/unknown, not eliminated.</p>' +
-      '<p style="margin:0 0 .5rem 0;font-size:.8rem;color:#64748b">Of ' + totalTeams + ' teams entered, ' + totalAlive + ' are confirmed alive and ' + totalR16 + ' have reached R16 or deeper across all continents.</p>';
+    analysisDiv.innerHTML = '<p style="margin:0 0 .5rem 0"><strong>Continental Financial Yield</strong> tracks which continent is capturing the tournament financial value. Total Prize = sum of all teams current prize by continent. Stage Delta = prize earned above $9M baseline. Financial Share = continent portion of total distributed prize pool. CER = current earnings ratio vs. baseline. FSR = future survival ratio.</p>' +
+      '<p style="margin:0;font-size:.8rem;color:#64748b">Total distributed: $' + totalPrize.toFixed(1) + 'M across ' + totalTeams + ' teams. Source: wc2026_matches (completed match results).</p>';
   }
 }
 
