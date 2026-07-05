@@ -104,6 +104,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   h2{font-size:1.1rem!important}
   table{font-size:.7rem!important}
   td,th{padding:.4rem .5rem!important}
+  /* Overall Assessment mobile fixes */
+  #final-verdict > div{border-width:1px!important;padding:.75rem!important;border-radius:10px!important}
+  #final-verdict .fv-grid{grid-template-columns:1fr!important;gap:.6rem!important}
+  #final-verdict a{border-radius:10px!important;padding:.75rem!important}
+  #final-verdict h2{font-size:1.15rem!important;margin-bottom:.25rem!important}
+  #final-verdict > div > p{font-size:.8rem!important;margin-bottom:.75rem!important}
+  /* Global box-sizing fix to prevent padding overflow */
+  *,*:before,*:after{box-sizing:border-box!important}
+  /* Section padding fix */
+  section{padding-left:.5rem!important;padding-right:.5rem!important}
 }
 
 /* FSI Table improvements */
@@ -180,6 +190,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -251,7 +262,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <p style="text-align:center;color:#64748b;font-size:.9rem;margin-bottom:1.5rem">The Dogbone Postulate is an accurate, insightful modeling of gamified sports governance. <strong>Every claim below links to live data.</strong></p>
 
     <!-- 3 Stages Side by Side -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+    <div class="fv-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
 
       <!-- STAGE 1 -->
       <a href="#summary" style="text-decoration:none;display:block;background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#fff'">
@@ -3681,17 +3692,23 @@ function renderContinentKPI() {
   //   No match record at all    → Unknown / Awaiting fixture
   var statusData = getTeamStatusFromMatches(matches);
   // Use shared normalizeTeamName() — must match getTeamStatusFromMatches() normalization
+  // CRITICAL: Check LOSERS before WINNERS.
+  // A team that won an early round then lost a later round appears in BOTH sets.
+  // Their final status is "Eliminated" (they lost their most recent match).
   for(var seed in teamData) {
     var rawName = teamData[seed].team;
     var normName = normalizeTeamName(rawName);
 
-    if(statusData.completedWinners.has(normName)) {
-      teamData[seed].status = 'Alive';
-      teamData[seed].eliminated = false;
-    } else if(statusData.completedLosers.has(normName)) {
+    if(statusData.completedLosers.has(normName)) {
+      // LOST their most recent completed match = ELIMINATED
+      // (checked FIRST — overrides any earlier wins)
       teamData[seed].status = 'Eliminated';
       teamData[seed].eliminated = true;
       // knockoutRound set below in match processing
+    } else if(statusData.completedWinners.has(normName)) {
+      // WON their most recent completed match = still ALIVE
+      teamData[seed].status = 'Alive';
+      teamData[seed].eliminated = false;
     } else if(statusData.pendingTeams.has(normName)) {
       teamData[seed].status = 'Pending';
       teamData[seed].eliminated = false;
