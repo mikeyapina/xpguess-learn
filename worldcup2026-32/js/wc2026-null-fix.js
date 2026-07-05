@@ -1,5 +1,5 @@
 /**
- * WC2026 TCI Dashboard — Null-Safe Patch
+ * WC2026 TCI Dashboard — Null-Safe Patch (CORRECTED)
  * Apply after the main <script> block. This overrides the broken functions
  * with null-safe versions and provides hardcoded prize-tier fallbacks.
  */
@@ -21,14 +21,24 @@ var WC2026_PRIZE_TIERS_HARD = {
 // ============================================================
 // 2. SAFE PRIZE TIER RESOLVER (never returns null)
 // ============================================================
+// Save original BEFORE any override
+var _origGetPrizeTiers = window.getPrizeTiers;
+
 function getPrizeTiersSafe() {
-  var tiers = getPrizeTiers();
+  // Try original first (if it exists and DB has data)
+  var tiers = null;
+  try {
+    if(_origGetPrizeTiers) tiers = _origGetPrizeTiers();
+  } catch(e) {}
+
   if(tiers && typeof tiers === 'object' && Object.keys(tiers).length >= 4) {
     return tiers;
   }
   console.warn('[null-fix] DB prize tiers missing/invalid — using hardcoded WC2026 values');
   return Object.assign({}, WC2026_PRIZE_TIERS_HARD);
 }
+
+// NEVER override getPrizeTiers globally — the render overrides use getPrizeTiersSafe directly
 
 // Convenience: prize for any stage label, never fails
 function getPrizeSafe(stageLabel) {
@@ -38,7 +48,7 @@ function getPrizeSafe(stageLabel) {
   if(s.indexOf('round of 32') >= 0 || s === 'r32') return tiers['Round of 32'];
   if(s.indexOf('round of 16') >= 0 || s === 'r16') return tiers['Round of 16'];
   if(s.indexOf('quarter') >= 0 || s === 'qf') return tiers['Quarter-Finals'];
-  if(s.indexOf('semi') >= 0 || s === 'sf') return 0; // semi = transition, no locked prize
+  if(s.indexOf('semi') >= 0 || s === 'sf') return 0;
   if(s.indexOf('champion') >= 0 || s.indexOf('winner') >= 0) return tiers['Winner'];
   if(s.indexOf('runner') >= 0 || s.indexOf('second') >= 0) return tiers['Runner-up'];
   if(s.indexOf('third') >= 0 || s === '3rd') return tiers['Third Place'];
@@ -159,7 +169,6 @@ function countTeams(groups) {
       return;
     }
 
-    // Draw the chart (same logic as original, extracted safely)
     var padding = {top:40,right:30,bottom:80,left:60};
     var chartW = w - padding.left - padding.right;
     var chartH = h - padding.top - padding.bottom;
@@ -169,7 +178,6 @@ function countTeams(groups) {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0,0,w,h);
 
-    // Grid
     ctx.strokeStyle = '#e2e8f0';
     ctx.lineWidth = 1;
     for(var i=0;i<=5;i++){
@@ -179,7 +187,6 @@ function countTeams(groups) {
       ctx.fillText((maxVal - i*10)+'M', padding.left-8, y+4);
     }
 
-    // Bars + cumulative line
     var barW = chartW / data.length * 0.6;
     var spacing = chartW / data.length;
     ctx.strokeStyle = '#d4a843'; ctx.lineWidth = 3; ctx.beginPath();
@@ -205,14 +212,12 @@ function countTeams(groups) {
       ctx.fillStyle = '#94a3b8'; ctx.font = '9px sans-serif';
       ctx.fillText(d.teams+' teams', x+barW/2, padding.top+chartH+50);
 
-      // Cumulative line point
       var cx = padding.left + spacing*i + spacing/2;
       var cy = padding.top + chartH - (d.cum/maxVal)*chartH;
       if(i===0) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
     });
     ctx.stroke();
 
-    // Cumulative points
     data.forEach(function(d,i){
       var cx = padding.left + spacing*i + spacing/2;
       var cy = padding.top + chartH - (d.cum/maxVal)*chartH;
@@ -220,7 +225,6 @@ function countTeams(groups) {
       ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
     });
 
-    // Title + legend
     ctx.fillStyle = '#0f172a'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'left';
     ctx.fillText('Stage Delta (bars) + Cumulative Delta (gold line)', padding.left, 20);
     var ly = h-15;
@@ -273,7 +277,6 @@ function countTeams(groups) {
       });
     });
 
-    // Process matches
     matches.forEach(function(m){
       if(!m || !m.winner || !m.team1 || !m.team2) return;
       var loser = (m.winner===m.team1)?m.team2:m.team1;
@@ -321,7 +324,6 @@ function countTeams(groups) {
       }
     }
 
-    // Summary cards
     if(cards){
       var totalD=0, aliveC=0, elimC=0, maxD=0, maxDT='';
       for(var s in teamData){
@@ -346,7 +348,6 @@ function countTeams(groups) {
         '<div style="font-size:.75rem;color:#64748b">'+maxDT+'</div></div>';
     }
 
-    // Table
     tbody.innerHTML = '';
     var sorted = Object.keys(teamData).sort(function(a,b){return teamData[b].delta - teamData[a].delta;});
     sorted.forEach(function(seed){
@@ -401,7 +402,6 @@ function countTeams(groups) {
         teams_reached_r16_or_deeper:0, current_total_prize:0, max_possible_remaining:0};
     });
 
-    // Count original teams
     groups.forEach(function(g){
       getStandings(g).forEach(function(s){
         var cont = getTeamContinent(s.team || '');
@@ -409,7 +409,6 @@ function countTeams(groups) {
       });
     });
 
-    // Per-team status
     groups.forEach(function(g){
       getStandings(g).forEach(function(s){
         var status = getTeamTournamentStatus(s.team || '', matches);
@@ -472,7 +471,6 @@ function countTeams(groups) {
     var teamsInMatches = {};
     elimData.participated.forEach(function(t){ teamsInMatches[t]=true; });
 
-    // Build team data
     var teamData = {};
     var nameToSeed = {};
     groups.forEach(function(g){
@@ -490,7 +488,6 @@ function countTeams(groups) {
       });
     });
 
-    // Apply status from matches
     var statusData = getTeamStatusFromMatches(matches);
     for(var sd in teamData){
       var rawName = teamData[sd].team;
@@ -514,14 +511,12 @@ function countTeams(groups) {
       for(var key in nameToSeed){
         if(key.length>3 && (norm.indexOf(key)>=0 || key.indexOf(norm)>=0)) return nameToSeed[key];
       }
-      // Try alias map
       for(var seed in teamData){
         if(normalizeTeamName(teamData[seed].team) === norm) return seed;
       }
       return null;
     }
 
-    // Process matches for prizes
     var roundOrder = ['Group Stage','Round of 32','Round of 16','Quarter-Finals','Semi-Finals','Final'];
     matches.forEach(function(m){
       if(!m || !m.winner || !m.team1 || !m.team2) return;
@@ -557,7 +552,6 @@ function countTeams(groups) {
       }
     });
 
-    // Aggregate by continent
     var allConts = ['north_america','south_america','europe','africa','asia','oceania','unknown'];
     var contData = {};
     allConts.forEach(function(c){
@@ -582,7 +576,6 @@ function countTeams(groups) {
 
     var sorted = allConts.filter(function(c){return contData[c].teams>0;}).sort(function(a,b){return contData[b].resilience-contData[a].resilience;});
 
-    // Render cards
     var cardColors = {north_america:{bg:'#dbeafe',border:'#3b82f6'},south_america:{bg:'#dcfce7',border:'#16a34a'},europe:{bg:'#fef3c7',border:'#f59e0b'},africa:{bg:'#fee2e2',border:'#dc2626'},asia:{bg:'#f3e8ff',border:'#9333ea'},oceania:{bg:'#ccfbf1',border:'#14b8a6'},unknown:{bg:'#f1f5f9',border:'#94a3b8'}};
     cards.innerHTML = '';
     sorted.forEach(function(c){
@@ -603,7 +596,6 @@ function countTeams(groups) {
       cards.appendChild(card);
     });
 
-    // Render table
     tbody.innerHTML = '';
     sorted.forEach(function(c){
       var d=contData[c];
@@ -617,7 +609,6 @@ function countTeams(groups) {
       tbody.appendChild(tr);
     });
 
-    // Prize div
     var prizeDiv = document.getElementById('cont-prize');
     if(prizeDiv){
       prizeDiv.innerHTML = '';
@@ -638,7 +629,6 @@ function countTeams(groups) {
       });
     }
 
-    // Analysis
     var analysisDiv = document.getElementById('cont-analysis');
     if(analysisDiv && sorted.length > 0){
       var best=sorted[0], worst=sorted[sorted.length-1];
@@ -687,7 +677,6 @@ function countTeams(groups) {
     var teamsInMatches = {};
     elimData.participated.forEach(function(t){ teamsInMatches[t]=true; });
 
-    // Process groups
     groups.forEach(function(g){
       var env = (g.environment_type || 'balanced').toLowerCase();
       if(!envData[env]) env = 'balanced';
@@ -699,7 +688,6 @@ function countTeams(groups) {
       envData[env].groupGoals += (g.total_goals || 0);
     });
 
-    // Process matches (if any)
     if(matches.length > 0){
       matches.forEach(function(m){
         if(!m || !m.winner || !m.team1 || !m.team2) return;
@@ -719,7 +707,6 @@ function countTeams(groups) {
       });
     }
 
-    // Calculate EPI
     var epiRows = [];
     for(var e in envData){
       var d = envData[e];
@@ -735,7 +722,6 @@ function countTeams(groups) {
 
     var activeRows = epiRows.filter(function(d){return d.qualified > 0;});
 
-    // Headline
     if(headlineText && activeRows.length > 0){
       var openEnv = activeRows.find(function(d){return d.env==='open';});
       var topEnv = openEnv || activeRows[0];
@@ -761,10 +747,9 @@ function countTeams(groups) {
       headlineText.innerHTML = hl;
     }
 
-    // Cards
     cards.innerHTML = '';
     epiRows.forEach(function(d){
-      if(d.qualified === 0) return; // skip empty
+      if(d.qualified === 0) return;
       var tc = parseFloat(d.epi) >= 50 ? '#16a34a' : '#dc2626';
       var card = document.createElement('div');
       card.style.cssText = 'background:#fff;border:2px solid '+d.color+';border-radius:12px;padding:1.25rem;text-align:center';
@@ -780,7 +765,6 @@ function countTeams(groups) {
       cards.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">No environments with qualified teams</div>';
     }
 
-    // Table
     tbody.innerHTML = '';
     epiRows.forEach(function(d){
       if(d.qualified === 0) return;
@@ -800,12 +784,10 @@ function countTeams(groups) {
       tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94a3b8;padding:1rem">No data to display</td></tr>';
     }
 
-    // Daily snapshots
     if(dailyBody){
       if(matches.length === 0){
         dailyBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94a3b8">No match data recorded yet. EPI snapshots will appear after each match day.</td></tr>';
       } else {
-        // Build daily data
         var matchesByDate = {};
         matches.forEach(function(m){ if(m.date){ if(!matchesByDate[m.date]) matchesByDate[m.date]=[]; matchesByDate[m.date].push(m); }});
         var dates = Object.keys(matchesByDate).sort();
@@ -836,7 +818,6 @@ function countTeams(groups) {
       }
     }
 
-    // EVI grid
     var eviGrid = document.getElementById('evi-grid');
     if(eviGrid){
       eviGrid.innerHTML = '';
@@ -851,7 +832,6 @@ function countTeams(groups) {
       });
     }
 
-    // Canvas
     if(matches.length > 0){
       var dailyData = [];
       var mbd = {};
@@ -885,7 +865,6 @@ function countTeams(groups) {
       }
     }
 
-    // Analysis
     if(analysisDiv){
       var h = '<strong>Environment Preservation Analysis:</strong><br><ul style="margin:.5rem 0 .5rem 1.2rem">';
       if(activeRows.length > 0){
@@ -984,7 +963,6 @@ window.sortEPIDaily = function(col) {
       return;
     }
 
-    // Build per-team goal data
     var teamGoals = {};
     var elimData = getTeamStatusFromMatches(matches);
     var teamsInMatches = {};
@@ -1000,92 +978,90 @@ window.sortEPIDaily = function(col) {
           envType:g.environment_type||'balanced',
           groupGoals:s.gs_goals||0,
           koGoalsByRound:{}, koTotal:0,
-          status: isElim?'Eliminated Group Stage':'Still Alive'
+          status: isElim ? 'Eliminated Group Stage' : 'Still Alive'
         };
         rounds.forEach(function(r){ teamGoals[seed].koGoalsByRound[r]=0; });
       });
     });
 
     matches.forEach(function(m){
-      if(!m || !m.team1 || !m.team2) return;
-      var t1s=null, t2s=null;
+      if(!m.team1 || !m.team2) return;
+      var t1Seed=null, t2Seed=null;
       for(var seed in teamGoals){
-        if(normalizeTeamName(teamGoals[seed].team)===normalizeTeamName(m.team1)) t1s=seed;
-        if(normalizeTeamName(teamGoals[seed].team)===normalizeTeamName(m.team2)) t2s=seed;
+        if(normalizeTeamName(teamGoals[seed].team)===normalizeTeamName(m.team1)) t1Seed=seed;
+        if(normalizeTeamName(teamGoals[seed].team)===normalizeTeamName(m.team2)) t2Seed=seed;
       }
-      if(t1s && m.score1!=null){ var r1=m.stage||'Round of 32'; teamGoals[t1s].koGoalsByRound[r1]=(teamGoals[t1s].koGoalsByRound[r1]||0)+m.score1; teamGoals[t1s].koTotal+=m.score1; }
-      if(t2s && m.score2!=null){ var r2=m.stage||'Round of 32'; teamGoals[t2s].koGoalsByRound[r2]=(teamGoals[t2s].koGoalsByRound[r2]||0)+m.score2; teamGoals[t2s].koTotal+=m.score2; }
-      if(m.winner && t1s && t2s){ var ls=(m.winner===m.team1)?t2s:t1s; teamGoals[ls].status='Eliminated '+(m.stage||''); }
+      var rk = m.stage || 'Round of 32';
+      if(t1Seed && m.score1!=null){ teamGoals[t1Seed].koGoalsByRound[rk]=(teamGoals[t1Seed].koGoalsByRound[rk]||0)+m.score1; teamGoals[t1Seed].koTotal+=m.score1; }
+      if(t2Seed && m.score2!=null){ teamGoals[t2Seed].koGoalsByRound[rk]=(teamGoals[t2Seed].koGoalsByRound[rk]||0)+m.score2; teamGoals[t2Seed].koTotal+=m.score2; }
+      if(m.winner && t1Seed && t2Seed){ var ls=(m.winner===m.team1)?t2Seed:t1Seed; teamGoals[ls].status='Eliminated '+(m.stage||''); }
     });
 
-    // Group aggregates
-    var groupGoalData = {};
-    var envColors = {suppressed:'#dc2626',balanced:'#2563eb',open:'#16a34a',dominant:'#f59e0b',inverted:'#f97316'};
+    var groupGoalData={};
+    var envColors={suppressed:'#dc2626',balanced:'#2563eb',open:'#16a34a',dominant:'#f59e0b',inverted:'#f97316'};
     groups.forEach(function(g){
-      groupGoalData[g.group_letter] = {letter:g.group_letter, env:g.environment_type||'balanced', groupGoals:0, koByRound:{}, koTotal:0};
+      groupGoalData[g.group_letter]={letter:g.group_letter,env:g.environment_type||'balanced',groupGoals:0,koByRound:{},koTotal:0};
       rounds.forEach(function(r){ groupGoalData[g.group_letter].koByRound[r]=0; });
     });
-    for(var sd in teamGoals){
-      var t = teamGoals[sd];
+    for(var seed in teamGoals){
+      var t=teamGoals[seed];
       if(groupGoalData[t.group]){
-        groupGoalData[t.group].groupGoals += t.groupGoals;
-        groupGoalData[t.group].koTotal += t.koTotal;
-        rounds.forEach(function(r){ groupGoalData[t.group].koByRound[r] += (t.koGoalsByRound[r]||0); });
+        groupGoalData[t.group].groupGoals+=t.groupGoals;
+        groupGoalData[t.group].koTotal+=t.koTotal;
+        rounds.forEach(function(r){ groupGoalData[t.group].koByRound[r]+=(t.koGoalsByRound[r]||0); });
       }
     }
 
-    // Render group table
-    groupBody.innerHTML = '';
-    var sortedGroups = Object.keys(groupGoalData).sort();
-    sortedGroups.forEach(function(letter){
-      var g = groupGoalData[letter];
-      var c = envColors[g.env] || '#64748b';
-      var total = g.groupGoals + g.koTotal;
-      var drop = g.groupGoals > 0 ? Math.round(((g.groupGoals-g.koTotal)/g.groupGoals)*100) : 0;
-      var dc = drop > 0 ? '#dc2626' : (drop < 0 ? '#16a34a' : '#64748b');
-      var ds = drop > 0 ? '-' : (drop < 0 ? '+' : '');
-      var tr = document.createElement('tr');
-      tr.innerHTML = '<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:'+c+';color:#fff;font-size:13px;font-weight:800;border-radius:6px;cursor:pointer" onclick="showGroupDetail(event,\''+letter+'\')">'+letter+'</span></td>'+
-        '<td><span class="gei-badge gei-'+g.env+'">'+ucFirst(g.env)+'</span></td>'+
+    groupBody.innerHTML='';
+    Object.keys(groupGoalData).sort().forEach(function(letter){
+      var g=groupGoalData[letter];
+      var c=envColors[g.env]||'#64748b';
+      var total=g.groupGoals+g.koTotal;
+      var drop=g.groupGoals>0?Math.round(((g.groupGoals-g.koTotal)/g.groupGoals)*100):0;
+      var dropColor=drop>0?'#dc2626':(drop<0?'#16a34a':'#64748b');
+      var dropSign=drop>0?'-':(drop<0?'+':'');
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:'+c+';color:#fff;font-size:13px;font-weight:800;border-radius:6px">'+letter+'</span></td>'+
+        '<td><span class="gei-badge gei-'+g.env+'">'+g.env.charAt(0).toUpperCase()+g.env.slice(1)+'</span></td>'+
         '<td style="font-weight:700;background:#fefce8">'+g.groupGoals+'</td>'+
         '<td>'+(g.koByRound['Round of 32']||0)+'</td><td>'+(g.koByRound['Round of 16']||0)+'</td>'+
         '<td>'+(g.koByRound['Quarter-Finals']||0)+'</td><td>'+(g.koByRound['Semi-Finals']||0)+'</td>'+
         '<td>'+(g.koByRound['Final']||0)+'</td><td style="font-weight:700">'+g.koTotal+'</td>'+
         '<td style="font-weight:800;color:#0f172a">'+total+'</td>'+
-        '<td style="color:'+dc+';font-weight:700">'+ds+Math.abs(drop)+'%</td>';
+        '<td style="color:'+dropColor+';font-weight:700">'+dropSign+Math.abs(drop)+'%</td>';
       groupBody.appendChild(tr);
     });
 
-    // Render team table
-    teamBody.innerHTML = '';
-    var sortedSeeds = Object.keys(teamGoals).sort();
-    sortedSeeds.forEach(function(seed){
-      var t = teamGoals[seed];
-      var c = envColors[t.envType] || '#64748b';
-      var total = t.groupGoals + t.koTotal;
-      var isElim = t.status !== 'Still Alive';
-      var tr = document.createElement('tr');
-      tr.style.opacity = isElim ? '0.6' : '1';
-      tr.innerHTML = '<td><strong>'+(t.team||seed)+'</strong>'+(isElim?' &#10060;':'')+'</td>'+
+    teamBody.innerHTML='';
+    Object.keys(teamGoals).sort().forEach(function(seed){
+      var t=teamGoals[seed];
+      var c=envColors[t.envType]||'#64748b';
+      var total=t.groupGoals+t.koTotal;
+      var isElim=t.status!=='Still Alive';
+      var tr=document.createElement('tr');
+      tr.style.opacity=isElim?'0.6':'1';
+      tr.innerHTML='<td><strong>'+(t.team||seed)+'</strong>'+(isElim?' &#10060;':'')+'</td>'+
         '<td><span style="display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;background:'+c+';color:#fff;font-size:11px;font-weight:700;border-radius:4px">'+t.group+'</span></td>'+
         '<td>'+seed+'</td><td style="font-weight:700;background:#fefce8">'+t.groupGoals+'</td>'+
-        '<td>'+(t.koGoalsByRound['Round of 32']||'-')+'</td><td>'+(t.koGoalsByRound['Round of 16']||'-')+'</td>'+
-        '<td>'+(t.koGoalsByRound['Quarter-Finals']||'-')+'</td><td>'+(t.koGoalsByRound['Semi-Finals']||'-')+'</td>'+
-        '<td>'+(t.koGoalsByRound['Final']||'-')+'</td><td style="font-weight:700">'+(t.koTotal||'-')+'</td>'+
+        '<td>'+(t.koGoalsByRound['Round of 32']||'-')+'</td>'+
+        '<td>'+(t.koGoalsByRound['Round of 16']||'-')+'</td>'+
+        '<td>'+(t.koGoalsByRound['Quarter-Finals']||'-')+'</td>'+
+        '<td>'+(t.koGoalsByRound['Semi-Finals']||'-')+'</td>'+
+        '<td>'+(t.koGoalsByRound['Final']||'-')+'</td>'+
+        '<td style="font-weight:700">'+(t.koTotal||'-')+'</td>'+
         '<td style="font-weight:800;color:#0f172a">'+total+'</td>'+
         '<td style="font-size:.8rem;color:'+(isElim?'#dc2626':'#16a34a')+'">'+t.status+'</td>';
       teamBody.appendChild(tr);
     });
 
-    // Analysis
-    var analysisDiv = document.getElementById('goal-analysis-content');
+    var analysisDiv=document.getElementById('goal-analysis-content');
     if(analysisDiv){
-      var tgg=0, tkg=0;
-      sortedGroups.forEach(function(l){ var g=groupGoalData[l]; tgg+=g.groupGoals; tkg+=g.koTotal; });
-      var od = tgg>0 ? Math.round(((tgg-tkg)/tgg)*100) : 0;
-      var h = '<strong>Overall:</strong> '+tgg+' group-stage goals. '+tkg+' knockout goals. ';
-      h += od>0 ? '<span style="color:#dc2626">Goal output down '+od+'%</span> in knockouts.</p>' : '<span style="color:#16a34a">Goal output maintained</span>.</p>';
-      analysisDiv.innerHTML = h;
+      var totalGG=0,totalKG=0;
+      Object.keys(groupGoalData).forEach(function(l){totalGG+=groupGoalData[l].groupGoals;totalKG+=groupGoalData[l].koTotal;});
+      var overall=totalGG>0?Math.round(((totalGG-totalKG)/totalGG)*100):0;
+      var html='<strong>Overall:</strong> '+totalGG+' group-stage goals. '+totalKG+' knockout goals. ';
+      html+=overall>0?'<span style="color:#dc2626">Down '+overall+'%</span> in knockouts.':'<span style="color:#16a34a">Maintained</span>.';
+      analysisDiv.innerHTML=html;
     }
   };
 })();
@@ -1094,25 +1070,23 @@ window.sortEPIDaily = function(col) {
 // 13. AUTO-APPLY FIXES ON LOAD
 // ============================================================
 (function applyNullFixes(){
-  console.log('[null-fix] Patch loaded. All render functions now null-safe.');
-
-  // Override getPrizeTiers globally to use safe version
-  window.getPrizeTiers = getPrizeTiersSafe;
+  console.log('[null-fix] CORRECTED patch loaded. All render functions now null-safe.');
+  console.log('[null-fix] getPrizeTiersSafe will use hardcoded FIFA WC2026 fallback when DB is empty.');
 
   // Re-render if data already loaded
   if(window._dbGroups && window._dbGroups.length > 0){
     console.log('[null-fix] Data detected — re-rendering all panels...');
     setTimeout(function(){
-      try{ renderPrizeLadderTable(); }catch(e){}
-      try{ drawPrizeDeltaGraph(); }catch(e){}
-      try{ renderTeamFinancialDelta(); }catch(e){}
-      try{ renderContinentKPI(); }catch(e){}
-      try{ renderContinentalAdvancementYield(); }catch(e){}
-      try{ renderEPIReport(); }catch(e){}
-      try{ renderGoalTracker(); }catch(e){}
-      try{ renderFSIReport(); }catch(e){}
-      try{ renderKPIReport(); }catch(e){}
-      try{ renderGroupMetric(); }catch(e){}
+      try{ renderPrizeLadderTable(); }catch(e){console.error('prize ladder:', e);}
+      try{ drawPrizeDeltaGraph(); }catch(e){console.error('prize graph:', e);}
+      try{ renderTeamFinancialDelta(); }catch(e){console.error('financial delta:', e);}
+      try{ renderContinentKPI(); }catch(e){console.error('continent KPI:', e);}
+      try{ renderContinentalAdvancementYield(); }catch(e){console.error('CAY:', e);}
+      try{ renderEPIReport(); }catch(e){console.error('EPI:', e);}
+      try{ renderGoalTracker(); }catch(e){console.error('goal tracker:', e);}
+      try{ renderFSIReport(); }catch(e){console.error('FSI:', e);}
+      try{ renderKPIReport(); }catch(e){console.error('KPI:', e);}
+      try{ renderGroupMetric(); }catch(e){console.error('group metric:', e);}
     }, 500);
   }
 })();
