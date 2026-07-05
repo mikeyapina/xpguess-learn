@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<!-- v=20260705-01 data-fix-applied -->
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
@@ -11,7 +14,7 @@
 <meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/wc2026-financial-delta.js"></script>
+  <script src="js/wc2026-financial-delta.js?v=2"></script>
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 html{background:#fafafa}
@@ -976,8 +979,8 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download JSON</button>
         <button onclick="downloadFullJSON()" style="padding:.5rem 1rem;background:#0f172a;color:#d4a843;border:1px solid #0f172a;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:700">&#128190; Download Full Snapshot</button>
       </div>
-      <div style="margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
-        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset</p>
+      <div id="import-section" style="display:none;margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset (Admin Only)</p>
         <p style="font-size:.8rem;color:#64748b;margin:0 0 .5rem">Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
         <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem">
       </div>
@@ -3613,6 +3616,7 @@ function renderContinentKPI() {
       teamData[seed].status = 'Alive';
       teamData[seed].eliminated = false;
     } else if(statusData.completedLosers.has(normName)) {
+      teamData[seed].status = 'Eliminated';
       teamData[seed].eliminated = true;
       // knockoutRound set below in match processing
     } else if(statusData.pendingTeams.has(normName)) {
@@ -3961,6 +3965,17 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
   });
   console.log('computeCAY: original_teams per continent:', Object.keys(data).map(function(c) { return c + '=' + data[c].original_teams; }).join(', '));
 
+  // Build eliminated lookup from match results (source of truth)
+  var eliminatedByMatch = {};
+  if(matches && matches.length > 0) {
+    matches.forEach(function(m) {
+      if(m.winner && m.team1 && m.team2) {
+        var loser = (normalizeTeamName(m.winner) === normalizeTeamName(m.team1)) ? normalizeTeamName(m.team2) : normalizeTeamName(m.team1);
+        eliminatedByMatch[loser] = m.stage || 'Round of 32';
+      }
+    });
+  }
+
   // For each team, determine status from match data
   groups.forEach(function(g) {
     var st = g.standings;
@@ -3972,6 +3987,11 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
       if(!data[cont]) return;
 
       var status = getTeamTournamentStatus(teamName, matches);
+      // Override: if team lost a completed match, they are eliminated (source of truth)
+      if(eliminatedByMatch[normalizeTeamName(teamName)]) {
+        status.status = 'Eliminated';
+        status.eliminatedAtStage = eliminatedByMatch[normalizeTeamName(teamName)];
+      }
 
       // Count by status
       if(status.status === 'Alive') {
