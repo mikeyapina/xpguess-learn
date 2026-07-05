@@ -287,60 +287,86 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin-top:.5rem">
     <canvas id="prize-delta-canvas" width="900" height="400" style="width:100%;height:auto;display:block"></canvas>
   </div>
-</section>
-
-<section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
+</section><section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
   <strong id="on-this-page" data-i18n="onThisPage" style="font-size:.9rem">On this page</strong>
   <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
-    <li><a href="#summary" data-i18n="tournamentSummary">Tournament Summary</a></li>
-    <li><a href="#knockout" data-i18n="knockoutTracking">Knockout Tracking</a></li>
-    <li><a href="#results" data-i18n="knockoutResults">Knockout Results</a></li>
-    <li><a href="#kpi-report">&#128274; TCI KPI Report</a></li>
-    <li><a href="#group-metric">&#128274; Knockout Group Metric</a></li>
-    <li><a href="#goal-tracker">&#128274; Goal Progression Tracker</a></li>
-    <li><a href="#continent-survival">&#128274; Continental Survival Tracker</a></li>
-    <li><a href="#continent-yield">&#128274; Continental Financial Yield</a></li>
-    <li><a href="#fsi-report">&#128274; Tournament Value Redistribution</a></li>
-    <li><a href="#epi-report">&#128274; Environment Preservation Index (EPI)</a></li>
-    <li><a href="#profiles" data-i18n="teamProfiles">Team Profiles (Sortable)</a></li>
-    <li><a href="#framework" data-i18n="methodology">The Framework</a></li>
-    <li><a href="#download" data-i18n="downloadDataset">Download Dataset</a></li>
+    <li style="margin-bottom:.3rem;list-style:none;margin-left:-1rem"><strong style="color:#d4a843;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Research Phases</strong></li>
+    <li><a href="#stage-1">&#9989; Stage 1 — Group Stage (Framework)</a></li>
+    <li><a href="#stage-2">&#9989; Stage 2 — Round of 32 (Prize Flow)</a></li>
+    <li><a href="#stage-3">&#127941; Stage 3 — Round of 16+ (Player Dev.)</a></li>
+    <li style="margin-top:.5rem;margin-bottom:.3rem;list-style:none;margin-left:-1rem"><strong style="color:#d4a843;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Data Tools</strong></li>
+    <li><a href="#profiles">&#128200; Team Profiles</a></li>
+    <li><a href="#download">&#128190; Download Full Dataset</a></li>
+    <li><a href="#admin">&#128274; Admin</a></li>
   </ul>
 </section>
+<!-- ===== STAGE 1 — GROUP STAGE (Framework Validation) ===== -->
+<section id="stage-1" style="margin:2rem 0">
+  <details>
+    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#d4a843;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem">
+      <span style="font-size:1.3rem">🔬</span>
+      <div>
+        <div>Stage 1 — Group Stage</div>
+        <div style="font-size:.8rem;color:#94a3b8;font-weight:400">Question: What competitive environments produce successful teams? ✅ Complete</div>
+      </div>
+    </summary>
+    <div style="padding:1rem 0">
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#64748b">
+        <strong style="color:#0f172a">Framework validation phase.</strong> 12 groups, 48 teams classified by SPI (91.7% held) and GEI environment type. Four environment classifications emerged: Constrained, Open, Dominant, Inverted. The TCI score was computed for every team. This stage validated that group-stage competitive structure predicts knockout advancement patterns.
+      </div>
+<section id="methodology">
+  <details>
+    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128214; Framework documentation &mdash; How SPI, GEI, and TCI work. The theory behind the dashboard. Understanding Strategic Performance Index, Group Environment Index, and Tournament Carryover Index.</span></summary>
 
-<hr>
+    <div class="methodology">
+      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
+      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
+      <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
 
-<div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
-  <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap">
-    <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-05</span>
-    <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span>
-    <span style="background:#16a34a;color:#fff;padding:.25rem .6rem;border-radius:4px;font-size:.75rem;font-weight:700;margin-left:.5rem">Stage 3 Active — Round of 16</span>
-  </div>
+      <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
+      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
+      <div class="formula-box">
+        <strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong><br>
+        <span style="color:#16a34a" id="spi-held-text">&#10003; SPI computed from group standings after data loads</span><br>
+        <span style="color:#94a3b8">Threshold: &gt;66% = "held", &le;66% = "broke"</span>
+      </div>
 
-  <!-- Stage Progress Timeline -->
-  <div style="margin:.5rem 0;display:flex;gap:.3rem;flex-wrap:wrap;font-size:.75rem">
-    <span style="background:#dcfce7;color:#166534;padding:.25rem .6rem;border-radius:4px;font-weight:700">&#9989; Group Stage</span>
-    <span style="color:#94a3b8">&#8594;</span>
-    <span style="background:#dcfce7;color:#166534;padding:.25rem .6rem;border-radius:4px;font-weight:700">&#9989; R32 (16/16)</span>
-    <span style="color:#94a3b8">&#8594;</span>
-    <span style="background:#fef3c7;color:#92400e;padding:.25rem .6rem;border-radius:4px;font-weight:700;border:2px solid #f59e0b">&#127941; R16 (2/8)</span>
-    <span style="color:#94a3b8">&#8594;</span>
-    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Quarterfinals</span>
-    <span style="color:#94a3b8">&#8594;</span>
-    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Semifinals</span>
-    <span style="color:#94a3b8">&#8594;</span>
-    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Final</span>
-  </div>
+      <h3>&#128101; GEI &mdash; Group Environment Index</h3>
+      <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
+      <div class="formula-box">
+        <strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong><br><br>
+        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share &mdash; one team overwhelmed the group<br>
+        <span class="gei-badge gei-suppressed">Constrained</span> 45&ndash;60% share &mdash; top team won a flat group<br>
+        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held &mdash; competitive, honest group<br>
+        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
+      </div>
 
-  <div style="margin-top:.3rem;font-size:.85rem;color:#64748b">
-    <strong style="color:#0f172a">Status:</strong> R32 complete &#10003; | R16 in progress (2 of 8 matches) | 18 of 20 total matches completed
-  </div>
+      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
+      <div class="formula-box">
+        <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
+        Where:<br>
+        &bull; SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br>
+        &bull; GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)<br>
+        &bull; Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br>
+        &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
+      </div>
 
-  <strong style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
-  <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">Loading from database...</span>
-</div>
+      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
+      <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
+        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
+        The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
+      </p>
 
-<section id="summary">
+      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
+      <p style="font-size:.85rem;color:#64748b">
+        &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
+        &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
+        &#8226; <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br>
+        &#8226; <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
+      </p>
+    </div>
+  </details>
+</section><section id="summary">
 <details class="accordion-section">
 <summary><h2 data-i18n="groupStageResults">&#128202; Group Stage Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#10003; Complete &mdash; 12 groups, 48 teams classified by SPI and GEI environment type. Open to view Matchday 3 breakdown and group classifications.</span></summary>
 
@@ -393,66 +419,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 </div>
 
 </details>
-</section>
-
-<div class="phase-divider"></div>
-<!-- ==================== KNOCKOUT TRACKING ==================== -->
-<section id="knockout">
-  <details>
-    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Tracks every team's path from group seed through each knockout round. 32 teams eliminated, 16 still competing. Shows current position and progression path.</span></summary>
-
-    <div class="content-box" style="overflow-x:auto">
-      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
-      <table class="data-table" id="ko-table">
-        <thead><tr>
-          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
-          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
-          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
-          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
-          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
-        </tr></thead>
-        <tbody id="ko-body">
-            <!-- Populated by renderKOTableFromTeams() -->
-        </tbody>
-      </table>
-    </div>
-  </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== KNOCKOUT RESULTS ==================== -->
-<section id="results">
-  <details open>
-    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Stage 3 (Round of 16): 2 of 8 matches completed. R32 complete (16/16). Live results with scores, winners, and upcoming fixtures.</span></summary>
-    <div class="content-box">
-      <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
-      <div class="table-container">
-        <table id="results-table">
-          <thead><tr>
-            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
-            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
-            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
-            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
-            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
-            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
-            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
-            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
-          </tr></thead>
-          <tbody id="results-body">
-            <!-- Populated by loadMatchesFromDB() -->
-          </tbody>
-        </table>
-      </div>
-      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
-    </div>
-  </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== KPI REPORT (GATED) ==================== -->
-<section id="kpi-report">
+</section><section id="kpi-report">
   <details>
     <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Framework metrics &mdash; How are GEI/SPI environments performing? Tracks advancement rates, preservation scores, and TCI verdicts by environment type (Constrained, Open, Dominant, Inverted).</span></summary>
     <div class="content-box">
@@ -487,12 +454,70 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
+</section>    </div>
+  </details>
 </section>
 
-<div class="phase-divider"></div>
+<!-- ===== STAGE 2 — ROUND OF 32 (Prize Flow Analysis) ===== -->
+<section id="stage-2" style="margin:2rem 0">
+  <details>
+    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#d4a843;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem">
+      <span style="font-size:1.3rem">💰</span>
+      <div>
+        <div>Stage 2 — Round of 32</div>
+        <div style="font-size:.8rem;color:#94a3b8;font-weight:400">Question: Where did FIFA prize money flow? ✅ Complete (16/16 matches)</div>
+      </div>
+    </summary>
+    <div style="padding:1rem 0">
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#64748b">
+        <strong style="color:#0f172a">Prize redistribution phase.</strong> 16 matches completed. $176M distributed. 83.3% value preservation rate — higher-value teams generally advanced. Stage deltas locked in: +$2M per team for R32 exits. Continental financial resilience tracked. Open environments showed strongest knockout performance (58.3% advance rate vs. 50% baseline).
+      </div>
+<section id="knockout">
+  <details>
+    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Tracks every team's path from group seed through each knockout round. 32 teams eliminated, 16 still competing. Shows current position and progression path.</span></summary>
 
-<!-- ==================== KNOCKOUT GROUP METRIC (GATED) ==================== -->
-<section id="group-metric">
+    <div class="content-box" style="overflow-x:auto">
+      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
+      <table class="data-table" id="ko-table">
+        <thead><tr>
+          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
+          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
+          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
+          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
+          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
+        </tr></thead>
+        <tbody id="ko-body">
+            <!-- Populated by renderKOTableFromTeams() -->
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section><section id="results">
+  <details open>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Stage 3 (Round of 16): 2 of 8 matches completed. R32 complete (16/16). Live results with scores, winners, and upcoming fixtures.</span></summary>
+    <div class="content-box">
+      <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
+      <div class="table-container">
+        <table id="results-table">
+          <thead><tr>
+            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
+            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
+            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
+            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
+            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
+            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
+            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
+            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
+          </tr></thead>
+          <tbody id="results-body">
+            <!-- Populated by loadMatchesFromDB() -->
+          </tbody>
+        </table>
+      </div>
+      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+    </div>
+  </details>
+</section><section id="group-metric">
   <details>
     <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128197; Tracking &mdash; Each group's knockout performance as matches complete. Shows wins, eliminations, survival %, and day-by-day progression. Which groups produce the most resilient teams?</span></summary>
     <div class="content-box">
@@ -538,12 +563,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== GOAL PROGRESSION TRACKER (GATED) ==================== -->
-<section id="goal-tracker">
+</section><section id="goal-tracker">
   <details>
     <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Offense model &mdash; How does goal production change through knockout rounds? Group-stage baseline plus R32, R16, QF, SF, and Final additions. The offensive decay curve.</span></summary>
     <div class="content-box">
@@ -613,12 +633,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== TEAM FINANCIAL DELTA ==================== -->
-<section id="team-financial-delta">
+</section><section id="team-financial-delta">
   <details>
     <summary><h2>&#128176; Team Financial Delta — Individual Team Prize Tracker</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128176; Individual teams &mdash; How much additional FIFA prize money has each team earned? Current stage, prize, delta, alive status, and next matchup. Purely per-team financial tracking.</span></summary>
     <div class="content-box">
@@ -650,12 +665,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">Baseline = $9M (group stage exit). Each advancement adds the stage delta. Champion = $50M (+$41M delta). Data updates after each match.</p>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== CONTINENT FINANCIAL KPI (GATED) ==================== -->
-<section id="continent-survival">
+</section><section id="continent-survival">
   <details>
     <summary><h2 data-i18n="continentalSurvival">&#127758; Continental Survival Tracker</h2><span style='font-size:.8rem;color:#64748b;display:block;margin-top:.2rem'>&#127758; Survival story &mdash; Which continent is surviving the knockout tournament best? Tracks original teams, alive, eliminated, QF+ reached, SF+ reached, finalists, and champion by continent.</span></summary>
     <div class="content-box">
@@ -697,12 +707,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== CONTINENTAL ADVANCEMENT & FINANCIAL YIELD (GATED) ==================== -->
-<section id="continent-yield">
+</section><section id="continent-yield">
   <details>
     <summary><h2>&#128176; Continental Financial Yield</h2><span style='font-size:.8rem;color:#64748b;display:block;margin-top:.2rem'>&#128176; Money story &mdash; Which continent is capturing the tournament's financial value? Total prize, yield per team, CER, FSR, and financial share. The primary economic model (the Dog Bone).</span></summary>
     <div class="content-box">
@@ -743,12 +748,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== TOURNAMENT VALUE REDISTRIBUTION (GATED) ==================== -->
-<section id="fsi-report">
+</section><section id="fsi-report">
   <details>
     <summary><h2 data-i18n="fsiReport">&#9889; Tournament Value Redistribution — Economic Impact Dashboard</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Value movement &mdash; Did tournament value stay with higher-value teams or move elsewhere? Preservation rate (83.3%), redistribution rate, upsets, and continent flow. The value-shift story.</span></summary>
     <div class="content-box">
@@ -796,12 +796,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== EPI SURVIVAL CURVES ==================== -->
-<section id="epi-report">
+</section><section id="epi-report">
   <details>
     <summary><h2>&#128200; Environment Preservation Index (EPI) — Survival Curves</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Environment story &mdash; Which competitive environments survive longest? Open at 37.5% EPI, Suppressed at 31.3%, Balanced at 25%, Dominant collapsed at 0%. Pure environment metrics.</span></summary>
     <div class="content-box">
@@ -881,10 +876,29 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
+</section>    </div>
+  </details>
 </section>
 
-<div class="phase-divider"></div>
-<!-- ==================== TEAM PROFILES ==================== -->
+<!-- ===== STAGE 3 — ROUND OF 16 AND BEYOND (Player Development Pathways) ===== -->
+<section id="stage-3" style="margin:2rem 0">
+  <details open>
+    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#d4a843 100%);color:#fff;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem;border:2px solid #d4a843">
+      <span style="font-size:1.3rem">🏅</span>
+      <div>
+        <div>Stage 3 — Round of 16 and Beyond</div>
+        <div style="font-size:.8rem;color:#fef3c7;font-weight:400">Question: Who is actually creating the value represented by a national team? 🟢 Active (2/8 matches)</div>
+      </div>
+    </summary>
+    <div style="padding:1rem 0">
+      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#92400e">
+        <strong style="color:#78350f">Research evolution: From tournament structure to player development governance.</strong> 
+        The Round of 16 marks a shift in the research question. Instead of asking "Which country won?" we now ask: <strong>"Which development ecosystems produced the players that generated those wins?"</strong>
+        For every remaining national team, we track: players developed domestically vs. in foreign academies, emigration pathways, sporting nationality changes, and the percentage of offensive production coming from external development systems. This is a governance question — not simply a competitive one.
+      </div>
+    </div>
+  </details>
+</section>
 <section id="profiles">
   <details>
     <summary><h2 data-i18n="teamProfiles">&#128200; Team Profiles (Sortable)</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128101; All 48 teams &mdash; Compare every team across SPI rank, GEI environment, TCI score, goals, and knockout progression. Click any column header to sort. Full tournament roster.</span></summary>
@@ -908,67 +922,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </table>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-<!-- ==================== TCI METHODOLOGY ==================== -->
-<section id="methodology">
-  <details>
-    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128214; Framework documentation &mdash; How SPI, GEI, and TCI work. The theory behind the dashboard. Understanding Strategic Performance Index, Group Environment Index, and Tournament Carryover Index.</span></summary>
-
-    <div class="methodology">
-      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
-      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
-      <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
-
-      <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
-      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
-      <div class="formula-box">
-        <strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong><br>
-        <span style="color:#16a34a" id="spi-held-text">&#10003; SPI computed from group standings after data loads</span><br>
-        <span style="color:#94a3b8">Threshold: &gt;66% = "held", &le;66% = "broke"</span>
-      </div>
-
-      <h3>&#128101; GEI &mdash; Group Environment Index</h3>
-      <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
-      <div class="formula-box">
-        <strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong><br><br>
-        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share &mdash; one team overwhelmed the group<br>
-        <span class="gei-badge gei-suppressed">Constrained</span> 45&ndash;60% share &mdash; top team won a flat group<br>
-        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held &mdash; competitive, honest group<br>
-        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
-      </div>
-
-      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
-      <div class="formula-box">
-        <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
-        Where:<br>
-        &bull; SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br>
-        &bull; GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)<br>
-        &bull; Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br>
-        &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
-      </div>
-
-      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
-      <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
-        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
-        The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
-      </p>
-
-      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
-      <p style="font-size:.85rem;color:#64748b">
-        &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
-        &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
-        &#8226; <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br>
-        &#8226; <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
-      </p>
-    </div>
-  </details>
-</section>
-
-<div class="phase-divider"></div>
-<!-- ==================== DOWNLOAD DATASET ==================== -->
-<section id="download">
+</section><section id="download">
   <details>
     <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128229; Export &mdash; Download the full TCI dataset as CSV or JSON. Two sheets: group standings with GEI/SPI + knockout matches with scores and preservation delta. Import/export snapshots.</span></summary>
 
@@ -989,12 +943,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
     </div>
   </details>
-</section>
-
-<div class="phase-divider"></div>
-
-<!-- ==================== ADMIN PANEL ==================== -->
-<section id="admin">
+</section><section id="admin">
   <details>
     <summary><h2 data-i18n="adminTitle">&#128274; Admin — Edit Knockout Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128273; Admin only &mdash; Two-step authentication required. Edit knockout positions, save to database, update all tables live. Only authorized NTG administrators.</span></summary>
 
@@ -1024,63 +973,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>
-
-<!-- ==================== FOOTER ==================== -->
-<!-- ==================== FOOTER (learn.xpguess.com approved) ==================== -->
-<hr style="margin-top:32px;">
-
-<h2 data-i18n="continueLearning">Continue Learning</h2>
-<ul style="padding-left:18px; line-height:1.6;">
-  <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
-  <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
-  <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
-  <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
-  <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
-  <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is &mdash; and Is Not</a></li>
-  <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
-  <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don&rsquo;t Go Pro</a></li>
-  <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
-  <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
-  <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
-  <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
-  <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
-  <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
-  <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
-  <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
-</ul>
-
-<p style="margin-top:32px;">
-  <a href="https://xpguess.com">Go to the XPGuess App</a>
-</p>
-
-<h2 data-i18n="compliance">Compliance Notice</h2>
-<p>
-  XPGuess is an educational platform. It does not provide medical services,
-  act as a healthcare provider, or replace professional care.
-  All fitness and support tools exist for training documentation,
-  reflection, and athlete protection.
-</p>
-
-<section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+</section><section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
   <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
   <p><strong>XPGuess</strong> &mdash; <em>Extended Performance Guessing</em> &mdash; is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
   <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
   <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Pi&ntilde;a</strong>, including biomechanical and developmental research.</p>
   <p>Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">&ldquo;Beginning and Staying with the Basics: Building from the Ground Up&rdquo;</a></p>
   <p>Additional work: <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">Coach Teaches Animals: Gymnastics Stretching</a></p>
-</section>
-
-<p style="font-size:12px; color:#777; margin-top:32px;">
-  XPGuess Learn content is educational, governance-focused, and non-commercial.
-</p>
-
-<p style="margin-top:18px;">
-  <a href="#top">Back to top</a>
-</p>
-
-<!-- ==================== SUPPORT THE MISSION (GATED) ==================== -->
-<section id="support">
+</section><section id="support">
   <div id="support-guest" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;text-align:center;margin:2rem 0">
     <p style="color:#64748b;font-size:.9rem;margin:0">&#128274; <strong>Sign in to support the mission</strong> and see how your contributions power open tournament analytics.</p>
   </div>
