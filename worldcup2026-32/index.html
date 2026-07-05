@@ -3,10 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<!-- v=20260705-01 data-fix-applied -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
@@ -14,7 +11,7 @@
 <meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/wc2026-financial-delta.js?v=2"></script>
+  <script src="js/wc2026-financial-delta.js"></script>
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 html{background:#fafafa}
@@ -185,10 +182,6 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <base target="_blank">
 </head>
 <body>
-<!-- DATA STATUS OVERLAY - shows connection state -->
-<div id="data-status-overlay" style="position:fixed;top:0;left:0;right:0;z-index:9999;padding:8px 16px;font-size:13px;font-weight:600;text-align:center;background:#eff6ff;color:#1e3a5f;border-bottom:2px solid #93c5fd;display:none">
-  <span id="data-status-text">Loading tournament data...</span>
-</div>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
 <div class="group-popup" id="group-popup"></div>
 
@@ -247,6 +240,91 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <button id="lang-toggle-es" onclick="setLang('es')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:.4">ES</button>
   </div>
 </header>
+
+<!-- Tournament Progress Bar REMOVED -- user wants only the white 3-card section below -->
+
+
+<!-- ===== OVERALL ASSESSMENT: WORLD CUP 2026 ===== -->
+<section id="final-verdict" style="margin:2rem 0">
+  <div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:16px;padding:1.5rem">
+    <h2 style="font-size:1.4rem;color:#0f172a;margin-bottom:.5rem;text-align:center">🏆 Overall Assessment to date of World Cup 2026</h2>
+    <p style="text-align:center;color:#64748b;font-size:.9rem;margin-bottom:1.5rem">The Dogbone Postulate is an accurate, insightful modeling of gamified sports governance. <strong>Every claim below links to live data.</strong></p>
+
+    <!-- 3 Stages Side by Side -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+
+      <!-- STAGE 1 -->
+      <a href="#summary" style="text-decoration:none;display:block;background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#fff'">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+          <span style="font-size:.8rem;color:#16a34a;font-weight:700">STAGE 1</span>
+          <span style="background:#16a34a;color:#fff;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">COMPLETE</span>
+        </div>
+        <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Group Stage</h3>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s1-teams">48 <span style="font-size:.8rem;color:#64748b;font-weight:400">teams</span></div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">12 groups classified by SPI (91.7% held) and GEI environment type. Four environments: Constrained, Open, Dominant, Inverted.</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
+          <div>SPI: 91.7% held (22/24 positions)</div>
+          <div>Inverted groups: D, G</div>
+          <div>48 teams classified</div>
+        </div>
+      </a>
+
+      <!-- STAGE 2 -->
+      <a href="#results" style="text-decoration:none;display:block;background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#fff'">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+          <span style="font-size:.8rem;color:#16a34a;font-weight:700">STAGE 2</span>
+          <span style="background:#16a34a;color:#fff;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">COMPLETE</span>
+        </div>
+        <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Knockout Round of 32</h3>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s2-prize">$176M <span style="font-size:.8rem;color:#64748b;font-weight:400">distributed</span></div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">$176M distributed. 83.3% value preservation rate. Stage delta locked at +$2M per team. 16 teams eliminated.</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
+          <div>$176M distributed</div>
+          <div>83.3% value preserved</div>
+          <div>16 teams advanced to R16</div>
+        </div>
+      </a>
+
+      <!-- STAGE 3 -->
+      <a href="#stage-3" style="text-decoration:none;display:block;background:#fff;border:2px solid #d4a843;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fefce8'" onmouseout="this.style.background='#fff'">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+          <span style="font-size:.8rem;color:#b45309;font-weight:700">STAGE 3</span>
+          <span style="background:#d4a843;color:#0f172a;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">IN PROGRESS</span>
+        </div>
+        <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Round of 16</h3>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s3-matches">2<span style="color:#64748b">/8</span> <span style="font-size:.8rem;color:#64748b;font-weight:400">matches</span></div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">Morocco 3-0 Canada, France 1-0 Paraguay. Next: Brazil vs Norway, Mexico vs England. Research: player development governance.</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
+          <div>2 QF confirmed: Morocco, France</div>
+          <div>2 eliminated: Canada, Paraguay</div>
+          <div>4 matches upcoming</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tournament Progress Bar -->
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e2e8f0">
+      <div style="font-size:.8rem;color:#94a3b8;text-align:center;margin-bottom:.5rem">TOURNAMENT PROGRESS</div>
+      <div style="display:flex;align-items:center;gap:.3rem;justify-content:center;font-size:.7rem;flex-wrap:wrap">
+        <span style="background:#16a34a;color:#fff;padding:.3rem .5rem;border-radius:4px">48 TEAMS</span>
+        <span style="color:#64748b">→</span>
+        <span style="background:#16a34a;color:#fff;padding:.3rem .5rem;border-radius:4px">32 R32</span>
+        <span style="color:#64748b">→</span>
+        <span style="background:#d4a843;color:#0f172a;padding:.3rem .5rem;border-radius:4px;font-weight:700">16 R16</span>
+        <span style="color:#64748b">→</span>
+        <span style="border:1px dashed #64748b;color:#64748b;padding:.3rem .5rem;border-radius:4px">8 QF</span>
+        <span style="color:#64748b">→</span>
+        <span style="border:1px dashed #64748b;color:#64748b;padding:.3rem .5rem;border-radius:4px">4 SF</span>
+        <span style="color:#64748b">→</span>
+        <span style="border:1px dashed #64748b;color:#64748b;padding:.3rem .5rem;border-radius:4px">1 CHAMP</span>
+      </div>
+      <div style="text-align:center;margin-top:.75rem;font-size:.8rem;color:#94a3b8;font-style:italic">
+        We believe the Dogbone Postulate is an accurate model — but we don't know yet. We're close, but not there. Building the case as the tournament unfolds.
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="prize-truth-panel" style="background:#f8fafc;border:2px solid #d4a843;border-radius:12px;padding:1.5rem;margin:1.5rem 0">
   <h2 style="font-size:1.1rem;color:#0f172a;margin-bottom:.75rem">📋 Prize Truth / Data Integrity</h2>
   <p style="font-size:.85rem;color:#334155;line-height:1.6;margin-bottom:1rem">
@@ -287,88 +365,37 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin-top:.5rem">
     <canvas id="prize-delta-canvas" width="900" height="400" style="width:100%;height:auto;display:block"></canvas>
   </div>
-</section><section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
+</section>
+
+<section id="toc" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0">
   <strong id="on-this-page" data-i18n="onThisPage" style="font-size:.9rem">On this page</strong>
   <ul style="margin-top:.5rem;padding-left:1.2rem;font-size:.9rem">
-    <li style="margin-bottom:.3rem;list-style:none;margin-left:-1rem"><strong style="color:#d4a843;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Research Phases</strong></li>
-    <li><a href="#stage-1">&#9989; Stage 1 — Group Stage (Framework)</a></li>
-    <li><a href="#stage-2">&#9989; Stage 2 — Round of 32 (Prize Flow)</a></li>
-    <li><a href="#stage-3">&#127941; Stage 3 — Round of 16+ (Player Dev.)</a></li>
-    <li style="margin-top:.5rem;margin-bottom:.3rem;list-style:none;margin-left:-1rem"><strong style="color:#d4a843;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em">Data Tools</strong></li>
-    <li><a href="#profiles">&#128200; Team Profiles</a></li>
-    <li><a href="#download">&#128190; Download Full Dataset</a></li>
-    <li><a href="#admin">&#128274; Admin</a></li>
+    <li><a href="#summary" data-i18n="tournamentSummary">Tournament Summary</a></li>
+    <li><a href="#knockout" data-i18n="knockoutTracking">Knockout Tracking</a></li>
+    <li><a href="#results" data-i18n="knockoutResults">Knockout Results</a></li>
+    <li><a href="#kpi-report">&#128274; TCI KPI Report</a></li>
+    <li><a href="#group-metric">&#128274; Knockout Group Metric</a></li>
+    <li><a href="#goal-tracker">&#128274; Goal Progression Tracker</a></li>
+    <li><a href="#continent-kpi">&#128274; Continental Financial KPI</a></li>
+    <li><a href="#fsi-report">&#128274; Final Spark Index (FSI)</a></li>
+    <li><a href="#epi-report">&#128274; Environment Preservation Index (EPI)</a></li>
+    <li><a href="#profiles" data-i18n="teamProfiles">Team Profiles (Sortable)</a></li>
+    <li><a href="#framework" data-i18n="methodology">The Framework</a></li>
+    <li><a href="#download" data-i18n="downloadDataset">Download Dataset</a></li>
   </ul>
 </section>
-<!-- ===== STAGE 1 — GROUP STAGE (Framework Validation) ===== -->
-<section id="stage-1" style="margin:2rem 0">
-  <details>
-    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#d4a843;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem">
-      <span style="font-size:1.3rem">🔬</span>
-      <div>
-        <div>Stage 1 — Group Stage</div>
-        <div style="font-size:.8rem;color:#94a3b8;font-weight:400">Question: What competitive environments produce successful teams? ✅ Complete</div>
-      </div>
-    </summary>
-    <div style="padding:1rem 0">
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#64748b">
-        <strong style="color:#0f172a">Framework validation phase.</strong> 12 groups, 48 teams classified by SPI (91.7% held) and GEI environment type. Four environment classifications emerged: Constrained, Open, Dominant, Inverted. The TCI score was computed for every team. This stage validated that group-stage competitive structure predicts knockout advancement patterns.
-      </div>
-<section id="methodology">
-  <details>
-    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128214; Framework documentation &mdash; How SPI, GEI, and TCI work. The theory behind the dashboard. Understanding Strategic Performance Index, Group Environment Index, and Tournament Carryover Index.</span></summary>
 
-    <div class="methodology">
-      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
-      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
-      <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
+<hr>
 
-      <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
-      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
-      <div class="formula-box">
-        <strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong><br>
-        <span style="color:#16a34a" id="spi-held-text">&#10003; SPI computed from group standings after data loads</span><br>
-        <span style="color:#94a3b8">Threshold: &gt;66% = "held", &le;66% = "broke"</span>
-      </div>
+<div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
+  <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-02</span> &mdash; <span id="last-round">Stage 1 Partial — Round of 32 through 2026-07-02</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br>
+  <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
+  <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">Loading from database...</span>
+</div>
 
-      <h3>&#128101; GEI &mdash; Group Environment Index</h3>
-      <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
-      <div class="formula-box">
-        <strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong><br><br>
-        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share &mdash; one team overwhelmed the group<br>
-        <span class="gei-badge gei-suppressed">Constrained</span> 45&ndash;60% share &mdash; top team won a flat group<br>
-        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held &mdash; competitive, honest group<br>
-        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
-      </div>
-
-      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
-      <div class="formula-box">
-        <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
-        Where:<br>
-        &bull; SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br>
-        &bull; GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)<br>
-        &bull; Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br>
-        &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
-      </div>
-
-      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
-      <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
-        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
-        The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
-      </p>
-
-      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
-      <p style="font-size:.85rem;color:#64748b">
-        &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
-        &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
-        &#8226; <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br>
-        &#8226; <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
-      </p>
-    </div>
-  </details>
-</section><section id="summary">
+<section id="summary">
 <details class="accordion-section">
-<summary><h2 data-i18n="groupStageResults">&#128202; Group Stage Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#10003; Complete &mdash; 12 groups, 48 teams classified by SPI and GEI environment type. Open to view Matchday 3 breakdown and group classifications.</span></summary>
+<summary><h2 data-i18n="groupStageResults">&#128202; Group Stage Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#10003; Complete — 12 groups, 48 teams classified by SPI (91.7% held) and GEI environment type.</span></summary>
 
 <div class="cards-grid">
   <div class="card">
@@ -419,9 +446,91 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 </div>
 
 </details>
-</section><section id="kpi-report">
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== KNOCKOUT TRACKING ==================== -->
+<section id="knockout">
   <details>
-    <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Framework metrics &mdash; How are GEI/SPI environments performing? Tracks advancement rates, preservation scores, and TCI verdicts by environment type (Constrained, Open, Dominant, Inverted).</span></summary>
+    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active — Tracks every team's path from group seed through each knockout round. 32 eliminated, 16 still competing.</span></summary>
+
+    <div class="content-box" style="overflow-x:auto">
+      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
+      <table class="data-table" id="ko-table">
+        <thead><tr>
+          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
+          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
+          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
+          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
+          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
+        </tr></thead>
+        <tbody id="ko-body">
+            <!-- Populated by renderKOTableFromTeams() -->
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== KNOCKOUT RESULTS ==================== -->
+<section id="results" class="stage-3-section">
+  <details id="stage-3" open>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active — Stage 3 (R16): 2 of 8 completed. R32 complete (16/16). Live results with scores, winners, upcoming fixtures.</span></summary>
+    <div class="content-box">
+      <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
+
+      <!-- STAGE 2: Round of 32 Results -->
+      <h3 style="margin:1.5rem 0 .5rem;padding-bottom:.3rem;border-bottom:2px solid #16a34a;font-size:1rem;color:#0f172a">&#9989; Stage 2 — Round of 32 (Complete)</h3>
+      <div class="table-container">
+        <table id="results-table">
+          <thead><tr>
+            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
+            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
+            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
+            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
+            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
+            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
+            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
+            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
+          </tr></thead>
+          <tbody id="results-body">
+            <!-- R32 matches populated by loadMatchesFromDB() -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- STAGE 3: Round of 16 Results -->
+      <h3 style="margin:1.5rem 0 .5rem;padding-bottom:.3rem;border-bottom:2px solid #d4a843;font-size:1rem;color:#0f172a">&#127941; Stage 3 — Round of 16 (Active: 2/8 completed)</h3>
+      <div class="table-container">
+        <table id="r16-results-table">
+          <thead><tr>
+            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
+            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
+            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
+            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
+            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
+            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
+            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
+            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
+          </tr></thead>
+          <tbody id="r16-results-body">
+            <!-- R16 matches populated by loadMatchesFromDB() -->
+          </tbody>
+        </table>
+      </div>
+      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== KPI REPORT (GATED) ==================== -->
+<section id="kpi-report">
+  <details>
+    <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Framework metrics — How are GEI/SPI environments performing? Advancement rates, preservation scores, TCI verdicts by environment type (Constrained, Open, Dominant, Inverted).</span></summary>
     <div class="content-box">
       <div id="kpi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p data-i18n-html="kpiGuest" style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>KPI Report is available for registered users only.</strong></p>
@@ -429,7 +538,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <button onclick="openAuthSignin()" data-i18n="kpiSignIn" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View KPIs</button>
       </div>
       <div id="kpi-user" style="display:block">
-        <p><strong>How are the GEI/SPI environments performing?</strong> Framework-only metrics. Tracks advancement rates, preservation scores, and TCI verdicts by environment type (Constrained, Open, Dominant, Inverted). No financial data — this is pure TCI methodology validation.</p>
+        <p>Key Performance Indicators for each group environment type. Calculated from live match results.</p>
         <div id="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0">
           <!-- Cards injected by renderKPIReport() -->
         </div>
@@ -454,74 +563,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>    </div>
-  </details>
 </section>
 
-<!-- ===== STAGE 2 — ROUND OF 32 (Prize Flow Analysis) ===== -->
-<section id="stage-2" style="margin:2rem 0">
-  <details>
-    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#d4a843;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem">
-      <span style="font-size:1.3rem">💰</span>
-      <div>
-        <div>Stage 2 — Round of 32</div>
-        <div style="font-size:.8rem;color:#94a3b8;font-weight:400">Question: Where did FIFA prize money flow? ✅ Complete (16/16 matches)</div>
-      </div>
-    </summary>
-    <div style="padding:1rem 0">
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#64748b">
-        <strong style="color:#0f172a">Prize redistribution phase.</strong> 16 matches completed. $176M distributed. 83.3% value preservation rate — higher-value teams generally advanced. Stage deltas locked in: +$2M per team for R32 exits. Continental financial resilience tracked. Open environments showed strongest knockout performance (58.3% advance rate vs. 50% baseline).
-      </div>
-<section id="results">
-  <details open>
-    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9989; Complete &mdash; Round of 32: all 16 matches finished. Stage deltas locked at +$2M. Winners advanced to Round of 16.</span></summary>
-    <div class="content-box">
-      <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
-      <div class="table-container">
-        <table id="results-table">
-          <thead><tr>
-            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
-            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
-            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
-            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
-            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
-            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
-            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
-            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
-          </tr></thead>
-          <tbody id="results-body">
-            <!-- Populated by loadMatchesFromDB() -->
-          </tbody>
-        </table>
-      </div>
-      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
-    </div>
-  </details>
-</section>
+<div class="phase-divider"></div>
 
-<section id="knockout">
+<!-- ==================== KNOCKOUT GROUP METRIC (GATED) ==================== -->
+<section id="group-metric">
   <details>
-    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active &mdash; Tracks every team's path from group seed through each knockout round. 32 teams eliminated, 16 still competing. Shows current position and progression path.</span></summary>
-
-    <div class="content-box" style="overflow-x:auto">
-      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
-      <table class="data-table" id="ko-table">
-        <thead><tr>
-          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
-          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
-          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
-          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
-          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
-        </tr></thead>
-        <tbody id="ko-body">
-            <!-- Populated by renderKOTableFromTeams() -->
-        </tbody>
-      </table>
-    </div>
-  </details>
-</section><section id="group-metric">
-  <details>
-    <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128197; Tracking &mdash; Each group's knockout performance as matches complete. Shows wins, eliminations, survival %, and day-by-day progression. Which groups produce the most resilient teams?</span></summary>
+    <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128197; Tracking — Each group's knockout performance as matches complete. Wins, eliminations, survival %, day-by-day progression.</span></summary>
     <div class="content-box">
       <div id="metric-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Group Metric is available for registered users only.</strong></p>
@@ -565,9 +614,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section><section id="goal-tracker">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== GOAL PROGRESSION TRACKER (GATED) ==================== -->
+<section id="goal-tracker">
   <details>
-    <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Offense model &mdash; How does goal production change through knockout rounds? Group-stage baseline plus R32, R16, QF, SF, and Final additions. The offensive decay curve.</span></summary>
+    <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Offense model — How does goal production change through knockout rounds? Group-stage baseline plus R32, R16, QF, SF, and Final additions. The offensive decay curve.</span></summary>
     <div class="content-box">
       <div id="goal-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Goal Progression Tracker is available for registered users only.</strong></p>
@@ -575,7 +629,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Goal Tracker</button>
       </div>
       <div id="goal-user" style="display:block">
-        <p><strong>How does offensive production change through the tournament?</strong> Each team's group-stage goal total is their baseline. Knockout rounds add game-by-game — R32, R16, Quarterfinal, Semifinal, Final. This is the offensive decay model: do teams score less as rounds progress?</p>
+        <p>Each team's <strong>group-stage goal total</strong> is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked &#10060;.</p>
 
         <!-- Group Goal Summary -->
         <h3 style="margin-top:1rem;font-size:1rem;color:#0f172a">&#128200; Group Goal Trajectory</h3>
@@ -635,11 +689,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section><section id="team-financial-delta">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== TEAM FINANCIAL DELTA ==================== -->
+<section id="team-financial-delta">
   <details>
-    <summary><h2>&#128176; Team Financial Delta — Individual Team Prize Tracker</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128176; Individual teams &mdash; How much additional FIFA prize money has each team earned? Current stage, prize, delta, alive status, and next matchup. Purely per-team financial tracking.</span></summary>
+    <summary><h2>&#128176; Team Financial Delta — Prize Money by Stage</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128176; Individual teams — How much additional FIFA prize money has each team earned? Current stage, prize, delta, alive status, next matchup.</span></summary>
     <div class="content-box">
-      <p><strong>How much additional FIFA prize money has each team earned?</strong> Tracks individual teams from the $9M group-stage baseline through each knockout round. Shows current stage, current prize, stage delta, cumulative delta, alive status, and next matchup. Nothing by continent here — this is purely individual.</p>
+      <p>Track every team&#8217;s prize money from the $9M group-stage baseline through each knockout round. <strong>Delta = current prize minus $9M baseline.</strong> Eliminated teams lock their prize at the exit stage.</p>
 
       <!-- Summary Cards -->
       <div id="financial-delta-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0"></div>
@@ -650,12 +709,13 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
           <thead><tr>
             <th onclick="sortFinancialDelta(0)" style="cursor:pointer">Team &#8597;</th>
             <th onclick="sortFinancialDelta(1)" style="cursor:pointer">Grp &#8597;</th>
-            <th onclick="sortFinancialDelta(2)" style="cursor:pointer">Current Stage &#8597;</th>
-            <th onclick="sortFinancialDelta(3)" style="cursor:pointer">Current Prize &#8597;</th>
-            <th onclick="sortFinancialDelta(4)" style="cursor:pointer">Stage Delta &#8597;</th>
-            <th onclick="sortFinancialDelta(5)" style="cursor:pointer">Cumulative Delta &#8597;</th>
-            <th onclick="sortFinancialDelta(6)" style="cursor:pointer">Still Alive? &#8597;</th>
-            <th onclick="sortFinancialDelta(7)" style="cursor:pointer">Next Match &#8597;</th>
+            <th onclick="sortFinancialDelta(2)" style="cursor:pointer">Seed &#8597;</th>
+            <th onclick="sortFinancialDelta(3)" style="cursor:pointer">Continent &#8597;</th>
+            <th onclick="sortFinancialDelta(4)" style="cursor:pointer">Status &#8597;</th>
+            <th onclick="sortFinancialDelta(5)" style="cursor:pointer">Current Prize &#8597;</th>
+            <th onclick="sortFinancialDelta(6)" style="cursor:pointer">Delta &#8597;</th>
+            <th onclick="sortFinancialDelta(7)" style="cursor:pointer">Exit Stage &#8597;</th>
+            <th onclick="sortFinancialDelta(8)" style="cursor:pointer">Next Matchup &#8597;</th>
           </tr></thead>
           <tbody id="financial-delta-body"></tbody>
         </table>
@@ -667,17 +727,22 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">Baseline = $9M (group stage exit). Each advancement adds the stage delta. Champion = $50M (+$41M delta). Data updates after each match.</p>
     </div>
   </details>
-</section><section id="continent-survival">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== CONTINENT FINANCIAL KPI (GATED) ==================== -->
+<section id="continent-kpi">
   <details>
-    <summary><h2 data-i18n="continentalSurvival">&#127758; Continental Survival Tracker</h2><span style='font-size:.8rem;color:#64748b;display:block;margin-top:.2rem'>&#127758; Survival story &mdash; Which continent is surviving the knockout tournament best? Tracks original teams, alive, eliminated, QF+ reached, SF+ reached, finalists, and champion by continent.</span></summary>
+    <summary><h2 data-i18n="continentalKpi">&#127758; Continental Knockout & Financial Resilience</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127758; Survival story — Which continent is surviving best? Original teams, alive, eliminated, QF+ reached, finalists, champion.</span></summary>
     <div class="content-box">
       <div id="cont-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Survival Tracker is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track which continents are surviving the knockout tournament best — teams alive, eliminated, and advancing to Quarterfinals, Semifinals, and beyond.</p>
-        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Survival Tracker</button>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Financial KPI is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track how each continent performs in the knockout stage — teams alive, eliminations by round, and total FIFA prize money earned. See which confederations have financial "residue" from deep runs.</p>
+        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Continental KPIs</button>
       </div>
       <div id="cont-user" style="display:block">
-        <p><strong>Which continent is surviving the knockout tournament best?</strong> Tracks original teams, teams still alive, eliminations by round, and advancement to Quarterfinals, Semifinals, and the Final. Pure survival metrics — no financial data.</p>
+        <p>Track every continent through the knockout rounds. <strong>Prize money estimates</strong> based on FIFA WC2026 announced tiers. "Resilience" = earnings vs. team count expectation.</p>
 
         <!-- Summary Cards per Continent -->
         <div id="cont-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1rem 0"></div>
@@ -687,39 +752,48 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
           <table id="cont-table">
             <thead><tr>
               <th onclick="sortCont(0)">Continent &#8597;</th>
-              <th onclick="sortCont(1)">Original Teams &#8597;</th>
+              <th onclick="sortCont(1)">Teams &#8597;</th>
               <th onclick="sortCont(2)">Alive &#8597;</th>
               <th onclick="sortCont(3)">Eliminated &#8597;</th>
-              <th onclick="sortCont(4)">Pending &#8597;</th>
-              <th onclick="sortCont(5)">QF+ Reached &#8597;</th>
-              <th onclick="sortCont(6)">SF+ Reached &#8597;</th>
-              <th onclick="sortCont(7)">Finalist &#8597;</th>
-              <th onclick="sortCont(8)">Champion &#8597;</th>
-              <th onclick="sortCont(9)">Survival % &#8597;</th>
-              <th onclick="sortCont(10)">Elimination % &#8597;</th>
+              <th onclick="sortCont(4)">R32 Out &#8597;</th>
+              <th onclick="sortCont(5)">R16 Out &#8597;</th>
+              <th onclick="sortCont(6)">QF Out &#8597;</th>
+              <th onclick="sortCont(7)">SF+ &#8597;</th>
+              <th onclick="sortCont(8)">Earnings/Team &#8597;</th>
+              <th onclick="sortCont(9)">Total Earnings &#8597;</th>
+              <th onclick="sortCont(10)">Resilience Score &#8597;</th>
             </tr></thead>
             <tbody id="cont-body"></tbody>
           </table>
         </div>
 
-        <!-- Survival Analysis -->
+        <!-- Prize Money Breakdown -->
+        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128176; Prize Money Breakdown by Continent</h3>
+        <div id="cont-prize" style="margin-top:.5rem"></div>
+
+        <!-- Analysis -->
         <div id="cont-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">Survival % = teams still alive / original teams. Elimination % = teams eliminated / original teams. Tracks pure advancement through knockout rounds — from Round of 32 to Champion. No financial metrics here — see Continental Financial Yield for prize money analysis.</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">WC2026 prize pool: ~$1.1B. Official performance ladder: Group stage exit = $9M, Round of 32 = $11M, Round of 16 = $15M, Quarterfinals = $19M, 4th = $27M, 3rd = $29M, Runner-up = $33M, Champion = $50M. Resilience Score = actual earnings / expected earnings (equal distribution). >100% = overperforming.</p>
       </div>
     </div>
   </details>
-</section><section id="continent-yield">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== CONTINENTAL ADVANCEMENT & FINANCIAL YIELD (GATED) ==================== -->
+<section id="continental-advancement-yield">
   <details>
-    <summary><h2>&#128176; Continental Financial Yield</h2><span style='font-size:.8rem;color:#64748b;display:block;margin-top:.2rem'>&#128176; Money story &mdash; Which continent is capturing the tournament's financial value? Total prize, yield per team, CER, FSR, and financial share. The primary economic model (the Dog Bone).</span></summary>
+    <summary><h2>&#127942; Continental Advancement & Financial Yield</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128176; Money story — Which continent is capturing the tournament's financial value? Total prize, yield per team, CER, FSR, financial share.</span></summary>
     <div class="content-box">
       <div id="cay-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Financial Yield is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to see which continent is capturing the tournament's financial value — total prize earned, yield per team, CER, FSR, and financial share of the tournament.</p>
-        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Financial Yield</button>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Advancement & Financial Yield is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to view formula-driven advancement metrics including CAE, Incremental Advancement Value, CER, and FSR — all computed live from match data.</p>
+        <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View</button>
       </div>
       <div id="cay-user" style="display:block">
-        <p><strong>Which continent is capturing the tournament's financial value?</strong> Primary economic model tracking prize accumulation, yield per original team, yield per surviving team, financial share, CER, and FSR — the "Dog Bone" model. All values computed from live match data and FIFA prize tiers.</p>
+        <p>Formula-driven continental advancement metrics. <strong>All values computed from live data</strong> — group standings, match results, and FIFA prize tiers. Numbers change automatically after every match result.</p>
 
         <!-- Summary Cards per Continent -->
         <div id="cay-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0"></div>
@@ -728,14 +802,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="cay-table">
             <thead><tr>
-              <th>Continent &#8597;</th>
-              <th>Original Teams &#8597;</th>
-              <th>Total Prize Earned &#8597;</th>
-              <th>Stage Delta &#8597;</th>
-              <th>Avg Prize / Team &#8597;</th>
-              <th>Financial Share &#8597;</th>
-              <th>CER % &#8597;</th>
-              <th>FSR % &#8597;</th>
+              <th>Continent</th>
+              <th>Original Teams</th>
+              <th>Total Prize</th>
+              <th>Stage Delta</th>
+              <th>Avg Prize/Team</th>
+              <th>Financial Share</th>
+              <th>CER %</th>
+              <th>FSR %</th>
             </tr></thead>
             <tbody id="cay-body"></tbody>
           </table>
@@ -744,13 +818,18 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Analysis -->
         <div id="cay-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Total Prize = sum of all teams\' current prize by continent. Stage Delta = total prize minus ($9M × original teams). Avg Prize / Team = total prize ÷ original teams. Financial Share = continent's prize ÷ total tournament prize pool. CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. Pure financial metrics — no survival data. Source: wc2026_matches.</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> CAE = teams_reached_current_stage / original_continent_teams. Incremental Advancement Value = teams_reached_r16_or_deeper × stage_delta (R16 prize - R32 prize). CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. Status rules: lost completed match = Eliminated; won completed match = Alive; scheduled/pending match = Pending; no match record = Unknown/Awaiting. Never treat missing data as eliminated.</p>
       </div>
     </div>
   </details>
-</section><section id="fsi-report">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== TOURNAMENT VALUE REDISTRIBUTION (GATED) ==================== -->
+<section id="fsi-report">
   <details>
-    <summary><h2 data-i18n="fsiReport">&#9889; Tournament Value Redistribution — Economic Impact Dashboard</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Value movement &mdash; Did tournament value stay with higher-value teams or move elsewhere? Preservation rate (83.3%), redistribution rate, upsets, and continent flow. The value-shift story.</span></summary>
+    <summary><h2 data-i18n="fsiReport">&#9889; Tournament Value Redistribution — Economic Impact Dashboard</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#9889; Value movement — Did value stay with higher-value teams or move elsewhere? Preservation rate (83.3%), redistribution, upsets, continent flow.</span></summary>
     <div class="content-box">
       <div id="fsi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Economic Impact Dashboard is available for registered users only.</strong></p>
@@ -759,7 +838,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
       <div id="fsi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>Did tournament value remain with higher-value teams or move elsewhere?</strong> Tracks preservation rate, redistribution rate, upsets, largest redistribution events, and continent flow. For every match: did the structurally "favored" team advance, or did value shift? This is the value-movement story.</p>
+          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>This framework measures how tournament results redistribute competitive and financial value.</strong> For every match, it tracks the economic movement created by the outcome — not which team "should" have won, but how the result changed the tournament's competitive and economic landscape.</p>
         </div>
 
         <!-- What the numbers mean -->
@@ -796,9 +875,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section><section id="epi-report">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== EPI SURVIVAL CURVES ==================== -->
+<section id="epi-report">
   <details>
-    <summary><h2>&#128200; Environment Preservation Index (EPI) — Survival Curves</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Environment story &mdash; Which competitive environments survive longest? Open at 37.5% EPI, Suppressed at 31.3%, Balanced at 25%, Dominant collapsed at 0%. Pure environment metrics.</span></summary>
+    <summary><h2>&#128200; Environment Preservation Index (EPI) — Survival Curves</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128200; Environment story — Which competitive environments survive longest? Open at 37.5% EPI, Suppressed at 31.3%, Balanced at 25%, Dominant 0%.</span></summary>
     <div class="content-box">
       <div id="epi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
         <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>EPI Survival Curves are available for registered users only.</strong></p>
@@ -807,7 +891,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
       <div id="epi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>Which competitive environments survive longest?</strong> EPI = Remaining Teams / Qualified Teams tracked through the tournament. Environment types (Constrained, Open, Dominant, Inverted) each get a survival curve. Pure environment metrics — nothing financial.</p>
+          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>EPI = Remaining Teams / Qualified Teams</strong> tracked daily through the tournament. Each environment type gets a survival curve. Watch suppressed, balanced, open, and dominant environments diverge as knockout play progresses.</p>
         </div>
 
         <!-- EPI Headline Finding -->
@@ -876,59 +960,13 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section>    </div>
-  </details>
 </section>
 
-<!-- ===== STAGE 3 — ROUND OF 16 AND BEYOND (Player Development Pathways) ===== -->
-<section id="stage-3" style="margin:2rem 0">
-  <details open>
-    <summary style="cursor:pointer;padding:1rem;background:linear-gradient(135deg,#0f172a 0%,#d4a843 100%);color:#fff;border-radius:12px;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem;border:2px solid #d4a843">
-      <span style="font-size:1.3rem">🏅</span>
-      <div>
-        <div>Stage 3 — Round of 16 and Beyond</div>
-        <div style="font-size:.8rem;color:#fef3c7;font-weight:400">Question: Who is actually creating the value represented by a national team? 🟢 Active (2/8 matches)</div>
-      </div>
-    </summary>
-    <div style="padding:1rem 0">
-      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.9rem;color:#92400e">
-        <strong style="color:#78350f">Research evolution: From tournament structure to player development governance.</strong> 
-        The Round of 16 marks a shift in the research question. Instead of asking "Which country won?" we now ask: <strong>"Which development ecosystems produced the players that generated those wins?"</strong>
-        For every remaining national team, we track: players developed domestically vs. in foreign academies, emigration pathways, sporting nationality changes, and the percentage of offensive production coming from external development systems. This is a governance question — not simply a competitive one.
-      </div>
-
-        <!-- Round of 16 Results — Stage 3 Only -->
-        <h3 style="margin-top:1.5rem;font-size:1.1rem;color:#0f172a;display:flex;align-items:center;gap:.5rem">
-          &#127942; Round of 16 — Match by Match
-        </h3>
-        <p style="font-size:.85rem;color:#64748b;margin:.3rem 0 .75rem">Live results from the Round of 16. Winners advance to Quarterfinals. Losers are eliminated at this stage.</p>
-        <div style="overflow-x:auto">
-          <table id="r16-results-table" style="width:100%;border-collapse:collapse;font-size:.9rem">
-            <thead style="background:#0f172a;color:#d4a843;position:sticky;top:0;z-index:1">
-              <tr>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Match &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Stage &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Date &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Team 1 &#8597;</th>
-                <th style="padding:.6rem;text-align:center;white-space:nowrap">Score &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Team 2 &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Winner &#8597;</th>
-                <th style="padding:.6rem;text-align:left;white-space:nowrap">Notes &#8597;</th>
-              </tr>
-            </thead>
-            <tbody id="r16-results-body"></tbody>
-          </table>
-        </div>
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. Winners advance to Quarterfinals ($19M prize). Losers lock at $15M.</p>
-
-
-
-    </div>
-  </details>
-</section>
+<div class="phase-divider"></div>
+<!-- ==================== TEAM PROFILES ==================== -->
 <section id="profiles">
   <details>
-    <summary><h2 data-i18n="teamProfiles">&#128200; Team Profiles (Sortable)</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128101; All 48 teams &mdash; Compare every team across SPI rank, GEI environment, TCI score, goals, and knockout progression. Click any column header to sort. Full tournament roster.</span></summary>
+    <summary><h2 data-i18n="teamProfiles">&#128200; Team Profiles (Sortable)</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128101; All 48 teams — Compare across SPI rank, GEI environment, TCI score, goals, knockout progression. Click column headers to sort.</span></summary>
 
     <div class="content-box" style="overflow-x:auto">
       <p>Compare every team &mdash; 48 total across 12 groups. Click any column header to sort by SPI rank, GEI environment type, TCI score, goals scored, and knockout progression.</p>
@@ -949,9 +987,69 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </table>
     </div>
   </details>
-</section><section id="download">
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== TCI METHODOLOGY ==================== -->
+<section id="methodology">
   <details>
-    <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128229; Export &mdash; Download the full TCI dataset as CSV or JSON. Two sheets: group standings with GEI/SPI + knockout matches with scores and preservation delta. Import/export snapshots.</span></summary>
+    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128214; Framework documentation — How SPI, GEI, and TCI work. The theory behind the dashboard. Understanding the tournament framework.</span></summary>
+
+    <div class="methodology">
+      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
+      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
+      <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
+
+      <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
+      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
+      <div class="formula-box">
+        <strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong><br>
+        <span style="color:#16a34a" id="spi-held-text">&#10003; SPI computed from group standings after data loads</span><br>
+        <span style="color:#94a3b8">Threshold: &gt;66% = "held", &le;66% = "broke"</span>
+      </div>
+
+      <h3>&#128101; GEI &mdash; Group Environment Index</h3>
+      <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
+      <div class="formula-box">
+        <strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong><br><br>
+        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share &mdash; one team overwhelmed the group<br>
+        <span class="gei-badge gei-suppressed">Constrained</span> 45&ndash;60% share &mdash; top team won a flat group<br>
+        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held &mdash; competitive, honest group<br>
+        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
+      </div>
+
+      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
+      <div class="formula-box">
+        <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
+        Where:<br>
+        &bull; SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br>
+        &bull; GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)<br>
+        &bull; Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br>
+        &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
+      </div>
+
+      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
+      <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
+        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
+        The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
+      </p>
+
+      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
+      <p style="font-size:.85rem;color:#64748b">
+        &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
+        &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
+        &#8226; <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br>
+        &#8226; <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
+      </p>
+    </div>
+  </details>
+</section>
+
+<div class="phase-divider"></div>
+<!-- ==================== DOWNLOAD DATASET ==================== -->
+<section id="download">
+  <details>
+    <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128229; Export — Download full TCI dataset as CSV or JSON. Group standings with GEI/SPI + knockout matches with scores and preservation delta.</span></summary>
 
     <div class="content-box">
       <p data-i18n="downloadDesc">Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
@@ -960,8 +1058,8 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download JSON</button>
         <button onclick="downloadFullJSON()" style="padding:.5rem 1rem;background:#0f172a;color:#d4a843;border:1px solid #0f172a;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:700">&#128190; Download Full Snapshot</button>
       </div>
-      <div id="import-section" style="display:none;margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
-        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset (Admin Only)</p>
+      <div style="margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset</p>
         <p style="font-size:.8rem;color:#64748b;margin:0 0 .5rem">Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
         <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem">
       </div>
@@ -970,9 +1068,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
     </div>
   </details>
-</section><section id="admin">
+</section>
+
+<div class="phase-divider"></div>
+
+<!-- ==================== ADMIN PANEL ==================== -->
+<section id="admin">
   <details>
-    <summary><h2 data-i18n="adminTitle">&#128274; Admin — Edit Knockout Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128273; Admin only &mdash; Two-step authentication required. Edit knockout positions, save to database, update all tables live. Only authorized NTG administrators.</span></summary>
+    <summary><h2 data-i18n="adminTitle">&#128274; Admin — Edit Knockout Results</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#128273; Admin only — Two-step authentication required. Edit knockout positions, save to database, update all tables live. Authorized NTG administrators only.</span></summary>
 
     <div class="content-box" id="admin-box">
       <div id="admin-login">
@@ -1000,14 +1103,63 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
     </div>
   </details>
-</section><section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<!-- ==================== FOOTER (learn.xpguess.com approved) ==================== -->
+<hr style="margin-top:32px;">
+
+<h2 data-i18n="continueLearning">Continue Learning</h2>
+<ul style="padding-left:18px; line-height:1.6;">
+  <li><a href="https://learn.xpguess.com/" rel="home">Learn Index</a></li>
+  <li><a href="https://learn.xpguess.com/how-xpguess-works.html">How XPGuess Works</a></li>
+  <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
+  <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
+  <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
+  <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is &mdash; and Is Not</a></li>
+  <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
+  <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don&rsquo;t Go Pro</a></li>
+  <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
+  <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
+  <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
+  <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
+  <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
+  <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
+  <li><a href="https://learn.xpguess.com/bracket.html">Bracket: A Structured Prediction Game for Learning, XP, and Ranking</a></li>
+  <li><a href="https://learn.xpguess.com/anti-corruption-framework-learning-ranking-sponsor-safety.html">Sport XP Bracket Ranking Governance | Anti-Corruption XP Flowchart | XPGuess Learn</a></li>
+</ul>
+
+<p style="margin-top:32px;">
+  <a href="https://xpguess.com">Go to the XPGuess App</a>
+</p>
+
+<h2 data-i18n="compliance">Compliance Notice</h2>
+<p>
+  XPGuess is an educational platform. It does not provide medical services,
+  act as a healthcare provider, or replace professional care.
+  All fitness and support tools exist for training documentation,
+  reflection, and athlete protection.
+</p>
+
+<section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
   <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
   <p><strong>XPGuess</strong> &mdash; <em>Extended Performance Guessing</em> &mdash; is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
   <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
   <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Pi&ntilde;a</strong>, including biomechanical and developmental research.</p>
   <p>Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">&ldquo;Beginning and Staying with the Basics: Building from the Ground Up&rdquo;</a></p>
   <p>Additional work: <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">Coach Teaches Animals: Gymnastics Stretching</a></p>
-</section><section id="support">
+</section>
+
+<p style="font-size:12px; color:#777; margin-top:32px;">
+  XPGuess Learn content is educational, governance-focused, and non-commercial.
+</p>
+
+<p style="margin-top:18px;">
+  <a href="#top">Back to top</a>
+</p>
+
+<!-- ==================== SUPPORT THE MISSION (GATED) ==================== -->
+<section id="support">
   <div id="support-guest" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;text-align:center;margin:2rem 0">
     <p style="color:#64748b;font-size:.9rem;margin:0">&#128274; <strong>Sign in to support the mission</strong> and see how your contributions power open tournament analytics.</p>
   </div>
@@ -1290,9 +1442,9 @@ var TRANSLATIONS = {
     goalGuestDesc: 'Sign in to track every team\'s goal output from group-stage baseline through each knockout round. See how groups perform offensively as the tournament advances.',
     goalSignIn: 'Sign In to View Goal Tracker',
     goalDesc: 'Each team\'s <strong>group-stage goal total</strong> is their baseline. Knockout rounds add game-by-game. Groups are color-coded. Eliminated teams are marked ✖.',
-    continentalSurvival: 'Continental Survival Tracker',
-    contGuest: 'Continental Survival Tracker is available for registered users only.',
-    contGuestDesc: 'Sign in to track which continents are surviving the knockout tournament best — teams alive, eliminations by round, and total FIFA prize money earned.',
+    continentalKpi: 'Continental Knockout & Financial Resilience',
+    contGuest: 'Continental Financial KPI is available for registered users only.',
+    contGuestDesc: 'Sign in to track how each continent performs in the knockout stage — teams alive, eliminations by round, and total FIFA prize money earned.',
     contSignIn: 'Sign In to View Continental KPIs',
     fsiReport: 'Final Spark Index (FSI) — Financial Incentive Alignment',
     fsiGuest: 'Final Spark Index is available for registered users only.',
@@ -1513,8 +1665,8 @@ var TRANSLATIONS = {
     goalGuestDesc: 'Inicia sesión para seguir la producción de goles de cada equipo desde la fase de grupos hasta cada ronda de eliminación.',
     goalSignIn: 'Iniciar Sesión para Ver Goles',
     goalDesc: 'El <strong>total de goles de fase de grupos</strong> de cada equipo es su línea base. Las rondas de eliminación suman partido a partido.',
-    continentalSurvival: 'Seguimiento de Supervivencia Continental',
-    contGuest: 'El Seguimiento de Supervivencia Continental está disponible solo para usuarios registrados.',
+    continentalKpi: 'Eliminación Continental y Resiliencia Financiera',
+    contGuest: 'El KPI Continental está disponible solo para usuarios registrados.',
     contGuestDesc: 'Inicia sesión para ver cómo cada continente se desempeña en eliminación — equipos vivos, eliminaciones por ronda y dinero total de premios FIFA.',
     contSignIn: 'Iniciar Sesión para Ver KPI Continental',
     fsiReport: 'Índice de Chispa Final (FSI) — Alineación de Incentivos Financieros',
@@ -1765,6 +1917,7 @@ function renderAllTranslatedContent() {
     try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
+    try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
   }
   toggleKPIAccess();
   toggleMetricAccess();
@@ -1781,99 +1934,52 @@ document.addEventListener('DOMContentLoaded', async function() {
   var loadingEl = document.getElementById('data-loading');
   if(loadingEl) loadingEl.style.display = 'block';
 
-  // Visible status helper
-  function showStatus(msg, type) {
-    var el = document.getElementById('coverage-stats');
-    if(el) {
-      var colors = { ok: '#166534', error: '#dc2626', warn: '#92400e', info: '#1e3a5f' };
-      el.innerHTML = '<span style="color:' + (colors[type] || '#64748b') + ';font-weight:600;">' + msg + '</span>';
+  // Init Supabase
+  try {
+    if(typeof supabase === 'undefined' || !supabase || !supabase.createClient) {
+      console.log('Supabase library not loaded');
+      throw new Error('Supabase library not available');
     }
-    var overlay = document.getElementById('data-status-overlay');
-    var overlayText = document.getElementById('data-status-text');
-    if(overlay && overlayText) {
-      overlay.style.display = 'block';
-      overlayText.textContent = msg;
-      var bgColors = { ok: '#dcfce7', error: '#fee2e2', warn: '#fef3c7', info: '#eff6ff' };
-      var borderColors = { ok: '#86efac', error: '#fca5a5', warn: '#fcd34d', info: '#93c5fd' };
-      overlay.style.background = bgColors[type] || '#eff6ff';
-      overlay.style.borderColor = borderColors[type] || '#93c5fd';
-      var textColors = { ok: '#166534', error: '#dc2626', warn: '#92400e', info: '#1e3a5f' };
-      overlay.style.color = textColors[type] || '#1e3a5f';
-      if(type === 'ok') setTimeout(function(){ overlay.style.display = 'none'; }, 3000);
+    var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
+    var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    window.supabaseClient = supabaseClient;
+    console.log('Supabase client initialized');
+
+    var { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      updateAuthUI();
     }
-  }
-  showStatus('Initializing...', 'info');
 
-  // Init Supabase with retry
-  var supabaseReady = false;
-  for(var retry = 0; retry < 5; retry++) {
-    try {
-      if(typeof supabase !== 'undefined' && supabase && supabase.createClient) {
-        var supabaseUrl = 'https://cckhswhugilbmiarwbvt.supabase.co';
-        var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNja2hzd2h1Z2lsYm1pYXJ3YnZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5ODIwODgsImV4cCI6MjA2MzU1ODA4OH0.IJ7ZOykyAxUKqt78XGto45Iib_kdTDVwjjlS3jRWU1w';
-        supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-        window.supabaseClient = supabaseClient;
-        console.log('Supabase client initialized');
-        supabaseReady = true;
-
-        var { data: { session } } = await supabaseClient.auth.getSession();
-        if (session) { currentUser = session.user; updateAuthUI(); }
-        supabaseClient.auth.onAuthStateChange(function(event, session) {
-          if (event === 'SIGNED_IN') { currentUser = session.user; updateAuthUI(); }
-          if (event === 'SIGNED_OUT') { currentUser = null; isAdmin = false; updateAuthUI(); }
-        });
-        break;
-      }
-    } catch(e) { console.log('Supabase init attempt ' + retry + ':', e.message); }
-    if(retry < 4) { await new Promise(function(r){ setTimeout(r, 500); }); }
-  }
-
-  if(!supabaseReady) {
-    showStatus('Database connection failed. Supabase library not loaded. Check network/console.', 'error');
-    console.error('Supabase library failed to load after 5 retries');
-    var loadEl = document.getElementById('data-loading');
-    if(loadEl) loadEl.style.display = 'none';
-    var errEl = document.getElementById('data-error');
-    if(errEl) { errEl.style.display = 'block'; errEl.innerHTML = '<strong>Error:</strong> Cannot connect to database. Supabase library not loaded. Check browser console (F12) for details.'; }
-    return; // Stop initialization
-  }
-
-  showStatus('Supabase connected. Loading prize tiers...', 'ok');
+    supabaseClient.auth.onAuthStateChange(function(event, session) {
+      if (event === 'SIGNED_IN') { currentUser = session.user; updateAuthUI(); }
+      if (event === 'SIGNED_OUT') { currentUser = null; isAdmin = false; updateAuthUI(); }
+    });
+  } catch(e) { console.log('Supabase init:', e.message); }
 
   // Load official prize tiers from database
-  try {
-    var loadedPrizeTiers = await loadPrizeTiers();
-    if(loadedPrizeTiers) { dbPrizeTiers = loadedPrizeTiers; console.log('Prize tiers loaded from DB'); }
-  } catch(e) { console.error('Prize tiers error:', e); }
+  var loadedPrizeTiers = await loadPrizeTiers();
+  if(loadedPrizeTiers) { dbPrizeTiers = loadedPrizeTiers; console.log('Prize tiers loaded from DB'); }
 
   // Load FSI config from database
-  try { await loadFSIConfig(); } catch(e) { console.error('FSI config error:', e); }
+  await loadFSIConfig();
 
   // Load team metadata (continent source of truth)
-  try { await loadTeamMetadata(); } catch(e) { console.error('Team metadata error:', e); }
+  await loadTeamMetadata();
 
   // Set initial timestamp
   var tsEl = document.getElementById('last-timestamp');
   if(tsEl) tsEl.textContent = '(' + formatTimestamp() + ')';
 
   // Load saved knockout data
-  try { loadKnockout(); } catch(e) { console.error('Knockout load error:', e); }
+  loadKnockout();
 
   // Always clear stale cache and load fresh from Supabase on first load
+  // Cache is only used for offline mode after successful load
   clearLocalCache();
-  showStatus('Loading tournament data from Supabase...', 'info');
   console.log('Loading fresh from Supabase...');
-
-  // Load groups and all dependent data
-  try {
-    await loadGroupsFromDB();
-    showStatus('Data loaded successfully.', 'ok');
-  } catch(e) {
-    console.error('loadGroupsFromDB error:', e);
-    showStatus('Data load failed: ' + e.message, 'error');
-    var errEl2 = document.getElementById('data-error');
-    if(errEl2) { errEl2.style.display = 'block'; errEl2.innerHTML = '<strong>Error loading data:</strong> ' + e.message; }
-  }
+  loadGroupsFromDB();
 });
 
 // ===== AUTH UI =====
@@ -3543,7 +3649,6 @@ function renderContinentKPI() {
       teamData[seed].status = 'Alive';
       teamData[seed].eliminated = false;
     } else if(statusData.completedLosers.has(normName)) {
-      teamData[seed].status = 'Eliminated';
       teamData[seed].eliminated = true;
       // knockoutRound set below in match processing
     } else if(statusData.pendingTeams.has(normName)) {
@@ -3742,8 +3847,8 @@ function renderContinentKPI() {
       '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
       '</div>' +
       '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid ' + col.border + ';display:flex;justify-content:space-between;align-items:center">' +
-      '<div style="font-size:.85rem;color:#64748b">' + d.teams + ' original</div>' +
-      '<div style="font-size:1rem;font-weight:700;color:#16a34a">' + (d.teams > 0 ? (d.alive / d.teams * 100).toFixed(0) : '0') + '% alive</div>' +
+      '<div style="font-size:.85rem;color:#64748b">$' + (d.totalEarnings || 0).toFixed(1) + 'M total</div>' +
+      '<div style="font-size:1rem;font-weight:700;color:' + resColor + '">' + (d.resilience || '100.0') + '%</div>' +
       '</div>';
     cards.appendChild(card);
   });
@@ -3755,66 +3860,60 @@ function renderContinentKPI() {
     var resColor = parseFloat(d.resilience) >= 100 ? '#16a34a' : '#dc2626';
     var resTrend = parseFloat(d.resilience) >= 120 ? '&#9650; Strong' : (parseFloat(d.resilience) >= 100 ? '&#9650; Par' : (parseFloat(d.resilience) >= 80 ? '&#9660; Weak' : '&#9660; Poor'));
 
-    // Compute survival metrics
-    var survivalPct = d.teams > 0 ? (d.alive / d.teams * 100).toFixed(1) : '0.0';
-    var eliminationPct = d.teams > 0 ? (d.eliminated / d.teams * 100).toFixed(1) : '0.0';
-    var qfReached = (d.qfOut || 0) + (d.sfPlus || 0);
-    var sfReached = d.sfPlus || 0;
-    // Count finalists and champions from matches
-    var finalist = 0, champion = 0;
-    var finalMatches = matches.filter(function(m) { return m.stage === 'Final' && m.winner; });
-    if(finalMatches.length > 0) {
-      var fm = finalMatches[0];
-      [fm.team1, fm.team2].forEach(function(t) {
-        var tn = getTeamContinent(t);
-        if(tn === c) finalist++;
-      });
-      var wm = getTeamContinent(fm.winner);
-      if(wm === c) champion++;
-    }
-    var sfMatches = matches.filter(function(m) { return m.stage === 'Semi-Finals' && m.winner; });
-    sfMatches.forEach(function(m) {
-      [m.team1, m.team2].forEach(function(t) {
-        var tn = getTeamContinent(t);
-        if(tn === c && !finalMatches.some(function(f) { return f.team1 === t || f.team2 === t; })) finalist++;
-      });
-    });
-
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td><strong>' + d.flag + ' ' + d.label + '</strong></td>' +
       '<td>' + d.teams + '</td>' +
       '<td style="color:#16a34a;font-weight:700">' + d.alive + '</td>' +
       '<td style="color:#dc2626">' + d.eliminated + '</td>' +
-      '<td style="color:#d4a843">' + (d.pending || 0) + '</td>' +
-      '<td style="font-weight:700">' + qfReached + '</td>' +
-      '<td style="font-weight:700">' + sfReached + '</td>' +
-      '<td>' + finalist + '</td>' +
-      '<td style="color:#d4a843;font-weight:800">' + champion + '</td>' +
-      '<td style="color:#16a34a;font-weight:700">' + survivalPct + '%</td>' +
-      '<td style="color:#dc2626">' + eliminationPct + '%</td>';
+      '<td>' + d.r32Out + '</td>' +
+      '<td>' + d.r16Out + '</td>' +
+      '<td>' + d.qfOut + '</td>' +
+      '<td style="font-weight:700">' + d.sfPlus + '</td>' +
+      '<td>$' + d.avgEarnings.toFixed(1) + 'M</td>' +
+      '<td style="font-weight:700;color:#0f172a">$' + d.totalEarnings.toFixed(1) + 'M</td>' +
+      '<td style="color:' + resColor + ';font-weight:700">' + (d.resilience || '100.0') + '% <span style="font-size:.75rem">' + resTrend + '</span></td>';
     tbody.appendChild(tr);
   });
 
-  // Note: prize breakdown removed — see Continental Financial Yield for money metrics
-  if(prizeDiv) { prizeDiv.innerHTML = '<p style="color:#94a3b8;font-size:.8rem">Prize breakdown moved to <strong>Continental Financial Yield</strong> section.</p>'; }
+  // Render prize breakdown per continent
+  if(prizeDiv) {
+    prizeDiv.innerHTML = '';
+    sortedConts.forEach(function(c) {
+      var d = contData[c];
+      if(d.teamEarnings.length === 0) return;
+
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'margin-bottom:1rem';
+      var col = cardColors[c] || cardColors.europe;
+      var html = '<div style="font-size:.85rem;font-weight:700;color:#0f172a;margin-bottom:.3rem;padding:.3rem .5rem;background:' + col.bg + ';border-left:3px solid ' + col.border + '">' + d.flag + ' ' + d.label + ' — $' + d.totalEarnings.toFixed(1) + 'M total</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:.25rem">';
+
+      d.teamEarnings.sort(function(a,b) { return b.prize - a.prize; });
+      d.teamEarnings.forEach(function(t) {
+        var statusColor = t.eliminated ? '#dc2626' : '#16a34a';
+        var opacity = t.eliminated ? '0.6' : '1';
+        html += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:.4rem .6rem;font-size:.75rem;opacity:' + opacity + '">' +
+          '<strong>' + t.team + '</strong> <span style="color:#94a3b8">' + t.round + '</span> ' +
+          '<span style="color:' + statusColor + ';font-weight:700">$' + t.prize.toFixed(1) + 'M</span></div>';
+      });
+      html += '</div>';
+      wrap.innerHTML = html;
+      prizeDiv.appendChild(wrap);
+    });
+  }
 
   // Render analysis
   if(analysisDiv) {
-    var html = '<strong>Continental Survival Analysis:</strong><br>';
+    var html = '<strong>Financial Resilience Analysis:</strong><br>';
 
-    // Find best/worst survival
-    var sortedBySurvival = sortedConts.slice().sort(function(a,b) {
-      var sa = contData[a].teams > 0 ? (contData[a].alive / contData[a].teams) : 0;
-      var sb = contData[b].teams > 0 ? (contData[b].alive / contData[b].teams) : 0;
-      return sb - sa;
-    });
-    var best = sortedBySurvival[0];
-    var worst = sortedBySurvival[sortedBySurvival.length - 1];
+    // Find best/worst
+    var best = sortedConts[0];
+    var worst = sortedConts[sortedConts.length - 1];
 
     html += '<ul style="margin:.5rem 0 .5rem 1.2rem">';
-    html += '<li><strong>Best survival:</strong> ' + continentFlag(best) + ' ' + continentLabel(best) + ' — ' + contData[best].alive + '/' + contData[best].teams + ' teams still alive (' + (contData[best].teams > 0 ? (contData[best].alive/contData[best].teams*100).toFixed(1) : '0') + '%)</li>';
-    html += '<li><strong>Most eliminated:</strong> ' + continentFlag(worst) + ' ' + continentLabel(worst) + ' — ' + contData[worst].eliminated + '/' + contData[worst].teams + ' teams eliminated (' + (contData[worst].teams > 0 ? (contData[worst].eliminated/contData[worst].teams*100).toFixed(1) : '0') + '%)</li>';
+    html += '<li><strong>Best performer:</strong> ' + continentFlag(best) + ' ' + continentLabel(best) + ' (' + (contData[best].resilience || '100.0') + '% resilience) — $' + ((contData[best].avgEarnings || 0)).toFixed(1) + 'M per team vs. $' + avgPerTeam.toFixed(1) + 'M average</li>';
+    html += '<li><strong>Underperforming:</strong> ' + continentFlag(worst) + ' ' + continentLabel(worst) + ' (' + (contData[worst].resilience || '100.0') + '% resilience) — $' + ((contData[worst].avgEarnings || 0)).toFixed(1) + 'M per team</li>';
 
     // Deep run analysis
     var deepRunners = [];
@@ -3825,17 +3924,14 @@ function renderContinentKPI() {
       html += '<li><strong>Deep runs (SF+):</strong> ' + deepRunners.join(', ') + '</li>';
     }
 
-    // Pending fixtures
-    var pendingConts = [];
-    sortedConts.forEach(function(c) {
-      if(contData[c].pending > 0) pendingConts.push(continentLabel(c) + ' (' + contData[c].pending + ')');
-    });
-    if(pendingConts.length > 0) {
-      html += '<li><strong>Pending fixtures:</strong> ' + pendingConts.join(', ') + '</li>';
-    }
+    // Money concentration
+    var top3Earnings = 0;
+    sortedConts.slice(0,3).forEach(function(c) { top3Earnings += contData[c].totalEarnings; });
+    var concentration = totalEarnings > 0 ? ((top3Earnings / totalEarnings) * 100).toFixed(1) : 0;
+    html += '<li><strong>Prize concentration:</strong> Top 3 continents hold ' + concentration + '% of all prize money ($' + totalEarnings.toFixed(1) + 'M distributed so far)</li>';
     html += '</ul>';
 
-    html += '<p style="margin-top:.5rem">Survival % = teams still alive / original teams. Tracks pure knockout advancement — see <strong>Continental Financial Yield</strong> for prize money analysis.</p>';
+    html += '<p style="margin-top:.5rem"><strong>Resilience Score formula:</strong> (actual avg earnings per team / expected equal-share avg) x 100. >100% = continent is extracting more than its fair share. <100% = underperforming financially.</p>';
 
     analysisDiv.innerHTML = html;
   }
@@ -3892,17 +3988,6 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
   });
   console.log('computeCAY: original_teams per continent:', Object.keys(data).map(function(c) { return c + '=' + data[c].original_teams; }).join(', '));
 
-  // Build eliminated lookup from match results (source of truth)
-  var eliminatedByMatch = {};
-  if(matches && matches.length > 0) {
-    matches.forEach(function(m) {
-      if(m.winner && m.team1 && m.team2) {
-        var loser = (normalizeTeamName(m.winner) === normalizeTeamName(m.team1)) ? normalizeTeamName(m.team2) : normalizeTeamName(m.team1);
-        eliminatedByMatch[loser] = m.stage || 'Round of 32';
-      }
-    });
-  }
-
   // For each team, determine status from match data
   groups.forEach(function(g) {
     var st = g.standings;
@@ -3914,11 +3999,6 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
       if(!data[cont]) return;
 
       var status = getTeamTournamentStatus(teamName, matches);
-      // Override: if team lost a completed match, they are eliminated (source of truth)
-      if(eliminatedByMatch[normalizeTeamName(teamName)]) {
-        status.status = 'Eliminated';
-        status.eliminatedAtStage = eliminatedByMatch[normalizeTeamName(teamName)];
-      }
 
       // Count by status
       if(status.status === 'Alive') {
@@ -3970,10 +4050,12 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
 }
 
 function renderContinentalAdvancementYield() {
+  console.log('>>> renderContinentalAdvancementYield CALLED');
   var container = document.getElementById('cay-cards');
   var tbody = document.getElementById('cay-body');
   var analysisDiv = document.getElementById('cay-analysis');
-  if(!container || !tbody) return;
+  console.log('>>> renderCAY: container=' + !!container + ', tbody=' + !!tbody + ', analysis=' + !!analysisDiv);
+  if(!container || !tbody) { console.warn('>>> renderCAY: ABORT - missing DOM elements'); return; }
 
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
@@ -3993,61 +4075,67 @@ function renderContinentalAdvancementYield() {
     oceania: { bg: '#ccfbf1', border: '#14b8a6', text: '#134e4a' }
   };
 
-  // Compute total prize for financial share %
-  var totalTournamentPrize = results.reduce(function(s, d) { return s + d.current_total_prize; }, 0);
-
-  // Build cards HTML — FINANCIAL METRICS ONLY
+  // Build cards HTML
   var cardsHtml = '';
+  console.log('renderCAY: building cards for', results.length, 'continents');
   results.forEach(function(d) {
+    console.log('  card:', d.continent, d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'pending=' + d.teams_pending, 'elim=' + d.teams_eliminated, 'unk=' + d.teams_unknown, 'r16=' + d.teams_reached_r16_or_deeper);
     var col = cardColors[d.continent] || cardColors.europe;
+    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
-    var sharePct = totalTournamentPrize > 0 ? ((d.current_total_prize / totalTournamentPrize) * 100).toFixed(1) : '0.0';
-    var avgPrize = d.original_teams > 0 ? (d.current_total_prize / d.original_teams) : 0;
     cardsHtml += '<div style="background:' + col.bg + ';border:2px solid ' + col.border + ';border-radius:12px;padding:1.25rem">' +
       '<div style="font-size:1.5rem;margin-bottom:.25rem">' + d.continentFlag + '</div>' +
       '<div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:' + col.text + ';font-weight:700;margin-bottom:.5rem">' + d.continentLabel + '</div>' +
-      '<div style="text-align:center;margin-bottom:.5rem">' +
-        '<div style="font-size:1.8rem;font-weight:800;color:#0f172a">$' + d.current_total_prize.toFixed(1) + 'M</div>' +
-        '<div style="color:#64748b;font-size:.7rem">Total Prize Earned</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.85rem;text-align:center;margin-bottom:.5rem">' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#16a34a">' + d.teams_alive + '</div><div style="color:#64748b;font-size:.65rem">Alive</div></div>' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#f59e0b">' + d.teams_pending + '</div><div style="color:#64748b;font-size:.65rem">Pending</div></div>' +
+        '<div><div style="font-size:1.1rem;font-weight:800;color:#94a3b8">' + d.teams_unknown + '</div><div style="color:#64748b;font-size:.65rem">Awaiting</div></div>' +
       '</div>' +
       '<div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid ' + col.border + '">' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Original Teams</span><span style="font-weight:700">' + d.original_teams + '</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Avg Prize/Team</span><span style="font-weight:700">$' + avgPrize.toFixed(1) + 'M</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Financial Share</span><span style="font-weight:700">' + sharePct + '%</span></div>' +
-        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Stage Delta</span><span style="font-weight:700">$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CAE</span><span style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>R16+ Teams</span><span style="font-weight:700">' + d.teams_reached_r16_or_deeper + '/' + d.original_teams + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Adv. Value</span><span style="font-weight:700">$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>Yield/Team</span><span style="font-weight:700">$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</span></div>' +
         '<div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.2rem"><span>CER</span><span style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</span></div>' +
         '<div style="display:flex;justify-content:space-between;font-size:.8rem"><span>FSR</span><span style="font-weight:700">' + d.fsr + '%</span></div>' +
       '</div>' +
     '</div>';
   });
   container.innerHTML = cardsHtml;
+  console.log('renderCAY: cards HTML length=' + cardsHtml.length + ', assigned to container');
 
-  // Build table rows HTML — FINANCIAL COLUMNS ONLY
+  // Build table rows HTML
   var rowsHtml = '';
+  console.log('renderCAY: building', results.length, 'table rows');
   results.forEach(function(d) {
+    console.log('  row:', d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'r16=' + d.teams_reached_r16_or_deeper, 'cae=' + d.cae);
+    var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
-    var sharePct = totalTournamentPrize > 0 ? ((d.current_total_prize / totalTournamentPrize) * 100).toFixed(1) : '0.0';
-    var avgPrize = d.original_teams > 0 ? (d.current_total_prize / d.original_teams) : 0;
-    var totalDelta = d.current_total_prize - (d.original_teams * 9); // above $9M baseline
     rowsHtml += '<tr>' +
       '<td><strong>' + d.continentFlag + ' ' + d.continentLabel + '</strong></td>' +
       '<td>' + d.original_teams + '</td>' +
-      '<td style="font-weight:800;color:#0f172a">$' + d.current_total_prize.toFixed(1) + 'M</td>' +
-      '<td style="color:#16a34a;font-weight:700">+$' + totalDelta.toFixed(1) + 'M</td>' +
-      '<td>$' + avgPrize.toFixed(1) + 'M</td>' +
-      '<td>' + sharePct + '%</td>' +
+      '<td style="color:#16a34a;font-weight:700">' + d.teams_alive + '</td>' +
+      '<td style="color:#f59e0b">' + d.teams_pending + '</td>' +
+      '<td style="color:#dc2626">' + d.teams_eliminated + '</td>' +
+      '<td style="color:#0f172a;font-weight:700">' + d.teams_reached_r16_or_deeper + '</td>' +
+      '<td style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</td>' +
+      '<td>$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.current_total_prize).toFixed(1) + 'M</td>' +
       '<td style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</td>' +
       '<td style="font-weight:700">' + d.fsr + '%</td>' +
     '</tr>';
   });
   tbody.innerHTML = rowsHtml;
+  console.log('renderCAY: table rows HTML length=' + rowsHtml.length + ', assigned to tbody');
 
-  // Render analysis — FINANCIAL FOCUS
+  // Render analysis
   if(analysisDiv) {
-    var totalPrize = results.reduce(function(s, d) { return s + d.current_total_prize; }, 0);
     var totalTeams = results.reduce(function(s, d) { return s + d.original_teams; }, 0);
-    analysisDiv.innerHTML = '<p style="margin:0 0 .5rem 0"><strong>Continental Financial Yield</strong> tracks which continent is capturing the tournament financial value. Total Prize = sum of all teams current prize by continent. Stage Delta = prize earned above $9M baseline. Financial Share = continent portion of total distributed prize pool. CER = current earnings ratio vs. baseline. FSR = future survival ratio.</p>' +
-      '<p style="margin:0;font-size:.8rem;color:#64748b">Total distributed: $' + totalPrize.toFixed(1) + 'M across ' + totalTeams + ' teams. Source: wc2026_matches (completed match results).</p>';
+    var totalAlive = results.reduce(function(s, d) { return s + d.teams_alive; }, 0);
+    var totalR16 = results.reduce(function(s, d) { return s + d.teams_reached_r16_or_deeper; }, 0);
+    analysisDiv.innerHTML = '<p style="margin:0 0 .5rem 0"><strong>Continental Advancement Efficiency (CAE)</strong> measures how efficiently each continent converts tournament entries into Round of 16 or deeper survival. <strong>Advancement Value</strong> measures the incremental FIFA prize delta created by survival from one stage to the next. Missing fixtures are treated as pending/unknown, not eliminated.</p>' +
+      '<p style="margin:0 0 .5rem 0;font-size:.8rem;color:#64748b">Of ' + totalTeams + ' teams entered, ' + totalAlive + ' are confirmed alive and ' + totalR16 + ' have reached R16 or deeper across all continents.</p>';
   }
 }
 
@@ -5415,36 +5503,6 @@ function applyMatchResultsToKOTable() {
       if(pathCell2) pathCell2.textContent = 'Eliminated ' + (m.stage || '');
     }
   });
-
-  // Also apply to Team Profiles table (R16+ column)
-  applyMatchResultsToProfileTable();
-}
-
-function applyMatchResultsToProfileTable() {
-  // Apply match winner/loser data to the Profile table R16+ column
-  if(!dbMatches || dbMatches.length === 0) return;
-  if(!dbSeedMap || Object.keys(dbSeedMap).length === 0) return;
-
-  var nameToSeed = {};
-  for(var seed in dbSeedMap) { if(dbSeedMap[seed]) nameToSeed[dbSeedMap[seed]] = seed; }
-
-  dbMatches.forEach(function(m) {
-    if(!m.winner || !m.team1 || !m.team2) return;
-
-    var winnerSeed = nameToSeed[m.winner];
-    var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
-    var loserSeed = nameToSeed[loserName];
-    var stage = m.stage || '';
-
-    if(winnerSeed) {
-      var r16Cell = document.getElementById('r16-' + winnerSeed.toLowerCase());
-      if(r16Cell) r16Cell.innerHTML = '<span style="color:#16a34a;font-weight:700">' + stage + ' - Winner</span>';
-    }
-    if(loserSeed) {
-      var r16Cell2 = document.getElementById('r16-' + loserSeed.toLowerCase());
-      if(r16Cell2) r16Cell2.innerHTML = '<span style="color:#dc2626;font-weight:700">Eliminated ' + stage + '</span>';
-    }
-  });
 }
 
 function getGroupColor(letter) {
@@ -5859,50 +5917,26 @@ function renderAllFromCache() {
     });
   }
 
-  // Rebuild results table — STAGE 2: R32 only, STAGE 3: R16 only
-  // Helper
-  function _renderRow(m) {
-    var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
-    var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
-    var winnerClass = m.winner ? 'result-win' : 'result-pending';
-    var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
-      '<td>' + (m.stage || 'TBD') + '</td>' +
-      '<td>' + (m.date || 'TBD') + '</td>' +
-      '<td><strong>' + (m.team1 || '') + '</strong></td>' +
-      '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
-      '<td><strong>' + (m.team2 || '') + '</strong></td>' +
-      '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
-      '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
-    return tr;
-  }
-
-  // STAGE 2: R32 results only
+  // Rebuild results table
   var rBody = document.getElementById('results-body');
   if(rBody && dbMatches.length > 0) {
     rBody.innerHTML = '';
-    var r32m = dbMatches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
-    if(r32m.length > 0) {
-      var h2 = document.createElement('tr');
-      h2.innerHTML = '<td colspan="8" style="background:#dcfce7;padding:.6rem .9rem;font-weight:700;color:#166534;font-size:.9rem;border-top:2px solid #86efac;border-bottom:1px solid #bbf7d0;">&#9989; ROUND OF 32 — COMPLETED (' + r32m.length + '/' + r32m.length + ')</td>';
-      rBody.appendChild(h2);
-      r32m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
-    }
-  }
-
-  // STAGE 3: R16 results only
-  var r16Body = document.getElementById('r16-results-body');
-  if(r16Body && dbMatches.length > 0) {
-    r16Body.innerHTML = '';
-    var r16m = dbMatches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
-    if(r16m.length > 0) {
-      var h1 = document.createElement('tr');
-      var c1 = r16m.filter(function(m) { return m.winner; }).length;
-      h1.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + c1 + '/' + r16m.length + ' completed)</td>';
-      r16Body.appendChild(h1);
-      r16m.forEach(function(m) { r16Body.appendChild(_renderRow(m)); });
-    }
+    dbMatches.forEach(function(m) {
+      var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
+      var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
+      var winnerClass = m.winner ? 'result-win' : 'result-pending';
+      var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
+        '<td>' + (m.stage || 'TBD') + '</td>' +
+        '<td>' + (m.date || 'TBD') + '</td>' +
+        '<td><strong>' + (m.team1 || '') + '</strong></td>' +
+        '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
+        '<td><strong>' + (m.team2 || '') + '</strong></td>' +
+        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' \u2705 Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
+        '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
+      rBody.appendChild(tr);
+    });
   }
 
   // Render KPI sections
@@ -6151,14 +6185,14 @@ async function loadMatchesFromDB() {
     var nameToSeed = {};
     for(var seed in dbSeedMap) { nameToSeed[dbSeedMap[seed]] = seed; }
 
-    // ---- POPULATE RESULTS TABLE ----
-    // Helper to render a single match row
-    function renderMatchRow(m) {
+    // ---- POPULATE RESULTS TABLES (split by stage) ----
+    // R32 matches -> results-body (Stage 2)
+    // R16+ matches -> r16-results-body (Stage 3)
+    function createResultRow(m) {
       var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
       var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
       var winnerClass = m.winner ? 'result-win' : 'result-pending';
       var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
-
       var tr = document.createElement('tr');
       tr.innerHTML =
         '<td><strong>' + (m.match_id || '') + '</strong></td>' +
@@ -6167,37 +6201,27 @@ async function loadMatchesFromDB() {
         '<td><strong>' + (m.team1 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team1_group || '') + (m.team1_group_pos || '') + '</span></td>' +
         '<td style="text-align:center;font-weight:700;color:' + (hasScore ? '#0f172a' : '#94a3b8') + '">' + scoreDisplay + penaltyInfo + '</td>' +
         '<td><strong>' + (m.team2 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team2_group || '') + (m.team2_group_pos || '') + '</span></td>' +
-        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
+        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' \u2705 Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
         '<td style="font-size:11px;color:#64748b;max-width:200px;white-space:normal">' + (m.notes || '') + '</td>';
       return tr;
     }
 
-    // STAGE 2: Render only R32 matches in results-body
     var rBody = document.getElementById('results-body');
-    if(rBody) {
-      rBody.innerHTML = '';
-      var r32Matches = matches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
-      if(r32Matches.length > 0) {
-        var completedHeader = document.createElement('tr');
-        completedHeader.innerHTML = '<td colspan="8" style="background:#dcfce7;padding:.6rem .9rem;font-weight:700;color:#166534;font-size:.9rem;border-top:2px solid #86efac;border-bottom:1px solid #bbf7d0;">&#9989; ROUND OF 32 — COMPLETED (' + r32Matches.length + '/' + r32Matches.length + ')</td>';
-        rBody.appendChild(completedHeader);
-        r32Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
-      }
-    }
-
-    // STAGE 3: Render only R16 matches in r16-results-body
     var r16Body = document.getElementById('r16-results-body');
-    if(r16Body) {
-      r16Body.innerHTML = '';
-      var r16Matches = matches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
-      if(r16Matches.length > 0) {
-        var activeHeader = document.createElement('tr');
-        var completedCount = r16Matches.filter(function(m) { return m.winner; }).length;
-        activeHeader.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + completedCount + '/' + r16Matches.length + ' completed)</td>';
-        r16Body.appendChild(activeHeader);
-        r16Matches.forEach(function(m) { r16Body.appendChild(renderMatchRow(m)); });
+    if(rBody) rBody.innerHTML = '';
+    if(r16Body) r16Body.innerHTML = '';
+
+    matches.forEach(function(m) {
+      var row = createResultRow(m);
+      if(m.stage === 'Round of 32' && rBody) {
+        rBody.appendChild(row);
+      } else if((m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') && r16Body) {
+        r16Body.appendChild(row);
+      } else if(rBody) {
+        // Fallback: if stage unrecognized, put in R32 table
+        rBody.appendChild(row);
       }
-    }
+    });
 
     // Update teamExportData from match results (DOM updates handled by applyMatchResultsToKOTable after render)
     var updated = 0;
@@ -6231,13 +6255,7 @@ async function loadMatchesFromDB() {
       }
     });
 
-    var eliminatedCount = matches.filter(function(m) { return m.winner; }).length;
-    var advancedCount = eliminatedCount; // each elimination means one advances
-    var remainingCount = matches.length - completedCount;
-    var statusMsg = '<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed</strong> &mdash; ' + eliminatedCount + ' teams eliminated, ' + advancedCount + ' advanced';
-    if(remainingCount > 0) statusMsg += ' &mdash; <strong>' + remainingCount + ' match' + (remainingCount > 1 ? 'es' : '') + ' remaining</strong>';
-    statusMsg += '<br><span style="font-size:11px;color:#64748b">Stage 3 (Round of 16) in progress &mdash; ' + formatTimestamp() + '</span></div>';
-    showLoadStatus(statusMsg,'ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
 
     // Trigger all dependent renders now that match data is loaded
     console.log('loadMatchesFromDB: triggering renders...');
@@ -6246,10 +6264,83 @@ async function loadMatchesFromDB() {
     try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
-    try { renderTeamFinancialDelta(); } catch(e) { console.error('renderTeamFinancialDelta error:', e); }
+    // Load FFI derived views (v_ffi_team_status, v_ffi_prize_from_matches, v_ffi_federation_integrity)
+    // These views derive elimination status SOLELY from wc2026_matches.winner
+    try { await loadFFIViewsFromDB(); } catch(e) { console.error('loadFFIViewsFromDB error:', e); }
     console.log('loadMatchesFromDB: all renders triggered');
 
   } catch(e) { console.error('loadMatches error:', e); }
+}
+
+// ===== FFI DERIVED VIEWS LOADER =====
+// Queries v_ffi_team_status, v_ffi_prize_from_matches, v_ffi_federation_integrity
+// These views use wc2026_matches as the SOLE source of truth for elimination status.
+// public.teams is display cache only and must NOT be used for elimination logic.
+async function loadFFIViewsFromDB() {
+  if(!supabaseClient) { console.warn('loadFFIViewsFromDB: no supabaseClient'); return; }
+  try {
+    console.log('loadFFIViewsFromDB: querying derived views...');
+
+    // View 1: team status (Alive / Eliminated / Prize)
+    var v1 = await supabaseClient.from('v_ffi_team_status').select('*').order('seed');
+    var teamStatus = v1.data || [];
+    if(v1.error) console.error('v_ffi_team_status error:', v1.error);
+
+    // View 2: prize from matches (stage deltas)
+    var v2 = await supabaseClient.from('v_ffi_prize_from_matches').select('*').order('stage_order,seed');
+    var prizeData = v2.data || [];
+    if(v2.error) console.error('v_ffi_prize_from_matches error:', v2.error);
+
+    // View 3: federation integrity (continent aggregates)
+    var v3 = await supabaseClient.from('v_ffi_federation_integrity').select('*').order('total_prize_millions',{ascending:false});
+    var fedData = v3.data || [];
+    if(v3.error) console.error('v_ffi_federation_integrity error:', v3.error);
+
+    window._ffiViewData = { teamStatus: teamStatus, prizeData: prizeData, federation: fedData };
+    console.log('loadFFIViewsFromDB: loaded', teamStatus.length, 'teams,', fedData.length, 'continents');
+
+    // Update Final Verdict with real-time data from views
+    updateFinalVerdictFromViews(teamStatus, fedData);
+
+  } catch(e) { console.error('loadFFIViewsFromDB error:', e); }
+}
+
+// Update Final Verdict section using data from derived views
+function updateFinalVerdictFromViews(teamStatus, fedData) {
+  if(!teamStatus || teamStatus.length === 0) return;
+
+  // Count by status
+  var groupExits = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Group Stage'; }).length;
+  var r32Elim    = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Round of 32'; }).length;
+  var r16Elim    = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Round of 16'; }).length;
+  var alive      = teamStatus.filter(function(t) { return t.status === 'Still Alive'; }).length;
+  var qfTeams    = teamStatus.filter(function(t) { return t.current_prize_millions >= 19 && t.status === 'Still Alive'; }).length;
+
+  // Total prize distributed
+  var totalPrize = teamStatus.reduce(function(sum, t) { return sum + (t.current_prize_millions || 0); }, 0);
+
+  // R32 stage summary
+  var r32TotalPrize = r32Elim * 11;
+  var r32AliveAdvance = alive + r16Elim; // teams that survived R32
+  var r32ValuePreserved = Math.round((r32AliveAdvance / 32) * 1000) / 10; // % of R32 teams still earning
+
+  // Stage 2 card: update prize numbers
+  var s2PrizeEl = document.getElementById('fv-s2-prize');
+  if(s2PrizeEl) s2PrizeEl.textContent = '$' + r32TotalPrize + 'M';
+
+  // Stage 3 card: update match count
+  var s3MatchesEl = document.getElementById('fv-s3-matches');
+  if(s3MatchesEl) s3MatchesEl.textContent = r16Elim + '/' + (r16Elim + alive);
+
+  // Stage 1 card: confirmed alive count
+  var s1TeamsEl = document.getElementById('fv-s1-teams');
+  if(s1TeamsEl) s1TeamsEl.textContent = '48';
+
+  // Total distributed
+  var totalEl = document.getElementById('fv-total-prize');
+  if(totalEl) totalEl.textContent = '$' + totalPrize + 'M';
+
+  console.log('updateFinalVerdictFromViews: total=$' + totalPrize + 'M, alive=' + alive + ', r16elim=' + r16Elim + ', r32elim=' + r32Elim + ', groupExits=' + groupExits);
 }
 
 // ===== TEAM METADATA (continent source-of-truth from DB) =====
@@ -6492,11 +6583,6 @@ function renderKPIReport() {
   }
 }
 </script>
-<script src="js/wc2026-null-fix.js"></script
-
-
-
->
-</script>
+<script src="js/wc2026-null-fix.js"></script>   <!-- ADD THIS LINE -->
 </body>
 </html>
