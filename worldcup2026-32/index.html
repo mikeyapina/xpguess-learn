@@ -3911,6 +3911,29 @@ function renderContinentKPI() {
     cards.appendChild(card);
   });
 
+  // DEBUG: Show per-team status for each continent
+  var debugEl = document.getElementById('cont-debug');
+  if(!debugEl) {
+    debugEl = document.createElement('div');
+    debugEl.id = 'cont-debug';
+    cards.parentNode.insertBefore(debugEl, cards.nextSibling);
+  }
+  var debugHtml = '<div style="margin:1rem 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.8rem">';
+  debugHtml += '<h4 style="color:#0f172a;margin-bottom:.5rem">Team Status Debug (auto-updates)</h4>';
+  debugHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">';
+  sortedConts.forEach(function(c) {
+    var d = contData[c];
+    debugHtml += '<div><strong>' + d.flag + ' ' + d.label + '</strong> (' + d.teams + ' teams)<ul style="margin:.25rem 0;padding-left:1.2rem">';
+    d.teamEarnings.forEach(function(t) {
+      var tColor = t.eliminated ? '#dc2626' : '#16a34a';
+      var tStatus = t.eliminated ? 'OUT' : 'ALIVE';
+      debugHtml += '<li style="color:' + tColor + '">' + t.team + ': ' + tStatus + ' (' + t.round + ', $' + t.prize.toFixed(0) + 'M)</li>';
+    });
+    debugHtml += '</ul></div>';
+  });
+  debugHtml += '</div></div>';
+  debugEl.innerHTML = debugHtml;
+
   // Render table
   tbody.innerHTML = '';
   sortedConts.forEach(function(c) {
