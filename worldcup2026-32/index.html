@@ -3391,67 +3391,85 @@ function getPrizeForStage(stageName, prizeTiers) {
 function getTeamTournamentStatus(teamName, matches) {
   var norm = normalizeTeamName(teamName);
   var result = {
-    status: 'Unknown',       // 'Alive' | 'Eliminated' | 'Pending' | 'Unknown'
-    currentStage: null,      // current/furthest stage reached
-    eliminatedAtStage: null, // stage where eliminated (if eliminated)
-    prizeMoney: 9            // default group stage baseline
+    status: 'Unknown',
+    currentStage: null,
+    eliminatedAtStage: null,
+    prizeMoney: 9
   };
-  if(!matches || matches.length === 0) return result;
 
   // Find all matches this team participates in
   var teamMatches = [];
-  for(var i = 0; i < matches.length; i++) {
-    var m = matches[i];
-    if(!m.team1 || !m.team2) continue;
-    var t1n = normalizeTeamName(m.team1);
-    var t2n = normalizeTeamName(m.team2);
-    if(t1n === norm || t2n === norm) {
-      teamMatches.push(m);
+  if(matches && matches.length > 0) {
+    for(var i = 0; i < matches.length; i++) {
+      var m = matches[i];
+      if(!m.team1 || !m.team2) continue;
+      var t1n = normalizeTeamName(m.team1);
+      var t2n = normalizeTeamName(m.team2);
+      if(t1n === norm || t2n === norm) teamMatches.push(m);
     }
   }
 
+  // No matches = Group Stage exit (eliminated without playing a knockout match)
   if(teamMatches.length === 0) {
-    result.status = 'Unknown';
+    result.status = 'Eliminated';
+    result.eliminatedAtStage = 'Group Stage';
+    result.currentStage = 'Group Stage';
+    result.prizeMoney = 9;
     return result;
   }
 
-  // Check the most recent match (or any completed match)
-  var latestMatch = null;
-  var hasCompletedMatch = false;
+  // Process all matches — find the LATEST completed match to determine final status
+  var lastCompleted = null;
+  var hasUpcoming = false;
+  var upcomingStage = null;
+
   for(var j = 0; j < teamMatches.length; j++) {
     var tm = teamMatches[j];
     if(tm.winner) {
-      hasCompletedMatch = true;
-      latestMatch = tm;
-      var wn = normalizeTeamName(tm.winner);
-      if(wn === norm) {
-        // This team won
-        result.status = 'Alive';
-        result.currentStage = tm.stage || 'Round of 32';
-        // Semi-Finals is a transition — do NOT lock prize here.
-        // Prize is only locked at final placement stages (4th, 3rd, Runner-up, Winner).
-        if(result.currentStage === 'Semi-Finals') {
-          result.prizeMoney = getPrizeForStage('Quarter-Finals', dbPrizeTiers); // QF prize = guaranteed minimum
-        } else {
-          result.prizeMoney = getPrizeForStage(result.currentStage, dbPrizeTiers);
-        }
-      } else {
-        // This team lost
-        result.status = 'Eliminated';
-        result.eliminatedAtStage = tm.stage || 'Round of 32';
-        result.currentStage = result.eliminatedAtStage;
-        // Semi-Finals loser = Fourth Place placement (locked $27M)
-        if(result.eliminatedAtStage === 'Semi-Finals') {
-          result.prizeMoney = dbPrizeTiers['Fourth Place'] || 27;
-        } else {
-          result.prizeMoney = getPrizeForStage(result.eliminatedAtStage, dbPrizeTiers);
-        }
-      }
-    } else if(!hasCompletedMatch) {
-      // No completed match yet, but has a scheduled match
-      result.status = 'Pending';
-      result.currentStage = tm.stage || 'Round of 32';
+      lastCompleted = tm;
+    } else {
+      hasUpcoming = true;
+      upcomingStage = tm.stage;
     }
+  }
+
+  if(lastCompleted) {
+    var wn = normalizeTeamName(lastCompleted.winner);
+    if(wn === norm) {
+      // Team won its last match
+      if(hasUpcoming) {
+        // Has an upcoming match = still alive but waiting
+        result.status = 'Alive';
+        result.currentStage = upcomingStage;
+        // Prize = next stage prize (they've advanced)
+        var nextPrize = getPrizeForStage(upcomingStage, dbPrizeTiers);
+        result.prizeMoney = nextPrize > 0 ? nextPrize : getPrizeForStage(lastCompleted.stage, dbPrizeTiers);
+      } else {
+        // Won and no upcoming = tournament winner or data gap
+        result.status = 'Alive';
+        result.currentStage = lastCompleted.stage;
+        result.prizeMoney = getPrizeForStage(lastCompleted.stage, dbPrizeTiers);
+      }
+    } else {
+      // Team lost its last match = eliminated
+      result.status = 'Eliminated';
+      result.eliminatedAtStage = lastCompleted.stage || 'Round of 32';
+      result.currentStage = result.eliminatedAtStage;
+      if(result.eliminatedAtStage === 'Semi-Finals') {
+        result.prizeMoney = dbPrizeTiers['Fourth Place'] || 27;
+      } else {
+        result.prizeMoney = getPrizeForStage(result.eliminatedAtStage, dbPrizeTiers);
+      }
+    }
+  } else if(hasUpcoming) {
+    // Only upcoming matches, none completed yet
+    result.status = 'Pending';
+    result.currentStage = upcomingStage;
+  } else {
+    // Should not reach here, but default to group exit
+    result.status = 'Eliminated';
+    result.eliminatedAtStage = 'Group Stage';
+    result.prizeMoney = 9;
   }
 
   return result;
@@ -3587,6 +3605,28 @@ function renderContinentKPI() {
     });
   });
 
+  // Add any teams from dbTeamMetadata that are missing from group standings
+  // This ensures all 48 teams are counted even if group standings have gaps
+  if(Object.keys(dbTeamMetadata).length > 0) {
+    for(var metaSeed in dbTeamMetadata) {
+      var meta = dbTeamMetadata[metaSeed];
+      if(!teamData[metaSeed]) {
+        var metaCont = meta.continent_code || getContinent(meta.team_name);
+        teamData[metaSeed] = {
+          seed: metaSeed,
+          team: meta.team_name,
+          group: metaSeed.charAt(0),
+          continent: metaCont,
+          continentLabel: continentLabel(metaCont),
+          groupGoals: 0,
+          knockoutRound: 'Group Stage',
+          prizeMoney: prizeTiers['Group Stage'],
+          eliminated: false
+        };
+      }
+    }
+  }
+
   // Use shared normalizeTeamName() for all name matching
   // _NAME_ALIASES handles: USA, Bosnia, SENEGAL, Cabo Verde, Ivory Coast, etc.
 
@@ -3649,15 +3689,17 @@ function renderContinentKPI() {
       teamData[seed].status = 'Alive';
       teamData[seed].eliminated = false;
     } else if(statusData.completedLosers.has(normName)) {
+      teamData[seed].status = 'Eliminated';
       teamData[seed].eliminated = true;
       // knockoutRound set below in match processing
     } else if(statusData.pendingTeams.has(normName)) {
       teamData[seed].status = 'Pending';
       teamData[seed].eliminated = false;
     } else {
-      teamData[seed].status = 'Unknown';
-      teamData[seed].eliminated = false;
-      teamData[seed].knockoutRound = 'Awaiting Fixture';
+      // Team never appeared in any match = Group Stage exit (eliminated)
+      teamData[seed].status = 'Eliminated';
+      teamData[seed].eliminated = true;
+      teamData[seed].knockoutRound = 'Group Stage';
     }
   }
 
@@ -3973,51 +4015,60 @@ function computeContinentalAdvancementYield(groups, matches, prizeTiers) {
     };
   });
 
-  // Count original teams per continent from group standings
-  console.log('computeCAY: processing', groups.length, 'groups');
-  groups.forEach(function(g) {
-    var st = g.standings;
-    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
-    if(!Array.isArray(st)) { console.log('  group', g.group_letter, 'no standings array'); return; }
-    console.log('  group', g.group_letter, 'has', st.length, 'standings');
-    st.forEach(function(s) {
-      var cont = getTeamContinent(s.team);
-      console.log('    team', s.team, '→ continent', cont);
+  // Count original teams per continent from DB metadata (source of truth)
+  var allTeams = [];
+  if(Object.keys(dbTeamMetadata).length > 0) {
+    // Use DB metadata for all 48 teams
+    for(var seed in dbTeamMetadata) {
+      var meta = dbTeamMetadata[seed];
+      allTeams.push({ team: meta.team_name, seed: seed });
+      var cont = meta.continent_code;
       if(data[cont]) data[cont].original_teams++;
+    }
+    console.log('computeCAY: using dbTeamMetadata for', allTeams.length, 'teams');
+  } else {
+    // Fallback: use group standings
+    groups.forEach(function(g) {
+      var st = g.standings;
+      if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
+      if(!Array.isArray(st)) return;
+      st.forEach(function(s) {
+        allTeams.push({ team: s.team });
+        var cont = getTeamContinent(s.team);
+        if(data[cont]) data[cont].original_teams++;
+      });
     });
-  });
-  console.log('computeCAY: original_teams per continent:', Object.keys(data).map(function(c) { return c + '=' + data[c].original_teams; }).join(', '));
+    console.log('computeCAY: using group standings for', allTeams.length, 'teams (DB metadata not loaded)');
+  }
 
   // For each team, determine status from match data
-  groups.forEach(function(g) {
-    var st = g.standings;
-    if(typeof st === 'string') { try { st = JSON.parse(st); } catch(e) { st = []; } }
-    if(!Array.isArray(st)) return;
-    st.forEach(function(s) {
-      var teamName = s.team;
-      var cont = getTeamContinent(teamName);
-      if(!data[cont]) return;
+  allTeams.forEach(function(t) {
+    var teamName = t.team;
+    var cont = getTeamContinent(teamName);
+    if(!data[cont]) return;
 
-      var status = getTeamTournamentStatus(teamName, matches);
+    var status = getTeamTournamentStatus(teamName, matches);
 
-      // Count by status
-      if(status.status === 'Alive') {
-        data[cont].teams_alive++;
-        // Alive team has reached at least R16 (won an R32 match)
+    // Count by status
+    if(status.status === 'Alive') {
+      data[cont].teams_alive++;
+      // Only count as R16+ if they actually reached R16 or deeper
+      if(status.currentStage === 'Round of 16' || status.currentStage === 'Quarter-Finals' ||
+         status.currentStage === 'Semi-Finals' || status.currentStage === 'Final') {
         data[cont].teams_reached_r16_or_deeper++;
-        data[cont].max_possible_remaining += championPrize;
-      } else if(status.status === 'Pending') {
-        data[cont].teams_pending++;
-        data[cont].max_possible_remaining += championPrize;
-      } else if(status.status === 'Eliminated') {
-        data[cont].teams_eliminated++;
-      } else {
-        data[cont].teams_unknown++;
-        data[cont].max_possible_remaining += championPrize; // still possible
       }
+      data[cont].max_possible_remaining += championPrize;
+    } else if(status.status === 'Pending') {
+      data[cont].teams_pending++;
+      data[cont].max_possible_remaining += championPrize;
+    } else if(status.status === 'Eliminated') {
+      data[cont].teams_eliminated++;
+    } else {
+      data[cont].teams_unknown++;
+      data[cont].max_possible_remaining += championPrize;
+    }
 
-      data[cont].current_total_prize += status.prizeMoney;
-    });
+    data[cont].current_total_prize += status.prizeMoney;
   });
 
   // Compute derived metrics per continent
@@ -6301,6 +6352,11 @@ async function loadFFIViewsFromDB() {
 
     // Update Final Verdict with real-time data from views
     updateFinalVerdictFromViews(teamStatus, fedData);
+
+    // Auto-refresh Continental sections with derived view data
+    // This ensures elimination status updates automatically when new match results come in
+    try { renderContinentKPI(); } catch(e) { console.error('renderContinentKPI auto-refresh error:', e); }
+    try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderCAY auto-refresh error:', e); }
 
   } catch(e) { console.error('loadFFIViewsFromDB error:', e); }
 }
