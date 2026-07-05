@@ -1,13 +1,14 @@
-
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
-<title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI · GEI · TCI) by Name The Game</title>
-<link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/"/>
-<meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 — built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers."/>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>World Cup 2026 TCI Dashboard | Tournament Carryover Index (SPI &middot; GEI &middot; TCI) by Name The Game</title>
+<link rel="canonical" href="https://learn.xpguess.com/worldcup2026-32/">
+<meta name="description" content="Tournament Carryover Index (TCI) Dashboard for World Cup 2026 &mdash; built on Natural Technical Governance (NTG) by Name The Game, powered by HUGS ID. Measure how group-stage competitive environments predict knockout performance using SPI (Strategic Performance Index), GEI (Group Environment Index), and TCI methodology. Free downloadable JSON datasets for researchers.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="js/wc2026-financial-delta.js"></script>
@@ -139,7 +140,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   background: #1e293b !important;
 }
 </style>
-<base target="_blank"/>
+<base target="_blank">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -177,9 +178,9 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 
 
-<base target="_blank"/>
-<base target="_blank"/>
-<script src="https://www.kimi.com/sdk-seed.js" defer=""></script></head>
+<base target="_blank">
+<base target="_blank">
+</head>
 <body>
 <!-- DATA STATUS OVERLAY - shows connection state -->
 <div id="data-status-overlay" style="position:fixed;top:0;left:0;right:0;z-index:9999;padding:8px 16px;font-size:13px;font-weight:600;text-align:center;background:#eff6ff;color:#1e3a5f;border-bottom:2px solid #93c5fd;display:none">
@@ -189,28 +190,28 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <div class="group-popup" id="group-popup"></div>
 
 <main>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3HB79N4XWD');</script>
 
-<div style="margin-bottom:1.5rem"><img src="https://learn.xpguess.com/XPGuess-black.png" alt="XPGuess" style="height:240px;display:block"/></div>
-<hr/>
+<div style="margin-bottom:1.5rem"><img src="https://learn.xpguess.com/XPGuess-black.png" alt="XPGuess" style="height:240px;display:block"></div>
+<hr>
 
 <header>
   <p style="font-size:.8rem;color:#94a3b8;margin-bottom:.5rem">Tournament Analytics / Research Dashboard</p>
   <h1>World Cup 2026 TCI Dashboard</h1>
-  <p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework — open data, reproducible methodology.</p>
+  <p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework &mdash; open data, reproducible methodology.</p>
 
   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#64748b;line-height:1.6;">
     <strong style="color:#0f172a">Key Terms:</strong>
-    <strong style="color:#0f172a">SPI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Strategic Performance Index — did Matchday 3 preserve competitive ordering?" onclick="showTip(event,&#39;Strategic Performance Index — did Matchday 3 preserve competitive ordering? Computed from group standings after data loads.&#39;)}">ⓘ</span> = Strategic Performance Index
-    <strong style="color:#0f172a">GEI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index — Constrained, Open, Inverted, or Dominant" onclick="showTip(event,&#39;Group Environment Index — what type of competitive environment each group created. Constrained (flat, low-scoring), Open (balanced), Inverted (SPI broke), Dominant (one team controlled).&#39;)">ⓘ</span> = Group Environment Index
-    <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Tournament Carryover Index — does group environment predict knockout success?" onclick="showTip(event,&#39;Tournament Carryover Index — does group environment predict knockout success? The core research question.&#39;)">ⓘ</span> = Tournament Carryover Index
+    <strong style="color:#0f172a">SPI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Strategic Performance Index &mdash; did Matchday 3 preserve competitive ordering?" onclick="showTip(event,'Strategic Performance Index &mdash; did Matchday 3 preserve competitive ordering? Computed from group standings after data loads.')}">&#9432;</span> = Strategic Performance Index
+    <strong style="color:#0f172a">GEI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Group Environment Index &mdash; Constrained, Open, Inverted, or Dominant" onclick="showTip(event,'Group Environment Index &mdash; what type of competitive environment each group created. Constrained (flat, low-scoring), Open (balanced), Inverted (SPI broke), Dominant (one team controlled).')">&#9432;</span> = Group Environment Index
+    <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Tournament Carryover Index &mdash; does group environment predict knockout success?" onclick="showTip(event,'Tournament Carryover Index &mdash; does group environment predict knockout success? The core research question.')">&#9432;</span> = Tournament Carryover Index
   </div>
 
-  <div style="margin-top:1rem"><span class="badge">LIVE — TCI Research in Progress</span></div>
+  <div style="margin-top:1rem"><span class="badge">LIVE &mdash; TCI Research in Progress</span></div>
 
   <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b">
-  <strong>⚠️ Database Connection Issue:</strong> Supabase cannot read tournament data.<br/>
+  <strong>⚠️ Database Connection Issue:</strong> Supabase cannot read tournament data.<br>
   <span style="font-size:.75rem">Common fixes: (1) Check RLS policies allow anonymous SELECT, (2) Verify Supabase URL/key in code, (3) Confirm tables have data.</span>
 </div>
 <div id="data-loading" style="display:none;background:#eff6ff;border:1px solid #93c5fd;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#1e3a5f">
@@ -220,27 +221,27 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <strong>⚠️ Data Load Failed:</strong> Check browser console (F12) for error details.
 </div>
   <div id="db-error" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:.8rem;margin-top:.5rem;font-size:.85rem;color:#92400e">
-    <strong>⚠ Database Empty:</strong> The <code>public.teams</code> table has no data.<br/><br/>
-    <strong>To fix:</strong> Run the seed SQL in your Supabase dashboard:<br/>
-    1. Go to your <a href="https://supabase.com/dashboard/project/cckhswhugilbmiarwbvt/editor" target="_blank" style="color:#92400e;text-decoration:underline;font-weight:700">Supabase SQL Editor</a><br/>
-    2. Paste the seed SQL (see <code>supabase-seed-teams.sql</code> in your repo)<br/>
-    3. Click Run — then refresh this page
+    <strong>&#9888; Database Empty:</strong> The <code>public.teams</code> table has no data.<br><br>
+    <strong>To fix:</strong> Run the seed SQL in your Supabase dashboard:<br>
+    1. Go to your <a href="https://supabase.com/dashboard/project/cckhswhugilbmiarwbvt/editor" target="_blank" style="color:#92400e;text-decoration:underline;font-weight:700">Supabase SQL Editor</a><br>
+    2. Paste the seed SQL (see <code>supabase-seed-teams.sql</code> in your repo)<br>
+    3. Click Run &mdash; then refresh this page
   </div>
-  <div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>✅ Database Connected:</strong> <span id="db-team-count"></span> teams loaded from Supabase. Admin edits will persist.</div>
+  <div id="db-status" style="display:none;background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#166534"><strong>&#9989; Database Connected:</strong> <span id="db-team-count"></span> teams loaded from Supabase. Admin edits will persist.</div>
 
   <div id="auth-bar" class="auth-box" style="margin-top:1rem">
     <div id="auth-guest"><strong>Free Access:</strong> Create an account to download datasets and get updates.
       <div style="margin-top:.5rem"><button id="btn-signup" onclick="openAuthSignup()">Create Free Account</button><button id="btn-login" class="secondary" onclick="openAuthSignin()">Sign In</button></div>
     </div>
     <div id="auth-user" style="display:none"><strong id="user-email"></strong>
-      <div style="margin-top:.3rem"><button onclick="doDownload()">💾 Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
+      <div style="margin-top:.3rem"><button onclick="doDownload()">&#128190; Download JSON</button><button class="secondary" onclick="doLogout()">Sign Out</button></div>
     </div>
   </div>
 
   <!-- Language Toggle -->
   <div style="display:flex;gap:.3rem;justify-content:flex-end;margin-top:.5rem">
-    <button id="lang-toggle-en" onclick="setLang(&#39;en&#39;)" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:1">EN</button>
-    <button id="lang-toggle-es" onclick="setLang(&#39;es&#39;)" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:.4">ES</button>
+    <button id="lang-toggle-en" onclick="setLang('en')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:1">EN</button>
+    <button id="lang-toggle-es" onclick="setLang('es')" style="padding:.2rem .5rem;font-size:.75rem;font-weight:700;background:transparent;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;color:#0f172a;opacity:.4">ES</button>
   </div>
 </header>
 <section id="prize-truth-panel" style="background:#f8fafc;border:2px solid #d4a843;border-radius:12px;padding:1.5rem;margin:1.5rem 0">
@@ -260,12 +261,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <table id="prize-ladder-table" style="font-size:.85rem">
       <thead>
         <tr>
-          <th onclick="sortPrizeLadder(0)" style="cursor:pointer">Stage ↕</th>
-          <th onclick="sortPrizeLadder(1)" style="cursor:pointer">Position ↕</th>
-          <th onclick="sortPrizeLadder(2)" style="cursor:pointer">Prize (USD) ↕</th>
-          <th onclick="sortPrizeLadder(3)" style="cursor:pointer;background:#0f172a;color:#d4a843">Stage Delta ↕</th>
-          <th onclick="sortPrizeLadder(4)" style="cursor:pointer">Teams ↕</th>
-          <th onclick="sortPrizeLadder(5)" style="cursor:pointer">Cumulative Delta ↕</th>
+          <th onclick="sortPrizeLadder(0)" style="cursor:pointer">Stage &#8597;</th>
+          <th onclick="sortPrizeLadder(1)" style="cursor:pointer">Position &#8597;</th>
+          <th onclick="sortPrizeLadder(2)" style="cursor:pointer">Prize (USD) &#8597;</th>
+          <th onclick="sortPrizeLadder(3)" style="cursor:pointer;background:#0f172a;color:#d4a843">Stage Delta &#8597;</th>
+          <th onclick="sortPrizeLadder(4)" style="cursor:pointer">Teams &#8597;</th>
+          <th onclick="sortPrizeLadder(5)" style="cursor:pointer">Cumulative Delta &#8597;</th>
         </tr>
       </thead>
       <tbody id="prize-ladder-body">
@@ -278,7 +279,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   </p>
 
   <!-- Prize Delta Graph -->
-  <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">📈 Prize Delta by Stage — Visual</h3>
+  <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128200; Prize Delta by Stage — Visual</h3>
   <p style="font-size:.85rem;color:#64748b;margin-bottom:.5rem">How much each stage adds to the prize pool. The bars show the <strong>irreversible financial commitment</strong> made at each elimination round.</p>
   <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin-top:.5rem">
     <canvas id="prize-delta-canvas" width="900" height="400" style="width:100%;height:auto;display:block"></canvas>
@@ -291,45 +292,69 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <li><a href="#summary" data-i18n="tournamentSummary">Tournament Summary</a></li>
     <li><a href="#knockout" data-i18n="knockoutTracking">Knockout Tracking</a></li>
     <li><a href="#results" data-i18n="knockoutResults">Knockout Results</a></li>
-    <li><a href="#kpi-report">🔒 TCI KPI Report</a></li>
-    <li><a href="#group-metric">🔒 Knockout Group Metric</a></li>
-    <li><a href="#goal-tracker">🔒 Goal Progression Tracker</a></li>
-    <li><a href="#continent-survival">🔒 Continental Survival Tracker</a></li>
-    <li><a href="#continent-yield">🔒 Continental Financial Yield</a></li>
-    <li><a href="#fsi-report">🔒 Tournament Value Redistribution</a></li>
-    <li><a href="#epi-report">🔒 Environment Preservation Index (EPI)</a></li>
+    <li><a href="#kpi-report">&#128274; TCI KPI Report</a></li>
+    <li><a href="#group-metric">&#128274; Knockout Group Metric</a></li>
+    <li><a href="#goal-tracker">&#128274; Goal Progression Tracker</a></li>
+    <li><a href="#continent-survival">&#128274; Continental Survival Tracker</a></li>
+    <li><a href="#continent-yield">&#128274; Continental Financial Yield</a></li>
+    <li><a href="#fsi-report">&#128274; Tournament Value Redistribution</a></li>
+    <li><a href="#epi-report">&#128274; Environment Preservation Index (EPI)</a></li>
     <li><a href="#profiles" data-i18n="teamProfiles">Team Profiles (Sortable)</a></li>
     <li><a href="#framework" data-i18n="methodology">The Framework</a></li>
     <li><a href="#download" data-i18n="downloadDataset">Download Dataset</a></li>
   </ul>
 </section>
 
-<hr/>
+<hr>
 
 <div class="update-note" style="background:#eff6ff;border-color:#93c5fd">
-  <strong data-i18n="lastUpdated" style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-02</span> — <span id="last-round">Stage 1 Partial — Round of 32 through 2026-07-02</span> <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span><br/>
-  <strong data-i18n="nextUpdate" style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br/>
+  <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap">
+    <strong style="color:#0f172a">Last Updated:</strong> <span id="last-date">2026-07-05</span>
+    <span id="last-timestamp" style="color:#94a3b8;font-size:.8rem"></span>
+    <span style="background:#16a34a;color:#fff;padding:.25rem .6rem;border-radius:4px;font-size:.75rem;font-weight:700;margin-left:.5rem">Stage 3 Active — Round of 16</span>
+  </div>
+
+  <!-- Stage Progress Timeline -->
+  <div style="margin:.5rem 0;display:flex;gap:.3rem;flex-wrap:wrap;font-size:.75rem">
+    <span style="background:#dcfce7;color:#166534;padding:.25rem .6rem;border-radius:4px;font-weight:700">&#9989; Group Stage</span>
+    <span style="color:#94a3b8">&#8594;</span>
+    <span style="background:#dcfce7;color:#166534;padding:.25rem .6rem;border-radius:4px;font-weight:700">&#9989; R32 (16/16)</span>
+    <span style="color:#94a3b8">&#8594;</span>
+    <span style="background:#fef3c7;color:#92400e;padding:.25rem .6rem;border-radius:4px;font-weight:700;border:2px solid #f59e0b">&#127941; R16 (2/8)</span>
+    <span style="color:#94a3b8">&#8594;</span>
+    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Quarterfinals</span>
+    <span style="color:#94a3b8">&#8594;</span>
+    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Semifinals</span>
+    <span style="color:#94a3b8">&#8594;</span>
+    <span style="background:#f1f5f9;color:#64748b;padding:.25rem .6rem;border-radius:4px">&#9208; Final</span>
+  </div>
+
+  <div style="margin-top:.3rem;font-size:.85rem;color:#64748b">
+    <strong style="color:#0f172a">Status:</strong> R32 complete &#10003; | R16 in progress (2 of 8 matches) | 18 of 20 total matches completed
+  </div>
+
+  <strong style="color:#0f172a">Next:</strong> <span data-i18n="afterEachRound">After each knockout round</span><br>
   <strong style="color:#0f172a">Coverage:</strong> <span id="coverage-stats">Loading from database...</span>
 </div>
 
 <section id="summary">
 <details class="accordion-section">
-<summary><h2 data-i18n="groupStageResults">📊 Group Stage Results</h2></summary>
+<summary><h2 data-i18n="groupStageResults">&#128202; Group Stage Results</h2></summary>
 
 <div class="cards-grid">
   <div class="card">
     <div class="card-title">SPI Preservation</div>
-    <div class="card-value">—</div>
+    <div class="card-value">&mdash;</div>
     <div class="card-label">Loading SPI from group standings...</div>
     <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
     <details class="toggle-section" style="margin-top:.8rem">
       <summary>View fixtures</summary>
-      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Matchday 3 — SPI Breakdown</h3>
+      <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Matchday 3 &mdash; SPI Breakdown</h3>
       <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
         <table id="spi-table">
-          <thead><tr><th onclick="sortSPI(0)">Group ↕</th><th onclick="sortSPI(1)">Fixture ↕</th><th onclick="sortSPI(2)">Expected ↕</th><th onclick="sortSPI(3)">Result ↕</th><th onclick="sortSPI(4)">SPI ↕</th></tr></thead>
+          <thead><tr><th onclick="sortSPI(0)">Group &#8597;</th><th onclick="sortSPI(1)">Fixture &#8597;</th><th onclick="sortSPI(2)">Expected &#8597;</th><th onclick="sortSPI(3)">Result &#8597;</th><th onclick="sortSPI(4)">SPI &#8597;</th></tr></thead>
           <tbody id="spi-body">
-            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1rem">SPI requires matchday 3 fixture data (expected vs actual results).<br/>Add <code>wc2026_matchday3</code> table with fields: group, fixture, expected_team, actual_result, spi_held.</td></tr>
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1rem">SPI requires matchday 3 fixture data (expected vs actual results).<br>Add <code>wc2026_matchday3</code> table with fields: group, fixture, expected_team, actual_result, spi_held.</td></tr>
           </tbody>
         </table>
       </div>
@@ -343,16 +368,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <details class="toggle-section" style="margin-top:.8rem">
       <summary>View group breakdown</summary>
       <h3 style="margin:1rem 0;padding-bottom:.5rem;border-bottom:2px solid #d4a843;font-size:1rem">Group Data by GEI Type</h3>
-      <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team’s Goal Share %</strong> — the % of all group goals scored by the #1 team.</p>
+      <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem"><strong>GEI = Top Team&#8217;s Goal Share %</strong> &mdash; the % of all group goals scored by the #1 team.</p>
       <div class="table-container" style="border:none;box-shadow:none;margin:0;padding:0">
         <table id="gei-table">
           <thead><tr>
-            <th onclick="sortGEI(0)">Group ↕</th>
-            <th onclick="sortGEI(1)">GEI ↕</th>
-            <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team — the GEI metric" onclick="event.stopPropagation();showTip(event,&#39;% of all group goals scored by the #1 team — the GEI metric&#39;)">ⓘ</span> ↕</th>
-            <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,&#39;Goals For by the #1 team in group stage&#39;)">ⓘ</span> ↕</th>
-            <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals — all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,&#39;Total Group Goals — all goals by all teams in this group&#39;)">ⓘ</span> ↕</th>
-            <th onclick="sortGEI(5)">Rule ↕</th>
+            <th onclick="sortGEI(0)">Group &#8597;</th>
+            <th onclick="sortGEI(1)">GEI &#8597;</th>
+            <th onclick="sortGEI(2)">Top Share <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="% of all group goals scored by the #1 team &mdash; the GEI metric" onclick="event.stopPropagation();showTip(event,'% of all group goals scored by the #1 team &mdash; the GEI metric')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(3)">Top GF <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Goals For by the #1 team in group stage" onclick="event.stopPropagation();showTip(event,'Goals For by the #1 team in group stage')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(4)">TGG <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Total Group Goals &mdash; all goals by all teams in this group" onclick="event.stopPropagation();showTip(event,'Total Group Goals &mdash; all goals by all teams in this group')">&#9432;</span> &#8597;</th>
+            <th onclick="sortGEI(5)">Rule &#8597;</th>
           </tr></thead>
           <tbody id="gei-body">
             <!-- Populated by loadGroupsFromDB() -->
@@ -371,17 +396,17 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT TRACKING ==================== -->
 <section id="knockout">
   <details>
-    <summary><h2 data-i18n="knockoutTracking">👥 Knockout Tracking — All 48 Teams</h2></summary>
+    <summary><h2 data-i18n="knockoutTracking">&#128101; Knockout Tracking — All 48 Teams</h2></summary>
 
     <div class="content-box" style="overflow-x:auto">
-      <p>Track every team from group seed through Round of 32 → Round of 16 → Quarter-Finals → Semi-Finals → Final. <strong>Admin edits update live.</strong></p>
+      <p>Track every team from group seed through Round of 32 &rarr; Round of 16 &rarr; Quarter-Finals &rarr; Semi-Finals &rarr; Final. <strong>Admin edits update live.</strong></p>
       <table class="data-table" id="ko-table">
         <thead><tr>
-          <th onclick="sortKO(0)" style="cursor:pointer">Grp ↕</th>
-          <th onclick="sortKO(1)" style="cursor:pointer">Team ↕</th>
-          <th onclick="sortKO(2)" style="cursor:pointer">Seed ↕</th>
-          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position ↕</th>
-          <th onclick="sortKO(4)" style="cursor:pointer">Path ↕</th>
+          <th onclick="sortKO(0)" style="cursor:pointer">Grp &#8597;</th>
+          <th onclick="sortKO(1)" style="cursor:pointer">Team &#8597;</th>
+          <th onclick="sortKO(2)" style="cursor:pointer">Seed &#8597;</th>
+          <th onclick="sortKO(3)" style="cursor:pointer">Knockout Position &#8597;</th>
+          <th onclick="sortKO(4)" style="cursor:pointer">Path &#8597;</th>
         </tr></thead>
         <tbody id="ko-body">
             <!-- Populated by renderKOTableFromTeams() -->
@@ -395,28 +420,28 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <!-- ==================== KNOCKOUT RESULTS ==================== -->
 <section id="results">
-  <details open="">
-    <summary><h2 data-i18n="knockoutResults">🏆 Knockout Results — Match by Match</h2></summary>
+  <details open>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2></summary>
     <div class="content-box">
       <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
       <div class="table-container">
         <table id="results-table">
           <thead><tr>
-            <th onclick="sortResults(0)" style="cursor:pointer">Match ↕</th>
-            <th onclick="sortResults(1)" style="cursor:pointer">Stage ↕</th>
-            <th onclick="sortResults(2)" style="cursor:pointer">Date ↕</th>
-            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 ↕</th>
-            <th onclick="sortResults(4)" style="cursor:pointer">Score ↕</th>
-            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 ↕</th>
-            <th onclick="sortResults(6)" style="cursor:pointer">Winner ↕</th>
-            <th onclick="sortResults(7)" style="cursor:pointer">Notes ↕</th>
+            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
+            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
+            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
+            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
+            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
+            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
+            <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
+            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
           </tr></thead>
           <tbody id="results-body">
             <!-- Populated by loadMatchesFromDB() -->
           </tbody>
         </table>
       </div>
-      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">ⓘ Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
+      <p data-i18n-html="matchesPending" style="color:#94a3b8;font-size:.8rem;margin-top:.5rem">&#9432; Matches with no score are upcoming fixtures. SPI and preservation_delta shown in downloadable dataset.</p>
     </div>
   </details>
 </section>
@@ -426,10 +451,10 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KPI REPORT (GATED) ==================== -->
 <section id="kpi-report">
   <details>
-    <summary><h2 data-i18n="tciKpiReport">📊 TCI KPI Report — By Environment Category</h2></summary>
+    <summary><h2 data-i18n="tciKpiReport">&#128202; TCI KPI Report — By Environment Category</h2></summary>
     <div class="content-box">
       <div id="kpi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p data-i18n-html="kpiGuest" style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>KPI Report is available for registered users only.</strong></p>
+        <p data-i18n-html="kpiGuest" style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>KPI Report is available for registered users only.</strong></p>
         <p data-i18n-html="kpiGuestDesc" style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to unlock the full TCI analytics dashboard with advancement rates, GEI impact scores, and environment-specific KPIs.</p>
         <button onclick="openAuthSignin()" data-i18n="kpiSignIn" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View KPIs</button>
       </div>
@@ -441,16 +466,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="kpi-table">
             <thead><tr>
-              <th onclick="sortKPI(0)" style="cursor:pointer">Environment ↕</th>
-              <th onclick="sortKPI(1)" style="cursor:pointer">Groups ↕</th>
-              <th onclick="sortKPI(2)" style="cursor:pointer">Teams ↕</th>
-              <th onclick="sortKPI(3)" style="cursor:pointer">Played ↕</th>
-              <th onclick="sortKPI(4)" style="cursor:pointer">Advanced ↕</th>
-              <th onclick="sortKPI(5)" style="cursor:pointer">Eliminated ↕</th>
-              <th onclick="sortKPI(6)" style="cursor:pointer">Advance % ↕</th>
-              <th onclick="sortKPI(7)" style="cursor:pointer">Avg GEI ↕</th>
-              <th onclick="sortKPI(8)" style="cursor:pointer">Avg Goals ↕</th>
-              <th onclick="sortKPI(9)" style="cursor:pointer">TCI Verdict ↕</th>
+              <th onclick="sortKPI(0)" style="cursor:pointer">Environment &#8597;</th>
+              <th onclick="sortKPI(1)" style="cursor:pointer">Groups &#8597;</th>
+              <th onclick="sortKPI(2)" style="cursor:pointer">Teams &#8597;</th>
+              <th onclick="sortKPI(3)" style="cursor:pointer">Played &#8597;</th>
+              <th onclick="sortKPI(4)" style="cursor:pointer">Advanced &#8597;</th>
+              <th onclick="sortKPI(5)" style="cursor:pointer">Eliminated &#8597;</th>
+              <th onclick="sortKPI(6)" style="cursor:pointer">Advance % &#8597;</th>
+              <th onclick="sortKPI(7)" style="cursor:pointer">Avg GEI &#8597;</th>
+              <th onclick="sortKPI(8)" style="cursor:pointer">Avg Goals &#8597;</th>
+              <th onclick="sortKPI(9)" style="cursor:pointer">TCI Verdict &#8597;</th>
             </tr></thead>
             <tbody id="kpi-body"></tbody>
           </table>
@@ -466,11 +491,11 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT GROUP METRIC (GATED) ==================== -->
 <section id="group-metric">
   <details>
-    <summary><h2 data-i18n="knockoutGroupMetric">🏆 Knockout Group Metric — Day by Day</h2></summary>
+    <summary><h2 data-i18n="knockoutGroupMetric">&#127942; Knockout Group Metric — Day by Day</h2></summary>
     <div class="content-box">
       <div id="metric-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>Group Metric is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track each group&#39;s knockout performance as the tournament progresses — wins, eliminations, advancement rates, and day-by-day progression.</p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Group Metric is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track each group's knockout performance as the tournament progresses — wins, eliminations, advancement rates, and day-by-day progression.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Group Metrics</button>
       </div>
       <div id="metric-user" style="display:block">
@@ -485,23 +510,23 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="metric-table">
             <thead><tr>
-              <th onclick="sortMetric(0)">Grp ↕</th>
-              <th onclick="sortMetric(1)">Env Type ↕</th>
-              <th onclick="sortMetric(2)">GEI ↕</th>
-              <th onclick="sortMetric(3)">Teams Qualified ↕</th>
-              <th onclick="sortMetric(4)">Still Alive ↕</th>
-              <th onclick="sortMetric(5)">Eliminated ↕</th>
-              <th onclick="sortMetric(6)">Wins ↕</th>
-              <th onclick="sortMetric(7)">Losses ↕</th>              <th onclick="sortMetric(8)">Survival % ↕</th>
-              <th onclick="sortMetric(9)">Latest Round ↕</th>
-              <th onclick="sortMetric(10)">TCI Trend ↕</th>
+              <th onclick="sortMetric(0)">Grp &#8597;</th>
+              <th onclick="sortMetric(1)">Env Type &#8597;</th>
+              <th onclick="sortMetric(2)">GEI &#8597;</th>
+              <th onclick="sortMetric(3)">Teams Qualified &#8597;</th>
+              <th onclick="sortMetric(4)">Still Alive &#8597;</th>
+              <th onclick="sortMetric(5)">Eliminated &#8597;</th>
+              <th onclick="sortMetric(6)">Wins &#8597;</th>
+              <th onclick="sortMetric(7)">Losses &#8597;</th>              <th onclick="sortMetric(8)">Survival % &#8597;</th>
+              <th onclick="sortMetric(9)">Latest Round &#8597;</th>
+              <th onclick="sortMetric(10)">TCI Trend &#8597;</th>
             </tr></thead>
             <tbody id="metric-body"></tbody>
           </table>
         </div>
 
         <!-- Day-by-Day Timeline -->
-        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">📅 Day-by-Day Progression</h3>
+        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128197; Day-by-Day Progression</h3>
         <div id="metric-timeline" style="margin-top:.5rem">
           <!-- Timeline injected by JS -->
         </div>
@@ -517,18 +542,18 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== GOAL PROGRESSION TRACKER (GATED) ==================== -->
 <section id="goal-tracker">
   <details>
-    <summary><h2 data-i18n="goalTracker">⚽ Goal Progression Tracker — Group Stage Baseline → Knockout</h2></summary>
+    <summary><h2 data-i18n="goalTracker">&#9917; Goal Progression Tracker — Group Stage Baseline → Knockout</h2></summary>
     <div class="content-box">
       <div id="goal-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>Goal Progression Tracker is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track every team&#39;s goal output from group-stage baseline through each knockout round. See how groups perform offensively as the tournament advances.</p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Goal Progression Tracker is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track every team's goal output from group-stage baseline through each knockout round. See how groups perform offensively as the tournament advances.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Goal Tracker</button>
       </div>
       <div id="goal-user" style="display:block">
-        <p><strong>How does offensive production change through the tournament?</strong> Each team&#39;s group-stage goal total is their baseline. Knockout rounds add game-by-game — R32, R16, Quarterfinal, Semifinal, Final. This is the offensive decay model: do teams score less as rounds progress?</p>
+        <p><strong>How does offensive production change through the tournament?</strong> Each team's group-stage goal total is their baseline. Knockout rounds add game-by-game — R32, R16, Quarterfinal, Semifinal, Final. This is the offensive decay model: do teams score less as rounds progress?</p>
 
         <!-- Group Goal Summary -->
-        <h3 style="margin-top:1rem;font-size:1rem;color:#0f172a">📈 Group Goal Trajectory</h3>
+        <h3 style="margin-top:1rem;font-size:1rem;color:#0f172a">&#128200; Group Goal Trajectory</h3>
         <div class="table-container" style="margin-top:.5rem">
           <div id="group-popup-detail" style="display:none;position:absolute;background:#0f172a;color:#fff;padding:1rem;border-radius:12px;z-index:1000;box-shadow:0 10px 40px rgba(0,0,0,.4);min-width:280px;max-width:350px;font-size:.85rem;line-height:1.6">
   <div id="group-popup-header" style="font-size:1rem;font-weight:800;color:#d4a843;margin-bottom:.5rem;border-bottom:1px solid #334155;padding-bottom:.3rem"></div>
@@ -537,39 +562,39 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 </div>
 <table id="group-goal-table">
             <thead><tr>
-              <th onclick="sortGroupGoal(0)" style="cursor:pointer">Group ↕</th>
-              <th onclick="sortGroupGoal(1)" style="cursor:pointer">Env ↕</th>
-              <th onclick="sortGroupGoal(2)" style="cursor:pointer">Group Stage Goals ↕</th>
-              <th onclick="sortGroupGoal(3)" style="cursor:pointer">R32 Goals ↕</th>
-              <th onclick="sortGroupGoal(4)" style="cursor:pointer">R16 Goals ↕</th>
-              <th onclick="sortGroupGoal(5)" style="cursor:pointer">QF Goals ↕</th>
-              <th onclick="sortGroupGoal(6)" style="cursor:pointer">SF Goals ↕</th>
-              <th onclick="sortGroupGoal(7)" style="cursor:pointer">Final Goals ↕</th>
-              <th onclick="sortGroupGoal(8)" style="cursor:pointer">Knockout Total ↕</th>
-              <th onclick="sortGroupGoal(9)" style="cursor:pointer">Tournament Total ↕</th>
-              <th onclick="sortGroupGoal(10)" style="cursor:pointer">Goal Drop % ↕</th>
+              <th onclick="sortGroupGoal(0)" style="cursor:pointer">Group &#8597;</th>
+              <th onclick="sortGroupGoal(1)" style="cursor:pointer">Env &#8597;</th>
+              <th onclick="sortGroupGoal(2)" style="cursor:pointer">Group Stage Goals &#8597;</th>
+              <th onclick="sortGroupGoal(3)" style="cursor:pointer">R32 Goals &#8597;</th>
+              <th onclick="sortGroupGoal(4)" style="cursor:pointer">R16 Goals &#8597;</th>
+              <th onclick="sortGroupGoal(5)" style="cursor:pointer">QF Goals &#8597;</th>
+              <th onclick="sortGroupGoal(6)" style="cursor:pointer">SF Goals &#8597;</th>
+              <th onclick="sortGroupGoal(7)" style="cursor:pointer">Final Goals &#8597;</th>
+              <th onclick="sortGroupGoal(8)" style="cursor:pointer">Knockout Total &#8597;</th>
+              <th onclick="sortGroupGoal(9)" style="cursor:pointer">Tournament Total &#8597;</th>
+              <th onclick="sortGroupGoal(10)" style="cursor:pointer">Goal Drop % &#8597;</th>
             </tr></thead>
             <tbody id="group-goal-body"></tbody>
           </table>
         </div>
 
         <!-- Team-by-Team Goal Matrix -->
-        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">🔍 Team-by-Team Goal Breakdown</h3>
+        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128269; Team-by-Team Goal Breakdown</h3>
         <div class="table-container" style="margin-top:.5rem">
           <table id="team-goal-table">
             <thead><tr>
-              <th onclick="sortTeamGoal(0)" style="cursor:pointer">Team ↕</th>
-              <th onclick="sortTeamGoal(1)" style="cursor:pointer">Grp ↕</th>
-              <th onclick="sortTeamGoal(2)" style="cursor:pointer">Seed ↕</th>
-              <th onclick="sortTeamGoal(3)" style="cursor:pointer">Group Stage (Baseline) ↕</th>
-              <th onclick="sortTeamGoal(4)" style="cursor:pointer">R32 ↕</th>
-              <th onclick="sortTeamGoal(5)" style="cursor:pointer">R16 ↕</th>
-              <th onclick="sortTeamGoal(6)" style="cursor:pointer">QF ↕</th>
-              <th onclick="sortTeamGoal(7)" style="cursor:pointer">SF ↕</th>
-              <th onclick="sortTeamGoal(8)" style="cursor:pointer">Final ↕</th>
-              <th onclick="sortTeamGoal(9)" style="cursor:pointer">Knockout Total ↕</th>
-              <th onclick="sortTeamGoal(10)" style="cursor:pointer">Tournament Total ↕</th>
-              <th onclick="sortTeamGoal(11)" style="cursor:pointer">Status ↕</th>
+              <th onclick="sortTeamGoal(0)" style="cursor:pointer">Team &#8597;</th>
+              <th onclick="sortTeamGoal(1)" style="cursor:pointer">Grp &#8597;</th>
+              <th onclick="sortTeamGoal(2)" style="cursor:pointer">Seed &#8597;</th>
+              <th onclick="sortTeamGoal(3)" style="cursor:pointer">Group Stage (Baseline) &#8597;</th>
+              <th onclick="sortTeamGoal(4)" style="cursor:pointer">R32 &#8597;</th>
+              <th onclick="sortTeamGoal(5)" style="cursor:pointer">R16 &#8597;</th>
+              <th onclick="sortTeamGoal(6)" style="cursor:pointer">QF &#8597;</th>
+              <th onclick="sortTeamGoal(7)" style="cursor:pointer">SF &#8597;</th>
+              <th onclick="sortTeamGoal(8)" style="cursor:pointer">Final &#8597;</th>
+              <th onclick="sortTeamGoal(9)" style="cursor:pointer">Knockout Total &#8597;</th>
+              <th onclick="sortTeamGoal(10)" style="cursor:pointer">Tournament Total &#8597;</th>
+              <th onclick="sortTeamGoal(11)" style="cursor:pointer">Status &#8597;</th>
             </tr></thead>
             <tbody id="team-goal-body"></tbody>
           </table>
@@ -577,7 +602,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
         <!-- Goal Drop Analysis -->
         <div id="goal-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem">
-          <h4 style="font-size:.9rem;color:#0f172a;margin-bottom:.5rem">📊 Goal Output Analysis</h4>
+          <h4 style="font-size:.9rem;color:#0f172a;margin-bottom:.5rem">&#128202; Goal Output Analysis</h4>
           <div id="goal-analysis-content" style="font-size:.85rem;color:#64748b;line-height:1.6"></div>
         </div>
 
@@ -592,7 +617,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TEAM FINANCIAL DELTA ==================== -->
 <section id="team-financial-delta">
   <details>
-    <summary><h2>💰 Team Financial Delta — Individual Team Prize Tracker</h2></summary>
+    <summary><h2>&#128176; Team Financial Delta — Individual Team Prize Tracker</h2></summary>
     <div class="content-box">
       <p><strong>How much additional FIFA prize money has each team earned?</strong> Tracks individual teams from the $9M group-stage baseline through each knockout round. Shows current stage, current prize, stage delta, cumulative delta, alive status, and next matchup. Nothing by continent here — this is purely individual.</p>
 
@@ -603,14 +628,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       <div class="table-container" style="margin-top:1rem">
         <table id="financial-delta-table">
           <thead><tr>
-            <th onclick="sortFinancialDelta(0)" style="cursor:pointer">Team ↕</th>
-            <th onclick="sortFinancialDelta(1)" style="cursor:pointer">Grp ↕</th>
-            <th onclick="sortFinancialDelta(2)" style="cursor:pointer">Current Stage ↕</th>
-            <th onclick="sortFinancialDelta(3)" style="cursor:pointer">Current Prize ↕</th>
-            <th onclick="sortFinancialDelta(4)" style="cursor:pointer">Stage Delta ↕</th>
-            <th onclick="sortFinancialDelta(5)" style="cursor:pointer">Cumulative Delta ↕</th>
-            <th onclick="sortFinancialDelta(6)" style="cursor:pointer">Still Alive? ↕</th>
-            <th onclick="sortFinancialDelta(7)" style="cursor:pointer">Next Match ↕</th>
+            <th onclick="sortFinancialDelta(0)" style="cursor:pointer">Team &#8597;</th>
+            <th onclick="sortFinancialDelta(1)" style="cursor:pointer">Grp &#8597;</th>
+            <th onclick="sortFinancialDelta(2)" style="cursor:pointer">Current Stage &#8597;</th>
+            <th onclick="sortFinancialDelta(3)" style="cursor:pointer">Current Prize &#8597;</th>
+            <th onclick="sortFinancialDelta(4)" style="cursor:pointer">Stage Delta &#8597;</th>
+            <th onclick="sortFinancialDelta(5)" style="cursor:pointer">Cumulative Delta &#8597;</th>
+            <th onclick="sortFinancialDelta(6)" style="cursor:pointer">Still Alive? &#8597;</th>
+            <th onclick="sortFinancialDelta(7)" style="cursor:pointer">Next Match &#8597;</th>
           </tr></thead>
           <tbody id="financial-delta-body"></tbody>
         </table>
@@ -629,10 +654,10 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== CONTINENT FINANCIAL KPI (GATED) ==================== -->
 <section id="continent-survival">
   <details>
-    <summary><h2 data-i18n="continentalSurvival">🌎 Continental Survival Tracker</h2></summary>
+    <summary><h2 data-i18n="continentalSurvival">&#127758; Continental Survival Tracker</h2></summary>
     <div class="content-box">
       <div id="cont-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>Continental Survival Tracker is available for registered users only.</strong></p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Survival Tracker is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track which continents are surviving the knockout tournament best — teams alive, eliminated, and advancing to Quarterfinals, Semifinals, and beyond.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Survival Tracker</button>
       </div>
@@ -646,17 +671,17 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="cont-table">
             <thead><tr>
-              <th onclick="sortCont(0)">Continent ↕</th>
-              <th onclick="sortCont(1)">Original Teams ↕</th>
-              <th onclick="sortCont(2)">Alive ↕</th>
-              <th onclick="sortCont(3)">Eliminated ↕</th>
-              <th onclick="sortCont(4)">Pending ↕</th>
-              <th onclick="sortCont(5)">QF+ Reached ↕</th>
-              <th onclick="sortCont(6)">SF+ Reached ↕</th>
-              <th onclick="sortCont(7)">Finalist ↕</th>
-              <th onclick="sortCont(8)">Champion ↕</th>
-              <th onclick="sortCont(9)">Survival % ↕</th>
-              <th onclick="sortCont(10)">Elimination % ↕</th>
+              <th onclick="sortCont(0)">Continent &#8597;</th>
+              <th onclick="sortCont(1)">Original Teams &#8597;</th>
+              <th onclick="sortCont(2)">Alive &#8597;</th>
+              <th onclick="sortCont(3)">Eliminated &#8597;</th>
+              <th onclick="sortCont(4)">Pending &#8597;</th>
+              <th onclick="sortCont(5)">QF+ Reached &#8597;</th>
+              <th onclick="sortCont(6)">SF+ Reached &#8597;</th>
+              <th onclick="sortCont(7)">Finalist &#8597;</th>
+              <th onclick="sortCont(8)">Champion &#8597;</th>
+              <th onclick="sortCont(9)">Survival % &#8597;</th>
+              <th onclick="sortCont(10)">Elimination % &#8597;</th>
             </tr></thead>
             <tbody id="cont-body"></tbody>
           </table>
@@ -673,18 +698,18 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <div class="phase-divider"></div>
 
-<!-- ==================== CONTINENTAL ADVANCEMENT &amp; FINANCIAL YIELD (GATED) ==================== -->
+<!-- ==================== CONTINENTAL ADVANCEMENT & FINANCIAL YIELD (GATED) ==================== -->
 <section id="continent-yield">
   <details>
-    <summary><h2>💰 Continental Financial Yield</h2></summary>
+    <summary><h2>&#128176; Continental Financial Yield</h2></summary>
     <div class="content-box">
       <div id="cay-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>Continental Financial Yield is available for registered users only.</strong></p>
-        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to see which continent is capturing the tournament&#39;s financial value — total prize earned, yield per team, CER, FSR, and financial share of the tournament.</p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Continental Financial Yield is available for registered users only.</strong></p>
+        <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to see which continent is capturing the tournament's financial value — total prize earned, yield per team, CER, FSR, and financial share of the tournament.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View Financial Yield</button>
       </div>
       <div id="cay-user" style="display:block">
-        <p><strong>Which continent is capturing the tournament&#39;s financial value?</strong> Primary economic model tracking prize accumulation, yield per original team, yield per surviving team, financial share, CER, and FSR — the &#34;Dog Bone&#34; model. All values computed from live match data and FIFA prize tiers.</p>
+        <p><strong>Which continent is capturing the tournament's financial value?</strong> Primary economic model tracking prize accumulation, yield per original team, yield per surviving team, financial share, CER, and FSR — the "Dog Bone" model. All values computed from live match data and FIFA prize tiers.</p>
 
         <!-- Summary Cards per Continent -->
         <div id="cay-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0"></div>
@@ -693,16 +718,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="cay-table">
             <thead><tr>
-              <th>Continent ↕</th>
-              <th>Original Teams ↕</th>
-              <th>Total Prize Earned ↕</th>
-              <th>Stage Delta Earned ↕</th>
-              <th>Avg Prize / Team ↕</th>
-              <th>Yield / Original Team ↕</th>
-              <th>Yield / Surviving Team ↕</th>
-              <th>Financial Share ↕</th>
-              <th>CER % ↕</th>
-              <th>FSR % ↕</th>
+              <th>Continent &#8597;</th>
+              <th>Original Teams &#8597;</th>
+              <th>Total Prize Earned &#8597;</th>
+              <th>Stage Delta Earned &#8597;</th>
+              <th>Avg Prize / Team &#8597;</th>
+              <th>Yield / Original Team &#8597;</th>
+              <th>Yield / Surviving Team &#8597;</th>
+              <th>Financial Share &#8597;</th>
+              <th>CER % &#8597;</th>
+              <th>FSR % &#8597;</th>
             </tr></thead>
             <tbody id="cay-body"></tbody>
           </table>
@@ -711,7 +736,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <!-- Analysis -->
         <div id="cay-analysis" style="margin-top:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.85rem;color:#64748b;line-height:1.6"></div>
 
-        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Total Prize = sum of all teams&#39; current prize by continent. Stage Delta = prize earned above $9M baseline. Avg Prize / Team = total prize ÷ original teams. Yield / Original Team = total prize ÷ original teams (full tournament view). Yield / Surviving Team = total prize ÷ teams still alive (forward-looking). Financial Share = continent&#39;s prize ÷ total tournament prize pool. CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. This is the primary economic model — the &#34;Dog Bone.&#34;</p>
+        <p style="font-size:.75rem;color:#94a3b8;margin-top:.5rem"><strong>Methodology:</strong> Total Prize = sum of all teams' current prize by continent. Stage Delta = prize earned above $9M baseline. Avg Prize / Team = total prize ÷ original teams. Yield / Original Team = total prize ÷ original teams (full tournament view). Yield / Surviving Team = total prize ÷ teams still alive (forward-looking). Financial Share = continent's prize ÷ total tournament prize pool. CER = current_total_prize / baseline_total_prize. FSR = remaining_possible_prize / max_possible_prize. This is the primary economic model — the "Dog Bone."</p>
       </div>
     </div>
   </details>
@@ -722,21 +747,21 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TOURNAMENT VALUE REDISTRIBUTION (GATED) ==================== -->
 <section id="fsi-report">
   <details>
-    <summary><h2 data-i18n="fsiReport">⚡ Tournament Value Redistribution — Economic Impact Dashboard</h2></summary>
+    <summary><h2 data-i18n="fsiReport">&#9889; Tournament Value Redistribution — Economic Impact Dashboard</h2></summary>
     <div class="content-box">
       <div id="fsi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>Economic Impact Dashboard is available for registered users only.</strong></p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>Economic Impact Dashboard is available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to view how each match result redistributes competitive and financial value across the tournament.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View</button>
       </div>
       <div id="fsi-user" style="display:block">
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin-bottom:1rem">
-          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>Did tournament value remain with higher-value teams or move elsewhere?</strong> Tracks preservation rate, redistribution rate, upsets, largest redistribution events, and continent flow. For every match: did the structurally &#34;favored&#34; team advance, or did value shift? This is the value-movement story.</p>
+          <p style="font-size:.85rem;color:#334155;line-height:1.6;margin:0"><strong>Did tournament value remain with higher-value teams or move elsewhere?</strong> Tracks preservation rate, redistribution rate, upsets, largest redistribution events, and continent flow. For every match: did the structurally "favored" team advance, or did value shift? This is the value-movement story.</p>
         </div>
 
         <!-- What the numbers mean -->
         <div style="background:#dbeafe;border-left:4px solid #3b82f6;padding:.75rem 1rem;margin-bottom:1rem;font-size:.8rem;color:#1e3a5f">
-          <strong>Projected Value Score (0–10):</strong> A composite score derived from group performance, environment type, advancement opportunity, and prize exposure. Higher = the team entered the match representing more accumulated tournament value. This is not a prediction — it describes each team&#39;s competitive-economic position.
+          <strong>Projected Value Score (0–10):</strong> A composite score derived from group performance, environment type, advancement opportunity, and prize exposure. Higher = the team entered the match representing more accumulated tournament value. This is not a prediction — it describes each team's competitive-economic position.
         </div>
 
         <!-- Summary Cards -->
@@ -746,16 +771,16 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="fsi-table">
             <thead><tr>
-              <th onclick="sortFSI(0)">Match ↕</th>
-              <th onclick="sortFSI(1)">Stage ↕</th>
-              <th onclick="sortFSI(2)">Team 1 (Score) ↕</th>
-              <th onclick="sortFSI(3)">Team 2 (Score) ↕</th>
-              <th onclick="sortFSI(4)">Result ↕</th>
-              <th onclick="sortFSI(5)">Prize Before ↕</th>
-              <th onclick="sortFSI(6)">Prize After ↕</th>
-              <th onclick="sortFSI(7)">Value Preserved? ↕</th>
-              <th onclick="sortFSI(8)">Score Gap ↕</th>
-              <th onclick="sortFSI(9)">Continent Impact ↕</th>
+              <th onclick="sortFSI(0)">Match &#8597;</th>
+              <th onclick="sortFSI(1)">Stage &#8597;</th>
+              <th onclick="sortFSI(2)">Team 1 (Score) &#8597;</th>
+              <th onclick="sortFSI(3)">Team 2 (Score) &#8597;</th>
+              <th onclick="sortFSI(4)">Result &#8597;</th>
+              <th onclick="sortFSI(5)">Prize Before &#8597;</th>
+              <th onclick="sortFSI(6)">Prize After &#8597;</th>
+              <th onclick="sortFSI(7)">Value Preserved? &#8597;</th>
+              <th onclick="sortFSI(8)">Score Gap &#8597;</th>
+              <th onclick="sortFSI(9)">Continent Impact &#8597;</th>
             </tr></thead>
             <tbody id="fsi-body"></tbody>
           </table>
@@ -775,10 +800,10 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== EPI SURVIVAL CURVES ==================== -->
 <section id="epi-report">
   <details>
-    <summary><h2>📈 Environment Preservation Index (EPI) — Survival Curves</h2></summary>
+    <summary><h2>&#128200; Environment Preservation Index (EPI) — Survival Curves</h2></summary>
     <div class="content-box">
       <div id="epi-guest" style="display:none;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:1.5rem;text-align:center">
-        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">🔒 <strong>EPI Survival Curves are available for registered users only.</strong></p>
+        <p style="color:#92400e;font-size:1rem;margin-bottom:1rem">&#128274; <strong>EPI Survival Curves are available for registered users only.</strong></p>
         <p style="color:#78716c;font-size:.85rem;margin-bottom:1rem">Sign in to track how competitive environments preserve or decay themselves as the tournament changes phase. Watch survival curves diverge in real time.</p>
         <button onclick="openAuthSignin()" style="padding:.5rem 1.5rem;background:#0f172a;color:#d4a843;border:none;border-radius:8px;font-weight:700;cursor:pointer">Sign In to View EPI</button>
       </div>
@@ -806,7 +831,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
         <!-- Survival Curve Canvas -->
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin:1rem 0">
-          <h3 style="font-size:1rem;color:#0f172a;margin:0 0 1rem;font-weight:700">📈 Environment Survival Curves</h3>
+          <h3 style="font-size:1rem;color:#0f172a;margin:0 0 1rem;font-weight:700">&#128200; Environment Survival Curves</h3>
           <canvas id="epi-canvas" width="1000" height="500" style="width:100%;height:auto;display:block;margin:0 auto"></canvas>
           <!-- Legend is drawn on canvas — no duplicate HTML legend needed -->
         </div>
@@ -815,32 +840,32 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
         <div class="table-container" style="margin-top:1rem">
           <table id="epi-table">
             <thead><tr>
-              <th onclick="sortEPI(0)">Environment ↕</th>
-              <th onclick="sortEPI(1)">Groups ↕</th>
-              <th onclick="sortEPI(2)">Qualified ↕</th>
-              <th onclick="sortEPI(3)">Alive ↕</th>
-              <th onclick="sortEPI(4)">EPI ↕</th>
-              <th onclick="sortEPI(5)">Group Goals ↕</th>
-              <th onclick="sortEPI(6)">KO Goals ↕</th>
-              <th onclick="sortEPI(7)">Offensive Preservation ↕</th>
-              <th onclick="sortEPI(8)">Trend ↕</th>
+              <th onclick="sortEPI(0)">Environment &#8597;</th>
+              <th onclick="sortEPI(1)">Groups &#8597;</th>
+              <th onclick="sortEPI(2)">Qualified &#8597;</th>
+              <th onclick="sortEPI(3)">Alive &#8597;</th>
+              <th onclick="sortEPI(4)">EPI &#8597;</th>
+              <th onclick="sortEPI(5)">Group Goals &#8597;</th>
+              <th onclick="sortEPI(6)">KO Goals &#8597;</th>
+              <th onclick="sortEPI(7)">Offensive Preservation &#8597;</th>
+              <th onclick="sortEPI(8)">Trend &#8597;</th>
             </tr></thead>
             <tbody id="epi-body"></tbody>
           </table>
         </div>
 
         <!-- Daily Snapshot Table -->
-        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">📅 Daily EPI Snapshots</h3>
+        <h3 style="margin-top:1.5rem;font-size:1rem;color:#0f172a">&#128197; Daily EPI Snapshots</h3>
         <div class="table-container" style="margin-top:.5rem">
           <table id="epi-daily-table">
             <thead><tr>
-              <th onclick="sortEPIDaily(0)" style="cursor:pointer">Day ↕</th>
-              <th onclick="sortEPIDaily(1)" style="cursor:pointer">Suppressed ↕</th>
-              <th onclick="sortEPIDaily(2)" style="cursor:pointer">Balanced ↕</th>
-              <th onclick="sortEPIDaily(3)" style="cursor:pointer">Open ↕</th>
-              <th onclick="sortEPIDaily(4)" style="cursor:pointer">Dominant ↕</th>
-              <th onclick="sortEPIDaily(5)" style="cursor:pointer">Inverted ↕</th>
-              <th onclick="sortEPIDaily(6)" style="cursor:pointer">Notes ↕</th>
+              <th onclick="sortEPIDaily(0)" style="cursor:pointer">Day &#8597;</th>
+              <th onclick="sortEPIDaily(1)" style="cursor:pointer">Suppressed &#8597;</th>
+              <th onclick="sortEPIDaily(2)" style="cursor:pointer">Balanced &#8597;</th>
+              <th onclick="sortEPIDaily(3)" style="cursor:pointer">Open &#8597;</th>
+              <th onclick="sortEPIDaily(4)" style="cursor:pointer">Dominant &#8597;</th>
+              <th onclick="sortEPIDaily(5)" style="cursor:pointer">Inverted &#8597;</th>
+              <th onclick="sortEPIDaily(6)" style="cursor:pointer">Notes &#8597;</th>
             </tr></thead>
             <tbody id="epi-daily-body"></tbody>
           </table>
@@ -859,20 +884,20 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TEAM PROFILES ==================== -->
 <section id="profiles">
   <details>
-    <summary><h2 data-i18n="teamProfiles">📈 Team Profiles (Sortable)</h2></summary>
+    <summary><h2 data-i18n="teamProfiles">&#128200; Team Profiles (Sortable)</h2></summary>
 
     <div class="content-box" style="overflow-x:auto">
-      <p>Compare every team — 48 total across 12 groups. Click any column header to sort by SPI rank, GEI environment type, TCI score, goals scored, and knockout progression.</p>
+      <p>Compare every team &mdash; 48 total across 12 groups. Click any column header to sort by SPI rank, GEI environment type, TCI score, goals scored, and knockout progression.</p>
       <table class="data-table" id="profile-table">
         <thead><tr>
-          <th onclick="sortProfiles(0)" style="cursor:pointer">Team ↕</th>
-          <th onclick="sortProfiles(1)" style="cursor:pointer">Grp ↕</th>
-          <th onclick="sortProfiles(2)" style="cursor:pointer">Seed ↕</th>
-          <th onclick="sortProfiles(3)" style="cursor:pointer">SPI Rank ↕</th>
-          <th onclick="sortProfiles(4)" style="cursor:pointer">GEI Type ↕</th>
-          <th onclick="sortProfiles(5)" style="cursor:pointer">GEI % ↕</th>
-          <th onclick="sortProfiles(6)" style="cursor:pointer">TCI ↕</th>
-          <th onclick="sortProfiles(7)" style="cursor:pointer">R16+ ↕</th>
+          <th onclick="sortProfiles(0)" style="cursor:pointer">Team &#8597;</th>
+          <th onclick="sortProfiles(1)" style="cursor:pointer">Grp &#8597;</th>
+          <th onclick="sortProfiles(2)" style="cursor:pointer">Seed &#8597;</th>
+          <th onclick="sortProfiles(3)" style="cursor:pointer">SPI Rank &#8597;</th>
+          <th onclick="sortProfiles(4)" style="cursor:pointer">GEI Type &#8597;</th>
+          <th onclick="sortProfiles(5)" style="cursor:pointer">GEI % &#8597;</th>
+          <th onclick="sortProfiles(6)" style="cursor:pointer">TCI &#8597;</th>
+          <th onclick="sortProfiles(7)" style="cursor:pointer">R16+ &#8597;</th>
         </tr></thead>
         <tbody id="profile-body">
             <!-- Populated by renderProfileTableFromTeams() -->
@@ -886,53 +911,53 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== TCI METHODOLOGY ==================== -->
 <section id="methodology">
   <details>
-    <summary><h2 data-i18n="methodology">📐 The TCI Methodology — NTG Framework</h2></summary>
+    <summary><h2 data-i18n="methodology">&#128208; The TCI Methodology — NTG Framework</h2></summary>
 
     <div class="methodology">
-      <h3>ⓘ <span data-i18n="whatIsTci">What is TCI?</span></h3>
-      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team&#39;s group-stage environment predict their knockout success?</em></p>
-      <p>TCI is built on two verified indices — SPI and GEI — combined into a single carryover score for each team.</p>
+      <h3>&#9432; <span data-i18n="whatIsTci">What is TCI?</span></h3>
+      <p data-i18n-html="tciIntro">The <strong>Tournament Carryover Index (TCI)</strong> is a predictive metric developed by <strong>Name The Game (NTG)</strong> under the <strong>Natural Technical Governance (NTG)</strong> framework. TCI asks: <em>Does a team's group-stage environment predict their knockout success?</em></p>
+      <p>TCI is built on two verified indices &mdash; SPI and GEI &mdash; combined into a single carryover score for each team.</p>
 
-      <h3>📈 SPI — Strategic Performance Index</h3>
-      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is &#34;honest.&#34;</p>
+      <h3>&#128200; SPI &mdash; Strategic Performance Index</h3>
+      <p>SPI measures whether the <strong>competitive ordering</strong> established by Matchday 2 was preserved in Matchday 3. If favorites held their positions, SPI is high and the group is "honest."</p>
       <div class="formula-box">
-        <strong>SPI = (% of seed positions held from Matchday 2 → 3)</strong><br/>
-        <span style="color:#16a34a" id="spi-held-text">✓ SPI computed from group standings after data loads</span><br/>
-        <span style="color:#94a3b8">Threshold: &gt;66% = &#34;held&#34;, ≤66% = &#34;broke&#34;</span>
+        <strong>SPI = (% of seed positions held from Matchday 2 &rarr; 3)</strong><br>
+        <span style="color:#16a34a" id="spi-held-text">&#10003; SPI computed from group standings after data loads</span><br>
+        <span style="color:#94a3b8">Threshold: &gt;66% = "held", &le;66% = "broke"</span>
       </div>
 
-      <h3>👥 GEI — Group Environment Index</h3>
+      <h3>&#128101; GEI &mdash; Group Environment Index</h3>
       <p>GEI classifies each group by measuring how much the <strong>top team dominated goal-scoring</strong>. A high share means the group was flat or suppressed; a low share means it was open and competitive.</p>
       <div class="formula-box">
-        <strong>GEI = (Top Team Goals / Total Group Goals) × 100</strong><br/><br/>
-        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share — one team overwhelmed the group<br/>
-        <span class="gei-badge gei-suppressed">Constrained</span> 45–60% share — top team won a flat group<br/>
-        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held — competitive, honest group<br/>
-        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke — competitive but upsets occurred
+        <strong>GEI = (Top Team Goals / Total Group Goals) &times; 100</strong><br><br>
+        <span class="gei-badge gei-dominant">Dominant</span> &gt;60% share &mdash; one team overwhelmed the group<br>
+        <span class="gei-badge gei-suppressed">Constrained</span> 45&ndash;60% share &mdash; top team won a flat group<br>
+        <span class="gei-badge gei-open">Open</span> &lt;45% share + SPI held &mdash; competitive, honest group<br>
+        <span class="gei-badge gei-inverted">Inverted</span> &lt;45% share + SPI broke &mdash; competitive but upsets occurred
       </div>
 
-      <h3 data-i18n="tciCalc">⚙ TCI Calculation</h3>
+      <h3 data-i18n="tciCalc">&#9881; TCI Calculation</h3>
       <div class="formula-box">
-        <strong>TCI = α(SPI<sub>team</sub>) + β(GEI<sub>group</sub>) + γ(Knockout Path)</strong><br/><br/>
-        Where:<br/>
-        • SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br/>
-        • GEI<sub>group</sub> = group environment score (0–100 normalized)<br/>
-        • Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br/>
-        • α, β, γ = NTG-calibrated weights
+        <strong>TCI = &alpha;(SPI<sub>team</sub>) + &beta;(GEI<sub>group</sub>) + &gamma;(Knockout Path)</strong><br><br>
+        Where:<br>
+        &bull; SPI<sub>team</sub> = did this team hold its Matchday 2 seed? (1/0)<br>
+        &bull; GEI<sub>group</sub> = group environment score (0&ndash;100 normalized)<br>
+        &bull; Knockout Path = progression depth bonus (0, 1, 2, 3, 4)<br>
+        &bull; &alpha;, &beta;, &gamma; = NTG-calibrated weights
       </div>
 
-      <h3 data-i18n="currentObservation">💡 Current Observation</h3>
+      <h3 data-i18n="currentObservation">&#128161; Current Observation</h3>
       <p data-i18n="currentObservationText" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:1rem;border-radius:6px">
-        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br/>
+        <strong style="color:#16a34a">Teams emerging from Open + Honest groups (GEI &lt;45%, SPI held) have shown stronger knockout performance in matches analyzed so far.</strong><br>
         The Tournament Carryover Index continues to evaluate whether this pattern persists as additional knockout rounds are completed. Teams from dominant groups may be under-prepared for the intensity shift.
       </p>
 
-      <h3 data-i18n="ecosystemLinks">🔗 NTG Ecosystem Links</h3>
+      <h3 data-i18n="ecosystemLinks">&#128279; NTG Ecosystem Links</h3>
       <p style="font-size:.85rem;color:#64748b">
-        • <strong>NTG:</strong> Natural Technical Governance — the decision-science framework powering TCI<br/>
-        • <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br/>
-        • <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br/>
-        • <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
+        &#8226; <strong>NTG:</strong> Natural Technical Governance &mdash; the decision-science framework powering TCI<br>
+        &#8226; <strong>HUGS ID:</strong> Athlete identity system connecting player data across NTG platforms<br>
+        &#8226; <strong>name-the-game.com:</strong> Primary NTG platform for tournament analytics<br>
+        &#8226; <strong>Learn.XPGuess.com:</strong> Educational deployment of NTG methodology (this dashboard)
       </p>
     </div>
   </details>
@@ -942,23 +967,23 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== DOWNLOAD DATASET ==================== -->
 <section id="download">
   <details>
-    <summary><h2 data-i18n="downloadDataset">💾 Download Dataset</h2></summary>
+    <summary><h2 data-i18n="downloadDataset">&#128190; Download Dataset</h2></summary>
 
     <div class="content-box">
       <p data-i18n="downloadDesc">Export the full TCI dataset as CSV or JSON for analysis in Excel, R, Python, or Tableau.</p>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0">
-        <button onclick="exportCSV()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">💾 Download CSV</button>
-        <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">💾 Download JSON</button>
-        <button onclick="downloadFullJSON()" style="padding:.5rem 1rem;background:#0f172a;color:#d4a843;border:1px solid #0f172a;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:700">💾 Download Full Snapshot</button>
+        <button onclick="exportCSV()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download CSV</button>
+        <button onclick="exportJSON()" style="padding:.5rem 1rem;background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.85rem">&#128190; Download JSON</button>
+        <button onclick="downloadFullJSON()" style="padding:.5rem 1rem;background:#0f172a;color:#d4a843;border:1px solid #0f172a;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:700">&#128190; Download Full Snapshot</button>
       </div>
       <div style="margin:1rem 0;padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
-        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">🔄 Import Dataset</p>
+        <p style="font-size:.85rem;color:#0f172a;margin:0 0 .5rem;font-weight:700">&#128260; Import Dataset</p>
         <p style="font-size:.8rem;color:#64748b;margin:0 0 .5rem">Upload a previously exported JSON snapshot to restore the full dashboard without hitting the database.</p>
-        <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem"/>
+        <input type="file" id="import-json-file" accept=".json" onchange="importJSONFile(this.files[0])" style="font-size:.85rem">
       </div>
-      <div style="margin-top:.5rem"><button onclick="clearLocalCache();location.reload();" style="padding:.3rem .8rem;background:transparent;color:#94a3b8;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.75rem">Clear Local Cache &amp; Reload</button></div>
-      <div style="margin-top:.25rem"><button onclick="localStorage.removeItem(&#39;wc2026_tci_cache&#39;);location.reload();" style="padding:.3rem .8rem;background:#dc2626;color:#fff;border:1px solid #dc2626;border-radius:6px;cursor:pointer;font-size:.75rem">🚫 Force Clear All Cache &amp; Reload</button></div>
-      <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets — (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
+      <div style="margin-top:.5rem"><button onclick="clearLocalCache();location.reload();" style="padding:.3rem .8rem;background:transparent;color:#94a3b8;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:.75rem">Clear Local Cache & Reload</button></div>
+      <div style="margin-top:.25rem"><button onclick="localStorage.removeItem('wc2026_tci_cache');location.reload();" style="padding:.3rem .8rem;background:#dc2626;color:#fff;border:1px solid #dc2626;border-radius:6px;cursor:pointer;font-size:.75rem">&#128683; Force Clear All Cache & Reload</button></div>
+      <p style="font-size:.8rem;color:#64748b"><strong>CSV:</strong> Two sheets &mdash; (1) Group standings with all 48 teams, GEI, SPI, knockout position (2) Knockout matches with scores, winners, penalties, SPI, preservation delta. <strong>JSON:</strong> Full tournament object with groupStandings + knockoutMatches arrays. <strong>Full Snapshot:</strong> Complete dump of all raw data including groups, matches, and computed fields. Can be re-imported later.</p>
     </div>
   </details>
 </section>
@@ -968,29 +993,29 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== ADMIN PANEL ==================== -->
 <section id="admin">
   <details>
-    <summary><h2 data-i18n="adminTitle">🔒 Admin — Edit Knockout Results</h2></summary>
+    <summary><h2 data-i18n="adminTitle">&#128274; Admin — Edit Knockout Results</h2></summary>
 
     <div class="content-box" id="admin-box">
       <div id="admin-login">
         <p><strong>Two-step authentication required.</strong> Only authorized NTG administrators can edit knockout data.</p>
         <div style="max-width:400px;margin:1rem 0">
-          <input type="email" id="admin-email" placeholder="Admin email" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
-          <input type="password" id="admin-pass" placeholder="Password" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
-          <input type="text" id="admin-code" placeholder="2FA code (6 digits)" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"/><br/>
-          <button class="btn-primary" onclick="adminLogin()">🔒 Authenticate</button>
+          <input type="email" id="admin-email" placeholder="Admin email" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"><br>
+          <input type="password" id="admin-pass" placeholder="Password" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"><br>
+          <input type="text" id="admin-code" placeholder="2FA code (6 digits)" style="width:100%;padding:.6rem;margin-bottom:.5rem;border:1px solid #cbd5e1;border-radius:6px"><br>
+          <button class="btn-primary" onclick="adminLogin()">&#128274; Authenticate</button>
         </div>
         <p id="admin-msg" style="color:#dc2626;font-size:.85rem;margin-top:.5rem"></p>
       </div>
 
       <div id="admin-editor" style="display:none">
-        <p style="color:#16a34a;margin-bottom:1rem"><strong>✅ Authenticated.</strong> Edit knockout positions below. Changes save to database and update all tables live.</p>
+        <p style="color:#16a34a;margin-bottom:1rem"><strong>&#9989; Authenticated.</strong> Edit knockout positions below. Changes save to database and update all tables live.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem" id="admin-grid">
           <!-- Admin edit fields generated by JS -->
         </div>
         <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-          <button class="btn-primary" onclick="saveKnockout()">💾 Save to Database</button>
-          <button class="btn-primary" onclick="loadKnockout()" style="background:#475569">🔄 Reload from DB</button>
-          <button class="btn-primary" onclick="adminLogout()" style="background:#dc2626;color:#fff">🔒 Logout</button>
+          <button class="btn-primary" onclick="saveKnockout()">&#128190; Save to Database</button>
+          <button class="btn-primary" onclick="loadKnockout()" style="background:#475569">&#128260; Reload from DB</button>
+          <button class="btn-primary" onclick="adminLogout()" style="background:#dc2626;color:#fff">&#128274; Logout</button>
         </div>
         <p id="save-msg" style="margin-top:.5rem;font-size:.85rem"></p>
       </div>
@@ -1000,7 +1025,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <!-- ==================== FOOTER ==================== -->
 <!-- ==================== FOOTER (learn.xpguess.com approved) ==================== -->
-<hr style="margin-top:32px;"/>
+<hr style="margin-top:32px;">
 
 <h2 data-i18n="continueLearning">Continue Learning</h2>
 <ul style="padding-left:18px; line-height:1.6;">
@@ -1009,9 +1034,9 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
   <li><a href="https://learn.xpguess.com/earn-xp.html">Earn XP on XPGuess</a></li>
   <li><a href="https://learn.xpguess.com/football-transfer-system.html">Athlete Transfer &amp; Mobility Systems</a></li>
   <li><a href="https://learn.xpguess.com/busking.html">Informal Performance &amp; Visibility Paths</a></li>
-  <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is — and Is Not</a></li>
+  <li><a href="https://learn.xpguess.com/what-xpguess-is-and-is-not.html">What XPGuess Is &mdash; and Is Not</a></li>
   <li><a href="https://learn.xpguess.com/secure-sports-analytics-infrastructure.html">Secure Sports Analytics Infrastructure</a></li>
-  <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don’t Go Pro</a></li>
+  <li><a href="https://learn.xpguess.com/why-most-athletes-dont-go-pro.html">Why Most Athletes Don&rsquo;t Go Pro</a></li>
   <li><a href="https://learn.xpguess.com/why-traditional-metrics-miss-the-full-picture.html">Why Traditional Metrics Miss the Full Picture</a></li>
   <li><a href="https://learn.xpguess.com/fitness-wellness-and-support-model.html">Fitness, Wellness, and Support Model</a></li>
   <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
@@ -1036,10 +1061,10 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <section aria-labelledby="terminology-provenance" style="font-size:14px; color:#444; line-height:1.7; margin-top:32px;">
   <h3 id="terminology-provenance">Terminology, Frameworks, and Foundational Work</h3>
-  <p><strong>XPGuess</strong> — <em>Extended Performance Guessing</em> — is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
+  <p><strong>XPGuess</strong> &mdash; <em>Extended Performance Guessing</em> &mdash; is an educational decision-learning construct used to explore how development paths and outcomes unfold over time.</p>
   <p><strong>Natural Technical Governance (NTG)</strong> documents training and participation using first principles rather than subjective opinion.</p>
-  <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Piña</strong>, including biomechanical and developmental research.</p>
-  <p>Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">“Beginning and Staying with the Basics: Building from the Ground Up”</a></p>
+  <p>The conceptual foundations derive from earlier technical work by <strong>Michael A. Pi&ntilde;a</strong>, including biomechanical and developmental research.</p>
+  <p>Reference: <a href="https://learn.xpguess.com/beginning-and-staying-with-basics-building-from-the-ground-up-michael-pina-michael-ortega.jpeg" target="_blank" rel="noopener noreferrer">&ldquo;Beginning and Staying with the Basics: Building from the Ground Up&rdquo;</a></p>
   <p>Additional work: <a href="https://www.amazon.com.mx/Coach-Teaches-Animals-Gymnastics-Stretching-ebook/dp/B09YN32C85" target="_blank" rel="noopener noreferrer">Coach Teaches Animals: Gymnastics Stretching</a></p>
 </section>
 
@@ -1054,38 +1079,38 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== SUPPORT THE MISSION (GATED) ==================== -->
 <section id="support">
   <div id="support-guest" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;text-align:center;margin:2rem 0">
-    <p style="color:#64748b;font-size:.9rem;margin:0">🔒 <strong>Sign in to support the mission</strong> and see how your contributions power open tournament analytics.</p>
+    <p style="color:#64748b;font-size:.9rem;margin:0">&#128274; <strong>Sign in to support the mission</strong> and see how your contributions power open tournament analytics.</p>
   </div>
   <div id="support-user" style="display:block;margin:2rem 0">
     <div class="phase-divider"></div>
-    <h2 data-i18n="supportMission" style="color:#0f172a;font-size:1.25rem;margin-bottom:.25rem">🌎 Support the Mission</h2>
+    <h2 data-i18n="supportMission" style="color:#0f172a;font-size:1.25rem;margin-bottom:.25rem">&#127758; Support the Mission</h2>
     <p style="color:#64748b;font-size:.85rem;margin-bottom:1rem">Supports Learning, Culture and Opportunities</p>
 
     <div class="content-box" style="background:#fafaf9;border:1px solid #e2e8f0">
       <p style="font-size:.9rem;color:#334155;line-height:1.6;margin-bottom:1rem"><strong>Name The Game</strong> builds open tools so that athletes, artists, and communities can train, preserve their languages, and share their culture with the world.</p>
-      <p style="font-size:.85rem;color:#64748b;line-height:1.6;margin-bottom:1rem">Through projects like <strong>CaptureLabz™</strong>, <strong>ArteRegistry™</strong>, and <strong>Mic Mode™</strong>, we are creating a global archive of voices, languages, cultural histories, and talent development. Every language contains cultural knowledge — CaptureLabz helps communities record and preserve their voices for future generations.</p>
+      <p style="font-size:.85rem;color:#64748b;line-height:1.6;margin-bottom:1rem">Through projects like <strong>CaptureLabz&trade;</strong>, <strong>ArteRegistry&trade;</strong>, and <strong>Mic Mode&trade;</strong>, we are creating a global archive of voices, languages, cultural histories, and talent development. Every language contains cultural knowledge &mdash; CaptureLabz helps communities record and preserve their voices for future generations.</p>
 
       <h3 style="font-size:.9rem;color:#0f172a;margin:1rem 0 .5rem">Donate to Support the Platform</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem;margin:1rem 0">
-        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amp;amount=5" target="_blank" style="text-decoration:none">
+        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amount=5" target="_blank" style="text-decoration:none">
           <div style="background:#fff;border:2px solid #d4a843;border-radius:10px;padding:1rem;text-align:center;transition:all .2s;cursor:pointer">
             <div style="font-size:1.5rem;font-weight:800;color:#0f172a">$5</div>
             <div style="font-size:.75rem;color:#64748b;margin-top:.25rem">Record language data</div>
           </div>
         </a>
-        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amp;amount=10" target="_blank" style="text-decoration:none">
+        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amount=10" target="_blank" style="text-decoration:none">
           <div style="background:#fff;border:2px solid #d4a843;border-radius:10px;padding:1rem;text-align:center;transition:all .2s;cursor:pointer">
             <div style="font-size:1.5rem;font-weight:800;color:#0f172a">$10</div>
             <div style="font-size:.75rem;color:#64748b;margin-top:.25rem">Training tools</div>
           </div>
         </a>
-        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amp;amount=25" target="_blank" style="text-decoration:none">
+        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amount=25" target="_blank" style="text-decoration:none">
           <div style="background:#fff;border:2px solid #d4a843;border-radius:10px;padding:1rem;text-align:center;transition:all .2s;cursor:pointer">
             <div style="font-size:1.5rem;font-weight:800;color:#0f172a">$25</div>
             <div style="font-size:.75rem;color:#64748b;margin-top:.25rem">Preserving cultural knowledge</div>
           </div>
         </a>
-        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amp;amount=50" target="_blank" style="text-decoration:none">
+        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC&amount=50" target="_blank" style="text-decoration:none">
           <div style="background:#fff;border:2px solid #d4a843;border-radius:10px;padding:1rem;text-align:center;transition:all .2s;cursor:pointer">
             <div style="font-size:1.5rem;font-weight:800;color:#0f172a">$50</div>
             <div style="font-size:.75rem;color:#64748b;margin-top:.25rem">New learning tools</div>
@@ -1094,61 +1119,61 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
 
       <div style="text-align:center;margin:1.5rem 0">
-        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC" target="_blank" style="display:inline-block;background:#0f172a;color:#d4a843;padding:.6rem 1.5rem;text-decoration:none;border-radius:8px;font-weight:700;font-size:.9rem">❤ Donate to Support the Platform</a>
+        <a href="https://www.paypal.com/donate/?campaign_id=M6U7M48EEDKRC" target="_blank" style="display:inline-block;background:#0f172a;color:#d4a843;padding:.6rem 1.5rem;text-decoration:none;border-radius:8px;font-weight:700;font-size:.9rem">&#10084; Donate to Support the Platform</a>
       </div>
 
       <div style="border-top:1px solid #e2e8f0;margin-top:1.5rem;padding-top:1rem">
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
           <span style="font-size:1rem;font-weight:800;color:#0f172a">Name The Game</span>
-          <span style="font-size:.8rem;color:#94a3b8">Powered by HUGS ID™</span>
+          <span style="font-size:.8rem;color:#94a3b8">Powered by HUGS ID&trade;</span>
         </div>
-        <p style="font-size:.8rem;color:#64748b;line-height:1.5;margin:0">A global platform for learning, culture, athletics, and creative talent. Our mission is to empower people everywhere with the tools to train, share their culture, preserve languages, and create opportunities through education and technology. Built so that every nation can learn from each other — and every person can grow.</p>
+        <p style="font-size:.8rem;color:#64748b;line-height:1.5;margin:0">A global platform for learning, culture, athletics, and creative talent. Our mission is to empower people everywhere with the tools to train, share their culture, preserve languages, and create opportunities through education and technology. Built so that every nation can learn from each other &mdash; and every person can grow.</p>
       </div>
     </div>
 
     <div style="margin-top:1.5rem;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem">
       <h4 style="font-size:.8rem;color:#0f172a;margin:0 0 .5rem;text-transform:uppercase;letter-spacing:.05em">Name The Game Ecosystem</h4>
       <div style="display:flex;flex-wrap:wrap;gap:.5rem;font-size:.75rem;color:#64748b">
-        <span>🏆 <strong>Platform:</strong> Panel, KITE Wallet, Evidence</span> ·
-        <span>💪 <strong>Train:</strong> Athlete Profiles, Training and Fitness</span> ·
-        <span>🎙 <strong>Culture:</strong> CaptureLabz™ Voice Studio, ArteRegistry™ Archive, Mic Mode™</span> ·
-        <span>🎯 <strong>Learn:</strong> Educational Library, Nutrition and Training</span>
+        <span>&#127942; <strong>Platform:</strong> Panel, KITE Wallet, Evidence</span> &middot;
+        <span>&#128170; <strong>Train:</strong> Athlete Profiles, Training and Fitness</span> &middot;
+        <span>&#127897; <strong>Culture:</strong> CaptureLabz&trade; Voice Studio, ArteRegistry&trade; Archive, Mic Mode&trade;</span> &middot;
+        <span>&#127919; <strong>Learn:</strong> Educational Library, Nutrition and Training</span>
       </div>
       <div style="margin-top:.75rem;font-size:.75rem;color:#94a3b8;border-top:1px solid #f1f5f9;padding-top:.5rem">
-        System: Train · Earn XP · Compete | Opportunities: Funding (CaptureLabz™) · Ownership (ArteRegistry™) · Partner Portal | Expression: Voice (Mic Mode™)
+        System: Train &middot; Earn XP &middot; Compete | Opportunities: Funding (CaptureLabz&trade;) &middot; Ownership (ArteRegistry&trade;) &middot; Partner Portal | Expression: Voice (Mic Mode&trade;)
       </div>
     </div>
 
     <div style="margin-top:1rem;text-align:center;font-size:.75rem;color:#94a3b8">
-      Part of the Name The Game ecosystem powered by HUGS ID™<br/>
-      © 2026 Name The Game. All rights reserved. HUGS ID™ is a registered trademark of Name The Game.<br/>
+      Part of the Name The Game ecosystem powered by HUGS ID&trade;<br>
+      &copy; 2026 Name The Game. All rights reserved. HUGS ID&trade; is a registered trademark of Name The Game.<br>
       Supports Learning and Opportunities
     </div>
   </div>
 </section>
 
-<!-- /container -->
+</div><!-- /container -->
 
 <!-- ==================== AUTH MODAL ==================== -->
 <div id="auth-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,.85);z-index:2000;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative">
-    <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8;line-height:1;padding:4px">×</button>
-    <h3 id="auth-title" style="margin:0 0 1.25rem;color:#0f172a;font-size:1.1rem">🔒 <span data-i18n="authSignin">Sign In</span></h3>
+    <button onclick="closeAuth()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#94a3b8;line-height:1;padding:4px">&times;</button>
+    <h3 id="auth-title" style="margin:0 0 1.25rem;color:#0f172a;font-size:1.1rem">&#128274; <span data-i18n="authSignin">Sign In</span></h3>
     <div id="auth-step1">
       <label style="display:block;font-size:.8rem;color:#64748b;margin-bottom:.25rem;font-weight:600">Email</label>
-      <input type="email" id="auth-email" placeholder="you@example.com" style="width:100%;padding:.7rem;margin-bottom:.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"/><br/>
+      <input type="email" id="auth-email" placeholder="you@example.com" style="width:100%;padding:.7rem;margin-bottom:.75rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"><br>
       <label style="display:block;font-size:.8rem;color:#64748b;margin-bottom:.25rem;font-weight:600">Password</label>
       <div style="position:relative;margin-bottom:1rem">
-        <input type="password" id="auth-password" placeholder="Enter password" style="width:100%;padding:.7rem 2.5rem .7rem .7rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box"/>
-        <button type="button" onclick="togglePassword()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.1rem;padding:4px" title="Show password">👁</button>
+        <input type="password" id="auth-password" placeholder="Enter password" style="width:100%;padding:.7rem 2.5rem .7rem .7rem;border:1px solid #cbd5e1;border-radius:6px;font-size:.95rem;box-sizing:border-box">
+        <button type="button" onclick="togglePassword()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.1rem;padding:4px" title="Show password">&#128065;</button>
       </div>
-      <button class="btn-primary" onclick="authSubmit()" id="auth-action-btn" style="width:100%;margin-bottom:.5rem;padding:.7rem;font-size:.95rem">🔒 Sign In</button>
+      <button class="btn-primary" onclick="authSubmit()" id="auth-action-btn" style="width:100%;margin-bottom:.5rem;padding:.7rem;font-size:.95rem">&#128274; Sign In</button>
       <button onclick="toggleAuthMode()" style="width:100%;padding:.7rem;font-size:.95rem;background:#fff;color:#475569;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer" id="auth-toggle-btn">Create Account</button>
       <p style="text-align:center;margin-top:.75rem;font-size:.85rem"><a href="#" onclick="forgotPassword();return false" style="color:#64748b;text-decoration:underline">Forgot password?</a></p>
       <p id="auth-msg" style="margin-top:.5rem;font-size:.85rem;min-height:1.5rem"></p>
     </div>
     <div id="auth-step2" style="display:none">
-      <p style="color:#16a34a;margin-bottom:1rem">✅ Check your email! We’ve sent a confirmation link.</p>
+      <p style="color:#16a34a;margin-bottom:1rem">&#9989; Check your email! We&rsquo;ve sent a confirmation link.</p>
       <p style="font-size:.85rem;color:#64748b;margin-bottom:1rem">Click the link in the email to activate your account, then sign in.</p>
       <button onclick="closeAuth()" style="width:100%;padding:.7rem;font-size:.95rem;background:#fff;color:#475569;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer">Got it</button>
     </div>
@@ -5865,11 +5890,13 @@ function renderAllFromCache() {
     });
   }
 
-  // Rebuild results table
+  // Rebuild results table — stage-separated: active first, completed below
   var rBody = document.getElementById('results-body');
   if(rBody && dbMatches.length > 0) {
     rBody.innerHTML = '';
-    dbMatches.forEach(function(m) {
+
+    // Helper
+    function _renderRow(m) {
       var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
       var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
       var winnerClass = m.winner ? 'result-win' : 'result-pending';
@@ -5883,8 +5910,26 @@ function renderAllFromCache() {
         '<td><strong>' + (m.team2 || '') + '</strong></td>' +
         '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
         '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
-      rBody.appendChild(tr);
-    });
+      return tr;
+    }
+
+    // Separate by stage
+    var r16m = dbMatches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
+    var r32m = dbMatches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
+
+    if(r16m.length > 0) {
+      var h1 = document.createElement('tr');
+      var c1 = r16m.filter(function(m) { return m.winner; }).length;
+      h1.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + c1 + '/' + r16m.length + ' completed)</td>';
+      rBody.appendChild(h1);
+      r16m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
+    }
+    if(r32m.length > 0) {
+      var h2 = document.createElement('tr');
+      h2.innerHTML = '<td colspan="8" style="background:#f1f5f9;padding:.6rem .9rem;font-weight:700;color:#64748b;font-size:.9rem;border-top:2px solid #e2e8f0;border-bottom:1px solid #cbd5e1;">&#9989; ROUND OF 32 — COMPLETED (' + r32m.length + '/' + r32m.length + ')</td>';
+      rBody.appendChild(h2);
+      r32m.forEach(function(m) { rBody.appendChild(_renderRow(m)); });
+    }
   }
 
   // Render KPI sections
@@ -6134,27 +6179,54 @@ async function loadMatchesFromDB() {
     for(var seed in dbSeedMap) { nameToSeed[dbSeedMap[seed]] = seed; }
 
     // ---- POPULATE RESULTS TABLE ----
+    // Helper to render a single match row
+    function renderMatchRow(m) {
+      var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
+      var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
+      var winnerClass = m.winner ? 'result-win' : 'result-pending';
+      var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
+
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><strong>' + (m.match_id || '') + '</strong></td>' +
+        '<td>' + (m.stage || 'TBD') + '</td>' +
+        '<td>' + (m.date || 'TBD') + '</td>' +
+        '<td><strong>' + (m.team1 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team1_group || '') + (m.team1_group_pos || '') + '</span></td>' +
+        '<td style="text-align:center;font-weight:700;color:' + (hasScore ? '#0f172a' : '#94a3b8') + '">' + scoreDisplay + penaltyInfo + '</td>' +
+        '<td><strong>' + (m.team2 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team2_group || '') + (m.team2_group_pos || '') + '</span></td>' +
+        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
+        '<td style="font-size:11px;color:#64748b;max-width:200px;white-space:normal">' + (m.notes || '') + '</td>';
+      return tr;
+    }
+
     var rBody = document.getElementById('results-body');
     if(rBody) {
       rBody.innerHTML = '';
-      matches.forEach(function(m) {
-        var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
-        var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
-        var winnerClass = m.winner ? 'result-win' : 'result-pending';
-        var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
 
-        var tr = document.createElement('tr');
-        tr.innerHTML =
-          '<td><strong>' + (m.match_id || '') + '</strong></td>' +
-          '<td>' + (m.stage || 'TBD') + '</td>' +
-          '<td>' + (m.date || 'TBD') + '</td>' +
-          '<td><strong>' + (m.team1 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team1_group || '') + (m.team1_group_pos || '') + '</span></td>' +
-          '<td style="text-align:center;font-weight:700;color:' + (hasScore ? '#0f172a' : '#94a3b8') + '">' + scoreDisplay + penaltyInfo + '</td>' +
-          '<td><strong>' + (m.team2 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team2_group || '') + (m.team2_group_pos || '') + '</span></td>' +
-          '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' ✅ Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
-          '<td style="font-size:11px;color:#64748b;max-width:200px;white-space:normal">' + (m.notes || '') + '</td>';
-        rBody.appendChild(tr);
-      });
+      // Sort matches: active stage first, then completed stages
+      var r16Matches = matches.filter(function(m) { return m.stage === 'Round of 16'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
+      var r32Matches = matches.filter(function(m) { return m.stage === 'Round of 32'; }).sort(function(a,b) { return (a.match_id||'').localeCompare(b.match_id||''); });
+      var otherMatches = matches.filter(function(m) { return m.stage !== 'Round of 16' && m.stage !== 'Round of 32'; });
+
+      // --- ACTIVE STAGE: Round of 16 ---
+      if(r16Matches.length > 0) {
+        var activeHeader = document.createElement('tr');
+        var completedCount = r16Matches.filter(function(m) { return m.winner; }).length;
+        activeHeader.innerHTML = '<td colspan="8" style="background:#fef3c7;padding:.6rem .9rem;font-weight:700;color:#92400e;font-size:.9rem;border-top:3px solid #f59e0b;border-bottom:2px solid #fcd34d;">&#127941; ROUND OF 16 — ACTIVE (' + completedCount + '/' + r16Matches.length + ' completed)</td>';
+        rBody.appendChild(activeHeader);
+        r16Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
+      }
+
+      // --- COMPLETED STAGE: Round of 32 ---
+      if(r32Matches.length > 0) {
+        var completedHeader = document.createElement('tr');
+        completedHeader.innerHTML = '<td colspan="8" style="background:#f1f5f9;padding:.6rem .9rem;font-weight:700;color:#64748b;font-size:.9rem;border-top:2px solid #e2e8f0;border-bottom:1px solid #cbd5e1;">&#9989; ROUND OF 32 — COMPLETED (' + r32Matches.length + '/' + r32Matches.length + ')</td>';
+        rBody.appendChild(completedHeader);
+        r32Matches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
+      }
+
+      // --- OTHER STAGES ---
+      otherMatches.forEach(function(m) { rBody.appendChild(renderMatchRow(m)); });
     }
 
     // Update teamExportData from match results (DOM updates handled by applyMatchResultsToKOTable after render)
@@ -6444,6 +6516,5 @@ function renderKPIReport() {
 }
 </script>
 <script src="js/wc2026-null-fix.js"></script>   <!-- ADD THIS LINE -->
-
-
-</main></body></html>
+</body>
+</html>
