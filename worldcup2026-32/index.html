@@ -180,6 +180,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -6095,9 +6096,9 @@ async function loadMatchesFromDB() {
           '<td><strong>' + (m.match_id || '') + '</strong></td>' +
           '<td>' + (m.stage || 'TBD') + '</td>' +
           '<td>' + (m.date || 'TBD') + '</td>' +
-          '<td><strong>' + (m.team1 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team1_group || '') + m.team1_group_pos + '</span></td>' +
+          '<td><strong>' + (m.team1 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team1_group || '') + (m.team1_group_pos || '') + '</span></td>' +
           '<td style="text-align:center;font-weight:700;color:' + (hasScore ? '#0f172a' : '#94a3b8') + '">' + scoreDisplay + penaltyInfo + '</td>' +
-          '<td><strong>' + (m.team2 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team2_group || '') + m.team2_group_pos + '</span></td>' +
+          '<td><strong>' + (m.team2 || '') + '</strong> <span style="color:#94a3b8;font-size:11px">' + (m.team2_group || '') + (m.team2_group_pos || '') + '</span></td>' +
           '<td class="' + winnerClass + '">' + (m.winner || 'Upcoming') + '</td>' +
           '<td style="font-size:11px;color:#64748b;max-width:200px;white-space:normal">' + (m.notes || '') + '</td>';
         rBody.appendChild(tr);
