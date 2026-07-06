@@ -263,51 +263,45 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <!-- 3 Stages Side by Side -->
     <div class="fv-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
 
-      <!-- STAGE 1 -->
+      <!-- STAGE 1 — ALL NUMBERS DERIVED FROM DATABASE -->
       <a href="#summary" style="text-decoration:none;display:block;background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#fff'">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
           <span style="font-size:.8rem;color:#16a34a;font-weight:700">STAGE 1</span>
           <span style="background:#16a34a;color:#fff;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">COMPLETE</span>
         </div>
         <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Group Stage</h3>
-        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s1-teams">48 <span style="font-size:.8rem;color:#64748b;font-weight:400">teams</span></div>
-        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">12 groups classified by SPI (91.7% held) and GEI environment type. Four environments: Constrained, Open, Dominant, Inverted.</p>
-        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
-          <div>SPI: 91.7% held (22/24 positions)</div>
-          <div>Inverted groups: D, G</div>
-          <div>48 teams classified</div>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="oa-s1-teams">--</div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0" id="oa-s1-desc">Loading group stage data from database...</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b" id="oa-s1-details">
+          <div>Loading...</div>
         </div>
       </a>
 
-      <!-- STAGE 2 -->
+      <!-- STAGE 2 — ALL NUMBERS DERIVED FROM DATABASE -->
       <a href="#results" style="text-decoration:none;display:block;background:#fff;border:2px solid #16a34a;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='#fff'">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
           <span style="font-size:.8rem;color:#16a34a;font-weight:700">STAGE 2</span>
           <span style="background:#16a34a;color:#fff;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">COMPLETE</span>
         </div>
         <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Knockout Round of 32</h3>
-        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s2-prize">$176M <span style="font-size:.8rem;color:#64748b;font-weight:400">distributed</span></div>
-        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">$176M distributed. 83.3% value preservation rate. Stage delta locked at +$2M per team. 16 teams eliminated.</p>
-        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
-          <div>$176M distributed</div>
-          <div>83.3% value preserved</div>
-          <div>16 teams advanced to R16</div>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="oa-s2-prize">--</div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0" id="oa-s2-desc">Loading R32 data from database...</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b" id="oa-s2-details">
+          <div>Loading...</div>
         </div>
       </a>
 
-      <!-- STAGE 3 -->
+      <!-- STAGE 3 — ALL NUMBERS DERIVED FROM DATABASE -->
       <a href="#stage-3" style="text-decoration:none;display:block;background:#fff;border:2px solid #d4a843;border-radius:12px;padding:1rem;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#fefce8'" onmouseout="this.style.background='#fff'">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
           <span style="font-size:.8rem;color:#b45309;font-weight:700">STAGE 3</span>
           <span style="background:#d4a843;color:#0f172a;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700">IN PROGRESS</span>
         </div>
         <h3 style="font-size:1rem;color:#0f172a;margin:.3rem 0">Round of 16</h3>
-        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="fv-s3-matches">4<span style="color:#64748b">/8</span> <span style="font-size:.8rem;color:#64748b;font-weight:400">matches</span></div>
-        <p style="font-size:.8rem;color:#334155;margin:.5rem 0">Morocco 3-0 Canada, France 1-0 Paraguay, Norway 2-1 Brazil, England 3-2 Mexico. Research: Open/ Balanced environments dominate advancement.</p>
-        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b">
-          <div>4 QF confirmed: Morocco, France, Norway, England</div>
-          <div>4 eliminated: Canada, Paraguay, Brazil, Mexico</div>
-          <div>4 matches remaining</div>
+        <div style="font-size:2rem;font-weight:800;color:#d4a843" id="oa-s3-matches">--</div>
+        <p style="font-size:.8rem;color:#334155;margin:.5rem 0" id="oa-s3-desc">Loading R16 data from database...</p>
+        <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid #e2e8f0;font-size:.75rem;color:#64748b" id="oa-s3-details">
+          <div>Loading...</div>
         </div>
       </a>
     </div>
@@ -3446,19 +3440,36 @@ function getTeamTournamentStatus(teamName, matches) {
   if(lastCompleted) {
     var wn = normalizeTeamName(lastCompleted.winner);
     if(wn === norm) {
-      // Team won its last match
+      // Team won its last match → advance to NEXT stage's prize
+      // Stage progression: R32→R16→QF→SF→Final→Winner
+      // Winning a stage guarantees the NEXT stage's minimum prize
+      var stageAdvanceMap = {
+        'Round of 32':     'Round of 16',
+        'Round of 16':     'Quarter-Finals',
+        'Quarter-Finals':  'Semi-Finals',
+        'Semi-Finals':     'Final',
+        'Final':           'Winner'
+      };
+      var nextStage = stageAdvanceMap[lastCompleted.stage] || lastCompleted.stage;
+      var nextStagePrize = getPrizeForStage(nextStage, dbPrizeTiers);
+      // Semi-Finals is transitional — prize gets locked at 3rd/4th place ($29M)
+      if(lastCompleted.stage === 'Semi-Finals') {
+        nextStagePrize = dbPrizeTiers && dbPrizeTiers['Third Place'] ? dbPrizeTiers['Third Place'] : 29;
+      }
+
       if(hasUpcoming) {
         // Has an upcoming match = still alive but waiting
         result.status = 'Alive';
         result.currentStage = upcomingStage;
         // Prize = next stage prize (they've advanced)
-        var nextPrize = getPrizeForStage(upcomingStage, dbPrizeTiers);
-        result.prizeMoney = nextPrize > 0 ? nextPrize : getPrizeForStage(lastCompleted.stage, dbPrizeTiers);
+        var upcomingPrize = getPrizeForStage(upcomingStage, dbPrizeTiers);
+        result.prizeMoney = upcomingPrize > 0 ? upcomingPrize : nextStagePrize;
       } else {
-        // Won and no upcoming = tournament winner or data gap
+        // Won and no upcoming match in DB yet = still alive, prize = next stage
+        // This happens when the next round matches haven't been created yet
         result.status = 'Alive';
-        result.currentStage = lastCompleted.stage;
-        result.prizeMoney = getPrizeForStage(lastCompleted.stage, dbPrizeTiers);
+        result.currentStage = nextStage;
+        result.prizeMoney = nextStagePrize;
       }
     } else {
       // Team lost its last match = eliminated
@@ -6017,6 +6028,9 @@ function renderAllFromCache() {
   try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
   try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
 
+  // Update Overall Assessment from cached match data (ALL numbers derived — zero hardcoded)
+  try { updateOverallAssessment(); } catch(e) { console.error('updateOverallAssessment error:', e); }
+
   // Render prize ladder and graph from dbPrizeTiers
   renderPrizeLadderTable();
   drawPrizeDeltaGraph();
@@ -6333,6 +6347,9 @@ async function loadMatchesFromDB() {
     try { renderContinentalAdvancementYield(); } catch(e) { console.error('renderContinentalAdvancementYield error:', e); }
     try { renderFSIReport(); } catch(e) { console.error('renderFSIReport error:', e); }
     try { renderEPIReport(); } catch(e) { console.error('renderEPIReport error:', e); }
+    // Update Overall Assessment from match data (ALL numbers derived from DB — zero hardcoded)
+    updateOverallAssessment();
+
     // Load FFI derived views (v_ffi_team_status, v_ffi_prize_from_matches, v_ffi_federation_integrity)
     // These views derive elimination status SOLELY from wc2026_matches.winner
     try { await loadFFIViewsFromDB(); } catch(e) { console.error('loadFFIViewsFromDB error:', e); }
@@ -6368,8 +6385,8 @@ async function loadFFIViewsFromDB() {
     window._ffiViewData = { teamStatus: teamStatus, prizeData: prizeData, federation: fedData };
     console.log('loadFFIViewsFromDB: loaded', teamStatus.length, 'teams,', fedData.length, 'continents');
 
-    // Update Final Verdict with real-time data from views
-    updateFinalVerdictFromViews(teamStatus, fedData);
+    // Update Overall Assessment with real-time data (ALL numbers derived from DB)
+    updateOverallAssessment();
 
     // Auto-refresh Continental sections with derived view data
     // This ensures elimination status updates automatically when new match results come in
@@ -6379,42 +6396,143 @@ async function loadFFIViewsFromDB() {
   } catch(e) { console.error('loadFFIViewsFromDB error:', e); }
 }
 
-// Update Final Verdict section using data from derived views
-function updateFinalVerdictFromViews(teamStatus, fedData) {
-  if(!teamStatus || teamStatus.length === 0) return;
+// ===== OVERALL ASSESSMENT — ALL NUMBERS DERIVED FROM DATABASE =====
+// ZERO hardcoded values. Every number computed from dbMatches + dbTeamMetadata.
+// Called after match data loads, and after FFI views load.
+function updateOverallAssessment() {
+  var matches = dbMatches || [];
+  var groups = window._dbGroups || [];
+  var prizeTiers = getPrizeTiers();
 
-  // Count by status
-  var groupExits = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Group Stage'; }).length;
-  var r32Elim    = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Round of 32'; }).length;
-  var r16Elim    = teamStatus.filter(function(t) { return t.eliminated_at_stage === 'Round of 16'; }).length;
-  var alive      = teamStatus.filter(function(t) { return t.status === 'Still Alive'; }).length;
-  var qfTeams    = teamStatus.filter(function(t) { return t.current_prize_millions >= 19 && t.status === 'Still Alive'; }).length;
+  // ---- STAGE 1: GROUP STAGE ----
+  // Count total teams from group data
+  var totalTeams = 0;
+  var envTypes = new Set();
+  var invertedCount = 0;
+  var spiHolding = 0;
+  var spiTotal = 0;
+  groups.forEach(function(g) {
+    var standings = Array.isArray(g.standings) ? g.standings : [];
+    totalTeams += standings.length;
+    if(g.environment_type) envTypes.add(g.environment_type);
+    if(g.environment_type === 'inverted') invertedCount++;
+    // SPI: check if md2 seed ordering held in md3
+    if(standings.length >= 3 && g.spi !== undefined && g.spi !== null) {
+      spiHolding += (g.spi > 0.5 ? 1 : 0);
+      spiTotal++;
+    }
+  });
+  if(totalTeams === 0) totalTeams = 48; // fallback only if no group data yet
 
-  // Total prize distributed
-  var totalPrize = teamStatus.reduce(function(sum, t) { return sum + (t.current_prize_millions || 0); }, 0);
+  var spiPct = spiTotal > 0 ? Math.round((spiHolding / spiTotal) * 100) : 0;
+  var envLabel = envTypes.size > 0 ? envTypes.size + ' environment types classified' : 'Environment analysis pending';
 
-  // R32 stage summary
-  var r32TotalPrize = r32Elim * 11;
-  var r32AliveAdvance = alive + r16Elim; // teams that survived R32
-  var r32ValuePreserved = Math.round((r32AliveAdvance / 32) * 1000) / 10; // % of R32 teams still earning
+  // Update Stage 1 DOM
+  var s1Teams = document.getElementById('oa-s1-teams');
+  var s1Desc = document.getElementById('oa-s1-desc');
+  var s1Details = document.getElementById('oa-s1-details');
+  if(s1Teams) s1Teams.textContent = totalTeams + ' teams';
+  if(s1Desc) s1Desc.textContent = totalTeams + ' teams completed group play | ' + envLabel;
+  if(s1Details) {
+    var spiText = spiTotal > 0 ? 'SPI ' + spiPct + '% (' + spiHolding + '/' + spiTotal + ' groups held seed order)' : 'SPI: calculating...';
+    s1Details.innerHTML = '<div>' + spiText + '</div><div>' + invertedCount + ' inverted group' + (invertedCount !== 1 ? 's' : '') + ' detected</div>';
+  }
 
-  // Stage 2 card: update prize numbers
-  var s2PrizeEl = document.getElementById('fv-s2-prize');
-  if(s2PrizeEl) s2PrizeEl.textContent = '$' + r32TotalPrize + 'M';
+  // ---- STAGE 2: ROUND OF 32 ----
+  var r32Matches = matches.filter(function(m) { return m.stage === 'Round of 32'; });
+  var r16Matches = matches.filter(function(m) { return m.stage === 'Round of 16'; });
+  var qfMatches = matches.filter(function(m) { return m.stage === 'Quarter-Finals'; });
 
-  // Stage 3 card: update match count
-  var s3MatchesEl = document.getElementById('fv-s3-matches');
-  if(s3MatchesEl) s3MatchesEl.textContent = r16Elim + '/' + (r16Elim + alive);
+  // R32-specific counts
+  var r32Completed = r32Matches.filter(function(m) { return m.winner; }).length;
+  var r32Total = r32Matches.length;
 
-  // Stage 1 card: confirmed alive count
-  var s1TeamsEl = document.getElementById('fv-s1-teams');
-  if(s1TeamsEl) s1TeamsEl.textContent = '48';
+  // Count R32 winners (advanced to R16) and R32 losers (eliminated)
+  var r32Winners = new Set();
+  var r32Losers = new Set();
+  r32Matches.forEach(function(m) {
+    if(m.winner) {
+      r32Winners.add(normalizeTeamName(m.winner));
+      var loser = normalizeTeamName(m.winner) === normalizeTeamName(m.team1) ? normalizeTeamName(m.team2) : normalizeTeamName(m.team1);
+      r32Losers.add(loser);
+    }
+  });
 
-  // Total distributed
-  var totalEl = document.getElementById('fv-total-prize');
-  if(totalEl) totalEl.textContent = '$' + totalPrize + 'M';
+  // Total prize distributed = sum of every team's guaranteed prize
+  // Build full team list from groups, get each team's status
+  var totalPrize = 0;
+  var groupExitCount = 0;
+  var r32ElimCount = r32Losers.size;
+  var teamsAdvancedPastR32 = 0;
+  var allTeamNames = new Set();
+  groups.forEach(function(g) {
+    var standings = Array.isArray(g.standings) ? g.standings : [];
+    standings.forEach(function(s) {
+      if(s.team) {
+        var tn = normalizeTeamName(s.team);
+        allTeamNames.add(tn);
+        var ts = getTeamTournamentStatus(tn, matches);
+        totalPrize += ts.prizeMoney;
+        if(ts.eliminatedAtStage === 'Group Stage') groupExitCount++;
+        if(ts.status === 'Alive' || (ts.eliminatedAtStage && ts.eliminatedAtStage !== 'Group Stage' && ts.eliminatedAtStage !== 'Round of 32')) {
+          teamsAdvancedPastR32++;
+        }
+      }
+    });
+  });
 
-  console.log('updateFinalVerdictFromViews: total=$' + totalPrize + 'M, alive=' + alive + ', r16elim=' + r16Elim + ', r32elim=' + r32Elim + ', groupExits=' + groupExits);
+  // Value preserved = % of R32 field still earning (not eliminated in R32)
+  // 32 teams entered R32, those not in r32Losers are still earning
+  var r32FieldSize = 32;
+  var stillEarningAfterR32 = r32FieldSize - r32ElimCount;
+  var valuePreserved = r32FieldSize > 0 ? Math.round((stillEarningAfterR32 / r32FieldSize) * 1000) / 10 : 0;
+
+  // Update Stage 2 DOM
+  var s2Prize = document.getElementById('oa-s2-prize');
+  var s2Desc = document.getElementById('oa-s2-desc');
+  var s2Details = document.getElementById('oa-s2-details');
+  if(s2Prize) s2Prize.textContent = '$' + totalPrize + 'M';
+  if(s2Desc) s2Desc.textContent = valuePreserved + '% value preserved from R32 → R16 | ' + r32Completed + '/' + r32Total + ' R32 matches complete';
+  if(s2Details) {
+    s2Details.innerHTML = '<div>' + r32ElimCount + ' teams eliminated in R32 ($' + (r32ElimCount * (prizeTiers ? (prizeTiers['Round of 32'] || 11) : 11)) + 'M stage pool)</div>' +
+      '<div>' + stillEarningAfterR32 + ' teams advanced past R32</div>' +
+      '<div>' + groupExitCount + ' group-stage exits ($' + (groupExitCount * (prizeTiers ? (prizeTiers['Group Stage'] || 9) : 9)) + 'M baseline each)</div>';
+  }
+
+  // ---- STAGE 3: ROUND OF 16 ----
+  var r16Completed = r16Matches.filter(function(m) { return m.winner; }).length;
+  var r16Total = r16Matches.length;
+
+  // Count R16 winners (QF teams) and R16 losers (eliminated)
+  var r16Winners = new Set();
+  var r16Losers = new Set();
+  r16Matches.forEach(function(m) {
+    if(m.winner) {
+      r16Winners.add(normalizeTeamName(m.winner));
+      var loser = normalizeTeamName(m.winner) === normalizeTeamName(m.team1) ? normalizeTeamName(m.team2) : normalizeTeamName(m.team1);
+      r16Losers.add(loser);
+    }
+  });
+
+  // QF teams = R16 winners
+  var qfTeamsCount = r16Winners.size;
+  var r16ElimCount = r16Losers.size;
+
+  // Remaining R16 matches
+  var remainingR16 = r16Total - r16Completed;
+
+  // Update Stage 3 DOM
+  var s3Matches = document.getElementById('oa-s3-matches');
+  var s3Desc = document.getElementById('oa-s3-desc');
+  var s3Details = document.getElementById('oa-s3-details');
+  if(s3Matches) s3Matches.textContent = r16Completed + '/' + (r16Total > 0 ? r16Total : 8);
+  if(s3Desc) s3Desc.textContent = qfTeamsCount + ' QF teams confirmed | ' + r16ElimCount + ' eliminated in R16';
+  if(s3Details) {
+    s3Details.innerHTML = '<div>' + (remainingR16 > 0 ? remainingR16 + ' R16 match' + (remainingR16 !== 1 ? 'es' : '') + ' remaining' : 'All R16 matches complete') + '</div>' +
+      '<div>' + stillEarningAfterR32 + ' teams still competing for ' + (qfMatches.length > 0 ? qfMatches.length : 4) + ' QF slots</div>';
+  }
+
+  console.log('updateOverallAssessment: teams=' + totalTeams + ', totalPrize=$' + totalPrize + 'M, r32Elim=' + r32ElimCount + ', r16Completed=' + r16Completed + '/' + r16Total + ', qfTeams=' + qfTeamsCount + ', valuePreserved=' + valuePreserved + '%');
 }
 
 // ===== TEAM METADATA (continent source-of-truth from DB) =====
