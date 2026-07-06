@@ -3728,29 +3728,6 @@ function renderContinentKPI() {
     var uniqueMatchNames = [...new Set(matchTeamNames)];
     var uniqueUnmatched = [...new Set(unmatchedMatchTeams)];
 
-    var debugEl = document.getElementById('cont-debug');
-    if(!debugEl) {
-      debugEl = document.createElement('div');
-      debugEl.id = 'cont-debug';
-      var cards = document.getElementById('cont-cards');
-      if(cards && cards.parentNode) cards.parentNode.insertBefore(debugEl, cards.nextSibling);
-    }
-    if(debugEl) {
-      debugEl.style.cssText = 'margin:1rem 0;padding:1rem;background:#fefce8;border:2px solid #f59e0b;border-radius:8px;font-size:.75rem;';
-      var html = '<h4 style="color:#92400e;margin-bottom:.5rem">Name Matching Debug</h4>';
-      html += '<div style="margin-bottom:.5rem"><strong>Group standings teams (' + groupTeamNames.length + '):</strong> ' + groupTeamNames.join(', ') + '</div>';
-      html += '<div style="margin-bottom:.5rem"><strong>Match data teams (' + uniqueMatchNames.length + '):</strong> ' + uniqueMatchNames.join(', ') + '</div>';
-      if(uniqueUnmatched.length > 0) {
-        html += '<div style="color:#dc2626;margin-bottom:.5rem"><strong>UNMATCHED match teams (' + uniqueUnmatched.length + '):</strong> ' + uniqueUnmatched.join(', ') + '</div>';
-      }
-      html += '<div style="color:#16a34a;margin-bottom:.5rem"><strong>Successfully matched:</strong> ' + Object.keys(teamsInMatchesNormalized).length + ' teams</div>';
-      html += '<div style="color:#dc2626"><strong>NOT in matches (group-stage exits):</strong> ';
-      var notInMatches = [];
-      for(var sd in teamData) { if(!teamsInMatchesNormalized[sd]) notInMatches.push(teamData[sd].team); }
-      html += notInMatches.join(', ') + '</div>';
-      debugEl.innerHTML = html;
-      debugEl.style.display = 'block';
-    }
   })();
 
   // Process matches to find elimination round
@@ -3910,29 +3887,6 @@ function renderContinentKPI() {
       '</div>';
     cards.appendChild(card);
   });
-
-  // DEBUG: Show per-team status for each continent
-  var debugEl = document.getElementById('cont-debug');
-  if(!debugEl) {
-    debugEl = document.createElement('div');
-    debugEl.id = 'cont-debug';
-    cards.parentNode.insertBefore(debugEl, cards.nextSibling);
-  }
-  var debugHtml = '<div style="margin:1rem 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;font-size:.8rem">';
-  debugHtml += '<h4 style="color:#0f172a;margin-bottom:.5rem">Team Status Debug (auto-updates)</h4>';
-  debugHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">';
-  sortedConts.forEach(function(c) {
-    var d = contData[c];
-    debugHtml += '<div><strong>' + d.flag + ' ' + d.label + '</strong> (' + d.teams + ' teams)<ul style="margin:.25rem 0;padding-left:1.2rem">';
-    d.teamEarnings.forEach(function(t) {
-      var tColor = t.eliminated ? '#dc2626' : '#16a34a';
-      var tStatus = t.eliminated ? 'OUT' : 'ALIVE';
-      debugHtml += '<li style="color:' + tColor + '">' + t.team + ': ' + tStatus + ' (' + t.round + ', $' + t.prize.toFixed(0) + 'M)</li>';
-    });
-    debugHtml += '</ul></div>';
-  });
-  debugHtml += '</div></div>';
-  debugEl.innerHTML = debugHtml;
 
   // Render table
   tbody.innerHTML = '';
@@ -4177,31 +4131,6 @@ function renderContinentalAdvancementYield() {
   var groups = window._dbGroups || [];
   var matches = dbMatches || [];
   var results = computeContinentalAdvancementYield(groups, matches, dbPrizeTiers);
-
-  // DEBUG: Show raw team-to-status mapping
-  var matchStatus = getTeamStatusFromMatches(matches);
-  var debugHtml = '<div style="margin:1rem 0;background:#fefce8;border:2px solid #f59e0b;border-radius:8px;padding:1rem;font-size:.8rem;max-height:300px;overflow-y:auto">';
-  debugHtml += '<h4 style="color:#92400e;margin:0 0 .5rem">DEBUG: Team Status Mapping (check console for full data)</h4>';
-  debugHtml += '<table style="width:100%;font-size:.75rem;border-collapse:collapse"><thead><tr style="background:#f59e0b;color:#fff"><th>Team</th><th>Norm</th><th>Continent</th><th>Losers?</th><th>Winners?</th><th>Pending?</th><th>Result</th></tr></thead><tbody>';
-  var naTeams = ['Mexico','Canada','Haiti','United States','Curacao','Panama'];
-  naTeams.forEach(function(t) {
-    var n = normalizeTeamName(t);
-    var c = getTeamContinent(t);
-    var inL = matchStatus.completedLosers.has(n) ? 'YES' : 'no';
-    var inW = matchStatus.completedWinners.has(n) ? 'YES' : 'no';
-    var inP = matchStatus.pendingTeams.has(n) ? 'YES' : 'no';
-    var res = matchStatus.completedLosers.has(n) ? 'OUT' : (matchStatus.completedWinners.has(n) ? 'ALIVE' : (matchStatus.pendingTeams.has(n) ? 'PENDING' : 'GROUP EXIT'));
-    var rColor = res === 'OUT' || res === 'GROUP EXIT' ? '#dc2626' : '#16a34a';
-    debugHtml += '<tr style="border-bottom:1px solid #e2e8f0"><td><strong>' + t + '</strong></td><td>' + n + '</td><td>' + c + '</td><td>' + inL + '</td><td>' + inW + '</td><td>' + inP + '</td><td style="color:' + rColor + ';font-weight:700">' + res + '</td></tr>';
-  });
-  debugHtml += '</tbody></table></div>';
-  var existingDebug = document.getElementById('cay-debug');
-  if(!existingDebug) {
-    existingDebug = document.createElement('div');
-    existingDebug.id = 'cay-debug';
-    container.parentNode.insertBefore(existingDebug, container);
-  }
-  existingDebug.innerHTML = debugHtml;
 
   if(results.length === 0) {
     container.innerHTML = '<div style="color:#94a3b8;font-size:.85rem;padding:1rem">Loading data...</div>';
