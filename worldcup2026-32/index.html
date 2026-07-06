@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>         
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -214,7 +214,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
     <strong style="color:#0f172a">TCI</strong> <span style="color:#94a3b8;font-size:10px;cursor:pointer" title="Tournament Carryover Index &mdash; does group environment predict knockout success?" onclick="showTip(event,'Tournament Carryover Index &mdash; does group environment predict knockout success? The core research question.')">&#9432;</span> = Tournament Carryover Index
   </div>
 
-  <div style="margin-top:1rem"><span class="badge">LIVE &mdash; TCI Research in Progress</span> <span style="font-size:.7rem;color:#94a3b8;margin-left:.5rem">v2026-07-06-c</span></div>
+  <div style="margin-top:1rem"><span class="badge">LIVE &mdash; TCI Research in Progress</span> <span style="font-size:.7rem;color:#94a3b8;margin-left:.5rem">v2026-07-06-live</span></div>
 
   <div id="offline-banner" style="display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:.5rem .8rem;margin-top:.5rem;font-size:.8rem;color:#991b1b">
   <strong>⚠️ Database Connection Issue:</strong> Supabase cannot read tournament data.<br>
@@ -6050,12 +6050,45 @@ function renderAllFromCache() {
     return tr;
   }
 
+  // Game notes for completed R16 matches
+  var _r16Notes = {
+    'R16-01': {winner_note: 'Morocco advanced convincingly from a Balanced group environment, defeating Canada 3-0 and capturing the Round of 16 financial stage delta.', loser_note: 'Canada exited after reaching the Round of 16 from a Suppressed environment. Its prize allocation is now locked at $15M.', highlight: 'Balanced-environment team beat Suppressed-environment team. Result supports the TCI observation that more competitive group environments may carry better into knockout intensity.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-02': {winner_note: 'France advanced from an Open group environment with a controlled 1-0 win, preserving survival and moving into the Quarterfinals.', loser_note: 'Paraguay exited from a Suppressed environment. Its tournament earnings are locked at $15M.', highlight: 'Open-environment team beat Suppressed-environment team. The result adds another observation where the more competitive group environment captured the next financial delta.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-03': {winner_note: 'Norway advanced from an Open environment, defeating Brazil 2-1 and earning the Round of 16 stage delta.', loser_note: 'Brazil exited despite coming from a Balanced environment. Its tournament prize is now locked at $15M.', highlight: 'This was not a Suppressed-versus-Open test. It was a competitive-environment matchup: Open beat Balanced. Norway\'s win strengthens the observed Open-environment survival trend.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-04': {winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.', loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.', highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6}
+  };
+  function _mkNoteRow(m) {
+    var n = _r16Notes[m.match_id];
+    if(!n) return null;
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="8" style="background:#f8fafc;padding:.75rem 1rem;border-left:3px solid #d4a843;font-size:.8rem;color:#334155;line-height:1.6">' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem">' +
+        '<div><strong style="color:#16a34a">Winner (' + m.winner + '):</strong> ' + n.winner_note + '</div>' +
+        '<div><strong style="color:#dc2626">Loser (' + (m.winner === m.team1 ? m.team2 : m.team1) + '):</strong> ' + n.loser_note + '</div>' +
+      '</div>' +
+      '<div style="background:#fefce8;border-left:3px solid #d4a843;padding:.5rem .75rem;margin:.3rem 0;border-radius:4px;font-size:.78rem"><strong>Research:</strong> ' + n.highlight + '</div>' +
+      '<div style="display:flex;gap:1.5rem;font-size:.75rem;color:#64748b;margin-top:.3rem;font-family:monospace">' +
+        '<span>Winner prize: $' + n.winner_prize + 'M (+$' + n.winner_delta + 'M)</span>' +
+        '<span>Loser locked: $' + n.loser_prize + 'M (+$' + n.loser_delta + 'M)</span>' +
+      '</div>' +
+    '</td>';
+    return tr;
+  }
+
   if(dbMatches.length > 0) {
     dbMatches.forEach(function(m) {
       if(m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') {
         r16T++;
-        if(m.winner) { r16C++; if(r16CompBody) r16CompBody.appendChild(makeRow(m)); }
-        else { if(r16UpBody) r16UpBody.appendChild(makeRow(m)); }
+        if(m.winner) {
+          r16C++;
+          if(r16CompBody) {
+            r16CompBody.appendChild(makeRow(m));
+            var nr = _mkNoteRow(m);
+            if(nr) r16CompBody.appendChild(nr);
+          }
+        } else {
+          if(r16UpBody) r16UpBody.appendChild(makeRow(m));
+        }
       } else if(m.stage === 'Round of 32' && rBody) {
         rBody.appendChild(makeRow(m));
       } else if(rBody) {
@@ -6352,12 +6385,62 @@ async function loadMatchesFromDB() {
     var r16Completed = 0;
     var r16Total = 0;
 
+    // Game notes for completed R16 matches (research narrative)
+    var r16GameNotes = {
+      'R16-01': {
+        winner_note: 'Morocco advanced convincingly from a Balanced group environment, defeating Canada 3-0 and capturing the Round of 16 financial stage delta.',
+        loser_note: 'Canada exited after reaching the Round of 16 from a Suppressed environment. Its prize allocation is now locked at $15M.',
+        highlight: 'Balanced-environment team beat Suppressed-environment team. Result supports the TCI observation that more competitive group environments may carry better into knockout intensity.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-02': {
+        winner_note: 'France advanced from an Open group environment with a controlled 1-0 win, preserving survival and moving into the Quarterfinals.',
+        loser_note: 'Paraguay exited from a Suppressed environment. Its tournament earnings are locked at $15M.',
+        highlight: 'Open-environment team beat Suppressed-environment team. The result adds another observation where the more competitive group environment captured the next financial delta.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-03': {
+        winner_note: 'Norway advanced from an Open environment, defeating Brazil 2-1 and earning the Round of 16 stage delta.',
+        loser_note: 'Brazil exited despite coming from a Balanced environment. Its tournament prize is now locked at $15M.',
+        highlight: 'This was not a Suppressed-versus-Open test. It was a competitive-environment matchup: Open beat Balanced. Norway\'s win strengthens the observed Open-environment survival trend.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-04': {
+        winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.',
+        loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.',
+        highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage. Mexico\'s two goals were scored by players associated with foreign professional development or foreign-league pathways.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      }
+    };
+
+    function createNotesRow(m) {
+      var note = r16GameNotes[m.match_id];
+      if(!note) return null;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td colspan="8" style="background:#f8fafc;padding:.75rem 1rem;border-left:3px solid #d4a843;font-size:.8rem;color:#334155;line-height:1.6">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem">' +
+          '<div><strong style="color:#16a34a">Winner (' + m.winner + '):</strong> ' + note.winner_note + '</div>' +
+          '<div><strong style="color:#dc2626">Loser (' + (m.winner === m.team1 ? m.team2 : m.team1) + '):</strong> ' + note.loser_note + '</div>' +
+        '</div>' +
+        '<div style="background:#fefce8;border-left:3px solid #d4a843;padding:.5rem .75rem;margin:.3rem 0;border-radius:4px;font-size:.78rem"><strong>Research:</strong> ' + note.highlight + '</div>' +
+        '<div style="display:flex;gap:1.5rem;font-size:.75rem;color:#64748b;margin-top:.3rem;font-family:monospace">' +
+          '<span>Winner prize: $' + note.winner_prize + 'M (+$' + note.winner_delta + 'M)</span>' +
+          '<span>Loser locked: $' + note.loser_prize + 'M (+$' + note.loser_delta + 'M)</span>' +
+        '</div>' +
+      '</td>';
+      return tr;
+    }
+
     matches.forEach(function(m) {
       if(m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') {
         r16Total++;
         if(m.winner) {
           r16Completed++;
-          if(r16CompletedBody) r16CompletedBody.appendChild(createResultRow(m));
+          if(r16CompletedBody) {
+            r16CompletedBody.appendChild(createResultRow(m));
+            var nRow = createNotesRow(m);
+            if(nRow) r16CompletedBody.appendChild(nRow);
+          }
         } else {
           if(r16UpcomingBody) r16UpcomingBody.appendChild(createResultRow(m));
         }
@@ -6385,10 +6468,14 @@ async function loadMatchesFromDB() {
       var loserName = (m.winner === m.team1) ? m.team2 : m.team1;
       var loserSeed = nameToSeed[loserName];
 
+      // Count teams whose status was resolved from match data
+      if(winnerSeed) updated++;
+      if(loserSeed) updated++;
+
       // Update teamExportData for exports and data consistency
       if(winnerSeed) {
         var idx = teamExportData.findIndex(function(x) { return x.seed === winnerSeed; });
-        if(idx >= 0) { teamExportData[idx].knockout = (m.stage || 'Advanced') + ' - Winner'; updated++; }
+        if(idx >= 0) teamExportData[idx].knockout = (m.stage || 'Advanced') + ' - Winner';
       }
       if(loserSeed) {
         var idx2 = teamExportData.findIndex(function(x) { return x.seed === loserSeed; });
@@ -6406,7 +6493,7 @@ async function loadMatchesFromDB() {
       }
     });
 
-    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed &mdash; ' + updated + ' teams updated</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
+    showLoadStatus('<div style="background:#dcfce7;border:1px solid #86efac;border-radius:6px;padding:.5rem .8rem;font-size:.8rem;color:#166534"><strong>' + completedCount + ' of ' + matches.length + ' matches completed &mdash; ' + updated + ' team status resolved</strong><br><span style="font-size:11px;color:#64748b">' + formatTimestamp() + '</span></div>','ok');
 
     // Trigger all dependent renders now that match data is loaded
     console.log('loadMatchesFromDB: triggering renders...');
