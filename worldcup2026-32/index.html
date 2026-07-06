@@ -4182,17 +4182,15 @@ function renderContinentalAdvancementYield() {
     console.log('  row:', d.continentLabel, 'orig=' + d.original_teams, 'alive=' + d.teams_alive, 'r16=' + d.teams_reached_r16_or_deeper, 'cae=' + d.cae);
     var caeColor = parseFloat(d.cae) >= 50 ? '#16a34a' : (parseFloat(d.cae) >= 25 ? '#f59e0b' : '#dc2626');
     var cerColor = parseFloat(d.cer) >= 100 ? '#16a34a' : '#dc2626';
+    var avgPrize = d.original_teams > 0 ? (d.current_total_prize / d.original_teams) : 0;
+    var finShare = d.current_total_prize > 0 ? (d.current_total_prize / results.reduce(function(s,r){return s+r.current_total_prize},0)) : 0;
     rowsHtml += '<tr>' +
       '<td><strong>' + d.continentFlag + ' ' + d.continentLabel + '</strong></td>' +
       '<td>' + d.original_teams + '</td>' +
-      '<td style="color:#16a34a;font-weight:700">' + d.teams_alive + '</td>' +
-      '<td style="color:#f59e0b">' + d.teams_pending + '</td>' +
-      '<td style="color:#dc2626">' + d.teams_eliminated + '</td>' +
-      '<td style="color:#0f172a;font-weight:700">' + d.teams_reached_r16_or_deeper + '</td>' +
-      '<td style="color:' + caeColor + ';font-weight:700">' + d.cae + '%</td>' +
-      '<td>$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</td>' +
-      '<td>$' + Number(d.advancement_yield_per_team).toFixed(1) + 'M</td>' +
       '<td>$' + Number(d.current_total_prize).toFixed(1) + 'M</td>' +
+      '<td>$' + Number(d.incremental_advancement_value).toFixed(1) + 'M</td>' +
+      '<td>$' + avgPrize.toFixed(1) + 'M</td>' +
+      '<td>' + (finShare * 100).toFixed(1) + '%</td>' +
       '<td style="color:' + cerColor + ';font-weight:700">' + d.cer + '%</td>' +
       '<td style="font-weight:700">' + d.fsr + '%</td>' +
     '</tr>';
