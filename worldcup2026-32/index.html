@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>          
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -481,7 +481,7 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <!-- ==================== KNOCKOUT RESULTS ==================== -->
 <section id="results" class="stage-3-section">
   <details id="stage-3" open>
-    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active — Stage 3 (R16): 2 of 8 completed. R32 complete (16/16). Live results with scores, winners, upcoming fixtures.</span></summary>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127941; Active — Stage 3 (R16): split into completed and upcoming tables. R32 complete (16/16). Live results with scores, winners, upcoming fixtures.</span></summary>
     <div class="content-box">
       <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
 
@@ -506,9 +506,12 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
       </div>
 
       <!-- STAGE 3: Round of 16 Results -->
-      <h3 style="margin:1.5rem 0 .5rem;padding-bottom:.3rem;border-bottom:2px solid #d4a843;font-size:1rem;color:#0f172a">&#127941; Stage 3 — Round of 16 (Active: 4/8 completed)</h3>
+      <h3 style="margin:1.5rem 0 .5rem;padding-bottom:.3rem;border-bottom:2px solid #d4a843;font-size:1rem;color:#0f172a" id="r16-section-header">&#127941; Stage 3 — Round of 16</h3>
+
+      <!-- Completed R16 Matches -->
+      <h4 style="margin:1rem 0 .3rem;font-size:.9rem;color:#16a34a">&#9989; Completed <span id="r16-completed-count"></span></h4>
       <div class="table-container">
-        <table id="r16-results-table">
+        <table id="r16-completed-table">
           <thead><tr>
             <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
             <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
@@ -519,8 +522,28 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
             <th onclick="sortResults(6)" style="cursor:pointer">Winner &#8597;</th>
             <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
           </tr></thead>
-          <tbody id="r16-results-body">
-            <!-- R16 matches populated by loadMatchesFromDB() -->
+          <tbody id="r16-completed-body">
+            <!-- Completed R16 matches populated by loadMatchesFromDB() -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Upcoming R16 Matches -->
+      <h4 style="margin:1rem 0 .3rem;font-size:.9rem;color:#d4a843">&#9203; Upcoming <span id="r16-upcoming-count"></span></h4>
+      <div class="table-container">
+        <table id="r16-upcoming-table">
+          <thead><tr>
+            <th onclick="sortResults(0)" style="cursor:pointer">Match &#8597;</th>
+            <th onclick="sortResults(1)" style="cursor:pointer">Stage &#8597;</th>
+            <th onclick="sortResults(2)" style="cursor:pointer">Date &#8597;</th>
+            <th onclick="sortResults(3)" style="cursor:pointer">Team 1 &#8597;</th>
+            <th onclick="sortResults(4)" style="cursor:pointer">Score &#8597;</th>
+            <th onclick="sortResults(5)" style="cursor:pointer">Team 2 &#8597;</th>
+            <th onclick="sortResults(6)" style="cursor:pointer">Status &#8597;</th>
+            <th onclick="sortResults(7)" style="cursor:pointer">Notes &#8597;</th>
+          </tr></thead>
+          <tbody id="r16-upcoming-body">
+            <!-- Upcoming R16 matches populated by loadMatchesFromDB() -->
           </tbody>
         </table>
       </div>
@@ -5997,27 +6020,53 @@ function renderAllFromCache() {
     });
   }
 
-  // Rebuild results table
+  // Rebuild results tables (R32 + split R16 into completed/upcoming)
   var rBody = document.getElementById('results-body');
-  if(rBody && dbMatches.length > 0) {
-    rBody.innerHTML = '';
+  var r16CompBody = document.getElementById('r16-completed-body');
+  var r16UpBody = document.getElementById('r16-upcoming-body');
+  var r16CompCount = document.getElementById('r16-completed-count');
+  var r16UpCount = document.getElementById('r16-upcoming-count');
+  var r16Hdr = document.getElementById('r16-section-header');
+  if(rBody) rBody.innerHTML = '';
+  if(r16CompBody) r16CompBody.innerHTML = '';
+  if(r16UpBody) r16UpBody.innerHTML = '';
+
+  var r16C = 0, r16T = 0;
+
+  function makeRow(m) {
+    var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
+    var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
+    var winnerClass = m.winner ? 'result-win' : 'result-pending';
+    var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
+      '<td>' + (m.stage || 'TBD') + '</td>' +
+      '<td>' + (m.date || 'TBD') + '</td>' +
+      '<td><strong>' + (m.team1 || '') + '</strong></td>' +
+      '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
+      '<td><strong>' + (m.team2 || '') + '</strong></td>' +
+      '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' \u2705 Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
+      '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
+    return tr;
+  }
+
+  if(dbMatches.length > 0) {
     dbMatches.forEach(function(m) {
-      var hasScore = (m.score1 !== null && m.score1 !== undefined && m.score2 !== null && m.score2 !== undefined);
-      var scoreDisplay = hasScore ? (m.score1 + ' - ' + m.score2) : 'vs';
-      var winnerClass = m.winner ? 'result-win' : 'result-pending';
-      var penaltyInfo = (m.penalty_score1 !== null && m.penalty_score2 !== null) ? (' (P: ' + m.penalty_score1 + '-' + m.penalty_score2 + ')') : '';
-      var tr = document.createElement('tr');
-      tr.innerHTML = '<td><strong>' + (m.match_id || '') + '</strong></td>' +
-        '<td>' + (m.stage || 'TBD') + '</td>' +
-        '<td>' + (m.date || 'TBD') + '</td>' +
-        '<td><strong>' + (m.team1 || '') + '</strong></td>' +
-        '<td style="text-align:center;font-weight:700;">' + scoreDisplay + penaltyInfo + '</td>' +
-        '<td><strong>' + (m.team2 || '') + '</strong></td>' +
-        '<td class="' + winnerClass + '">' + (m.winner ? m.winner + ' \u2705 Completed' : (m.date ? 'Plays ' + (function(s){var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],p=s.split("-");return M[parseInt(p[1],10)-1]+" "+p[2];})(m.date) : "Not Played")) + '</td>' +
-        '<td style="font-size:11px;color:#64748b;">' + (m.notes || '') + '</td>';
-      rBody.appendChild(tr);
+      if(m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') {
+        r16T++;
+        if(m.winner) { r16C++; if(r16CompBody) r16CompBody.appendChild(makeRow(m)); }
+        else { if(r16UpBody) r16UpBody.appendChild(makeRow(m)); }
+      } else if(m.stage === 'Round of 32' && rBody) {
+        rBody.appendChild(makeRow(m));
+      } else if(rBody) {
+        rBody.appendChild(makeRow(m));
+      }
     });
   }
+
+  if(r16Hdr) r16Hdr.innerHTML = '&#127941; Stage 3 — Round of 16 (Active: ' + r16C + '/' + (r16T > 0 ? r16T : 8) + ' completed)';
+  if(r16CompCount) r16CompCount.textContent = '(' + r16C + ')';
+  if(r16UpCount) r16UpCount.textContent = '(' + (r16T - r16C) + ')';
 
   // Render KPI sections
   try { renderKPIReport(); } catch(e) { console.error('renderKPIReport error:', e); }
@@ -6290,21 +6339,40 @@ async function loadMatchesFromDB() {
     }
 
     var rBody = document.getElementById('results-body');
-    var r16Body = document.getElementById('r16-results-body');
+    var r16CompletedBody = document.getElementById('r16-completed-body');
+    var r16UpcomingBody = document.getElementById('r16-upcoming-body');
+    var r16CompletedCount = document.getElementById('r16-completed-count');
+    var r16UpcomingCount = document.getElementById('r16-upcoming-count');
+    var r16SectionHeader = document.getElementById('r16-section-header');
     if(rBody) rBody.innerHTML = '';
-    if(r16Body) r16Body.innerHTML = '';
+    if(r16CompletedBody) r16CompletedBody.innerHTML = '';
+    if(r16UpcomingBody) r16UpcomingBody.innerHTML = '';
+
+    // Counters for R16 split
+    var r16Completed = 0;
+    var r16Total = 0;
 
     matches.forEach(function(m) {
-      var row = createResultRow(m);
-      if(m.stage === 'Round of 32' && rBody) {
-        rBody.appendChild(row);
-      } else if((m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') && r16Body) {
-        r16Body.appendChild(row);
+      if(m.stage === 'Round of 16' || m.stage === 'Quarter-Finals' || m.stage === 'Semi-Finals' || m.stage === 'Final') {
+        r16Total++;
+        if(m.winner) {
+          r16Completed++;
+          if(r16CompletedBody) r16CompletedBody.appendChild(createResultRow(m));
+        } else {
+          if(r16UpcomingBody) r16UpcomingBody.appendChild(createResultRow(m));
+        }
+      } else if(m.stage === 'Round of 32' && rBody) {
+        rBody.appendChild(createResultRow(m));
       } else if(rBody) {
         // Fallback: if stage unrecognized, put in R32 table
-        rBody.appendChild(row);
+        rBody.appendChild(createResultRow(m));
       }
     });
+
+    // Update R16 section header and counts
+    if(r16SectionHeader) r16SectionHeader.innerHTML = '&#127941; Stage 3 — Round of 16 (Active: ' + r16Completed + '/' + (r16Total > 0 ? r16Total : 8) + ' completed)';
+    if(r16CompletedCount) r16CompletedCount.textContent = '(' + r16Completed + ')';
+    if(r16UpcomingCount) r16UpcomingCount.textContent = '(' + (r16Total - r16Completed) + ')';
 
     // Update teamExportData from match results (DOM updates handled by applyMatchResultsToKOTable after render)
     var updated = 0;
