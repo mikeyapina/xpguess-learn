@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>        
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -5844,7 +5844,7 @@ var dbMatches = [];
 
 // ===== LOCALSTORAGE CACHE =====
 var LOCAL_CACHE_KEY = 'wc2026_tci_cache';
-var CACHE_VERSION = '1.0';
+var CACHE_VERSION = '1.1'; // Bumped 2026-07-06 to force fresh load after R16-05/06 results
 
 function saveToLocalCache() {
   // Deep clone groups to ensure standings are serializable
@@ -6055,7 +6055,9 @@ function renderAllFromCache() {
     'R16-01': {winner_note: 'Morocco advanced convincingly from a Balanced group environment, defeating Canada 3-0 and capturing the Round of 16 financial stage delta.', loser_note: 'Canada exited after reaching the Round of 16 from a Suppressed environment. Its prize allocation is now locked at $15M.', highlight: 'Balanced-environment team beat Suppressed-environment team. Result supports the TCI observation that more competitive group environments may carry better into knockout intensity.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
     'R16-02': {winner_note: 'France advanced from an Open group environment with a controlled 1-0 win, preserving survival and moving into the Quarterfinals.', loser_note: 'Paraguay exited from a Suppressed environment. Its tournament earnings are locked at $15M.', highlight: 'Open-environment team beat Suppressed-environment team. The result adds another observation where the more competitive group environment captured the next financial delta.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
     'R16-03': {winner_note: 'Norway advanced from an Open environment, defeating Brazil 2-1 and earning the Round of 16 stage delta.', loser_note: 'Brazil exited despite coming from a Balanced environment. Its tournament prize is now locked at $15M.', highlight: 'This was not a Suppressed-versus-Open test. It was a competitive-environment matchup: Open beat Balanced. Norway\'s win strengthens the observed Open-environment survival trend.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
-    'R16-04': {winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.', loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.', highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6}
+    'R16-04': {winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.', loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.', highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-05': {winner_note: 'Spain advanced from an Open environment, defeating Portugal 1-0. Iberian derby goes to the team with stronger group-stage competitive intensity.', loser_note: 'Portugal exited from an Open environment. Its tournament prize is now locked at $15M.', highlight: 'Open vs Open: the team with stronger recent competitive intensity (Spain) advanced. Both teams came from competitive group environments, but Spain matched its group performance into knockout success.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-06': {winner_note: 'Belgium advanced from a Suppressed environment, defeating USA 4-1. This is the first Suppressed-environment Quarterfinalist under the original classification.', loser_note: 'USA exited from a Suppressed environment. Its tournament prize is now locked at $15M.', highlight: 'Suppressed-environment team advances for the first time. Belgium 4-1 USA breaks the Open/Balanced monopoly on QF spots. Stage delta captured regardless of environment label.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6}
   };
   function _mkNoteRow(m) {
     var n = _r16Notes[m.match_id];
@@ -6409,6 +6411,18 @@ async function loadMatchesFromDB() {
         winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.',
         loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.',
         highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage. Mexico\'s two goals were scored by players associated with foreign professional development or foreign-league pathways.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-05': {
+        winner_note: 'Spain advanced from an Open environment, defeating Portugal 1-0. Iberian derby goes to the team with stronger group-stage competitive intensity.',
+        loser_note: 'Portugal exited from an Open environment. Its tournament prize is now locked at $15M.',
+        highlight: 'Open vs Open: the team with stronger recent competitive intensity (Spain) advanced. Both teams came from competitive group environments, but Spain matched its group performance into knockout success.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-06': {
+        winner_note: 'Belgium advanced from a Suppressed environment, defeating USA 4-1. This is the first Suppressed-environment Quarterfinalist under the original classification.',
+        loser_note: 'USA exited from a Suppressed environment. Its tournament prize is now locked at $15M.',
+        highlight: 'Suppressed-environment team advances for the first time. Belgium 4-1 USA breaks the Open/Balanced monopoly on QF spots. Stage delta captured regardless of environment label.',
         winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
       }
     };
