@@ -5844,7 +5844,7 @@ var dbMatches = [];
 
 // ===== LOCALSTORAGE CACHE =====
 var LOCAL_CACHE_KEY = 'wc2026_tci_cache';
-var CACHE_VERSION = '1.1'; // Bumped 2026-07-06 to force fresh load after R16-05/06 results
+var CACHE_VERSION = '1.2'; // Bumped 2026-07-07 — R16 COMPLETE, all 8 QF teams confirmed
 
 function saveToLocalCache() {
   // Deep clone groups to ensure standings are serializable
@@ -6057,7 +6057,9 @@ function renderAllFromCache() {
     'R16-03': {winner_note: 'Norway advanced from an Open environment, defeating Brazil 2-1 and earning the Round of 16 stage delta.', loser_note: 'Brazil exited despite coming from a Balanced environment. Its tournament prize is now locked at $15M.', highlight: 'This was not a Suppressed-versus-Open test. It was a competitive-environment matchup: Open beat Balanced. Norway\'s win strengthens the observed Open-environment survival trend.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
     'R16-04': {winner_note: 'England advanced from an Open group environment despite playing most of the second half plus stoppage time with 10 players after a red card.', loser_note: 'Mexico exited after failing to convert a long numerical advantage into advancement. Its prize allocation is now locked at $15M.', highlight: 'Suppressed-environment team failed to advance despite home field, two goals, and a manpower advantage.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
     'R16-05': {winner_note: 'Spain advanced from an Open environment, defeating Portugal 1-0. Iberian derby goes to the team with stronger group-stage competitive intensity.', loser_note: 'Portugal exited from an Open environment. Its tournament prize is now locked at $15M.', highlight: 'Open vs Open: the team with stronger recent competitive intensity (Spain) advanced. Both teams came from competitive group environments, but Spain matched its group performance into knockout success.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
-    'R16-06': {winner_note: 'Belgium advanced from a Suppressed environment, defeating USA 4-1. This is the first Suppressed-environment Quarterfinalist under the original classification.', loser_note: 'USA exited from a Suppressed environment. Its tournament prize is now locked at $15M.', highlight: 'Suppressed-environment team advances for the first time. Belgium 4-1 USA breaks the Open/Balanced monopoly on QF spots. Stage delta captured regardless of environment label.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6}
+    'R16-06': {winner_note: 'Belgium advanced from a Suppressed environment, defeating USA 4-1. This is the first Suppressed-environment Quarterfinalist under the original classification.', loser_note: 'USA exited from a Suppressed environment. Its tournament prize is now locked at $15M.', highlight: 'Suppressed-environment team advances for the first time. Belgium 4-1 USA breaks the Open/Balanced monopoly on QF spots. Stage delta captured regardless of environment label.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-07': {winner_note: 'Argentina survived a difficult knockout match, defeating Egypt 3-2. The defending champions pushed to the limit but found a way to advance.', loser_note: 'Egypt exited after pushing Argentina to the brink. Its tournament prize is locked at $15M.', highlight: 'Controversial VAR intervention became a major talking point. Egypt pushed the defending champions to the limit — a reminder that knockout margins are thin regardless of group environment classification.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6},
+    'R16-08': {winner_note: 'Switzerland 0-0 Colombia AET, won 4-3 on penalties. First World Cup Quarterfinal since 1954. Gregor Kobel made decisive saves during the shootout.', loser_note: 'Colombia created several dangerous chances during open play but could not score. Its tournament prize is locked at $15M.', highlight: 'First documented high-variance decision node in the TCI dataset. Switzerland advances on penalties — the method of victory varied, but the stage delta capture remained constant. First Suppressed-environment team to advance via shootout.', winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6}
   };
   function _mkNoteRow(m) {
     var n = _r16Notes[m.match_id];
@@ -6423,6 +6425,18 @@ async function loadMatchesFromDB() {
         winner_note: 'Belgium advanced from a Suppressed environment, defeating USA 4-1. This is the first Suppressed-environment Quarterfinalist under the original classification.',
         loser_note: 'USA exited from a Suppressed environment. Its tournament prize is now locked at $15M.',
         highlight: 'Suppressed-environment team advances for the first time. Belgium 4-1 USA breaks the Open/Balanced monopoly on QF spots. Stage delta captured regardless of environment label.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-07': {
+        winner_note: 'Argentina survived a difficult knockout match, defeating Egypt 3-2. The defending champions pushed to the limit but found a way to advance.',
+        loser_note: 'Egypt exited after pushing Argentina to the brink. Its tournament prize is locked at $15M.',
+        highlight: 'Controversial VAR intervention became a major talking point. Egypt pushed the defending champions to the limit — a reminder that knockout margins are thin regardless of group environment classification.',
+        winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
+      },
+      'R16-08': {
+        winner_note: 'Switzerland 0-0 Colombia AET, won 4-3 on penalties. First World Cup Quarterfinal since 1954. Gregor Kobel made decisive saves during the shootout.',
+        loser_note: 'Colombia created several dangerous chances during open play but could not score. Its tournament prize is locked at $15M.',
+        highlight: 'First documented high-variance decision node in the TCI dataset. Switzerland advances on penalties — the method of victory varied, but the stage delta capture remained constant. First Suppressed-environment team to advance via shootout.',
         winner_prize: 19, winner_delta: 10, loser_prize: 15, loser_delta: 6
       }
     };
