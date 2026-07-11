@@ -1,4 +1,4 @@
-we are fxi this websote with new data <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -783,6 +783,155 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 }
 </script>
 
+
+<style id="ntg-dark-phase-theme">
+:root{
+  --ntg-bg:#07111f;
+  --ntg-panel:#0d1b2a;
+  --ntg-panel-2:#12263a;
+  --ntg-line:#27405a;
+  --ntg-text:#e8eef5;
+  --ntg-muted:#9fb0c3;
+  --ntg-gold:#d4a843;
+  --ntg-gold-2:#f0c96a;
+  --ntg-green:#22c55e;
+  --ntg-red:#ef4444;
+  --ntg-blue:#60a5fa;
+}
+html,body{background:var(--ntg-bg)!important;color:var(--ntg-text)!important}
+body{
+  background:
+    radial-gradient(circle at 10% 0%,rgba(30,64,175,.18),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(212,168,67,.10),transparent 24%),
+    linear-gradient(180deg,#07111f 0%,#091522 100%)!important;
+}
+main{
+  background:rgba(7,17,31,.90)!important;
+  border:1px solid var(--ntg-line)!important;
+  box-shadow:0 20px 60px rgba(0,0,0,.35)!important;
+}
+h1,h2,h3,h4,strong,.team-cell{color:var(--ntg-text)!important}
+p,.card-label,.note,footer,.compliance{color:var(--ntg-muted)!important}
+a{color:var(--ntg-gold-2)!important}
+hr,.phase-divider{border-color:var(--ntg-line)!important;background:var(--ntg-gold)!important}
+.card,
+.content-box,
+.table-container,
+.auth-box,
+#toc,
+#prize-truth-panel,
+#machine-readable-data details,
+details.accordion-section>summary,
+details>summary,
+section>div{
+  background:linear-gradient(180deg,rgba(18,38,58,.98),rgba(13,27,42,.98))!important;
+  border-color:var(--ntg-line)!important;
+  color:var(--ntg-text)!important;
+}
+.card{
+  box-shadow:0 12px 28px rgba(0,0,0,.24)!important;
+}
+.card-title{color:var(--ntg-gold-2)!important}
+.card-value{color:#fff!important}
+.update-note,
+#data-loading,
+#data-error,
+#db-error,
+#db-status,
+#offline-banner{
+  background:#102236!important;
+  border-color:var(--ntg-line)!important;
+  color:var(--ntg-text)!important;
+}
+table{background:var(--ntg-panel)!important;color:var(--ntg-text)!important}
+thead th{
+  background:#050d17!important;
+  color:var(--ntg-gold-2)!important;
+  border-bottom:1px solid var(--ntg-line)!important;
+}
+tbody td{
+  border-bottom:1px solid rgba(39,64,90,.65)!important;
+  color:var(--ntg-text)!important;
+}
+tbody tr:hover td{background:#162b40!important}
+input,select,textarea{
+  background:#08131f!important;
+  color:#fff!important;
+  border-color:var(--ntg-line)!important;
+}
+button{
+  background:#08131f!important;
+  color:var(--ntg-gold-2)!important;
+  border:1px solid var(--ntg-line)!important;
+}
+button:hover{border-color:var(--ntg-gold)!important}
+.badge{background:var(--ntg-gold)!important;color:#07111f!important}
+.progress-bar{background:#1e3348!important}
+.progress-fill{background:linear-gradient(90deg,var(--ntg-gold),var(--ntg-gold-2))!important}
+.gei-open{background:#123b2a!important;color:#8af0b5!important}
+.gei-suppressed{background:#3b1720!important;color:#ff9aaa!important}
+.gei-inverted{background:#4a2813!important;color:#ffc089!important}
+.gei-dominant{background:#172c50!important;color:#9fc1ff!important}
+.result-win{color:#4ade80!important}
+.result-loss{color:#f87171!important}
+.result-pending{color:#94a3b8!important}
+.formula-box,
+#epi-headline,
+#fsi-scorecard,
+#financial-delta-analysis,
+#cont-analysis,
+#cay-analysis,
+#goal-analysis{
+  background:#08131f!important;
+  border-color:var(--ntg-line)!important;
+  color:var(--ntg-text)!important;
+}
+pre{
+  background:#030912!important;
+  color:#dbeafe!important;
+  border:1px solid var(--ntg-line)!important;
+}
+.modal{
+  background:var(--ntg-panel)!important;
+  color:var(--ntg-text)!important;
+  border:1px solid var(--ntg-line)!important;
+}
+#auth-modal>div{
+  background:var(--ntg-panel)!important;
+  color:var(--ntg-text)!important;
+}
+#final-verdict>div{
+  background:linear-gradient(135deg,#0a1828,#10263b)!important;
+  border-color:var(--ntg-gold)!important;
+}
+#final-verdict a{
+  background:#0d1b2a!important;
+  border-color:var(--ntg-line)!important;
+}
+#final-verdict a:hover{background:#142b42!important}
+canvas{background:#08131f!important;border-radius:8px}
+.phase-banner{
+  background:linear-gradient(90deg,#0a1828,#17324d)!important;
+  border:1px solid var(--ntg-gold)!important;
+  color:#fff!important;
+  border-radius:12px;
+  padding:1rem 1.2rem;
+  margin:1rem 0 1.4rem;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.phase-banner .phase-title{
+  color:var(--ntg-gold-2)!important;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:.78rem;
+}
+.phase-banner .phase-copy{color:#d7e2ee!important;font-size:.9rem;margin-top:.25rem}
+@media(max-width:768px){
+  main{margin:0!important;border-radius:0!important;padding:18px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -796,6 +945,14 @@ details.toggle-section>summary::-webkit-details-marker{display:none}
 <hr>
 
 <header>
+
+<div class="phase-banner">
+  <div class="phase-title">New Phase — Quarterfinal Data Architecture</div>
+  <div class="phase-copy">
+    The visual system has shifted to the dark NTG research interface, while the underlying model remains the full TCI dataset, metrics, exports, and machine-readable JSON already generated.
+  </div>
+</div>
+
   <p style="font-size:.8rem;color:#94a3b8;margin-bottom:.5rem">Tournament Analytics / Research Dashboard</p>
   <h1>World Cup 2026 TCI Dashboard</h1>
   <p class="lede">Measuring how group-stage competitive environments influence knockout performance. SPI, GEI, and TCI framework &mdash; open data, reproducible methodology.</p>
