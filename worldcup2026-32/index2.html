@@ -1,4 +1,4 @@
-<!doctype html>
+we are fxi this websote with new data <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -1064,6 +1064,233 @@ canvas{
 }
 </style>
 
+
+<style id="ntg-visibility-fixes-20260710">
+/* XPGuess logo: restore a clearly visible masthead scale */
+.brand-row{
+  min-height:110px!important;
+  margin-bottom:22px!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.brand-row img{
+  height:118px!important;
+  width:auto!important;
+  max-width:380px!important;
+  object-fit:contain!important;
+  display:block!important;
+  filter:invert(1) brightness(1.35)!important;
+}
+
+/* Remove native browser disclosure triangles everywhere */
+details > summary{
+  list-style:none!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  position:relative!important;
+}
+details > summary::-webkit-details-marker{
+  display:none!important;
+}
+details > summary::marker{
+  content:""!important;
+  display:none!important;
+}
+
+/* Full-width application accordions: clean right-side chevron */
+section > details > summary,
+details.accordion-section > summary{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  column-gap:20px!important;
+  padding:22px 64px 22px 24px!important;
+  background:#fff!important;
+  border:1px solid #d8e2ec!important;
+  border-radius:14px!important;
+  box-shadow:0 6px 22px rgba(7,17,31,.05)!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+}
+section > details > summary::after,
+details.accordion-section > summary::after{
+  content:"+"!important;
+  position:absolute!important;
+  right:22px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:32px!important;
+  height:32px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#07111f!important;
+  color:#f0c766!important;
+  font-size:1.35rem!important;
+  font-weight:900!important;
+  line-height:1!important;
+  transition:transform .18s ease, background .18s ease!important;
+}
+section > details[open] > summary::after,
+details.accordion-section[open] > summary::after{
+  content:"−"!important;
+  transform:translateY(-50%)!important;
+}
+section > details > summary:hover::after,
+details.accordion-section > summary:hover::after{
+  background:#10233b!important;
+}
+section > details > summary h2,
+details.accordion-section > summary h2{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  color:#07111f!important;
+  font-size:1.55rem!important;
+  line-height:1.2!important;
+}
+section > details > summary > span,
+details.accordion-section > summary > span{
+  margin:0!important;
+  color:#53657c!important;
+  font-size:.9rem!important;
+  line-height:1.45!important;
+  text-align:right!important;
+  max-width:720px!important;
+}
+
+/* Small in-card toggles: compact visible controls, no stray triangles */
+details.toggle-section > summary{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:.5rem!important;
+  padding:.5rem .9rem!important;
+  background:#07111f!important;
+  color:#f0c766!important;
+  border:1px solid #35506f!important;
+  border-radius:8px!important;
+  font-weight:800!important;
+}
+details.toggle-section > summary::after{
+  content:"+"!important;
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  background:transparent!important;
+  color:#f0c766!important;
+  transform:none!important;
+  font-size:1rem!important;
+}
+details.toggle-section[open] > summary::after{
+  content:"−"!important;
+}
+
+/* Status bars: force high-contrast dark text on light semantic backgrounds */
+#db-status,
+#data-loading,
+#data-error,
+#db-error,
+#offline-banner,
+.hero #db-status,
+.hero #data-loading,
+.hero #data-error,
+.hero #db-error,
+.hero #offline-banner{
+  font-weight:600!important;
+}
+#db-status,
+.hero #db-status{
+  background:#dcfce7!important;
+  border-color:#4ade80!important;
+  color:#14532d!important;
+}
+#data-loading,
+.hero #data-loading{
+  background:#dbeafe!important;
+  border-color:#60a5fa!important;
+  color:#1e3a8a!important;
+}
+#data-error,
+#db-error,
+.hero #data-error,
+.hero #db-error{
+  background:#fef3c7!important;
+  border-color:#f59e0b!important;
+  color:#78350f!important;
+}
+#offline-banner,
+.hero #offline-banner{
+  background:#fee2e2!important;
+  border-color:#ef4444!important;
+  color:#7f1d1d!important;
+}
+#db-status *,
+#data-loading *,
+#data-error *,
+#db-error *,
+#offline-banner *,
+.hero #db-status *,
+.hero #data-loading *,
+.hero #data-error *,
+.hero #db-error *,
+.hero #offline-banner *{
+  color:inherit!important;
+}
+
+/* Canonical overlay box: readable dark green, never white-on-pale-green */
+.hero header > div[style*="background:#ecfdf5"],
+header > div[style*="background:#ecfdf5"]{
+  background:#dcfce7!important;
+  border-color:#4ade80!important;
+  color:#14532d!important;
+  font-weight:600!important;
+}
+.hero header > div[style*="background:#ecfdf5"] *,
+header > div[style*="background:#ecfdf5"] *{
+  color:#14532d!important;
+}
+
+/* Runtime progress/status message that was rendering white on pale green */
+.hero [style*="background:#dcfce7"],
+.hero [style*="background:#ecfdf5"]{
+  color:#14532d!important;
+}
+.hero [style*="background:#dcfce7"] *,
+.hero [style*="background:#ecfdf5"] *{
+  color:#14532d!important;
+}
+
+/* Avoid clipping long accordion status lines */
+section > details,
+details.accordion-section{
+  overflow:visible!important;
+}
+section > details > summary > span{
+  white-space:normal!important;
+}
+
+/* Mobile */
+@media(max-width:760px){
+  .brand-row{min-height:82px!important}
+  .brand-row img{height:78px!important;max-width:280px!important}
+  section > details > summary,
+  details.accordion-section > summary{
+    grid-template-columns:1fr!important;
+    padding:18px 58px 18px 18px!important;
+  }
+  section > details > summary > span,
+  details.accordion-section > summary > span{
+    text-align:left!important;
+    margin-top:6px!important;
+  }
+  section > details > summary h2,
+  details.accordion-section > summary h2{
+    font-size:1.2rem!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="tip-popup" id="tip-popup"><span id="tip-text"></span></div>
@@ -1414,7 +1641,7 @@ canvas{
 <!-- ==================== KNOCKOUT RESULTS ==================== -->
 <section id="results" class="stage-3-section">
   <details id="stage-3" open>
-    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127942; ACTIVE — Stage 4 (QF): 0/4 completed. R16 COMPLETE (8/8). Live results with scores, winners, game notes, upcoming fixtures.</span></summary>
+    <summary><h2 data-i18n="knockoutResults">&#127942; Knockout Results — Match by Match</h2><span style="font-size:.8rem;color:#64748b;display:block;margin-top:.2rem">&#127942; ACTIVE — Stage 4 (QF): 2/4 completed. R16 COMPLETE (8/8). Live results with scores, winners, game notes, upcoming fixtures.</span></summary>
     <div class="content-box">
       <p>Live results from Round of 32 through the Final. <strong>Updates automatically from your Supabase database.</strong></p>
 
