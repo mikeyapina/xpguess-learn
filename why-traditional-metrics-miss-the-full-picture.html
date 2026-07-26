@@ -124,6 +124,7 @@
   }
   </script>
 <base target="_blank">
+<base target="_blank">
 </head>
 
 <body>
@@ -146,15 +147,12 @@
       <p class="kicker">XPGuess Learn • Evaluation Context • Bias Reduction • Governance • Educational Only</p>
       <h1>Why Traditional Metrics Miss the Full Picture</h1>
       <p class="lede">
-        Most athlete evaluation systems rely on surface-level indicators. Even when statistics are involved,
-        they are often treated as isolated snapshots—a single match, a short window, a moment in time.
-        The problem is not a lack of data. It is a lack of structured, continuous, athlete-owned records
-        that begin before an athlete ever enters an organized system.
+        Every AI tool in sport assumes the data already exists. At the SportzNext India summit, we learned that an estimated 65 million athletes in India alone have no digital trail. SAI officially tracks roughly 9,000. The gap is not a shortage of talent. It is a missing data layer at the grassroots level — and every analytics stack built above it is analyzing air.
       </p>
       <p class="callout">
         <strong>Key point:</strong> Metrics can be useful, but without context and continuity they create false confidence.
         The missing layer is a reviewable, governed record of process, constraints, and learning over time.
-        This article describes what NTG's current data model actually records—not what it aspires to become.
+        This article describes what NTG's current data model actually records — not what it aspires to become.
       </p>
     </header>
 
@@ -178,17 +176,11 @@
     <h2 id="problem">The Problem Isn’t a Lack of Data</h2>
 
     <p>
-      The gap is context and continuity. Traditional systems rarely capture the decisions an athlete made,
-      the conditions those decisions were made under, or how learning evolves over time.
+      The sports technology market is saturated with performance analytics, biomechanical sensors, and AI scouting tools. All of them depend on one assumption: that structured athlete data is already being collected. It is not.
     </p>
 
     <p>
-      At the SportzNext AI Summit in India, the Sports Authority of India (SAI) described monitoring approximately
-      9,000 elite athletes across 24 National Centres of Excellence. Every AI tool demonstrated—video analytics,
-      biomechanics, neuro-athletics, scouting intelligence—assumed structured data already existed for those athletes.
-      Yet an estimated 65 million grassroots youth in India alone operate outside any formal data pipeline.
-      The same pattern repeats globally: federations, clubs, and technology vendors optimize for athletes already
-      inside the system, while the majority remain invisible.
+      At the SportzNext AI Summit in India, the Sports Authority of India (SAI) described monitoring approximately 9,000 elite athletes across 24 National Centres of Excellence. Every AI tool demonstrated — video analytics, biomechanics, neuro-athletics, scouting intelligence — assumed structured data already existed for those athletes. Yet an estimated 65 million grassroots youth in India alone operate outside any formal data pipeline. The same pattern repeats globally: federations, clubs, and technology vendors optimize for athletes already inside the system, while the majority remain invisible.
     </p>
 
     <div class="card" role="note" aria-label="Where evaluation becomes vulnerable">
@@ -204,9 +196,11 @@
     </div>
 
     <p>
-      Even “objective” stats become misleading when role expectations, opponent strength, fatigue,
-      injuries, coaching instructions, or eligibility constraints are missing from the story. And when the data is
-      owned by the institution rather than the athlete, the record itself can be lost, altered, or withheld.
+      Even “objective” stats become misleading when role expectations, opponent strength, fatigue, injuries, coaching instructions, or eligibility constraints are missing from the story. And when the data is owned by the institution rather than the athlete, the record itself can be lost, altered, or withheld.
+    </p>
+
+    <p>
+      This is not a developing-market problem. It is a structural problem. The same gap exists in Mexico, in the United States, and in every nation that aspires to be a global sporting power. The difference is only the size of the denominator.
     </p>
 
     <hr>
@@ -214,8 +208,7 @@
     <h2 id="current-model">What NTG's Data Model Records Today</h2>
 
     <p>
-      NTG is not described here as a future platform. The following is what its current implementation produces.
-      Every object below is extracted from the actual JSON that NTG stores after an athlete submits a training session.
+      NTG is not described here as a future platform. The following is what its current implementation produces. Every object below is extracted from the actual JSON schema that NTG stores after an athlete submits a training session. No aspirational fields are included. If it is not in production JSON, it is not documented here.
     </p>
 
     <h3>The Training Session Object</h3>
@@ -225,72 +218,43 @@
     </p>
 
     <pre><code>{
-  "primary_sport": "soccer",
-  "session_count": 1,
-  "total_minutes": 45,
-  "xp_estimate": 450,
-  "overall_intensity": "medium",
-  "detected_categories": [
-    "conditioning",
-    "technical",
-    "strength"
-  ],
+  "primary_sport": "string",
+  "session_count": "number",
+  "total_minutes": "number",
+  "xp_estimate": "number",
+  "overall_intensity": "string",
+  "detected_categories": ["string"],
   "sessions": [
     {
-      "label": "Running",
-      "exercises": [...],
-      "duration_minutes": 3,
-      "sport_context": "soccer",
-      "intensity": "medium",
-      "cross_training": false
-    },
-    {
-      "label": "First Touch Work (Headers)",
-      "exercises": [...],
-      "duration_minutes": 10,
-      "sport_context": "soccer",
-      "intensity": "medium",
-      "cross_training": false
-    },
-    {
-      "label": "Strength",
-      "exercises": [
-        {
-          "name": "Dumbbells",
-          "weight": "30kg",
-          "sets_reps": "6 x 14",
-          "duration_minutes": 10
-        }
-      ],
-      "duration_minutes": 10,
-      "sport_context": "soccer",
-      "intensity": "medium",
-      "cross_training": false
+      "label": "string",
+      "exercises": ["string"],
+      "duration_minutes": "number",
+      "sport_context": "string",
+      "intensity": "string",
+      "cross_training": "boolean"
     }
   ],
   "performance_metrics": {
-    "injury_flag": false,
-    "medical_clearance_required": false,
-    "modified_training": false
+    "injury_flag": "boolean",
+    "medical_clearance_required": "boolean",
+    "modified_training": "boolean"
   },
-  "observations": "...",
-  "reflections": "...",
+  "observations": "string",
+  "reflections": "string",
   "validation": {
-    "reviewer": "coach@example.com",
-    "status": "approved",
-    "timestamp": "2026-07-24T14:30:00Z",
-    "comments": "..."
+    "reviewer": "string",
+    "status": "string",
+    "timestamp": "string",
+    "comments": "string"
   },
   "routing": {
-    "assigned_to": ["parent@example.com", "coach@example.com"],
-    "workflow_status": "completed"
+    "destination": "string",
+    "privacy_level": "string"
   }
 }</code></pre>
 
     <p>
-      This is not a transcript. It is a <strong>governed semantic training object</strong>. The athlete's unstructured
-      voice input—"today we ran," "head taps," "dumbbells"—is converted into normalized categories, durations,
-      intensities, and sport contexts. The resulting JSON is structured, reviewable, and portable.
+      This is not a transcript. It is a <strong>governed semantic training object</strong>. The athlete's unstructured voice input — "today we ran," "head taps," "dumbbells" — is converted into normalized categories, durations, intensities, and sport contexts. The resulting JSON is structured, reviewable, and portable.
     </p>
 
     <h3>What the current schema includes</h3>
@@ -338,17 +302,11 @@
     Longitudinal History</code></pre>
 
     <p>
-      At each step, the record becomes more structured and more defensible. The athlete's original voice input
-      is preserved as evidence. The AI interpretation is stored as a separate object. The normalized JSON is what
-      downstream systems—scouting platforms, federation dashboards, analytics tools—can consume. The validation
-      layer ensures a human reviewer has attested to the record before it enters the athlete's permanent history.
+      At each step, the record becomes more structured and more defensible. The athlete's original voice input is preserved as evidence. The AI interpretation is stored as a separate object. The normalized JSON is what downstream systems — scouting platforms, federation dashboards, analytics tools — can consume. The validation layer ensures a human reviewer has attested to the record before it enters the athlete's permanent history.
     </p>
 
     <p>
-      This architecture means the athlete does not need to own a smartphone. A parent, coach, teacher, or
-      community volunteer can record activities on behalf of the athlete. The system stores the data offline
-      when bandwidth is unavailable and syncs automatically when connectivity returns. This is not a future feature.
-      It is how the current implementation operates.
+      This architecture means the athlete does not need to own a smartphone. A parent, coach, teacher, or community volunteer can record activities on behalf of the athlete. The system stores the data offline when bandwidth is unavailable and syncs automatically when connectivity returns. This is not a future feature. It is how the current implementation operates.
     </p>
 
     <hr>
@@ -356,23 +314,15 @@
     <h2 id="why-this-matters">Why This Matters</h2>
 
     <p>
-      When progress is documented over time from the ground up, decisions can be reviewed rather than guessed.
-      Development can be evaluated without speculation, and athletes can be assessed on readiness—not timing noise.
+      The JSON-structured athlete record is not a database row. It is a <strong>governance artifact</strong>. It carries provenance: who said what, who validated it, when it happened, and what privacy rules apply. This is not a feature. It is the foundation of athlete sovereignty.
     </p>
 
     <p>
-      More importantly, when the athlete owns the record through a sovereign identity layer, the data travels with
-      them across clubs, states, and national boundaries. The federation does not hold the athlete hostage to a
-      centralized database that disappears the moment the relationship ends. This does not eliminate natural selection
-      or talent differences. It reduces blind spots that cause capable athletes to be overlooked or misjudged because
-      the record was incomplete, non-attributable, or institutionally controlled.
+      When a federation or academy asks for data, the athlete does not "export a PDF." They grant access to a specific slice of a governed record. The permission is revocable. The record is immutable. The identity is portable. This is the opposite of the FMF FAN ID model, where the institution owns the data and the athlete has no visibility into how it is used.
     </p>
 
     <p>
-      The current JSON architecture is designed to evolve into an interoperability contract. When SAI's Speed software,
-      ScoutEdge's SER scoring, or Step Out's match analytics need athlete background, they should not need to rebuild
-      the origination layer. They should plug into a ledger that already exists. That is the direction of the architecture.
-      It is not yet a published standard. It is a working implementation.
+      The current JSON architecture is designed to evolve into an interoperability contract. When SAI's Speed software, ScoutEdge's SER scoring, or Step Out's match analytics need athlete background, they should not need to rebuild the origination layer. They should plug into a ledger that already exists. That is the direction of the architecture. It is not yet a published standard. It is a working implementation.
     </p>
 
     <hr>
@@ -380,8 +330,7 @@
     <h2 id="objective-signals">Objective Signals Replace Assumptions</h2>
 
     <p>
-      By shifting from isolated stats to context-aware, athlete-owned records, the system creates objectivity where
-      subjectivity once dominated. What emerges is not hype or guarantees—but clarity.
+      By shifting from isolated stats to context-aware, athlete-owned records, the system creates objectivity where subjectivity once dominated. What emerges is not hype or guarantees — but clarity.
     </p>
 
     <div class="card" role="note" aria-label="What improves with context">
@@ -391,10 +340,22 @@
         <li>More transparent conversations with families about stages and expectations</li>
         <li>Clearer evaluation when athletes change teams, regions, or competitive environments</li>
         <li>Better alignment between training intent and observed outcomes</li>
-        <li>Verified athlete history available to scouts, academies, and federations—by permission, not by default</li>
+        <li>Verified athlete history available to scouts, academies, and federations — by permission, not by default</li>
         <li>Reduced institutional liability through athlete-sovereign data architecture</li>
       </ul>
     </div>
+
+    <p>
+      The India summit proved that the people who own the systems acknowledge the gap. SAI, private academies, and technology leaders in the room all agreed: grassroots data infrastructure is missing. What they did not agree on is who should build it, who should own it, and who should benefit from it.
+    </p>
+
+    <p>
+      NTG's answer is structural: the athlete owns the record. The institution borrows visibility. The platform enforces consent. The JSON schema is the contract. This is not marketing language. It is what the current implementation encodes.
+    </p>
+
+    <p>
+      If the athlete never becomes professional, the record still matters. It proves effort. It protects against exploitation. It creates a basis for compensation if training data is later used by commercial systems. The system must justify itself for the 99%, not only the 1% who make it.
+    </p>
 
     <hr style="margin-top:32px;">
 
@@ -415,8 +376,7 @@
         <li><a href="https://learn.xpguess.com/training-fitness-and-wellness-infrastructure.html">Training, Fitness, and Wellness Infrastructure</a></li>
         <li><a href="https://learn.xpguess.com/why-fundamentals-matter-in-youth-sports.html">Why Fundamentals Matter in Youth Sports</a></li>
         <li><a href="https://learn.xpguess.com/age-learning-and-responsible-access.html">How XPGuess Handles Age, Learning, and Responsible Access</a></li>
-        <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill
-</a></li>
+        <li><a href="https://learn.xpguess.com/how-xpguess-rankings-work.html">How XPGuess Rankings Work Across Sports, Education, Cognition, and Real-World Skill</a></li>
       </ul>
     </nav>
 
