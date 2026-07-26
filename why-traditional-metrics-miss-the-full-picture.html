@@ -208,7 +208,7 @@
     <h2 id="current-model">What NTG's Data Model Records Today</h2>
 
     <p>
-      NTG is not described here as a future platform. The following is what its current implementation produces. Every object below is extracted from the actual JSON schema that NTG stores after an athlete submits a training session. No aspirational fields are included. If it is not in production JSON, it is not documented here.
+      NTG is not described here as a future platform. The following is what its current implementation produces. Every field below is present in the production JSON that NTG stores after an athlete submits a training session. No aspirational fields are included.
     </p>
 
     <h3>The Training Session Object</h3>
@@ -240,17 +240,7 @@
     "modified_training": "boolean"
   },
   "observations": "string",
-  "reflections": "string",
-  "validation": {
-    "reviewer": "string",
-    "status": "string",
-    "timestamp": "string",
-    "comments": "string"
-  },
-  "routing": {
-    "destination": "string",
-    "privacy_level": "string"
-  }
+  "reflections": "string"
 }</code></pre>
 
     <p>
@@ -270,14 +260,37 @@
         <li><strong>Individual sessions</strong> — each with label, exercises, duration, sport context, intensity, and cross-training flag</li>
         <li><strong>Performance metrics</strong> — injury flag, medical clearance requirement, modified training status</li>
         <li><strong>Observations and reflections</strong> — athlete-generated qualitative notes</li>
-        <li><strong>Validation</strong> — reviewer identity, approval status, timestamp, and comments</li>
-        <li><strong>Routing</strong> — assigned recipients and workflow status</li>
       </ul>
     </div>
 
     <p style="font-size:13px; color:#555;">
       XP is not money, not redeemable, and not tied to wagering. It is an educational progress signal.
     </p>
+
+    <h3>Current implementation vs. architectural direction</h3>
+
+    <div class="card" role="note" aria-label="Verified capabilities">
+      <div class="card-title">Current implementation</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Voice transcript captured and stored</li>
+        <li>AI interpretation stored as separate object</li>
+        <li>Semantic training object generated with normalized categories</li>
+        <li>XP estimate generated from intensity × duration × category weights</li>
+        <li>Training categories normalized (conditioning, technical, strength, etc.)</li>
+        <li>Offline-first sync when connectivity returns</li>
+      </ul>
+    </div>
+
+    <div class="card" role="note" aria-label="Architectural direction">
+      <div class="card-title">Architectural direction</div>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Formal validation workflow (reviewer attestation, approval status, timestamped comments)</li>
+        <li>Routing and privacy-level controls for downstream federation access</li>
+        <li>Portable athlete ledger with revocable permission grants</li>
+        <li>Version history and append-only audit log for provenance</li>
+        <li>Published interoperability contract for external system consumption</li>
+      </ul>
+    </div>
 
     <hr>
 
@@ -302,7 +315,7 @@
     Longitudinal History</code></pre>
 
     <p>
-      At each step, the record becomes more structured and more defensible. The athlete's original voice input is preserved as evidence. The AI interpretation is stored as a separate object. The normalized JSON is what downstream systems — scouting platforms, federation dashboards, analytics tools — can consume. The validation layer ensures a human reviewer has attested to the record before it enters the athlete's permanent history.
+      At each step, the record becomes more structured and more defensible. The athlete's original voice input is preserved as evidence. The AI interpretation is stored as a separate object. The normalized JSON is what downstream systems — scouting platforms, federation dashboards, analytics tools — can consume.
     </p>
 
     <p>
@@ -314,11 +327,11 @@
     <h2 id="why-this-matters">Why This Matters</h2>
 
     <p>
-      The JSON-structured athlete record is not a database row. It is a <strong>governance artifact</strong>. It carries provenance: who said what, who validated it, when it happened, and what privacy rules apply. This is not a feature. It is the foundation of athlete sovereignty.
+      The JSON-structured athlete record is not a database row. It is a <strong>governance artifact</strong>. It carries provenance: who said what, when it happened, and under what conditions. The architecture is designed to preserve that provenance and version history as the system matures.
     </p>
 
     <p>
-      When a federation or academy asks for data, the athlete does not "export a PDF." They grant access to a specific slice of a governed record. The permission is revocable. The record is immutable. The identity is portable. This is the opposite of the FMF FAN ID model, where the institution owns the data and the athlete has no visibility into how it is used.
+      When a federation or academy asks for data, the intended model is that the athlete grants access to a specific slice of a governed record. The permission is revocable. The identity is portable. This is the opposite of the FMF FAN ID model, where the institution owns the data and the athlete has no visibility into how it is used. The athlete-sovereign design principle is encoded in the architecture, even as the permission and revocation mechanisms are still being hardened.
     </p>
 
     <p>
@@ -330,7 +343,7 @@
     <h2 id="objective-signals">Objective Signals Replace Assumptions</h2>
 
     <p>
-      By shifting from isolated stats to context-aware, athlete-owned records, the system creates objectivity where subjectivity once dominated. What emerges is not hype or guarantees — but clarity.
+      By shifting from isolated stats to context-aware records, the system creates objectivity where subjectivity once dominated. What emerges is not hype or guarantees — but clarity.
     </p>
 
     <div class="card" role="note" aria-label="What improves with context">
