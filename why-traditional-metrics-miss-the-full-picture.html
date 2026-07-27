@@ -22,7 +22,6 @@
 
   <meta name="robots" content="index,follow" />
   <meta name="googlebot" content="index,follow" />
-
   <meta name="keywords" content="sports analytics, athlete development, grassroots sports data, AI scouting, sports technology, athlete governance, NTG, XPGuess, training records, sports data infrastructure, youth sports, biometric data, federation data, athlete-owned data, semantic normalization, sports AI, India sports, SAI, SportzNext" />
   <meta name="author" content="XPGuess Learn" />
   <meta name="theme-color" content="#fafafa" />
@@ -115,6 +114,22 @@
     code{
       font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
     }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:20px 0;
+      font-size:14px;
+    }
+    th, td{
+      border:1px solid #ddd;
+      padding:10px 12px;
+      text-align:left;
+    }
+    th{
+      background:#f4f4f4;
+      font-weight:600;
+    }
+    tr:nth-child(even){ background:#fafafa; }
   </style>
 
   <!-- Breadcrumb Schema -->
@@ -211,7 +226,7 @@
       <p class="kicker">XPGuess Learn • Evaluation Context • Bias Reduction • Governance • Educational Only</p>
       <h1>Why Traditional Metrics Miss the Full Picture</h1>
       <p class="lede">
-        A discussion at the SportzNext AI Summit in India highlighted a broader question: what happens when advanced analytics assume athlete records already exist? An estimated 65 million children participate in sport across India, while the Sports Authority of India described approximately 9,000 athletes inside its organized monitoring ecosystem. These figures are not a complete census of every athlete record in the country. They illustrate the structural distance between mass participation and formal, longitudinal monitoring.
+        A discussion at the SportzNext AI Summit in India highlighted a broader question: what happens when advanced analytics assume athlete records already exist? An estimated 65 million children participate in organized and informal sport across India, while longitudinal athlete records remain concentrated within much smaller organized systems. These figures are not a complete census of every athlete record in the country. They illustrate the structural distance between mass participation and formal, longitudinal monitoring.
       </p>
       <p class="callout">
         <strong>Key point:</strong> Metrics can be useful, but without context and continuity they create false confidence.
@@ -281,6 +296,53 @@
       During the summit, Dr. Amol immediately reframed the discussion around the infrastructure problem: how do you solve structured data capture at the grassroots? That was not an outside critique. It was the question the room itself arrived at. The presentation that followed demonstrated one possible implementation using athlete-owned longitudinal records, coach and parent validation, and structured exports. The gap was acknowledged before the solution was presented.
     </p>
 
+    <h3>The dependency table</h3>
+
+    <p>
+      The summit demonstrated a mature ecosystem of downstream sports AI. Each system performs a specific function. Each system also depends on one thing: a structured athlete record that already exists.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Current Market</th>
+          <th>Missing Dependency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Catapult</td>
+          <td>Performance monitoring</td>
+          <td>Athlete history</td>
+        </tr>
+        <tr>
+          <td>Zone7</td>
+          <td>Injury prediction</td>
+          <td>Longitudinal training record</td>
+        </tr>
+        <tr>
+          <td>Step Out</td>
+          <td>Video analytics</td>
+          <td>Prior development context</td>
+        </tr>
+        <tr>
+          <td>Scout Edge</td>
+          <td>AI scouting</td>
+          <td>Verified grassroots evidence</td>
+        </tr>
+        <tr>
+          <td><strong>NTG</strong></td>
+          <td><strong>Athlete record origination</strong></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      NTG is not trying to replace any of these systems. It feeds them. The origination layer creates the structured record that every downstream system requires.
+    </p>
+
     <div class="card" role="note" aria-label="Where evaluation becomes vulnerable">
       <div class="card-title">When the record is incomplete, evaluation becomes vulnerable to:</div>
       <ul style="margin:0; padding-left:18px;">
@@ -307,6 +369,10 @@
 
     <p>
       NTG is not described here as a future platform. The following is what its current implementation produces. Every field below is present in the production JSON that NTG stores after an athlete submits a training session. No aspirational fields are included.
+    </p>
+
+    <p>
+      If the missing layer is the athlete record itself, the obvious question becomes: what should that record actually contain? The current NTG implementation answers that question with the following production object.
     </p>
 
     <h3>The Training Session Object</h3>
@@ -595,6 +661,12 @@
       pre {
         font-size: 11px !important;
         padding: 12px !important;
+      }
+      table {
+        font-size: 12px !important;
+      }
+      th, td {
+        padding: 6px 8px !important;
       }
     }
   </style>
