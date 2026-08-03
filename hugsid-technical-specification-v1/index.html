@@ -1,239 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>HUGS ID Technical Specification v1.0 | XPGuess Learn</title>
-<link rel="canonical" href="https://learn.xpguess.com/hugsid-technical-specification-v1/"/>
-<meta name="description" content="The official public working draft of the HUGS ID Technical Specification v1.0: identity, consent, verification, governance, trust, provenance, and AI accountability for interoperable digital systems."/>
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"/>
-<meta property="og:type" content="article"/>
-<meta property="og:title" content="HUGS ID Technical Specification v1.0"/>
-<meta property="og:description" content="The canonical technical reference for HUGS ID identity, consent, verification, governance, trust, provenance, and AI accountability."/>
-<meta property="og:url" content="https://learn.xpguess.com/hugsid-technical-specification-v1/"/>
-<meta property="og:site_name" content="XPGuess Learn"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<style>
-*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
-html{background:#fafafa;scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#334155;line-height:1.7;background:#fafafa}
-main{max-width:1400px;margin:40px auto;background:#fff;padding:32px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-h1{font-size:1.85rem;color:#0f172a;margin-bottom:.3rem;line-height:1.25}
-h2{font-size:1.25rem;color:#0f172a;margin:1.5rem 0 .75rem;padding-bottom:.4rem;border-bottom:2px solid #d4a843}
-h3{font-size:1.05rem;color:#0f172a;margin:1.2rem 0 .5rem}
-p{margin:.55rem 0}
-p.lede{color:#64748b;font-size:1.05rem;margin-bottom:1rem;max-width:920px}
-a{color:#334155;text-decoration:underline}a:hover{color:#d4a843}
-hr{border:none;border-top:1px solid #e2e8f0;margin:1.5rem 0}
-.badge{display:inline-block;background:#d4a843;color:#0f172a;padding:.35rem .8rem;border-radius:4px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;font-size:.82rem;color:#64748b;margin:1rem 0}
-.meta strong{color:#0f172a}.callout{background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #d4a843;border-radius:8px;padding:1rem;margin:1rem 0}
-.warning{background:#fff7ed;border-color:#fdba74;border-left-color:#f97316}
-.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0}
-.card{border:1px solid #e2e8f0;border-radius:10px;padding:1.15rem;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:700;margin-bottom:.4rem}.card h3{margin:.15rem 0 .45rem}.card p{font-size:.9rem;color:#64748b}
-.toc{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;margin:1.5rem 0}.toc ul{columns:2;padding-left:1.2rem;margin-top:.5rem;font-size:.9rem}.toc li{break-inside:avoid;margin:.2rem 0}
-.layer-stack{display:grid;gap:.45rem;margin:1rem 0}.layer{padding:.8rem 1rem;border:1px solid #e2e8f0;border-left:4px solid #d4a843;border-radius:7px;background:#fff}.layer strong{color:#0f172a}.layer span{color:#64748b;font-size:.9rem}
-.code{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:1rem;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.55;margin:1rem 0}
-table{width:100%;border-collapse:collapse;font-size:.86rem}th{background:#0f172a;color:#d4a843;text-align:left;padding:.7rem .8rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}td{padding:.7rem .8rem;border-bottom:1px solid #e2e8f0;vertical-align:top}.table-container{overflow-x:auto;border:1px solid #e2e8f0;border-radius:8px;margin:1rem 0}
-ul,ol{padding-left:1.25rem;margin:.55rem 0}li{margin:.25rem 0}
-details{margin:.55rem 0;border:1px solid #e2e8f0;border-radius:8px;background:#fff}summary{cursor:pointer;padding:.85rem 1rem;font-weight:700;color:#0f172a;background:#f8fafc}details>div{padding:0 1rem 1rem}
-.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin:1rem 0}.status{border:1px solid #e2e8f0;border-radius:8px;padding:.9rem}.status small{display:block;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;font-weight:700}.status strong{display:block;color:#0f172a;margin-top:.2rem}
-footer{background:#0f172a;color:#94a3b8;text-align:center;padding:2.5rem 1rem 2rem;margin-top:2rem;border-top:1px solid #1e293b;border-radius:0 0 8px 8px}
-footer strong{color:#f8fafc}
-@media(max-width:900px){main{margin:0;padding:20px;border-radius:0}.cards-grid,.status-grid{grid-template-columns:1fr 1fr}.toc ul{columns:1}}
-@media(max-width:600px){.cards-grid,.status-grid{grid-template-columns:1fr}h1{font-size:1.5rem}}
-</style>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@graph":[
-    {
-      "@type":"TechArticle",
-      "@id":"https://learn.xpguess.com/hugsid-technical-specification-v1/#specification",
-      "headline":"HUGS ID Technical Specification v1.0",
-      "alternativeHeadline":"Identity, Consent, Verification, Governance, Trust, Provenance, and AI Accountability",
-      "description":"The official public working draft of the HUGS ID Technical Specification v1.0.",
-      "url":"https://learn.xpguess.com/hugsid-technical-specification-v1/",
-      "mainEntityOfPage":"https://learn.xpguess.com/hugsid-technical-specification-v1/",
-      "version":"1.0",
-      "datePublished":"2026-08-03",
-      "dateModified":"2026-08-03",
-      "inLanguage":"en",
-      "isPartOf":{"@id":"https://learn.xpguess.com/#website"},
-      "about":{"@id":"https://hugsid.com/#software"},
-      "author":{"@id":"https://hugsid.com/#organization"},
-      "publisher":{"@id":"https://xpguess.com/#organization"},
-      "copyrightHolder":{"@id":"https://hugsid.com/#organization"},
-      "keywords":["HUGS ID","digital identity","AI governance","consent framework","identity verification","data provenance","trust framework","athlete identity","interoperability"]
-    },
-    {
-      "@type":"WebSite",
-      "@id":"https://learn.xpguess.com/#website",
-      "name":"XPGuess Learn",
-      "url":"https://learn.xpguess.com/",
-      "publisher":{"@id":"https://xpguess.com/#organization"}
-    },
-    {
-      "@type":"Organization",
-      "@id":"https://xpguess.com/#organization",
-      "name":"XPGuess",
-      "url":"https://xpguess.com/"
-    },
-    {
-      "@type":"Organization",
-      "@id":"https://hugsid.com/#organization",
-      "name":"HUGS ID",
-      "url":"https://hugsid.com/"
-    },
-    {
-      "@type":"SoftwareApplication",
-      "@id":"https://hugsid.com/#software",
-      "name":"HUGS ID",
-      "applicationCategory":"Identity and Governance Framework",
-      "operatingSystem":"Any",
-      "url":"https://hugsid.com/",
-      "publisher":{"@id":"https://hugsid.com/#organization"}
-    },
-    {
-      "@type":"Organization",
-      "@id":"https://name-the-game.com/#organization",
-      "name":"Name The Game",
-      "url":"https://name-the-game.com/"
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>HUGS ID™ Technical Specification v1.0 | Public Working Draft</title>
+  <meta name="description" content="The authoritative technical reference for HUGS ID™: canonical identity, governance, consent, verification, trust, Athlete Intelligence, AI permissions, and APIs. Version 1.0 Public Working Draft.">
+  <link rel="canonical" href="https://learn.xpguess.com/hugsid-technical-specification-v1/">
+  <link rel="icon" type="image/png" href="HugdID-logo.png">
+  <link rel="apple-touch-icon" href="HugdID-logo.png">
+
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HUGS ID™ Technical Specification v1.0">
+  <meta property="og:description" content="The Canonical Identity and Governance Framework for the AI Era. Version 1.0 Public Working Draft.">
+  <meta property="og:url" content="https://learn.xpguess.com/hugsid-technical-specification-v1/">
+  <meta property="og:site_name" content="XPGuess Learn">
+  <meta property="og:image" content="https://learn.xpguess.com/hugsid-technical-specification-v1/HugdID-logo.png">
+  <meta property="og:image:alt" content="HUGS ID identity and governance framework logo">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HUGS ID™ Technical Specification v1.0">
+  <meta name="twitter:description" content="The Canonical Identity and Governance Framework for the AI Era. Version 1.0 Public Working Draft.">
+  <meta name="twitter:image" content="https://learn.xpguess.com/hugsid-technical-specification-v1/HugdID-logo.png">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3HB79N4XWD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3HB79N4XWD');
+  </script>
+
+  <style>
+    :root{
+      --paper:#f5f1e8;
+      --ink:#151515;
+      --green:#0f513f;
+      --green2:#176b57;
+      --teal:#16a6b6;
+      --muted:#66736e;
+      --line:#d8d1c4;
+      --white:#fff;
+      --soft:#faf8f3;
     }
-  ]
-}
-</script>
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--paper)}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        linear-gradient(rgba(15,81,63,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,81,63,.045) 1px, transparent 1px),
+        var(--paper);
+      background-size:70px 70px;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--green)}
+    a:hover{color:var(--teal)}
+    .shell{max-width:1180px;margin:0 auto;padding:28px 24px 60px}
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+      margin-bottom:28px;
+      font-size:.84rem;
+      color:var(--muted);
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--green)}
+    .brand-logo{
+      width:58px;
+      height:58px;
+      object-fit:contain;
+      display:block;
+      border-radius:8px;
+      background:#fff;
+      box-shadow:0 4px 14px rgba(0,0,0,.07);
+    }
+    .brand-name{
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:1.35rem;
+      letter-spacing:.01em;
+      color:var(--green);
+    }
+    .topnav{display:flex;gap:14px;flex-wrap:wrap}
+    .topnav a{text-decoration:none;font-weight:700}
+    .hero{
+      padding:58px 0 38px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:32px;
+    }
+    .eyebrow{
+      color:var(--green2);
+      text-transform:uppercase;
+      letter-spacing:.34em;
+      font-size:.78rem;
+      font-weight:800;
+      margin:0 0 24px;
+    }
+    h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--ink)}
+    h1{font-size:clamp(3.1rem,8vw,6.5rem);line-height:.92;margin:0 0 18px;font-weight:700}
+    .hero em{
+      display:block;
+      color:var(--green2);
+      font-size:clamp(2rem,5vw,4rem);
+      font-family:Georgia,"Times New Roman",serif;
+      margin-top:14px;
+    }
+    .subtitle{font-size:1.18rem;color:#303936;max-width:780px;margin:28px 0 18px}
+    .meta{
+      display:flex;flex-wrap:wrap;gap:10px 18px;
+      font-size:.9rem;color:var(--muted);margin:18px 0 0;
+    }
+    .status{
+      display:inline-flex;align-items:center;gap:8px;
+      border-top:3px solid var(--green2);
+      padding-top:6px;font-weight:800;color:var(--green);
+    }
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .button{
+      display:inline-block;text-decoration:none;font-weight:800;
+      padding:.8rem 1.1rem;border-radius:7px;
+      background:var(--green);color:#fff;
+    }
+    .button:hover{color:#fff;background:var(--green2)}
+    .button.secondary{background:transparent;color:var(--green);border:1px solid var(--green)}
+    .layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:32px}
+    .sidebar{position:sticky;top:22px;align-self:start}
+    .panel{
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:18px;
+      box-shadow:0 5px 20px rgba(0,0,0,.035);
+    }
+    .panel + .panel{margin-top:16px}
+    .panel h2{font-size:1rem;margin:0 0 12px;font-family:inherit}
+    .toc{list-style:none;margin:0;padding:0}
+    .toc li{margin:.36rem 0}
+    .toc a{text-decoration:none;font-size:.9rem}
+    .main article{
+      background:rgba(255,255,255,.79);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:30px;
+      box-shadow:0 5px 20px rgba(0,0,0,.035);
+    }
+    section{scroll-margin-top:20px}
+    section + section{margin-top:36px;padding-top:30px;border-top:1px solid var(--line)}
+    h2{font-size:2rem;margin:0 0 16px;color:var(--green)}
+    h3{font-size:1.25rem;margin:22px 0 9px}
+    p{margin:.65rem 0}
+    ul{padding-left:1.25rem}
+    li{margin:.38rem 0}
+    .definition{
+      border-left:4px solid var(--teal);
+      background:#f3fbfb;
+      padding:14px 16px;
+      border-radius:0 8px 8px 0;
+      margin:18px 0;
+    }
+    .requirements{
+      border-left:4px solid var(--green);
+      background:#f5f8f6;
+      padding:14px 16px;
+      border-radius:0 8px 8px 0;
+      margin:18px 0;
+    }
+    .architecture{
+      display:grid;
+      gap:8px;
+      margin:20px 0;
+      max-width:650px;
+    }
+    .layer{
+      background:var(--green);
+      color:#fff;
+      padding:11px 14px;
+      border-radius:5px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-size:.82rem;
+    }
+    .layer.identity{background:var(--teal)}
+    table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+    th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    th{color:var(--green);background:#f5f3ec}
+    code{
+      background:#eef3f1;
+      color:#0e4739;
+      padding:.12rem .3rem;
+      border-radius:4px;
+      font-size:.9em;
+    }
+    .footer{
+      text-align:center;color:var(--muted);
+      font-size:.85rem;padding-top:38px;
+    }
+    @media(max-width:850px){
+      .layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .topbar{align-items:flex-start}
+    }
+    @media(max-width:600px){
+      .shell{padding:20px 14px 44px}
+      .main article{padding:20px}
+      .topbar{display:block}
+      .topnav{margin-top:12px}
+      h1{font-size:3rem}
+      .brand-logo{width:50px;height:50px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"TechArticle",
+    "headline":"HUGS ID Technical Specification v1.0",
+    "description":"The Canonical Identity and Governance Framework for the AI Era.",
+    "url":"https://learn.xpguess.com/hugsid-technical-specification-v1/",
+    "datePublished":"2026-08-04",
+    "dateModified":"2026-08-04",
+    "inLanguage":"en",
+    "isAccessibleForFree":true,
+    "version":"1.0",
+    "author":{"@type":"Organization","name":"HUGS ID","url":"https://hugsid.com/","logo":{"@type":"ImageObject","url":"https://learn.xpguess.com/hugsid-technical-specification-v1/HugdID-logo.png"}},
+    "publisher":{"@type":"Organization","name":"HUGS ID","url":"https://hugsid.com/","logo":{"@type":"ImageObject","url":"https://learn.xpguess.com/hugsid-technical-specification-v1/HugdID-logo.png"}},
+    "image":"https://learn.xpguess.com/hugsid-technical-specification-v1/HugdID-logo.png",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://learn.xpguess.com/hugsid-technical-specification-v1/"},
+    "encoding":{
+      "@type":"MediaObject",
+      "contentUrl":"https://learn.xpguess.com/hugsid-technical-specification-v1/HUGS_ID_Technical_Specification_v1.0.pdf",
+      "encodingFormat":"application/pdf"
+    },
+    "about":[
+      "Digital identity",
+      "Data governance",
+      "Consent management",
+      "AI accountability",
+      "Athlete Intelligence",
+      "Trust frameworks",
+      "Verification",
+      "Application programming interfaces"
+    ]
+  }
+  </script>
 </head>
+
 <body>
-<main>
-<div style="margin-bottom:1.5rem"><img src="https://learn.xpguess.com/XPGuess-black.png" alt="XPGuess" style="height:220px;max-width:100%;object-fit:contain;display:block"/></div>
-<hr/>
-<header>
-<p style="font-size:.8rem;color:#94a3b8;margin-bottom:.5rem">HUGS ID / Standards / Technical Specification</p>
-<h1>HUGS ID™ Technical Specification v1.0</h1>
-<p class="lede">The canonical technical reference for identity, consent, verification, governance, trust, provenance, and accountable AI interaction across the HUGS ID ecosystem.</p>
-<span class="badge">Public Working Draft</span>
-<div class="meta"><span><strong>Version:</strong> 1.0</span><span><strong>Published:</strong> August 3, 2026</span><span><strong>Publisher:</strong> HUGS ID</span><span><strong>Documentation host:</strong> XPGuess Learn</span></div>
-<div class="callout warning"><strong>Draft status:</strong> This document establishes the first public technical baseline for HUGS ID. Implementers should expect refinement before a future stable release.</div>
-</header>
+<div class="shell">
+  <div class="topbar">
+    <a class="brand" href="https://hugsid.com/" aria-label="HUGS ID home" style="text-decoration:none">
+      <img class="brand-logo" src="HugdID-logo.png" alt="HUGS ID logo" width="58" height="58">
+      <span class="brand-name">hugs id</span>
+    </a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="https://hugsid.com/">HUGS ID</a>
+      <a href="https://learn.xpguess.com/">XPGuess Learn</a>
+      <a href="#contents">Contents</a>
+    </nav>
+  </div>
 
-<nav class="toc" aria-label="Table of contents"><strong>On this page</strong><ul>
-<li><a href="#purpose">Purpose and scope</a></li><li><a href="#principles">Design principles</a></li><li><a href="#architecture">Reference architecture</a></li><li><a href="#objects">Core objects</a></li><li><a href="#identity">Identity layer</a></li><li><a href="#consent">Consent layer</a></li><li><a href="#verification">Verification layer</a></li><li><a href="#governance">Governance layer</a></li><li><a href="#trust">Trust framework</a></li><li><a href="#ai">AI accountability</a></li><li><a href="#security">Security and privacy</a></li><li><a href="#conformance">Conformance</a></li><li><a href="#versioning">Versioning</a></li><li><a href="#roadmap">Roadmap</a></li>
-</ul></nav>
+  <header class="hero">
+    <p class="eyebrow">Technical Reference · v1.0</p>
+    <h1>HUGS ID™</h1>
+    <em>Technical Specification</em>
+    <p class="subtitle">The Canonical Identity and Governance Framework for the AI Era</p>
 
-<section id="purpose"><h2>1. Purpose and Scope</h2>
-<p>HUGS ID is an interoperable identity and governance framework for systems that create, exchange, verify, analyze, or act upon personal and institutional data. It is designed to make identity relationships, permissions, evidence, provenance, and automated actions understandable and auditable across organizational boundaries.</p>
-<p>HUGS ID does not require every participant to move data into one central database. Instead, it defines a common governance layer through which independent systems can describe identity, authority, consent, verification, and accountability in a consistent form.</p>
-<div class="cards-grid">
-<div class="card"><div class="card-title">For developers</div><h3>Implement consistently</h3><p>Use stable objects, identifiers, events, and policy rules across applications and services.</p></div>
-<div class="card"><div class="card-title">For institutions</div><h3>Govern transparently</h3><p>Document who may access data, under what authority, for what purpose, and for how long.</p></div>
-<div class="card"><div class="card-title">For researchers</div><h3>Evaluate reproducibly</h3><p>Trace evidence, methodology, permissions, transformations, and model-assisted decisions.</p></div>
-</div></section>
+    <div class="status">Version 1.0 · Public Working Draft</div>
 
-<section id="principles"><h2>2. Design Principles</h2>
-<details open><summary>Identity first</summary><div><p>Every governed interaction begins with an identifiable subject, actor, organization, service, or agent.</p></div></details>
-<details open><summary>Data sovereignty</summary><div><p>HUGS ID records authority and permissions around data without assuming that physical possession of data equals lawful or ethical authority to use it.</p></div></details>
-<details open><summary>Verifiable provenance</summary><div><p>Trusted records should identify their origin, creator, verifier, approval history, revision state, and supporting evidence.</p></div></details>
-<details open><summary>Purpose limitation</summary><div><p>Access and processing permissions should be connected to a declared purpose rather than granted as unlimited general access.</p></div></details>
-<details open><summary>AI accountability</summary><div><p>Automated actions must be attributable to an agent, authorization, policy, purpose, input set, and resulting event.</p></div></details>
-<details open><summary>Interoperability</summary><div><p>The framework is designed to integrate with existing institutions, databases, credentials, APIs, and sector-specific standards.</p></div></details>
-</section>
+    <div class="meta">
+      <span>4 August 2026</span>
+      <span>Publisher: HUGS ID™</span>
+      <span>Canonical reference: hugsid.com</span>
+      <span>Documentation portal: learn.xpguess.com</span>
+    </div>
 
-<section id="architecture"><h2>3. Reference Architecture</h2>
-<p>The architecture separates evidence, identity, verification, consent, governance, and application behavior so that each layer can be evaluated independently.</p>
-<div class="layer-stack">
-<div class="layer"><strong>Applications and Experiences</strong><br/><span>Portals, dashboards, research tools, athlete profiles, institutional services, and user interfaces.</span></div>
-<div class="layer"><strong>AI and Decision Services</strong><br/><span>Models, agents, classifiers, recommendations, simulations, and automated workflows.</span></div>
-<div class="layer"><strong>Governance Layer</strong><br/><span>Policies, authority chains, obligations, restrictions, retention rules, and accountability.</span></div>
-<div class="layer"><strong>Consent Layer</strong><br/><span>Permissions, purpose, scope, duration, revocation, delegation, and receipt records.</span></div>
-<div class="layer"><strong>Verification and Trust Layer</strong><br/><span>Credential checks, evidence review, issuer authority, confidence, and dispute state.</span></div>
-<div class="layer"><strong>Identity Layer</strong><br/><span>Subjects, organizations, agents, identifiers, relationships, and lifecycle state.</span></div>
-<div class="layer"><strong>Evidence and Provenance Layer</strong><br/><span>Source records, hashes, timestamps, attestations, transformations, and lineage.</span></div>
-</div></section>
+    <div class="actions">
+      <a class="button" href="HUGS_ID_Technical_Specification_v1.0.pdf">Read or Download the Full PDF</a>
+      <a class="button secondary" href="#status">Read the Web Summary</a>
+    </div>
+  </header>
 
-<section id="objects"><h2>4. Core Objects</h2>
-<div class="table-container"><table><thead><tr><th>Object</th><th>Purpose</th><th>Minimum responsibility</th></tr></thead><tbody>
-<tr><td><strong>Identity Object</strong></td><td>Represents a person, organization, service, or AI agent.</td><td>Stable identifier, type, status, and lifecycle metadata.</td></tr>
-<tr><td><strong>Evidence Object</strong></td><td>Records material supporting a claim.</td><td>Source, timestamp, integrity reference, and provenance.</td></tr>
-<tr><td><strong>Claim Object</strong></td><td>Expresses a statement about an identity or event.</td><td>Subject, predicate, value, issuer, and status.</td></tr>
-<tr><td><strong>Verification Object</strong></td><td>Records how a claim or credential was evaluated.</td><td>Verifier, method, evidence, result, and confidence.</td></tr>
-<tr><td><strong>Consent Object</strong></td><td>Defines permission for a specific use.</td><td>Grantor, recipient, purpose, scope, term, and revocation state.</td></tr>
-<tr><td><strong>Governance Object</strong></td><td>Applies policy and authority to an action or dataset.</td><td>Authority, policy, jurisdiction, obligations, and enforcement state.</td></tr>
-<tr><td><strong>Event Object</strong></td><td>Creates an auditable record of an action.</td><td>Actor, action, target, time, authorization, and outcome.</td></tr>
-</tbody></table></div>
-<div class="code">{
-  "@type": "HUGSIDIdentity",
-  "id": "hugsid:subject:example-123",
-  "identityType": "Person",
-  "status": "active",
-  "createdAt": "2026-08-03T00:00:00Z",
-  "version": "1.0"
-}</div></section>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="panel">
+        <h2 id="contents">Contents</h2>
+        <ol class="toc">
+          <li><a href="#status">Status of This Document</a></li>
+          <li><a href="#vision">1. Vision</a></li>
+          <li><a href="#problem">2. Problem Statement</a></li>
+          <li><a href="#architecture">3. Architecture</a></li>
+          <li><a href="#identity">4. Identity Layer</a></li>
+          <li><a href="#governance">5. Governance Layer</a></li>
+          <li><a href="#consent">6. Consent Layer</a></li>
+          <li><a href="#athlete">7. Athlete Intelligence</a></li>
+          <li><a href="#ai">8. AI Permissions</a></li>
+          <li><a href="#trust">9. Trust Framework</a></li>
+          <li><a href="#apis">10. APIs</a></li>
+          <li><a href="#roadmap">11. Roadmap</a></li>
+          <li><a href="#references">12. References</a></li>
+        </ol>
+      </div>
 
-<section id="identity"><h2>5. Identity Layer</h2>
-<p>The Identity Layer establishes a persistent reference to a governed subject without requiring all personal information to be exposed or stored together.</p>
-<h3>Identity types</h3><ul><li>Person</li><li>Organization</li><li>Institution</li><li>Service</li><li>Device</li><li>AI model or agent</li><li>Dataset or governed digital asset</li></ul>
-<h3>Lifecycle states</h3><p>An implementation should support at least <strong>pending</strong>, <strong>active</strong>, <strong>suspended</strong>, <strong>revoked</strong>, and <strong>archived</strong>.</p>
-</section>
+      <div class="panel">
+        <h2>Document</h2>
+        <p><strong>Status:</strong><br>Public Working Draft</p>
+        <p><strong>Audience:</strong><br>Developers, researchers, institutions, governing bodies, and AI systems.</p>
+        <p><a href="HUGS_ID_Technical_Specification_v1.0.pdf">Full 25-page PDF</a></p>
+      </div>
+    </aside>
 
-<section id="consent"><h2>6. Consent Layer</h2>
-<p>Consent in HUGS ID is a structured authorization record, not merely a checkbox. It should define the specific relationship between the grantor, recipient, data or capability, purpose, duration, and revocation mechanism.</p>
-<div class="callout"><strong>Required consent fields:</strong> grantor, recipient, purpose, scope, permitted actions, effective time, expiration or review time, delegation rules, and current state.</div>
-<p>Consent must be separable from identity verification. A verified identity does not automatically imply permission to access or process all associated data.</p>
-</section>
+    <main class="main">
+      <article>
+        <section id="status">
+          <h2>Status of This Document</h2>
+          <p>
+            This document is the authoritative technical reference for the HUGS ID™ platform.
+            It defines the architecture, identity model, governance framework, consent framework,
+            AI permission model, trust framework, and application programming interfaces of the HUGS ID standard.
+          </p>
+          <div class="requirements">
+            <strong>Public Working Draft.</strong>
+            This is the first published version of the specification. It does not yet constitute a final standard.
+            Implementers should expect editorial refinement, while the core object models in Sections 4 through 9
+            are considered stable within the v1.x line.
+          </div>
+          <p>
+            Normative terms such as MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and OPTIONAL are interpreted
+            according to RFC 2119. Requirement identifiers use the format <code>REQ-&lt;section&gt;-&lt;number&gt;</code>.
+          </p>
+        </section>
 
-<section id="verification"><h2>7. Verification Layer</h2>
-<p>Verification records how a claim was assessed and whether the verifier had appropriate authority and evidence. The framework distinguishes between a claim being present, a source being authentic, and the claim itself being accurate.</p>
-<ol><li>Identify the claim and issuer.</li><li>Confirm the evidence source and integrity.</li><li>Evaluate issuer authority for the claim type.</li><li>Record the verification method and result.</li><li>Assign a confidence or assurance level.</li><li>Preserve dispute and revision history.</li></ol>
-</section>
+        <section id="vision">
+          <h2>1. Vision</h2>
+          <p>
+            HUGS ID™ exists to create a globally interoperable identity and governance standard that allows
+            individuals to manage the lifecycle of their verified digital identity while enabling trusted
+            collaboration between institutions and artificial intelligence systems.
+          </p>
+          <p>
+            HUGS ID does not create another centralized database. It establishes a governance layer that determines
+            how identity, permissions, provenance, consent, verification, and trust interact across independent systems.
+          </p>
+          <h3>Core objectives</h3>
+          <ul>
+            <li>Define a canonical, machine-readable identity object.</li>
+            <li>Give individuals enforceable authority over the use of verified information.</li>
+            <li>Make every AI action attributable to an identity, authorization, purpose, and policy.</li>
+            <li>Integrate with existing institutional systems rather than replace them.</li>
+            <li>Evolve as an independently implementable open technical standard.</li>
+          </ul>
+        </section>
 
-<section id="governance"><h2>8. Governance Layer</h2>
-<p>The Governance Layer determines whether an actor or system is permitted to perform an action under applicable policy, authority, purpose, and jurisdiction.</p>
-<h3>Governance decision</h3><div class="code">decision = evaluate(identity, authority, consent, purpose, policy, jurisdiction, risk)</div>
-<p>A compliant implementation should return a decision of <strong>allow</strong>, <strong>deny</strong>, <strong>allow with obligations</strong>, or <strong>requires review</strong>, together with a human-readable reason and machine-readable policy reference.</p>
-</section>
+        <section id="problem">
+          <h2>2. Problem Statement</h2>
+          <p>
+            Digital identity is fragmented across governments, schools, hospitals, employers, sports organizations,
+            financial institutions, and technology platforms. Each system holds only a partial view and rarely gives
+            the person meaningful authority over how that information is reused.
+          </p>
+          <p>
+            Artificial intelligence intensifies this problem by summarizing, classifying, predicting, recommending,
+            generating, and deciding from data that people often do not control or understand.
+          </p>
+          <div class="definition">
+            HUGS ID makes identity, consent, provenance, verification, governance, and trust first-class,
+            machine-readable objects with defined semantics.
+          </div>
+        </section>
 
-<section id="trust"><h2>9. Trust Framework</h2>
-<p>Trust is contextual. HUGS ID does not define one universal score for a person. Instead, it records assurance about specific identities, claims, issuers, evidence, and transactions.</p>
-<div class="status-grid"><div class="status"><small>Identity assurance</small><strong>Who is involved?</strong></div><div class="status"><small>Evidence assurance</small><strong>What supports the claim?</strong></div><div class="status"><small>Authority assurance</small><strong>Who is allowed to assert it?</strong></div><div class="status"><small>Transaction assurance</small><strong>Was the action permitted?</strong></div></div>
-</section>
+        <section id="architecture">
+          <h2>3. Architecture</h2>
+          <p>
+            The framework uses seven independent layers. Requests flow upward; verification and trust flow downward.
+          </p>
+          <div class="architecture" aria-label="Seven-layer HUGS ID architecture">
+            <div class="layer">Applications</div>
+            <div class="layer">AI Services</div>
+            <div class="layer">Governance Layer</div>
+            <div class="layer">Consent Layer</div>
+            <div class="layer">Verification Layer</div>
+            <div class="layer identity">Identity Layer</div>
+            <div class="layer">Evidence Layer</div>
+          </div>
+          <p>
+            Version 1.0 specifies Athlete Intelligence in detail. Recognized future domains include education,
+            healthcare, employment, research, creative works, digital assets, and AI agents.
+          </p>
+        </section>
 
-<section id="ai"><h2>10. AI Accountability</h2>
-<p>Every consequential AI-assisted action should produce an event record that identifies the model or agent, responsible organization, authorization, declared purpose, input references, output reference, policy decision, and human review state.</p>
-<div class="callout"><strong>Minimum rule:</strong> An AI system must not convert data access into unrestricted authority. It may only operate within the permissions, purposes, and governance conditions attached to the relevant identity and data objects.</div>
-</section>
+        <section id="identity">
+          <h2>4. Identity Layer</h2>
+          <div class="definition">
+            <strong>Canonical Identity Object:</strong> the single authoritative representation of a subject within
+            the HUGS ID framework. It contains no personal records; it anchors references, verifications, consents,
+            and governance decisions to one resolvable identifier.
+          </div>
+          <p>HUGS identifiers use the form:</p>
+          <p><code>hugs:id:&lt;type&gt;:&lt;namespace&gt;:&lt;unique-id&gt;</code></p>
+          <p>Supported identity types are <code>individual</code>, <code>organization</code>, <code>ai-agent</code>, and <code>digital-asset</code>.</p>
+        </section>
 
-<section id="security"><h2>11. Security and Privacy</h2>
-<ul><li>Use encryption in transit and at rest.</li><li>Apply least-privilege access controls.</li><li>Separate public identifiers from sensitive attributes.</li><li>Preserve tamper-evident event and provenance records.</li><li>Support revocation, correction, dispute, and deletion workflows where legally and technically applicable.</li><li>Do not expose raw sensitive data when a verified claim or derived credential is sufficient.</li></ul>
-<p>Sector-specific implementations may require additional safeguards, especially when handling minors, health data, education records, financial information, biometric data, or precise location.</p>
-</section>
+        <section id="governance">
+          <h2>5. Governance Layer</h2>
+          <p>
+            Governance is expressed through policies, authority chains, institutional roles, and decision records.
+            Every governed operation must be traceable to a complete authority chain.
+          </p>
+          <div class="requirements">
+            More specific policies override broader policies, while prohibitions always override permissions.
+            Delegated authority may be narrowed but never amplified beyond its parent authority.
+          </div>
+        </section>
 
-<section id="conformance"><h2>12. Conformance</h2>
-<p>An implementation may describe itself as conformant with HUGS ID v1.0 only when it:</p>
-<ol><li>Uses stable identifiers for governed entities.</li><li>Implements the required core object fields.</li><li>Records consent and governance decisions separately.</li><li>Maintains provenance for verified claims.</li><li>Produces auditable event records for consequential actions.</li><li>Publishes the implemented specification version.</li></ol>
-</section>
+        <section id="consent">
+          <h2>6. Consent Layer</h2>
+          <div class="definition">
+            <strong>Consent Object:</strong> a machine-readable permission granted by an identity controller to a
+            defined grantee, for a defined purpose, over a defined scope, for a defined period.
+          </div>
+          <p>
+            Version 1.0 includes purposes such as eligibility verification, performance analysis,
+            selection evaluation, media licensing, research, and model training.
+          </p>
+          <p>
+            Revocation is a first-class operation. Consent must be as easy to withdraw as it was to grant.
+          </p>
+        </section>
 
-<section id="versioning"><h2>13. Versioning and Change Control</h2>
-<p>HUGS ID uses semantic versioning:</p><div class="code">MAJOR.MINOR.PATCH  →  1.0.0</div>
-<ul><li><strong>Major:</strong> incompatible changes to the framework or required objects.</li><li><strong>Minor:</strong> backward-compatible additions.</li><li><strong>Patch:</strong> clarifications and backward-compatible corrections.</li></ul>
-<p>Every published revision should provide a dated change log and preserve access to prior versions.</p>
-</section>
+        <section id="athlete">
+          <h2>7. Athlete Intelligence</h2>
+          <p>
+            Athlete Intelligence is the first governed domain under HUGS ID. It applies identity, verification,
+            consent, governance, and trust to sports data across clubs, schools, leagues, federations, agents,
+            testing providers, and media platforms.
+          </p>
+          <table>
+            <thead>
+              <tr><th>Data class</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Identity registration</td><td>Verified identity, age band, registration status, federation membership.</td></tr>
+              <tr><td>Eligibility</td><td>Clearances, transfer status, amateur or professional standing.</td></tr>
+              <tr><td>Performance</td><td>Verified results, statistics, rankings, and milestones.</td></tr>
+              <tr><td>Development</td><td>Training benchmarks, combine results, and linked academic standing.</td></tr>
+              <tr><td>Media rights</td><td>Identity-linked media, likeness use, and licensing terms.</td></tr>
+            </tbody>
+          </table>
+        </section>
 
-<section id="roadmap"><h2>14. Roadmap</h2>
-<div class="table-container"><table><thead><tr><th>Release</th><th>Focus</th></tr></thead><tbody>
-<tr><td><strong>1.x</strong></td><td>Core identity, consent, verification, governance, provenance, event logging, and athlete-domain implementation guidance.</td></tr>
-<tr><td><strong>2.x</strong></td><td>AI agent governance, cross-domain trust exchange, institutional federation, and policy interoperability.</td></tr>
-<tr><td><strong>3.x</strong></td><td>Large-scale identity federation, real-time compliance, distributed verification, and autonomous-agent accountability.</td></tr>
-</tbody></table></div>
-</section>
+        <section id="ai">
+          <h2>8. AI Permissions</h2>
+          <p>
+            Every AI system operating against governed information must hold a resolvable <code>ai-agent</code>
+            identity with an accountable organizational controller.
+          </p>
+          <p>
+            Permission classes include <code>read</code>, <code>derive</code>, <code>train</code>,
+            <code>generate</code>, <code>distribute</code>, and <code>decide</code>.
+          </p>
+          <div class="requirements">
+            Every AI action must be attributable to an identity, an authorization, a purpose, and a governance policy.
+          </div>
+        </section>
 
-<section><h2>15. Ecosystem Association</h2>
-<p><strong>HUGS ID</strong> is the subject and specification owner. <strong>XPGuess Learn</strong> is the publication and educational documentation host. <strong>Name The Game / NTG</strong> may implement HUGS ID within sports analytics and athlete intelligence applications, but it is not presented here as the owner of the HUGS ID standard.</p>
-<div class="callout"><strong>Canonical citation:</strong> HUGS ID. “HUGS ID Technical Specification v1.0.” XPGuess Learn, August 3, 2026.</div>
-</section>
+        <section id="trust">
+          <h2>9. Trust Framework</h2>
+          <p>
+            Trust is computed from verification depth, provenance completeness, authority weight, recency,
+            and dispute state. Trust applies to a claim and a purpose; it is not a universal label attached to a person.
+          </p>
+          <table>
+            <thead><tr><th>Level</th><th>Name</th><th>Basis</th></tr></thead>
+            <tbody>
+              <tr><td>T0</td><td>Unverified</td><td>Self-asserted only.</td></tr>
+              <tr><td>T1</td><td>Basic</td><td>Single-source recognized verification.</td></tr>
+              <tr><td>T2</td><td>Verified</td><td>Multi-source or institutional verification.</td></tr>
+              <tr><td>T3</td><td>Certified</td><td>Governing-body attestation through a complete authority chain.</td></tr>
+              <tr><td>T4</td><td>Canonical</td><td>Continuously verified, complete provenance, and uncontested over time.</td></tr>
+            </tbody>
+          </table>
+        </section>
 
-<footer><p><strong>HUGS ID™ Technical Specification v1.0</strong></p><p>Published through XPGuess Learn · Canonical technical documentation</p><p style="font-size:.76rem;color:#64748b;margin-top:.75rem">© 2026 HUGS ID. Public Working Draft.</p></footer>
-</main>
+        <section id="apis">
+          <h2>10. APIs</h2>
+          <p>
+            HUGS ID exposes versioned REST resources over HTTPS. JSON resources are namespaced under <code>/v1/</code>.
+            The API enforces the same governance, consent, and trust rules as the rest of the framework.
+          </p>
+          <ul>
+            <li><code>/v1/identities</code></li>
+            <li><code>/v1/consents</code></li>
+            <li><code>/v1/governance/policies</code></li>
+            <li><code>/v1/trust/scores/{identityId}</code></li>
+            <li><code>/v1/events</code></li>
+          </ul>
+        </section>
+
+        <section id="roadmap">
+          <h2>11. Roadmap</h2>
+          <p><strong>Version 1.0:</strong> Identity, governance, consent, verification, and Athlete Intelligence.</p>
+          <p><strong>Version 2.0:</strong> Full AI-agent lifecycle, cross-domain trust exchange, institutional federation, and reputation models.</p>
+          <p><strong>Version 3.0:</strong> Global identity federation, autonomous AI governance, real-time compliance, and decentralized trust networks.</p>
+        </section>
+
+        <section id="references">
+          <h2>12. References</h2>
+          <p>
+            The full PDF includes the normative and informative references informing this draft, including RFC 2119,
+            W3C Verifiable Credentials, W3C Decentralized Identifiers, OAuth 2.0, OpenID Connect, ISO/IEC 27001,
+            NIST SP 800-63, and the GDPR.
+          </p>
+          <p><a class="button" href="HUGS_ID_Technical_Specification_v1.0.pdf">Open the Complete Technical Specification</a></p>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p>HUGS ID™ Technical Specification · Version 1.0 · Public Working Draft</p>
+    <p>hugsid.com · learn.xpguess.com</p>
+    <p>© 2026 HUGS ID™. Published for public review and implementation feedback.</p>
+  </footer>
+</div>
 </body>
 </html>
