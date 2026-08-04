@@ -6,6 +6,28 @@ This project follows Semantic Versioning.
 
 ---
 
+## [1.0b] – 2026-08-04
+
+### Status
+
+Public Working Draft
+
+### Updated
+
+- Replaced the original Version 1.0 PDF with the revised Version 1.0b specification.
+- Improved technical language and organization.
+- Expanded governance and trust framework content.
+- Added additional implementation guidance.
+- Corrected editorial issues and formatting.
+- Updated repository documentation to reference Version 1.0b.
+
+---
+
+## [1.0] – 2026-08-04
+
+Initial public working draft.
+
+
 ## [1.0] – 2026-08-04
 
 ### Status
