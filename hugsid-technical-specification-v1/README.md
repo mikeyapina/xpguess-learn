@@ -1,29 +1,37 @@
 # HUGS ID™ Technical Specification
 
-**Version:** 1.0  
-**Status:** Public Working Draft
+Version: **1.0**
+
+Status: **Public Working Draft**
+
+---
+
+## Overview
 
 HUGS ID™ is a canonical identity and governance framework for the AI era.
 
-Rather than creating another centralized identity database, HUGS ID defines one canonical identity with many governed domains. It provides a technical foundation for identity, consent, verification, provenance, trust, governance, and accountable AI interactions.
+Rather than creating another centralized identity database, HUGS ID establishes one canonical identity with many governed domains. The framework defines how identity, consent, verification, governance, provenance, trust, and AI permissions interact across independent systems.
 
-## Purpose
+---
 
-The HUGS ID Technical Specification establishes:
+## Scope
+
+Version 1.0 defines the foundation of the HUGS ID framework including:
 
 - Canonical Identity
-- Governance Objects
+- Governance Framework
 - Consent Framework
 - Verification Framework
 - Trust Framework
 - Athlete Intelligence
 - AI Permission Model
 - REST APIs
-- Future Governance Architecture
 
-This repository contains the first public technical specification.
+Future versions will expand implementation guidance, interoperability, SDKs, and additional governed domains.
 
-## Repository
+---
+
+## Repository Contents
 
 ```
 /
@@ -33,37 +41,58 @@ This repository contains the first public technical specification.
 ├── README.md
 ├── CHANGELOG.md
 ├── LICENSE.md
-└── CITATION.cff
+├── CITATION.cff
+└── VERSION
 ```
+
+---
 
 ## Documentation
 
-Official Documentation
+### Technical Specification
 
 https://learn.xpguess.com/hugsid-technical-specification-v1/
 
-Official Website
+### Official Website
 
 https://hugsid.com
 
-XPGuess Learn
+### XPGuess Learn
 
 https://learn.xpguess.com
 
-Presentation
+### Project Presentation
 
 https://docs.google.com/presentation/d/1v0bq1tTSedu8XH502t0GUjMUrFF8CdGSZ0hzXxrsH_A/
 
-Video Overview
+### Project Video
 
 https://youtu.be/wZo4KLan0n8
 
-## Status
+---
 
-Version 1.0 is published as a **Public Working Draft**.
+## Citation
 
-The architecture is considered stable enough for public review while implementation details may continue to evolve through future releases.
+If you reference HUGS ID in research, software, policy, or standards work, please cite:
+
+Michael Ortega.
+
+**HUGS ID™ Technical Specification Version 1.0 – Public Working Draft.**
+
+HUGS ID™, August 2026.
+
+https://learn.xpguess.com/hugsid-technical-specification-v1/
+
+---
+
+## Version Status
+
+Version 1.0 is the first public working draft.
+
+The architecture is considered stable for public review while implementation details will continue to evolve in future releases.
 
 Feedback and technical discussion are encouraged.
+
+---
 
 © 2026 HUGS ID™
