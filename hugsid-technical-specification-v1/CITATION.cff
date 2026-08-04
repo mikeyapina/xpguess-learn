@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+
+title: "HUGS ID Technical Specification"
+
+version: "1.0"
+
+message: "If you use or reference HUGS ID, please cite this specification."
+
+type: report
+
+authors:
+  - family-names: Ortega
+    given-names: Michael
+
+repository-code: https://github.com/mikeyapina/xpguess-learn
+
+url: https://learn.xpguess.com/hugsid-technical-specification-v1/
+
+license: Proprietary
+
+date-released: 2026-08-04
+
+keywords:
+  - digital identity
+  - identity governance
+  - AI governance
+  - consent
+  - verification
+  - provenance
+  - trust
+  - athlete intelligence
+  - artificial intelligence
