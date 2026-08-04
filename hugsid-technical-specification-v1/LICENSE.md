@@ -4,15 +4,13 @@ Copyright © 2026 HUGS ID™
 
 All Rights Reserved.
 
-The HUGS ID Technical Specification may be viewed, referenced, cited, and linked for educational, research, interoperability, standards discussion, and implementation evaluation purposes.
+The HUGS ID™ Technical Specification may be viewed, downloaded, cited, referenced, and linked for educational, research, interoperability, standards development, and implementation evaluation purposes.
 
-No portion of this work may be represented as an official HUGS ID specification after modification without explicit written permission.
+No modified version may be represented as an official HUGS ID™ Technical Specification without prior written permission.
 
-The HUGS ID name, trademarks, logos, and branding remain the property of their respective owners.
+The HUGS ID™ name, trademarks, logos, branding, and official specifications remain the intellectual property of HUGS ID™.
 
-This specification is distributed as a Public Working Draft for community review.
-
-Future versions may be released under different licensing terms.
+This Version 1.0 specification is published as a Public Working Draft for community review.
 
 For licensing inquiries:
 
