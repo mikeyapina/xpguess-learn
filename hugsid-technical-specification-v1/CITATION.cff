@@ -1,5 +1,16 @@
 cff-version: 1.2.0
 
+
+version: "1.0b"
+
+title: "HUGS ID™ Technical Specification"
+
+message: "If you use this specification, please cite Version 1.0b."
+
+date-released: 2026-08-04
+
+
+
 title: "HUGS ID™ Technical Specification"
 
 version: "1.0"
