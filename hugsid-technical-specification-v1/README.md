@@ -1,18 +1,20 @@
 # HUGS ID™ Technical Specification
 
-**Version:** 1.0
+**Repository:** Historical Version 1.0 Public Working Draft
 
-**Status:** Public Working Draft
+**Status:** Archived Public Working Draft
 
 ---
 
 # Document Authority
 
-This repository contains the **official Version 1.0 Public Working Draft** of the **HUGS ID™ Technical Specification**.
+This repository preserves the **official Version 1.0 Public Working Draft** of the **HUGS ID™ Technical Specification** as the historical first publication of the HUGS ID framework.
 
-The HTML documentation (`index.html`) and the PDF (`HUGS_ID_Technical_Specification_v1.0.pdf`) are the canonical publications for this release.
+The HTML documentation (`index.html`) and the PDF (`HUGS_ID_Technical_Specification_v1.0b.pdf`) are the canonical publications for this archived release.
 
-Future versions of the specification will be released under new version numbers while preserving this repository as the historical Version 1.0 reference.
+Version **1.1** is now the current Public Working Draft and incorporates the accepted findings of the independent Version 1.0 Security Review together with subsequent architectural improvements.
+
+Version 1.0 remains available for historical reference, academic citation, implementation comparison, and standards development.
 
 ---
 
@@ -24,7 +26,7 @@ Rather than creating another centralized identity database, HUGS ID establishes 
 
 The framework defines how identity, consent, verification, governance, provenance, trust, and AI permissions interact across independent systems while preserving accountability across organizations, institutions, and artificial intelligence.
 
-Version 1.0 establishes the foundational architecture of the HUGS ID framework and is intended for public review, implementation evaluation, technical discussion, and future standards development.
+Version 1.0 established the foundational architecture of the HUGS ID framework and served as the basis for the Version 1.1 refinement process.
 
 ---
 
@@ -41,7 +43,7 @@ Version 1.0 defines the foundational architecture of HUGS ID including:
 - AI Permission Framework
 - REST APIs
 
-Future releases will expand:
+Future releases expand upon these foundations through:
 
 - Additional governed domains
 - Identity federation
@@ -59,7 +61,11 @@ Future releases will expand:
 /
 ├── index.html
 ├── HUGS_ID_Technical_Specification_v1.0.pdf
+├── HUGS_ID_Technical_Specification_v1.0b.pdf
+├── HUGS_ID_Technical_Specification_v1.1.docx
+├── HUGS_ID_Security_Review_and_Remediation_Annex_v1.0.docx
 ├── LogoHUgsId-nb.png
+├── HugdID-logo.png
 ├── README.md
 ├── CHANGELOG.md
 ├── LICENSE.md
@@ -69,13 +75,33 @@ Future releases will expand:
 
 ---
 
-# Related Resources
+# Documentation
 
-## Official Technical Specification
+## Current Technical Specification (Version 1.1)
+
+https://learn.xpguess.com/hugsid-specification/v1.1/
+
+---
+
+## Archived Technical Specification (Version 1.0b)
+
+https://learn.xpguess.com/hugsid-specification/v1.0/
+
+---
+
+## Security Reviews
+
+https://learn.xpguess.com/hugsid-specification/security-review/
+
+---
+
+## Official Version 1.0 Publication
 
 https://learn.xpguess.com/hugsid-technical-specification-v1/
 
 ---
+
+# Related Resources
 
 ## Official Website
 
@@ -83,7 +109,7 @@ https://hugsid.com
 
 ---
 
-## XPGuess Learn Documentation
+## XPGuess Learn
 
 https://learn.xpguess.com
 
@@ -103,7 +129,7 @@ https://youtu.be/wZo4KLan0n8
 
 # Citation
 
-If you reference HUGS ID™ in research, software, public policy, standards development, technical documentation, or academic work, please cite:
+If you reference **Version 1.0** in research, software, public policy, standards development, technical documentation, or academic work, please cite:
 
 > Ortega, Michael.
 >
@@ -111,25 +137,46 @@ If you reference HUGS ID™ in research, software, public policy, standards deve
 >
 > HUGS ID™, August 2026.
 >
-> https://learn.xpguess.com/hugsid-technical-specification-v1/
+> https://learn.xpguess.com/hugsid-specification/v1.0/
+
+For current implementations and new development, please reference **Version 1.1**.
 
 ---
 
 # Version Status
 
-Current Release
+## Current Specification
 
-**Version:** 1.0
+**Version:** 1.1
 
 **Status:** Public Working Draft
 
-**Release Date:** August 4, 2026
+Documentation:
 
-Version 1.0 represents the first publicly released technical specification for the HUGS ID framework.
+https://learn.xpguess.com/hugsid-specification/v1.1/
 
-The architectural concepts defined in this release are considered stable for public review while implementation details, interoperability guidance, APIs, and additional governed domains will continue to evolve through future versioned releases.
+---
 
-Future specifications will build upon Version 1.0 while preserving this release as the historical first publication of the HUGS ID Technical Specification.
+## Historical Specification
+
+**Version:** 1.0b
+
+**Status:** Archived Public Working Draft
+
+Documentation:
+
+https://learn.xpguess.com/hugsid-specification/v1.0/
+
+---
+
+## Published Security Reviews
+
+- Security Review & Remediation Annex v1.0
+- Version 1.1 Regression & Fix-Verification Review
+
+Documentation:
+
+https://learn.xpguess.com/hugsid-specification/security-review/
 
 ---
 
@@ -137,9 +184,11 @@ Future specifications will build upon Version 1.0 while preserving this release 
 
 Constructive technical feedback is welcome.
 
-As a Public Working Draft, Version 1.0 is intended to encourage discussion among developers, researchers, standards organizations, educational institutions, governing bodies, and industry partners interested in digital identity, governance, provenance, consent, and accountable artificial intelligence.
+The HUGS ID specification continues to evolve through public review, implementation experience, independent research, and architectural refinement.
 
-Future revisions will incorporate implementation experience, technical review, and community feedback through versioned releases.
+Developers, researchers, standards organizations, educational institutions, governing bodies, and industry partners are encouraged to participate in technical discussion and submit constructive feedback.
+
+Future revisions will continue to be published as independently versioned specifications while preserving previous releases for transparency and historical reference.
 
 ---
 
